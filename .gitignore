@@ -1,0 +1,6 @@
+.mimocode/
+.vscode/
+target/
+build/
+out/
+!out/.gitkeep
