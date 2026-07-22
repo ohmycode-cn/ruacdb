@@ -23,7 +23,8 @@ namespace ruac::rstd::logsystem {
         const char *const G_READ_LOG_PATH{"/etc/ruacdb"};
 #endif
 
-#if defined(__Win32__) || defined(__Win64__) || defined(__WIN32__) || defined(__WIN64__)
+#if defined(__Win32__) || defined(__Win64__) || defined(__WIN32__) || \
+    defined(__WIN64__)
         const char *const G_WRITE_LOG_PATH{"C:\\Users\\RuacDB\\Log"};
         const char *const G_READ_LOG_PATH{"C:\\Users\\RuacDB\\Etc"};
 #endif
