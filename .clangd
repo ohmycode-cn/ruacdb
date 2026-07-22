@@ -1,0 +1,15 @@
+CompileFlags:
+  CompilationDatabase: build
+
+---
+# C 头文件使用 C 模式
+If:
+  PathMatch:
+    - ".*\\.h$"
+
+CompileFlags:
+  Add:
+    - "-xc"
+    - "-std=c23"
+  Remove:
+    - "-std=c++*"
