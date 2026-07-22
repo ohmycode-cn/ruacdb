@@ -4,7 +4,6 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_colored.hpp
  * src/rstd/logsystem/ruac_colored.cpp
- * ANSI color code utilities for log message formatting.
  */
 
 #include "rstd/logsystem/ruac_colored.hpp"
@@ -13,11 +12,11 @@
 namespace ruac::rstd::logsystem {
 
     /**
-     * @brief Construct a Colored formatter with given options.
+     * @brief Construct a Colored formatter and initialize color sequences.
      *
-     * @param enable_ce_  Use classic ESC escape sequence (\\033).
-     * @param enable_ht_  Enable HTML-style color output.
-     * @param enable_bf_  Enable bold font weight.
+     * @param enable_ce_  Use classic ESC escape sequence (\\033) instead of \\x1b.
+     * @param enable_ht_  Enable ANSI color output; false disables all colors.
+     * @param enable_bf_  Enable bold font weight instead of normal.
      */
     Colored::Colored(const logtype::Bool enable_ce_, const logtype::Bool enable_ht_, const logtype::Bool enable_bf_) {
         init(enable_ce_, enable_ht_, enable_bf_);
@@ -26,9 +25,9 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Initialize ANSI color sequences based on configuration.
      *
-     * @param enable_ce_  Use classic ESC escape sequence (\\033).
-     * @param enable_ht_  Enable HTML-style color output.
-     * @param enable_bf_  Enable bold font weight.
+     * @param enable_ce_  Use classic ESC escape sequence (\\033) instead of \\x1b.
+     * @param enable_ht_  Enable ANSI color output; false sets all colors to empty.
+     * @param enable_bf_  Enable bold font weight instead of normal.
      */
     void Colored::init(const logtype::Bool enable_ce_, const logtype::Bool enable_ht_, const logtype::Bool enable_bf_) {
 

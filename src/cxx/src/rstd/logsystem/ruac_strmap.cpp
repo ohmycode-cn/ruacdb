@@ -53,6 +53,14 @@ namespace ruac::rstd::logsystem {
 
     namespace strmap {
 
+        /**
+         * @brief Build a token-to-string map with ANSI color codes applied.
+         *
+         * @param enable_ce_  Use classic ESC escape sequence (\\033) instead of \\x1b.
+         * @param enable_ht_  Enable ANSI color output; false disables all colors.
+         * @param enable_bf_  Enable bold font weight instead of normal.
+         * @return A StringMap mapping token keys to ANSI-colored string values.
+         */
         auto get_ansi_map(const logtype::Bool enable_ce_, const logtype::Bool enable_ht_,
                           const logtype::Bool enable_bf_) -> logtype::StringMap {
             Colored cr(enable_ce_, enable_ht_, enable_bf_);
@@ -92,6 +100,11 @@ namespace ruac::rstd::logsystem {
             return map;
         }
 
+        /**
+         * @brief Build a token-to-string map with plain (uncolored) text.
+         *
+         * @return A StringMap mapping token keys to plain string values.
+         */
         auto get_text_map() -> logtype::StringMap {
             logtype::StringMap map{
                 {logkeys::token::G_LEFT_BRACE, G_TOKEN_L_BRACE},
