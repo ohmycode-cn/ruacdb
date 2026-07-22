@@ -8,6 +8,7 @@
 
 #include "rstd/logsystem/ruac_format_json.hpp"
 #include "rstd/logsystem/ruac_format_text.hpp"
+#include "rstd/logsystem/ruac_format_xml.hpp"
 #include "rstd/logsystem/ruac_nowtime.hpp"
 #include "rstd/logsystem/ruac_strmap.hpp"
 #include "test/ruac_test_logsystem.hpp"
@@ -62,9 +63,25 @@ namespace {
     }
 
     void test_format_xml(void) {
+        logsys::FormatXML xml;
         auto map{logsys::strmap::get_ansi_map(true, true, false)};
         auto time{logsys::nowtime::get_time()};
         auto message{"This is format XML message !"};
+        auto str0 = xml.format(map, time, "DEBUG", 12002, message,
+                               __FILE__, __LINE__);
+        auto str1 = xml.format(map, time, "INFO", 12003, message,
+                               __FILE__, __LINE__);
+        auto str2 = xml.format(map, time, "WARNING", 12004, message,
+                               __FILE__, __LINE__);
+        auto str3 = xml.format(map, time, "ERROR", 12005, message,
+                               __FILE__, __LINE__);
+        auto str4 = xml.format(map, time, "FATAL", 12006, message,
+                               __FILE__, __LINE__);
+        std::cout << str0 << "\n";
+        std::cout << str1 << "\n";
+        std::cout << str2 << "\n";
+        std::cout << str3 << "\n";
+        std::cout << str4 << std::endl;
     }
 
 } // namespace
@@ -73,6 +90,7 @@ namespace ruac::test {
 
     void test_main_logsystem(void) {
         std::cout << "From C++ This is test main logsystem !" << std::endl;
+        std::cout << std::endl;
         test_format_json();
         std::cout << std::endl;
         test_format_text();
