@@ -5,7 +5,13 @@
 ## 目录导航
 
 [C++ 命名空间](#CXX命名空间)
+[C++ 全局变量与常量](#CXX全局变量与常量)
+[C++ 成员变量与常量](#CXX成员变量与常量)
+[C++ 参数规则](#CXX参数规则)
 [C++ 类](#CXX类)
+[C++ 函数](#CXX函数)
+[C++ 函数返回语法标准](#CXX函数返回语法标准)
+[C++ 函数名称](#CXX函数名称)
 
 
 ## CXX命名空间
@@ -28,6 +34,72 @@ namespace ruac::_target { /* code */ } // namespace ruac::_target
 namespace ruac::target_ { /* code */ } // namespace ruac::target_
 
 ```
+
+## CXX全局变量与常量
+
+- C++ 全局变量必须使用g_前缀。全局常量必须使用G_前缀。
+- 全局变量应该全部使用小写字母，或者使用下划线分隔单词。
+- 全局常量应该全部使用大写字母，或者使用下划线分隔单词。
+- 注意：应当尽量减少使用全局变量。
+
+```cpp
+// 合法全局变量
+int g_target = 0; // g_target
+int g_target_other = 0; // g_target_other
+
+// 非合法全局变量
+int g_Target = 0; // Target
+int g_TargetOther = 0; // TargetOther
+
+// 合法全局常量
+const int G_TARGET = 0; // G_TARGET
+const int G_TARGET_OTHER = 0; // G_TARGET_OTHER
+
+// 非合法全局常量
+const int g_target = 0; // g_target
+const int g_target_other = 0; // g_target_other
+```
+
+## CXX成员变量与常量
+
+- C++ 成员变量必须使用m_前缀。成员常量必须使用M_前缀。
+- 成员变量应该全部使用小写字母，或者使用下划线分隔单词。
+- 成员常量应该全部使用大写字母，或者使用下划线分隔单词。
+
+```cpp
+// 合法成员变量
+int m_target = 0; // m_target
+int m_target_other = 0; // m_target_other
+
+// 非合法成员变量
+int m_Target = 0; // Target
+int m_TargetOther = 0; // TargetOther
+
+// 合法成员常量
+const int M_TARGET = 0; // M_TARGET
+const int M_TARGET_OTHER = 0; // M_TARGET_OTHER
+
+// 非合法成员常量
+const int m_target = 0; // m_target
+const int m_target_other = 0; // m_target_other
+```
+
+## CXX参数规则
+
+- C++ 参数必须全部使用小写字母加下划线后缀，或者使用下划线分隔单词。
+- 参数应该全部使用小写字母，或者使用下划线分隔单词。
+
+```cpp
+// 合法参数
+void fn(type param_ = 0); // param_
+void fn(type param_, type param_other_ = 0); // param_other_
+
+// 非合法参数
+void fn(type Param_ = 0); // Param_
+void fn(type ParamOther_ = 0); // ParamOther_
+```
+
+
 
 ## CXX类
 
@@ -63,4 +135,36 @@ class targetOther { ... } // 非合法类
 class Targetother { ... } // 非合法类
 
 // struct / enum / enum class / union 以此类推
+```
+
+## CXX函数返回语法标准
+
+- 当函数返回类型为void时， 应当使用如下语法标准：
+```cpp
+// 前置返回语法
+void fn(type param_, ...);
+```
+- 当函数返回类型为非void时， 应当使用如下语法标准：
+```cpp
+// 后置返回语法
+auto fn(type param_, ...) -> type;
+```
+
+## CXX函数名称
+
+- C++ 函数名称必须全部使用小写字母，或者使用下划线分隔单词。
+- C++ 函数禁止使用驼峰命名法。禁止使用任何形式的前缀或者后缀。
+
+```cpp
+// 合法函数名称
+auto fn_example(type param_, ...) -> type; // fn_example_;
+void fn(type param_, ...); // fn_
+
+// 非合法函数名称
+auto Fn_example(type param_, ...) -> type; // fn_example
+void Fn(type param_, ...); // fn
+auto FnExample(type param_, ...) -> type; // fn_example_example
+auto fn_(type param_, ...) -> type; // fn_
+auto _fn(type param_, ...) -> type; // _fn_
+auto fnExample(type param_, ...) -> type; // fn_example_example
 ```
