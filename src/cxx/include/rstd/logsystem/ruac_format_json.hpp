@@ -4,7 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_format_json.hpp
  * src/rstd/logsystem/ruac_format_json.cpp
- * Description of header file function declaration
+ * JSON-formatted log entry serializer with configurable key-value formatting.
  *
  */
 
