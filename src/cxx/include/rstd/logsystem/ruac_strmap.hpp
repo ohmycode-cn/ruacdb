@@ -2,26 +2,27 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/rstd/logsystem/ruac_nowtime.hpp
- * src/rstd/logsystem/ruac_nowtime.cpp
+ * include/rstd/logsystem/ruac_strmap.hpp
+ * src/rstd/logsystem/ruac_strmap.cpp
  * Description of header file function declaration
  *
  */
 
 #pragma once
-#ifndef RUAC_NOWTIME_HPP
-#define RUAC_NOWTIME_HPP
+#ifndef RUAC_STRMAP_HPP
+#define RUAC_STRMAP_HPP
 
 #include "rstd/logsystem/ruac_logtype.hpp"
 
 namespace ruac::rstd::logsystem {
 
-    namespace nowtime {
+    namespace strmap {
 
-        auto get_time() -> logtype::String;
+        auto get_ansi_map() -> logtype::StringMap;
+        auto get_text_map() -> logtype::StringMap;
 
-    } // namespace nowtime
+    } // namespace strmap
 
 } // namespace ruac::rstd::logsystem
 
-#endif // RUAC_NOWTIME_HPP
+#endif // RUAC_STRMAP_HPP

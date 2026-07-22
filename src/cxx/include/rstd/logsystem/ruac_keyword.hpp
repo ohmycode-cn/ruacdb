@@ -14,11 +14,13 @@
 
 namespace ruac::rstd::logsystem {
 
-    class REPLACE_ME {
-      public:
-        REPLACE_ME() = default;
-        ~REPLACE_ME() = default;
-    };
+    namespace keyword {
+
+        namespace confk {} // namespace confk
+
+        namespace token {} // namespace token
+
+    } // namespace keyword
 
 } // namespace ruac::rstd::logsystem
 
