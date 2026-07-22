@@ -9,7 +9,6 @@
 #include "rstd/logsystem/ruac_colored.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
-#include "rstd/logsystem/ruac_nowtime.hpp"
 #include "rstd/logsystem/ruac_strmap.hpp"
 
 namespace {

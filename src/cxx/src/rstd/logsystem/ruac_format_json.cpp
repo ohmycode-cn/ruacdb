@@ -75,7 +75,7 @@ namespace ruac::rstd::logsystem {
                             const logtype::Seqnum &sequence_,
                             const logtype::String &message_,
                             const logtype::String &file_,
-                            const logtype::String &line_) -> logtype::String {
+                            const logtype::Int line_) -> logtype::String {
         std::stringstream ss;
         logtype::StringMap map{strmap_};
 

@@ -18,7 +18,8 @@ namespace ruac::rstd::logsystem {
 
     namespace strmap {
 
-        auto get_ansi_map() -> logtype::StringMap;
+        auto get_ansi_map(const logtype::Bool enable_ce_ = true, const logtype::Bool enable_ht_ = false,
+                          const logtype::Bool enable_bf_ = false) -> logtype::StringMap;
         auto get_text_map() -> logtype::StringMap;
 
     } // namespace strmap

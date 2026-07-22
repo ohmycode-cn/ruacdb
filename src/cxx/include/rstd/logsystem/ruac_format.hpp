@@ -44,7 +44,7 @@ namespace ruac::rstd::logsystem {
                             const logtype::Seqnum &sequence_,
                             const logtype::String &message_,
                             const logtype::String &file_,
-                            const logtype::String &line_) -> logtype::String = 0;
+                            const logtype::Int line_) -> logtype::String = 0;
 
         virtual ~Format() = default;
     };
