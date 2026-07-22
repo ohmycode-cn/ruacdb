@@ -16,7 +16,7 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Formats a single JSON key-value pair line with indentation.
      *
-     * @tparam V       Type of the value to format (e.g. strg, udll, sdit).
+     * @tparam V       Type of the value to format (e.g. String, udll, sdit).
      * @param strmap_  Key-value map containing formatting token (quotes, colons, etc.).
      * @param key_     The JSON property name token (e.g. logkeys::token::G_TIME).
      * @param val_     The value to be serialized into the JSON property.

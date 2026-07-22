@@ -13,6 +13,7 @@ set(OUTPUT_DIR ${CMAKE_SOURCE_DIR}/out)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)
-add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp)
+add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp
+    src/cxx/src/rstd/logsystem/ruac_nullproc.cpp)
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIR}")
 target_include_directories(${PROJECT_NAME} PRIVATE src/cxx/include)

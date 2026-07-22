@@ -16,7 +16,7 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Formats a single XML element line with open/close tags and indentation.
      *
-     * @tparam V   Type of the value to format (e.g. strg, udll, sdit).
+     * @tparam V   Type of the value to format (e.g. String, udll, sdit).
      * @param strmap_  Key-value map containing formatting token (angle brackets, slash, etc.).
      * @param key_   The XML element name token (e.g. logkeys::token::G_XML_TIME).
      * @param val_   The value to be placed between the open and close tags.

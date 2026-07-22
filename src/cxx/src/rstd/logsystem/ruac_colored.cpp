@@ -67,6 +67,30 @@ namespace ruac::rstd::logsystem {
         return color_ + message_ + m_reset;
     }
 
+    auto Colored::get_var(ColoredName color_) -> logtype::String {
+        switch (color_) {
+        case ColoredName::RESET:
+            return m_reset;
+        case ColoredName::DARK:
+            return m_dark;
+        case ColoredName::RED:
+            return m_red;
+        case ColoredName::GREEN:
+            return m_green;
+        case ColoredName::YELLOW:
+            return m_yellow;
+        case ColoredName::BLUE:
+            return m_blue;
+        case ColoredName::MAGENTA:
+            return m_magenta;
+        case ColoredName::CYAN:
+            return m_cyan;
+        case ColoredName::WHITE:
+            break;
+        }
+        return m_reset;
+    }
+
     /**
      * @brief Apply dark (black) color to the message.
      *

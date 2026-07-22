@@ -16,6 +16,18 @@
 
 namespace ruac::rstd::logsystem {
 
+    enum class ColoredName {
+        RESET = 0,
+        DARK,
+        RED,
+        GREEN,
+        YELLOW,
+        BLUE,
+        MAGENTA,
+        CYAN,
+        WHITE
+    };
+
     /**
      * @brief Utility for applying ANSI color codes to log messages.
      *
@@ -53,6 +65,7 @@ namespace ruac::rstd::logsystem {
         ~Colored() = default;
 
       public:
+        auto get_var(ColoredName color_) -> logtype::String;
         auto d(const logtype::String &message_) -> logtype::String;
         auto r(const logtype::String &message_) -> logtype::String;
         auto g(const logtype::String &message_) -> logtype::String;

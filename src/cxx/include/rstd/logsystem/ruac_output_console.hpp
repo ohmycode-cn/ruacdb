@@ -5,18 +5,35 @@
  * include/rstd/logsystem/ruac_output_console.hpp
  * src/rstd/logsystem/ruac_output_console.cpp
  * Description of header file function declaration
- * 
+ * Declares the OutputConsole class, a concrete implementation of the
+ * Output interface for the RUAC log system. OutputConsole writes
+ * formatted log messages to standard output using synchronized streams
+ * to ensure thread-safe console output.
+ *
  */
 
 #pragma once
 #ifndef RUAC_OUTPUT_CONSOLE_HPP
 #define RUAC_OUTPUT_CONSOLE_HPP
 
-namespace ruac::rstd::logsystem
-{
+#include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_output.hpp"
 
-class REPLACE_ME {public: REPLACE_ME()=default; ~REPLACE_ME()=default;};
+namespace ruac::rstd::logsystem {
+
+    /**
+     * @brief Console-output sink that writes formatted log messages to stdout.
+     *        Uses std::osyncstream for thread-safe output synchronization.
+     */
+    class OutputConsole : public Output {
+      public:
+        OutputConsole() = default;
+        ~OutputConsole() = default;
+
+      public:
+        void output(const logtype::String &message_);
+    }; // class OutputConsole
 
 } // namespace ruac::rstd::logsystem
 
-#endif  // RUAC_OUTPUT_CONSOLE_HPP
+#endif // RUAC_OUTPUT_CONSOLE_HPP
