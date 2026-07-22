@@ -70,7 +70,7 @@ function init_cxx_file() {
         cxx_include="${PATH_INCLUDE}/${fpath}"
         cxx_src="${PATH_SRC}/${fpath}"
         # change xxx/xxx to xxx::xxx
-        cxx_namespace="${cxx_root_namespace}::${fpath//\//::/}"
+        cxx_namespace="${cxx_root_namespace}::${fpath//\//::}"
     fi
 
     if ! is_exist_path "${cxx_include}" || ! is_exist_path "${cxx_src}"; then
