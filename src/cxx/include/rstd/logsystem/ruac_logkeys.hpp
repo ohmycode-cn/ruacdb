@@ -4,7 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_logkeys.hpp
  * src/rstd/logsystem/ruac_logkeys.cpp
- * Constant key definitions for log system configuration and formatting tokens.
+ * Constant key definitions for log system configuration and formatting token.
  *
  */
 
