@@ -1,0 +1,48 @@
+/**
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
+ * Author: ohmycode-cn(ohcode@163.com)
+ * include/rstd/logsystem/ruac_loader.hpp
+ * src/rstd/logsystem/ruac_loader.cpp
+ * Description of header file function declaration
+ *
+ */
+
+#pragma once
+#ifndef RUAC_LOADER_HPP
+#define RUAC_LOADER_HPP
+
+#include "rstd/logsystem/ruac_logpath.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
+
+namespace ruac::rstd::logsystem {
+
+    struct LoaderParamList {
+        logtype::String m_fpath{logpath::G_READ_LOG_CONFIG_FILE_PATH};
+        logtype::String m_fname{logpath::G_READ_LOG_CONFING_FILE_NAME};
+    };
+
+    class Loader {
+      private:
+        LoaderParamList m_params;
+        logtype::Bool m_once_lock{false};
+        logtype::Bool m_load_done{false};
+        char *m_buffer{nullptr};
+
+      private:
+        void load_file_content_to_buffer();
+        auto parser_buffer_content() -> logtype::StringMap;
+        void free_buffer();
+
+      public:
+        Loader() = default;
+        Loader(const LoaderParamList &params);
+        ~Loader();
+
+      public:
+        auto getmap(const LoaderParamList &params = {}) -> logtype::StringMap;
+    };
+
+} // namespace ruac::rstd::logsystem
+
+#endif // RUAC_LOADER_HPP

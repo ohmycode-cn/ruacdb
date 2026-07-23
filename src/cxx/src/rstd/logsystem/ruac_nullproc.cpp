@@ -29,6 +29,10 @@ namespace ruac::rstd::logsystem {
             return;
         }
 
+        auto nextline() -> logtype::String {
+            return "\n";
+        }
+
     } // namespace nullproc
 
 } // namespace ruac::rstd::logsystem

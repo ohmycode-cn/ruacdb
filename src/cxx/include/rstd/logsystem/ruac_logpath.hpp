@@ -15,18 +15,18 @@ namespace ruac::rstd::logsystem {
 
     namespace logpath {
 
-        const char *const G_READ_LOG_CONFING_FILE{"ruacdb.log.config"};
+        const char *const G_READ_LOG_CONFING_FILE_NAME{"ruacdb.log.config"};
         const char *const G_WRITE_LOG_FILE{"ruacdb.default.log"};
 
 #if defined(__linux__)
         const char *const G_WRITE_LOG_PATH{"/var/log/ruacdb"};
-        const char *const G_READ_LOG_PATH{"/etc/ruacdb"};
+        const char *const G_READ_LOG_CONFIG_FILE_PATH{"/etc/ruacdb"};
 #endif
 
 #if defined(__Win32__) || defined(__Win64__) || defined(__WIN32__) || \
     defined(__WIN64__)
         const char *const G_WRITE_LOG_PATH{"C:\\Users\\RuacDB\\Log"};
-        const char *const G_READ_LOG_PATH{"C:\\Users\\RuacDB\\Etc"};
+        const char *const G_READ_LOG_CONFIG_FILE_PATH{"C:\\Users\\RuacDB\\Etc"};
 #endif
 
     } // namespace logpath

@@ -35,6 +35,8 @@ namespace ruac::rstd::logsystem {
          */
         void donot();
 
+        auto nextline() -> logtype::String;
+
     } // namespace nullproc
 
 } // namespace ruac::rstd::logsystem

@@ -79,7 +79,7 @@ namespace ruac::rstd::logsystem {
                 {logkeys::token::G_COLON, cr.w(G_TOKEN_COLON)},
                 {logkeys::token::G_COMMA, cr.r(G_TOKEN_COMMA)},
                 {logkeys::token::G_EQUAL, cr.w(G_TOKEN_EQUAL)},
-                {logkeys::token::G_QUOTE, cr.y(G_TOKEN_QUOTE)},
+                {logkeys::token::G_QUOTE, cr.c(G_TOKEN_QUOTE)},
                 {logkeys::token::G_GT, cr.c(G_TOKEN_GT)},
                 {logkeys::token::G_LT, cr.c(G_TOKEN_LT)},
                 {logkeys::token::G_SLASH, cr.r(G_TOKEN_SLASH)},
