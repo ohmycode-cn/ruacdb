@@ -4,15 +4,19 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_loader.hpp
  * src/rstd/logsystem/ruac_loader.cpp
+ * Configuration file loader implementation with buffer-based reading and key-value parsing.
  */
 
 #include "rstd/logsystem/ruac_logtype.hpp"
-#include "rstd/logsystem/ruac_nullproc.hpp"
 #include "rstd/logsystem/ruac_message.hpp"
+#include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_loader.hpp"
+#include "rstd/logsystem/ruac_debugt.hpp"
+#include "rstd/logsystem/ruac_table.hpp"
 #include <filesystem>
 #include <sstream>
 #include <fstream>
+#include <vector>
 
 namespace ruac::rstd::logsystem {
 
@@ -22,8 +26,8 @@ namespace ruac::rstd::logsystem {
      * @param params_ File path and name configuration
      *
      */
-    Loader::Loader(const LoaderParamList &params) {
-        m_params = params;
+    Loader::Loader(const LoaderParamList &params_) {
+        m_params = params_;
         load_file_content_to_buffer();
     }
 
@@ -52,9 +56,8 @@ namespace ruac::rstd::logsystem {
 
         if (!std::filesystem::exists(fullpath)) {
             std::stringstream ss;
-            ss << "Loader: file not found: " << nullproc::nextline();
-            ss << "      Path: " << fpath << nullproc::nextline();
-            ss << "      Name: " << fname;
+            ss << "Not found file: " << fullpath.string();
+            ss << DebugT::instance().print_string("", __FILE__, __LINE__);
             Message::instance().stdout_err(ss.str(), "LOAD ");
             return;
         }
@@ -62,9 +65,9 @@ namespace ruac::rstd::logsystem {
         auto f_size = std::filesystem::file_size(fullpath);
         auto b_size = static_cast<std::size_t>(f_size);
 
-        m_buffer = new char[b_size];
+        m_buffer = new std::vector<std::byte>(b_size);
         std::ifstream ifs(fullpath);
-        ifs.read(m_buffer, b_size);
+        ifs.read(reinterpret_cast<char *>(m_buffer->data()), b_size);
         ifs.close();
         m_load_done = true;
     }
@@ -75,7 +78,7 @@ namespace ruac::rstd::logsystem {
      */
     void Loader::free_buffer() {
         if (nullptr != m_buffer) {
-            delete[] m_buffer;
+            delete m_buffer;
             m_buffer = nullptr;
         }
     }
@@ -92,7 +95,41 @@ namespace ruac::rstd::logsystem {
             return map;
         }
 
-        // TODO: parser buffer content to map map
+        std::string content(reinterpret_cast<const char *>(m_buffer->data()), m_buffer->size());
+        std::istringstream stream(content);
+        std::string line;
+
+        while (std::getline(stream, line)) {
+
+            if (line.empty() || line.find(logkeys::word::G_COMMENT) == 0) {
+                continue;
+            }
+
+            auto eq_pos = line.find(logkeys::word::G_EQUAL);
+            if (eq_pos == std::string::npos) {
+                continue;
+            }
+
+            std::string key = line.substr(0, eq_pos);
+            std::string value = line.substr(eq_pos + 1);
+
+            key.erase(key.find_last_not_of(" \t") + 1);
+
+            auto quote_start = value.find(logkeys::word::G_QUOTE);
+            auto quote_end = value.rfind(logkeys::word::G_QUOTE);
+
+            if (quote_start != std::string::npos && quote_end != std::string::npos && quote_start != quote_end) {
+                value = value.substr(quote_start + 1, quote_end - quote_start - 1);
+            }
+
+            auto semicolon_pos = value.find(logkeys::word::G_SEMICOLON);
+            if (semicolon_pos != std::string::npos) {
+                value = value.substr(0, semicolon_pos);
+            }
+
+            value.erase(value.find_last_not_of(" \t") + 1);
+            map[key] = value;
+        }
         return map;
     }
 
@@ -104,7 +141,13 @@ namespace ruac::rstd::logsystem {
      * @return Parsed key-value map, or empty map on failure
      *
      */
-    auto Loader::getmap(const LoaderParamList &params) -> logtype::StringMap {
+    auto Loader::getmap(const LoaderParamList &params_) -> logtype::StringMap {
+        if (!params_.m_fpath.empty()) {
+            m_params.m_fpath = params_.m_fpath;
+        }
+        if (!params_.m_fname.empty()) {
+            m_params.m_fname = params_.m_fname;
+        }
         if (!m_once_lock) {
             load_file_content_to_buffer();
         }
@@ -113,4 +156,27 @@ namespace ruac::rstd::logsystem {
         }
         return parser_buffer_content();
     }
+
+    /**
+     * @brief Print the parsed config map as an ASCII table to stdout
+     *
+     * @param strmap_  The key-value map to display
+     */
+    void Loader::outmap(const logtype::StringMap &strmap_) {
+
+        if (strmap_.empty()) {
+            std::stringstream ss;
+            ss << "Loader outmap failed ! Because the map is empty.";
+            ss << DebugT::instance().print_string("", __FILE__, __LINE__);
+            Message::instance().stdout_err(ss.str(), "LOAD ");
+            return;
+        }
+
+        auto table = Table();
+        std::vector<logtype::String> h{"CONFIG@KEY", "CONFIG@VAL"};
+        auto t = strmap_;
+        table.set_param_list({h, t});
+        table.print(TableType::STRMAP);
+    }
+
 } // namespace ruac::rstd::logsystem

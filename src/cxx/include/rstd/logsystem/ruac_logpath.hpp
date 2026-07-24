@@ -16,7 +16,7 @@ namespace ruac::rstd::logsystem {
 
     namespace logpath {
 
-        const char *const G_READ_LOG_CONFING_FILE_NAME{"ruacdb.log.config"};
+        const char *const G_READ_LOG_CONFING_FILE_NAME{"ruacdb.log.conf"};
         const char *const G_WRITE_LOG_FILE{"ruacdb.default.log"};
 
 #if defined(__linux__)

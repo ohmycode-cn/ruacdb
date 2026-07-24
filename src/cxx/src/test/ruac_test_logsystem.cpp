@@ -14,6 +14,7 @@
 #include "rstd/logsystem/ruac_nowtime.hpp"
 #include "rstd/logsystem/ruac_strmap.hpp"
 #include "rstd/logsystem/ruac_debugt.hpp"
+#include "rstd/logsystem/ruac_loader.hpp"
 #include "test/ruac_test_logsystem.hpp"
 #include <iostream>
 #include <sstream>
@@ -107,6 +108,13 @@ namespace {
         file.output(message_);
     }
 
+    void test_loader(void) {
+        logsys::Loader loader({"/home/repox/Engdev/ruacdb/document",
+                               "ruacdb.log.conf"});
+        auto map = loader.getmap();
+        loader.outmap(map);
+    }
+
 } // namespace
 
 namespace ruac::test {
@@ -120,6 +128,7 @@ namespace ruac::test {
         std::cout << std::endl;
         test_format_xml();
         test_output_file(test_format_text());
+        test_loader();
     }
 
 } // namespace ruac::test
