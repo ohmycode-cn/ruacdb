@@ -5,6 +5,7 @@
  * include/rstd/logsystem/ruac_message.hpp
  * src/rstd/logsystem/ruac_message.cpp
  * Description of header file function declaration
+ * Singleton message output utility with colored error and warning output to stdout.
  *
  */
 
@@ -19,12 +20,21 @@
 
 namespace ruac::rstd::logsystem {
 
+    /**
+     * @brief Parameter list for configuring Colored ANSI output behavior
+     *
+     */
     struct ColoredParamList {
         logtype::Bool m_enable_ce{true};
         logtype::Bool m_enable_ht{false};
         logtype::Bool m_enable_bf{false};
     };
 
+    /**
+     * @brief Singleton message output utility that formats and writes colored
+     *        error/warning messages to stdout via osyncstream
+     *
+     */
     class Message {
       private:
         Colored *m_colored{nullptr};

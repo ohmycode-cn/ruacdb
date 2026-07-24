@@ -13,6 +13,7 @@
 #include "rstd/logsystem/ruac_message.hpp"
 #include "rstd/logsystem/ruac_nowtime.hpp"
 #include "rstd/logsystem/ruac_strmap.hpp"
+#include "rstd/logsystem/ruac_debugt.hpp"
 #include "test/ruac_test_logsystem.hpp"
 #include <iostream>
 #include <sstream>
@@ -91,6 +92,10 @@ namespace {
     }
 
     void test_output_file(const std::string &message_) {
+        logsys::DebugTParamList params;
+        params.m_enable_color = true;
+        logsys::DebugT::instance().set_param_mode(params);
+
         const char *const FILE_PATH_NOT_EXIST{"/home/repox/Engdev/ruacdb/tmp/unexist"};
         const char *const FILE_PATH{"/home/repox/Engdev/ruacdb/tmp/test"};
         const char *const FILE_NAME{"ruacdb.test.log.txt"};

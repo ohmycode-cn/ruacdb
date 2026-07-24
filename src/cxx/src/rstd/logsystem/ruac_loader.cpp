@@ -16,15 +16,30 @@
 
 namespace ruac::rstd::logsystem {
 
+    /**
+     * @brief Construct a Loader and immediately load the config file into buffer
+     *
+     * @param params_ File path and name configuration
+     *
+     */
     Loader::Loader(const LoaderParamList &params) {
         m_params = params;
         load_file_content_to_buffer();
     }
 
+    /**
+     * @brief Destroy the Loader and free the internal read buffer
+     *
+     */
     Loader::~Loader() {
         free_buffer();
     }
 
+    /**
+     * @brief Read the entire config file into a heap-allocated buffer
+     * @details Skips if already loaded (once-lock). Reports errors via Message on failure.
+     *
+     */
     void Loader::load_file_content_to_buffer() {
         if (m_once_lock) {
             return;
@@ -54,6 +69,10 @@ namespace ruac::rstd::logsystem {
         m_load_done = true;
     }
 
+    /**
+     * @brief Free the internal buffer and reset the pointer to nullptr
+     *
+     */
     void Loader::free_buffer() {
         if (nullptr != m_buffer) {
             delete[] m_buffer;
@@ -61,6 +80,12 @@ namespace ruac::rstd::logsystem {
         }
     }
 
+    /**
+     * @brief Parse the raw buffer content into a key-value StringMap
+     *
+     * @return Parsed map, or empty map if buffer is null
+     *
+     */
     auto Loader::parser_buffer_content() -> logtype::StringMap {
         logtype::StringMap map{};
         if (nullptr == m_buffer) {
@@ -71,6 +96,14 @@ namespace ruac::rstd::logsystem {
         return map;
     }
 
+    /**
+     * @brief Return the parsed config as a StringMap, loading the file if needed
+     *
+     * @param params_ Optional override for file path and name
+     *
+     * @return Parsed key-value map, or empty map on failure
+     *
+     */
     auto Loader::getmap(const LoaderParamList &params) -> logtype::StringMap {
         if (!m_once_lock) {
             load_file_content_to_buffer();

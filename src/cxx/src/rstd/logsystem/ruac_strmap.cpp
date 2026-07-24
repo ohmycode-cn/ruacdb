@@ -4,6 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_strmap.hpp
  * src/rstd/logsystem/ruac_strmap.cpp
+ * Token-to-string map builders with raw token constants defined in anonymous namespace.
  */
 
 #include "rstd/logsystem/ruac_colored.hpp"

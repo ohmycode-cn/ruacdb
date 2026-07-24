@@ -5,6 +5,7 @@
  * include/rstd/logsystem/ruac_output_file.hpp
  * src/rstd/logsystem/ruac_output_file.cpp
  * Description of header file function declaration
+ * File-output sink that writes formatted log messages to disk with path validation.
  *
  */
 

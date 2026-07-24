@@ -4,6 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_output.hpp
  * src/rstd/logsystem/ruac_output.cpp
+ * Description of header file function declaration
  * Abstract interface for log message output destinations.
  *
  */

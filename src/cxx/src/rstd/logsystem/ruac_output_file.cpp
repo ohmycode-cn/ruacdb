@@ -4,31 +4,33 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_output_file.hpp
  * src/rstd/logsystem/ruac_output_file.cpp
+ * File-output sink implementation with directory/file validation in anonymous namespace.
  */
 
 #include "rstd/logsystem/ruac_output_file.hpp"
 #include "rstd/logsystem/ruac_message.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_debugt.hpp"
 #include <filesystem>
 #include <sstream>
 namespace ruac::rstd::logsystem {
 
     namespace {
 
-        /**
-         * @brief Builds a temporary debug string with source file and line info.
-         *
-         * @param line_  The line number, typically passed via the __LINE__ macro.
-         *
-         * @return A formatted debug string containing __FILE__ and the given line number.
-         */
-        auto debug(const logtype::Int line_) -> logtype::String {
-            const char *const NEXT_LINE{"\n"};
-            std::stringstream ss;
-            ss << NEXT_LINE << "(TMP DEBUG) " << "FILE: " << __FILE__ << NEXT_LINE;
-            ss << "            " << "LINE: " << line_;
-            return ss.str();
-        }
+        // /**
+        //  * @brief Builds a temporary debug string with source file and line info.
+        //  *
+        //  * @param line_  The line number, typically passed via the __LINE__ macro.
+        //  *
+        //  * @return A formatted debug string containing __FILE__ and the given line number.
+        //  */
+        // auto debug(const logtype::Int line_) -> logtype::String {
+        //     const char *const NEXT_LINE{"\n"};
+        //     std::stringstream ss;
+        //     // ss << NEXT_LINE << "(TMP DEBUG) " << "FILE: " << __FILE__ << NEXT_LINE;
+        //     // ss << "            " << "LINE: " << line_;
+        //     return ss.str();
+        // }
 
         /**
          * @brief Validates the target directory and file for write access.
@@ -59,7 +61,7 @@ namespace ruac::rstd::logsystem {
                 std::stringstream ss;
                 ss << "Directory not exist, you must manually create it: " << NEXT_LINE << pfmt << fpath;
 
-                ss << debug(__LINE__);
+                ss << DebugT::instance().print_string("", __FILE__, __LINE__);
 
                 Message::instance().stdout_err(ss.str(), PREFIX_PATH);
 
@@ -71,7 +73,7 @@ namespace ruac::rstd::logsystem {
                 std::stringstream ss;
                 ss << "Directory is not writable: " << NEXT_LINE << pfmt << fpath;
 
-                ss << debug(__LINE__);
+                ss << DebugT::instance().print_string("", __FILE__, __LINE__);
 
                 Message::instance().stdout_err(ss.str(), PREFIX_PATH);
                 return false;
@@ -82,7 +84,7 @@ namespace ruac::rstd::logsystem {
                     std::stringstream ss;
                     ss << "Target is not a regular file: " << NEXT_LINE << pfmt << fpath << NEXT_LINE << ffmt << fname_;
 
-                    ss << debug(__LINE__);
+                    ss << DebugT::instance().print_string("", __FILE__, __LINE__);
 
                     Message::instance().stdout_err(ss.str(), PREFIX_FILE);
                     return false;

@@ -4,6 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_colored.hpp
  * src/rstd/logsystem/ruac_colored.cpp
+ * Description of header file function declaration
  * Utility for applying ANSI color codes to log messages.
  *
  */
@@ -16,6 +17,10 @@
 
 namespace ruac::rstd::logsystem {
 
+    /**
+     * @brief Enumeration of supported ANSI color names for log colorization
+     *
+     */
     enum class ColoredName {
         RESET = 0,
         DARK,

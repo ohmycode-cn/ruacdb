@@ -5,6 +5,7 @@
  * include/rstd/logsystem/ruac_loader.hpp
  * src/rstd/logsystem/ruac_loader.cpp
  * Description of header file function declaration
+ * Configuration file loader that reads and parses log config files into key-value maps.
  *
  */
 
@@ -17,11 +18,20 @@
 
 namespace ruac::rstd::logsystem {
 
+    /**
+     * @brief Parameter list for configuring the Loader file path and name
+     *
+     */
     struct LoaderParamList {
         logtype::String m_fpath{logpath::G_READ_LOG_CONFIG_FILE_PATH};
         logtype::String m_fname{logpath::G_READ_LOG_CONFING_FILE_NAME};
     };
 
+    /**
+     * @brief Reads a log configuration file into memory and parses it into a StringMap.
+     *        Supports one-time loading with a lock mechanism to prevent repeated reads.
+     *
+     */
     class Loader {
       private:
         LoaderParamList m_params;

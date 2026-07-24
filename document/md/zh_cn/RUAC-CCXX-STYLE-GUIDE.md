@@ -11,7 +11,6 @@
 [C++ 成员变量与常量](#CXX成员变量与常量)
 [C++ 参数规则](#CXX参数规则)
 [C++ 类](#CXX类)
-[C++ 函数](#CXX函数)
 [C++ 函数返回语法标准](#CXX函数返回语法标准)
 [C++ 函数名称](#CXX函数名称)
 
@@ -21,6 +20,49 @@
 - C/C++ 的注解内容必须根据实际代码进行注解。
 - 如果只存在纯头文件，那么需要对类内部的成员函数进行注解。
 - 如果存在头文件与源文件，那么不需要对头文件类成员函数进行注解，应当在源文件中进行注解。
+- 函数注解：当函数使用了委托或者较为复杂的实现时，需要在@details 进行额外描述说明。其它情况可选
+  - 例如：
+  ```cpp
+  /**
+   * @brief
+   *
+   * @param
+   * 
+   * @return
+   *
+   * @details
+   *
+   */
+   auto example(type param_) -> type;
+  ```
+- 类的注解：类的注解（如果存在类）主要描述这个类做了什么，这个类是否单例，多态，继承依赖, ... 类
+  - 例如：
+  ```cpp
+  /**
+   * @brief
+   *
+   */
+   class Example{};
+  ```
+- 头文件注解头：头文件的注解头是对当前头文件功能内容的完整描述
+  - 注意：在头文件中，类的内部声明内容无需任何注解，只需要对类进行注解即可。
+  - 例如:
+  ```cpp
+  /**
+   * ...
+   * Description of header file function declaration
+   * // 在此行开始添加hpp文件注解描述
+   */
+  ```
+- 源文件注解头：如果源码实现文件存在匿名空间， 则需要在源文件注解头的描述部分添加匿名空间实现内容的描述。
+  - 例如:
+  ```cpp
+  /**
+   * ...
+   * Description of source file function implementation
+   * // 在此行开始添加cpp文件注解描述
+   */
+  ```
 
 ## CXX文件规范
 
@@ -64,8 +106,8 @@ int g_target = 0; // g_target
 int g_target_other = 0; // g_target_other
 
 // 非合法全局变量
-int g_Target = 0; // Target
-int g_TargetOther = 0; // TargetOther
+int g_Target = 0; // g_Target
+int g_TargetOther = 0; // g_TargetOther
 
 // 合法全局常量
 const int G_TARGET = 0; // G_TARGET
@@ -88,16 +130,16 @@ int m_target = 0; // m_target
 int m_target_other = 0; // m_target_other
 
 // 非合法成员变量
-int m_Target = 0; // Target
-int m_TargetOther = 0; // TargetOther
+int m_Target = 0; // m_Target
+int m_TargetOther = 0; // m_TargetOther
 
 // 合法成员常量
 const int M_TARGET = 0; // M_TARGET
 const int M_TARGET_OTHER = 0; // M_TARGET_OTHER
 
 // 非合法成员常量
-const int m_target = 0; // m_target
-const int m_target_other = 0; // m_target_other
+const int M_target = 0; // M_target
+const int M_target_other = 0; // M_target_other
 ```
 
 ## CXX参数规则
@@ -136,7 +178,7 @@ class TargetOther {
 public:
     TargetOther(type param_);
     ~TargetOther() = default;
-}
+};
 
 // 非合法类
 class TargetOther {
@@ -144,7 +186,7 @@ public:
     // 不需要使用构造函数或者析构函数但是没有使用`=default`关键字
     TargetOther(); 
     ~TargetOther();
-}
+};
 
 class Target_Other { ... } // 非合法类
 class targetOther { ... } // 非合法类
@@ -155,12 +197,12 @@ class Targetother { ... } // 非合法类
 
 ## CXX函数返回语法标准
 
-- 当函数返回类型为void时， 应当使用如下语法标准：
+- 当函数返回类型为void时，应当使用如下语法标准：
 ```cpp
 // 前置返回语法
 void fn(type param_, ...);
 ```
-- 当函数返回类型为非void时， 应当使用如下语法标准：
+- 当函数返回类型为非void时，应当使用如下语法标准：
 ```cpp
 // 后置返回语法
 auto fn(type param_, ...) -> type;

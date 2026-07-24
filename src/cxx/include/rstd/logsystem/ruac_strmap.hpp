@@ -5,6 +5,7 @@
  * include/rstd/logsystem/ruac_strmap.hpp
  * src/rstd/logsystem/ruac_strmap.cpp
  * Description of header file function declaration
+ * Builders for token-to-string maps used by log formatters (plain-text and ANSI-colored).
  *
  */
 

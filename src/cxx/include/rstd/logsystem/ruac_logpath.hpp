@@ -5,6 +5,7 @@
  * include/rstd/logsystem/ruac_logpath.hpp
  * src/rstd/logsystem/ruac_logpath.cpp
  * Description of header file function declaration
+ * Platform-specific constant paths for log file reading and writing.
  *
  */
 

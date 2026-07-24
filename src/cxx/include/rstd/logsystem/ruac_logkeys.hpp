@@ -4,6 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_logkeys.hpp
  * src/rstd/logsystem/ruac_logkeys.cpp
+ * Description of header file function declaration
  * Constant key definitions for log system configuration and formatting token.
  *
  */

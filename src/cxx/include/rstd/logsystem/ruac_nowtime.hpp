@@ -4,6 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_nowtime.hpp
  * src/rstd/logsystem/ruac_nowtime.cpp
+ * Description of header file function declaration
  * Utility for retrieving the current formatted timestamp.
  *
  */

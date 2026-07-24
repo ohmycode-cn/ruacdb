@@ -29,6 +29,11 @@ namespace ruac::rstd::logsystem {
             return;
         }
 
+        /**
+         * @brief Returns a newline string, used as a line-separator placeholder.
+         *
+         * @return A logtype::String containing "\\n".
+         */
         auto nextline() -> logtype::String {
             return "\n";
         }

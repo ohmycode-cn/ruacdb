@@ -12,6 +12,10 @@
 
 namespace ruac::rstd::logsystem {
 
+    /**
+     * @brief Safely deletes the internal Colored pointer and resets it to nullptr
+     *
+     */
     void Message::delete_colored_ptr() {
         if (nullptr != m_colored) {
             delete m_colored;
@@ -19,11 +23,23 @@ namespace ruac::rstd::logsystem {
         }
     }
 
+    /**
+     * @brief Return the global singleton Message instance
+     *
+     * @return Reference to the static Message object
+     *
+     */
     auto Message::instance() -> Message & {
         static Message instance_object;
         return instance_object;
     }
 
+    /**
+     * @brief Initialize the Message with colored output sequences
+     *
+     * @param param_ Configuration for ANSI color behavior
+     *
+     */
     void Message::init(const ColoredParamList &param_) {
         delete_colored_ptr();
         m_colored = new Colored(param_.m_enable_ce, param_.m_enable_ht,
