@@ -35,7 +35,7 @@ namespace ruac::rstd::logsystem {
      */
     class Loader {
       private:
-        std::vector<std::byte> *m_buffer{nullptr};
+        std::vector<std::byte> m_buffer;
         LoaderParamList m_params;
         logtype::Bool m_once_lock{false};
         logtype::Bool m_load_done{false};
@@ -43,12 +43,11 @@ namespace ruac::rstd::logsystem {
       private:
         void load_file_content_to_buffer();
         auto parser_buffer_content() -> logtype::StringMap;
-        void free_buffer();
 
       public:
         Loader() = default;
         Loader(const LoaderParamList &params_);
-        ~Loader();
+        ~Loader() = default;
 
       public:
         auto getmap(const LoaderParamList &params_ = {}) -> logtype::StringMap;

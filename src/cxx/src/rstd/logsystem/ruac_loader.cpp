@@ -32,14 +32,6 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * @brief Destroy the Loader and free the internal read buffer
-     *
-     */
-    Loader::~Loader() {
-        free_buffer();
-    }
-
-    /**
      * @brief Read the entire config file into a heap-allocated buffer
      * @details Skips if already loaded (once-lock). Reports errors via Message on failure.
      *
@@ -65,22 +57,11 @@ namespace ruac::rstd::logsystem {
         auto f_size = std::filesystem::file_size(fullpath);
         auto b_size = static_cast<std::size_t>(f_size);
 
-        m_buffer = new std::vector<std::byte>(b_size);
+        m_buffer.resize(b_size);
         std::ifstream ifs(fullpath);
-        ifs.read(reinterpret_cast<char *>(m_buffer->data()), b_size);
+        ifs.read(reinterpret_cast<char *>(m_buffer.data()), b_size);
         ifs.close();
         m_load_done = true;
-    }
-
-    /**
-     * @brief Free the internal buffer and reset the pointer to nullptr
-     *
-     */
-    void Loader::free_buffer() {
-        if (nullptr != m_buffer) {
-            delete m_buffer;
-            m_buffer = nullptr;
-        }
     }
 
     /**
@@ -91,11 +72,11 @@ namespace ruac::rstd::logsystem {
      */
     auto Loader::parser_buffer_content() -> logtype::StringMap {
         logtype::StringMap map{};
-        if (nullptr == m_buffer) {
+        if (m_buffer.empty()) {
             return map;
         }
 
-        std::string content(reinterpret_cast<const char *>(m_buffer->data()), m_buffer->size());
+        std::string content(reinterpret_cast<const char *>(m_buffer.data()), m_buffer.size());
         std::istringstream stream(content);
         std::string line;
 
