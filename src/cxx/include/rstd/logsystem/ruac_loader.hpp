@@ -25,7 +25,7 @@ namespace ruac::rstd::logsystem {
      */
     struct LoaderParamList {
         logtype::String m_fpath{logpath::G_READ_LOG_CONFIG_FILE_PATH};
-        logtype::String m_fname{logpath::G_READ_LOG_CONFING_FILE_NAME};
+        logtype::String m_fname{logpath::G_READ_LOG_CONFIG_FILE_NAME};
     };
 
     /**
