@@ -4,3 +4,5 @@ target/
 build/
 out/
 !out/.gitkeep
+.mimo*
+old_project/

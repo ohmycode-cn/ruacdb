@@ -94,7 +94,7 @@ namespace ruac::rstd::logsystem {
 Use C++ trailing return type syntax for methods:
 
 ```cpp
-auto format(...) -> logtype::String;
+auto format(...) -> logtype::string;
 ```
 
 ---
@@ -129,7 +129,7 @@ Place a `/** */` block immediately before the method declaration:
  * @param name_  Description of the parameter.
  * @return Description of the return value.
  */
-auto doSomething(const logtype::String &name_) -> logtype::String;
+auto doSomething(const logtype::string &name_) -> logtype::string;
 ```
 
 - Use `@brief`, `@param`, `@return`, `@note`, `@see` tags.
