@@ -20,12 +20,14 @@ namespace ruac::rstd::logsystem {
 
         namespace kword {
 
+            // keys.
+
             constexpr const char *const G_ENABLE_TERM_COMPATIBLE_MODE{"ENABLE_TERM_COMPATIBLE_MODE"};
             constexpr const char *const G_ENABLE_TERM_HIGHLIGHT_MODE{"ENABLE_TERM_HIGHLIGHT_MODE"};
             constexpr const char *const G_ENABLE_TERM_BOLD_FONT_MODE{"ENABLE_TERM_BOLD_FONT_MODE"};
 
-            constexpr const char *const G_LOG_TERM_FORMAT_MODE{"LOG_TERM_FORMAT_MODE"};
-            constexpr const char *const G_LOG_FILE_FORMAT_MODE{"LOG_FILE_FORMAT_MODE"};
+            constexpr const char *const G_LOG_TERM_FORMAT_STYLE{"LOG_TERM_FORMAT_STYLE"};
+            constexpr const char *const G_LOG_FILE_FORMAT_STYLE{"LOG_FILE_FORMAT_STYLE"};
 
             constexpr const char *const G_LOG_TERM_OUTPUT_MODE{"LOG_TERM_OUTPUT_MODE"};
             constexpr const char *const G_LOG_FILE_OUTPUT_MODE{"LOG_FILE_OUTPUT_MODE"};
@@ -40,12 +42,13 @@ namespace ruac::rstd::logsystem {
 
             constexpr const char *const G_LOG_MINI_LEVEL_FILTER{"LOG_MINI_LEVEL_FILTER"};
 
-            constexpr const char *const G_LOG_LEVEL_DEBUG{"debug"};
-            constexpr const char *const G_LOG_LEVEL_INFO{"info"};
-            constexpr const char *const G_LOG_LEVEL_WARNING{"warning"};
-            constexpr const char *const G_LOG_LEVEL_ERROR{"error"};
-            constexpr const char *const G_LOG_LEVEL_FATAL{"fatal"};
+            // mids and values.
 
+            constexpr const char *const G_DEBUG{"debug"};
+            constexpr const char *const G_INFO{"info"};
+            constexpr const char *const G_WARNING{"warning"};
+            constexpr const char *const G_RROR{"error"};
+            constexpr const char *const G_FATAL{"fatal"};
             constexpr const char *const G_COMMENT{"#"};
             constexpr const char *const G_SEMICOLON{";"};
             constexpr const char *const G_EQUAL{"="};
@@ -57,6 +60,7 @@ namespace ruac::rstd::logsystem {
             constexpr const char *const G_XML{"xml"};
             constexpr const char *const G_FALSE{"false"};
             constexpr const char *const G_TRUE{"true"};
+            constexpr const char *const G_LOG_FILE_SIZE_LIMIT_VALUE{"128MB"};
 
         }; // namespace kword
 

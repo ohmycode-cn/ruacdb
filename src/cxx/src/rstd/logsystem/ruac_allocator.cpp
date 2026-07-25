@@ -18,6 +18,7 @@ namespace ruac::rstd::logsystem {
             Loader loader(loader_param_list);
             m_loader_map = loader.getmap();
             m_loader_msg = loader.outmap_string(m_loader_map);
+            init_default_map();
         }
     }
 

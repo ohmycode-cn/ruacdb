@@ -53,6 +53,9 @@ namespace ruac::rstd::logsystem {
         logtype::strmap m_loader_map{};
         logtype::string m_loader_msg{""};
 
+      private:
+        void init_default_map();
+
       public:
         Allocator(const LoaderParamList &loader_param_list = {});
         ~Allocator() = default;
