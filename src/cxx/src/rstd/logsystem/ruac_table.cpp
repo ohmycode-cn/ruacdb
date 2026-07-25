@@ -102,4 +102,14 @@ namespace ruac::rstd::logsystem {
             break;
         }
     }
+
+    /**
+     * @brief Render the stored StringMap as an ASCII table with borders and aligned columns
+     *
+     * @return The formatted table string, or empty string if headers are not set
+     */
+    auto Table::print_fmt_string() -> logtype::string {
+        return print_strmap();
+    }
+
 } // namespace ruac::rstd::logsystem

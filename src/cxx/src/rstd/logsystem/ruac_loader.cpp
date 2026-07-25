@@ -139,25 +139,34 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * @brief Print the parsed config map as an ASCII table to stdout
+     * @brief Return the last error message set by the Loader
      *
-     * @param strmap_  The key-value map to display
+     * @return The error message, or empty string if none
+     *
      */
-    void Loader::outmap(const logtype::strmap &strmap_) {
-
+    auto Loader::outmap_string(const logtype::strmap &strmap_) -> logtype::string {
         if (strmap_.empty()) {
             std::stringstream ss;
             ss << "Loader outmap failed ! Because the map is empty.";
             ss << DebugT::instance().ostrs("", __FILE__, __LINE__);
             Message::instance().stdout_err(ss.str(), "LOAD ");
-            return;
+            return "";
         }
 
         auto table = Table();
         std::vector<logtype::string> h{"CONFIG@KEY", "CONFIG@VAL"};
         auto t = strmap_;
         table.set_param_list({h, t});
-        table.print(TableType::STRMAP);
+        return table.print_fmt_string();
+    }
+
+    /**
+     * @brief Print the parsed config map as an ASCII table to stdout
+     *
+     * @param strmap_  The key-value map to display
+     */
+    void Loader::outmap(const logtype::strmap &strmap_) {
+        std::cout << outmap_string(strmap_) << std::endl;
     }
 
 } // namespace ruac::rstd::logsystem

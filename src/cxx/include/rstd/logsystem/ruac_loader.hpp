@@ -51,6 +51,7 @@ namespace ruac::rstd::logsystem {
 
       public:
         auto getmap(const LoaderParamList &params_ = {}) -> logtype::strmap;
+        auto outmap_string(const logtype::strmap &strmap_) -> logtype::string;
         void outmap(const logtype::strmap &strmap_);
     };
 

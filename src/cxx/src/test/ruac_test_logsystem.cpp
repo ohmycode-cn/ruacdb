@@ -10,6 +10,7 @@
 #include "rstd/logsystem/ruac_format_text.hpp"
 #include "rstd/logsystem/ruac_format_xml.hpp"
 #include "rstd/logsystem/ruac_output_file.hpp"
+#include "rstd/logsystem/ruac_allocator.hpp"
 #include "rstd/logsystem/ruac_message.hpp"
 #include "rstd/logsystem/ruac_logtime.hpp"
 #include "rstd/logsystem/ruac_logmaps.hpp"
@@ -115,6 +116,12 @@ namespace {
         loader.outmap(map);
     }
 
+    void test_allocator(void) {
+        logsys::Allocator allocator({"/home/repox/Engdev/ruacdb/document/config",
+                                     "ruacdb.log.conf"});
+        allocator.out_loader_msg();
+    }
+
 } // namespace
 
 namespace ruac::test {
@@ -129,6 +136,7 @@ namespace ruac::test {
         test_format_xml();
         test_output_file(test_format_text());
         test_loader();
+        test_allocator();
     }
 
 } // namespace ruac::test

@@ -52,6 +52,7 @@ namespace ruac::rstd::logsystem {
       public:
         void set_param_list(const TableParamList &params = {});
         void print(TableType type);
+        auto print_fmt_string() -> logtype::string;
     };
 
 } // namespace ruac::rstd::logsystem
