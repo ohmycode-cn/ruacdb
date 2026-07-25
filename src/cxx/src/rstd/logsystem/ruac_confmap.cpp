@@ -37,19 +37,19 @@ namespace ruac::rstd::logsystem {
         auto get_default_config_map() -> logtype::strmap {
 
             logtype::strmap map{
+                {w::G_LOG_TERM_OUTPUT_MODE, w::G_CONSOLE},
+                {w::G_LOG_FILE_OUTPUT_MODE, w::G_CONSOLE},
+                {w::G_LOG_TERM_FORMAT_STYLE, w::G_TEXT},
+                {w::G_LOG_FILE_FORMAT_STYLE, w::G_TEXT},
+                {w::G_LOG_TERM_LEVEL_FILTER, w::G_DEBUG},
+                {w::G_LOG_FILE_LEVEL_FILTER, w::G_DEBUG},
+                {w::G_LOG_MINI_LEVEL_FILTER, w::G_DEBUG},
                 {w::G_ENABLE_TERM_COMPATIBLE_MODE, w::G_TRUE},
                 {w::G_ENABLE_TERM_HIGHLIGHT_MODE, w::G_FALSE},
                 {w::G_ENABLE_TERM_BOLD_FONT_MODE, w::G_FALSE},
-                {w::G_LOG_TERM_FORMAT_STYLE, w::G_TEXT},
-                {w::G_LOG_FILE_FORMAT_STYLE, w::G_TEXT},
-                {w::G_LOG_TERM_OUTPUT_MODE, w::G_CONSOLE},
-                {w::G_LOG_FILE_OUTPUT_MODE, w::G_CONSOLE},
                 {w::G_LOG_WRITE_FILE_PATH, p::G_LOG_WRITE_FILE_PATH},
                 {w::G_LOG_WRITE_FILE_NAME, p::G_LOG_WRITE_FILE_NAME},
-                {w::G_LOG_FILE_SIZE_LIMIT, w::G_LOG_FILE_SIZE_LIMIT_VALUE},
-                {w::G_LOG_TERM_LEVEL_FILTER, w::G_DEBUG},
-                {w::G_LOG_FILE_LEVEL_FILTER, w::G_DEBUG},
-                {w::G_LOG_MINI_LEVEL_FILTER, w::G_DEBUG}};
+                {w::G_LOG_FILE_SIZE_LIMIT, w::G_LOG_FILE_SIZE_LIMIT_VALUE}};
             return map;
         }
 

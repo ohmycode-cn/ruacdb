@@ -38,6 +38,7 @@ namespace ruac::rstd::logsystem {
             Output *m_output_{nullptr};
             Format *m_format_{nullptr};
         };
+
     } // namespace
 
     struct AllocatorSinkPipeline {
@@ -47,18 +48,39 @@ namespace ruac::rstd::logsystem {
 
     class Allocator {
       private:
+        logtype::string m_wf_path{""};
+        logtype::string m_wf_name{""};
+        logtype::string m_limit_f{""};
+
+      private:
         AllocatorSinkPipeline m_sink_pipeline{};
         AllocatorParamList m_param_list{};
         logtype::strmap m_default_map{};
         logtype::strmap m_loader_map{};
+        logtype::strmap m_std_map{};
         logtype::string m_loader_msg{""};
 
       private:
+        void parser_config_bool_value(logtype::strmap &map_, const logtype::string key_, bool &val_);
+        void parser_config_output(logtype::strmap &map_, const logtype::string key_, logenum::Output &val_);
+        void parser_config_format(logtype::strmap &map_, const logtype::string key_, logenum::Format &val_);
+        void parser_config_log_level(logtype::strmap &map_, const logtype::string key_, logenum::Level &val_);
+
+      private:
+        void create_sink_output(Output *&out_, logenum::Output &enum_out_);
+        void create_sink_format(Format *&fmt_, logenum::Format &enum_fmt_);
+        void delete_sink_output(Output *&out_);
+        void delete_sink_format(Format *&fmt_);
+
+      private:
         void init_default_map();
+        void parser_verify_configure_map();
+        void init_sink_pipeline();
+        void over_sink_pipeline();
 
       public:
         Allocator(const LoaderParamList &loader_param_list = {});
-        ~Allocator() = default;
+        ~Allocator();
 
       public:
         auto get_sink_pipeline() -> AllocatorSinkPipeline &;
