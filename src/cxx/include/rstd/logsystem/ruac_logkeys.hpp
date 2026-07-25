@@ -47,7 +47,7 @@ namespace ruac::rstd::logsystem {
             constexpr const char *const G_DEBUG{"debug"};
             constexpr const char *const G_INFO{"info"};
             constexpr const char *const G_WARNING{"warning"};
-            constexpr const char *const G_RROR{"error"};
+            constexpr const char *const G_ERROR{"error"};
             constexpr const char *const G_FATAL{"fatal"};
             constexpr const char *const G_COMMENT{"#"};
             constexpr const char *const G_SEMICOLON{";"};
