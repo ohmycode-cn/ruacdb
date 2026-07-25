@@ -37,8 +37,8 @@ namespace ruac::rstd::logsystem {
      * @param key_  The config key whose value determines the Format
      *
      */
-    void Assembler::inner_resolve_format_enum(logenum::Format &fmt_, logtype::StringMap &map_,
-                                             const logtype::String &key_) {
+    void Assembler::resolve_format_enum(logenum::Format &fmt_, logtype::StringMap &map_,
+                                        const logtype::String &key_) {
         if (logkeys::word::G_JSON == map_.at(key_)) {
             fmt_ = logenum::Format::JSON;
         } else if (logkeys::word::G_XML == map_.at(key_)) {
@@ -56,8 +56,8 @@ namespace ruac::rstd::logsystem {
      * @param key_    The config key whose value determines the Level
      *
      */
-    void Assembler::inner_resolve_log_level(logenum::Level &level_, logtype::StringMap &map_,
-                                          const logtype::String &key_) {
+    void Assembler::resolve_log_level(logenum::Level &level_, logtype::StringMap &map_,
+                                      const logtype::String &key_) {
         if (logkeys::word::G_LOG_LEVEL_INFO == map_.at(key_)) {
             level_ = logenum::Level::INFO;
         } else if (logkeys::word::G_LOG_LEVEL_WARNING == map_.at(key_)) {
@@ -73,17 +73,17 @@ namespace ruac::rstd::logsystem {
 
     /**
      * @brief Create an Output instance based on the output mode enum.
-     * @details Skips if ptr_output_ is already set. Uses a once-lock to ensure
+     * @details Skips if ptr_out_ is already set. Uses a once-lock to ensure
      *          FILE-type Output is created at most once across multiple calls.
      *
-     * @param ptr_output_  Reference to output pointer; receives the new object
+     * @param ptr_out_  Reference to output pointer; receives the new object
      * @param enm_out_     Output mode enum (CONSOLE, FILE, or BOTH)
      * @param is_file_     Whether this call targets a file sink channel
      *
      */
-    void Assembler::inner_create_output(Output *&ptr_output_, logenum::Output &enm_out_,
-                                              logtype::Bool is_file_) {
-        if (nullptr != ptr_output_) {
+    void Assembler::create_output(Output *&ptr_out_, logenum::Output &enm_out_,
+                                  logtype::Bool is_file_) {
+        if (nullptr != ptr_out_) {
             return;
         }
 
@@ -93,20 +93,20 @@ namespace ruac::rstd::logsystem {
         switch (enm_out_) {
 
         case logenum::Output::CONSOLE:
-            ptr_output_ = new OutputConsole();
+            ptr_out_ = new OutputConsole();
             break;
 
         case logenum::Output::FILE:
             if (!m_once_lock && is_file_) {
-                ptr_output_ = new OutputFile(wf_path, wf_name);
+                ptr_out_ = new OutputFile(wf_path, wf_name);
                 m_once_lock = true;
             }
             break;
 
         case logenum::Output::BOTH:
-            ptr_output_ = new OutputConsole();
+            ptr_out_ = new OutputConsole();
             if (!m_once_lock && is_file_) {
-                ptr_output_ = new OutputFile(wf_path, wf_name);
+                ptr_out_ = new OutputFile(wf_path, wf_name);
                 m_once_lock = true;
             }
             break;
@@ -121,7 +121,7 @@ namespace ruac::rstd::logsystem {
      * @param enm_fmt_  Format enum (JSON, XML, or TEXT)
      *
      */
-    void Assembler::inner_create_format(Format *&ptr_fmt_, logenum::Format &enm_fmt_) {
+    void Assembler::create_format(Format *&ptr_fmt_, logenum::Format &enm_fmt_) {
 
         if (nullptr != ptr_fmt_) {
             return;
@@ -146,7 +146,7 @@ namespace ruac::rstd::logsystem {
      *          log level filters into their corresponding enum members.
      *
      */
-    void Assembler::inner_load_member_config() {
+    void Assembler::load_member_config() {
         auto map = m_allocator.getconfmap();
         if (logkeys::word::G_FILE == map.at(logkeys::word::G_LOG_OUTPUT_MODE)) {
             m_output_mode = logenum::Output::FILE;
@@ -155,11 +155,11 @@ namespace ruac::rstd::logsystem {
         } else {
             m_output_mode = logenum::Output::CONSOLE;
         }
-        inner_resolve_format_enum(m_term_format, map, logkeys::word::G_LOG_TERM_FORMAT_STYLE);
-        inner_resolve_format_enum(m_file_format, map, logkeys::word::G_LOG_FILE_FORMAT_STYLE);
-        inner_resolve_log_level(m_term_level, map, logkeys::word::G_TERM_LOG_LEVEL_FILTER);
-        inner_resolve_log_level(m_file_level, map, logkeys::word::G_FILE_LOG_LEVEL_FILTER);
-        inner_resolve_log_level(m_min_level, map, logkeys::word::G_MINIMUM_LOG_LEVEL);
+        resolve_format_enum(m_term_format, map, logkeys::word::G_LOG_TERM_FORMAT_STYLE);
+        resolve_format_enum(m_file_format, map, logkeys::word::G_LOG_FILE_FORMAT_STYLE);
+        resolve_log_level(m_term_level, map, logkeys::word::G_TERM_LOG_LEVEL_FILTER);
+        resolve_log_level(m_file_level, map, logkeys::word::G_FILE_LOG_LEVEL_FILTER);
+        resolve_log_level(m_min_level, map, logkeys::word::G_MINIMUM_LOG_LEVEL);
     }
 
     /**
@@ -168,7 +168,7 @@ namespace ruac::rstd::logsystem {
      * @param ptr_out_  Reference to the output pointer to delete
      *
      */
-    void Assembler::inner_destroy_output(Output *&ptr_out_) {
+    void Assembler::destroy_output(Output *&ptr_out_) {
         if (nullptr != ptr_out_) {
             delete ptr_out_;
             ptr_out_ = nullptr;
@@ -181,7 +181,7 @@ namespace ruac::rstd::logsystem {
      * @param ptr_fmt_  Reference to the format pointer to delete
      *
      */
-    void Assembler::inner_destroy_format(Format *&ptr_fmt_) {
+    void Assembler::destroy_format(Format *&ptr_fmt_) {
         if (nullptr != ptr_fmt_) {
             delete ptr_fmt_;
             ptr_fmt_ = nullptr;
@@ -194,13 +194,13 @@ namespace ruac::rstd::logsystem {
      *
      */
     void Assembler::build() {
-        inner_load_member_config();
-        inner_create_output(m_sink_pipeline.m_term_sink_pair.m_output, m_output_mode,
-                                  false);
-        inner_create_format(m_sink_pipeline.m_term_sink_pair.m_format, m_term_format);
-        inner_create_output(m_sink_pipeline.m_file_sink_pair.m_output, m_output_mode,
-                                  true);
-        inner_create_format(m_sink_pipeline.m_file_sink_pair.m_format, m_file_format);
+        load_member_config();
+        auto &term_pair = m_sink_pipeline.m_term_sink_pair;
+        auto &file_pair = m_sink_pipeline.m_file_sink_pair;
+        create_output(term_pair.m_output, m_output_mode, false);
+        create_format(term_pair.m_format, m_term_format);
+        create_output(file_pair.m_output, m_output_mode, true);
+        create_format(file_pair.m_format, m_file_format);
     }
 
     /**
@@ -208,12 +208,12 @@ namespace ruac::rstd::logsystem {
      *
      */
     void Assembler::endof() {
-
-        inner_destroy_output(m_sink_pipeline.m_term_sink_pair.m_output);
-        inner_destroy_format(m_sink_pipeline.m_term_sink_pair.m_format);
-
-        inner_destroy_output(m_sink_pipeline.m_file_sink_pair.m_output);
-        inner_destroy_format(m_sink_pipeline.m_file_sink_pair.m_format);
+        auto &term_pair = m_sink_pipeline.m_term_sink_pair;
+        auto &file_pair = m_sink_pipeline.m_file_sink_pair;
+        destroy_output(term_pair.m_output);
+        destroy_format(term_pair.m_format);
+        destroy_output(file_pair.m_output);
+        destroy_format(file_pair.m_format);
     }
 
     /**

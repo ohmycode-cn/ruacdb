@@ -66,13 +66,13 @@ namespace ruac::rstd::logsystem {
         logtype::Bool m_once_lock{false};
 
       private:
-        void inner_load_member_config();
-        void inner_resolve_format_enum(logenum::Format &fmt_, logtype::StringMap &map_, const logtype::String &key_);
-        void inner_resolve_log_level(logenum::Level &level_, logtype::StringMap &map_, const logtype::String &key_);
-        void inner_create_output(Output *&ptr_output_, logenum::Output &enm_out_, logtype::Bool is_file_);
-        void inner_create_format(Format *&ptr_fmt_, logenum::Format &enm_fmt_);
-        void inner_destroy_output(Output *&ptr_out_);
-        void inner_destroy_format(Format *&ptr_fmt_);
+        void load_member_config();
+        void resolve_format_enum(logenum::Format &fmt_, logtype::StringMap &map_, const logtype::String &key_);
+        void resolve_log_level(logenum::Level &level_, logtype::StringMap &map_, const logtype::String &key_);
+        void create_output(Output *&ptr_out_, logenum::Output &enm_out_, logtype::Bool is_file_);
+        void create_format(Format *&ptr_fmt_, logenum::Format &enm_fmt_);
+        void destroy_output(Output *&ptr_out_);
+        void destroy_format(Format *&ptr_fmt_);
 
       private:
         void build();

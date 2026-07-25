@@ -88,8 +88,8 @@ function error() {
     echo -e "$(now) [${RED}ERROR${RESET}] ${COLON}${MAGENTA}${1}${RESET}"
 }
 
-SPINNER_LOCK=0 # 0: unlocked, 1: locked
-SPINNER_PID=0  # Spinner process ID, 0: not running
+SPLOCK=0 # 0: unlocked, 1: locked
+SPPID=0  # Spinner process ID, 0: not running
 
 # Description:
 #   This function draws a spinning clock animation with an optional message.
@@ -99,8 +99,8 @@ SPINNER_PID=0  # Spinner process ID, 0: not running
 #   None
 # Echo:
 #   Animated clock spinner with optional message text.
-function spinner_draw() {
-    local spinner_array=('🕛' '🕐' '🕑' '🕒' '🕓' '🕔' '🕕' '🕖' '🕗' '🕘' '🕙' '🕚')
+function spdraw() {
+    local sparray=('🕛' '🕐' '🕑' '🕒' '🕓' '🕔' '🕕' '🕖' '🕗' '🕘' '🕙' '🕚')
     local message=""
     local param="${1}"
 
@@ -109,7 +109,7 @@ function spinner_draw() {
     fi
 
     while true; do
-        for itme in "${spinner_array[@]}"; do
+        for itme in "${sparray[@]}"; do
             printf "\r%s %s" "${itme}" "${message}"
             sleep 0.1
         done
@@ -127,13 +127,13 @@ function spinner_draw() {
 # Echo:
 #   None (spawns background process).
 function enable_spinner() {
-    if [[ ${SPINNER_LOCK} -eq 1 ]]; then
+    if [[ ${SPLOCK} -eq 1 ]]; then
         return
     fi
-    SPINNER_LOCK=1
+    SPLOCK=1
     tput civis
-    spinner_draw "${1}" &
-    SPINNER_PID=$!
+    spdraw "${1}" &
+    SPPID=$!
 }
 
 # Description:
@@ -145,12 +145,12 @@ function enable_spinner() {
 # Echo:
 #   None (kills background spinner process).
 function cancel_spinner() {
-    if [[ ${SPINNER_LOCK} -eq 0 ]]; then
+    if [[ ${SPLOCK} -eq 0 ]]; then
         return
     fi
-    kill ${SPINNER_PID} 2>/dev/null
-    wait ${SPINNER_PID} 2>/dev/null
+    kill ${SPPID} 2>/dev/null
+    wait ${SPPID} 2>/dev/null
     info "done spinner"
     tput cnorm
-    SPINNER_LOCK=0
+    SPLOCK=0
 }
