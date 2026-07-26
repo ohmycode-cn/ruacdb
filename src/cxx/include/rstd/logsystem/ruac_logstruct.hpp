@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_logstruct.cpp
  * Description of header file function declaration
  *
+ * Defines common data structures used in the log system
+ *
  */
 
 #pragma once

@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_format_json.cpp
  * Description of header file function declaration
  *
+ * Defines the JSON log formatter that serializes log entries into structured JSON strings
+ *
  */
 
 #pragma once

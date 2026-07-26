@@ -6,11 +6,7 @@
  * src/rstd/logsystem/ruac_format_xml.cpp
  * Description of header file function declaration
  *
- * interface for the RUAC log system. FormatXML serializes log entries into
- * XML element strings, where each entry is wrapped in a <record> element
- * containing TIME, LEVEL, SEQUENCE, MESSAGE, FILE, and LINE child elements.
- * A private template helper fmt generates paired open/close
- * XML tags with consistent indentation.
+ * Defines the XML log formatter that serializes log entries into structured XML elements
  *
  */
 

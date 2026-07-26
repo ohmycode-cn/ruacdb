@@ -125,7 +125,8 @@ namespace {
 
     void test_log_runtime(void) {
         logsys::api::LogRuntime::instance().init({"/home/repox/Engdev/ruacdb/document/config",
-                                                   "ruacdb.log.conf"});
+                                                  "ruacdb.log.conf"});
+        logsys::api::LogRuntime::instance().setting({true});
         std::string message{"This is test log runtime message: +++++++> "};
 
         // DEBUG TO FATAL

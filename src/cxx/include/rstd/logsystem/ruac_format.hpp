@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_format.cpp
  * Description of header file function declaration
  *
+ * Defines the abstract Format interface for log message formatting
+ *
  */
 
 #pragma once

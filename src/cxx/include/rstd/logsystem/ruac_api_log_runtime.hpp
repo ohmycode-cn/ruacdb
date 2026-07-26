@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_api_log_runtime.cpp
  * Description of header file function declaration
  *
+ * Defines the LogRuntime singleton API for runtime log initialization and writing with convenience macros
+ *
  */
 
 #pragma once
@@ -19,8 +21,13 @@ namespace ruac::rstd::logsystem {
 
     namespace api {
 
+        struct LogRuntimeParamList {
+            bool m_enable_log_runtime{false};
+        };
+
         class LogRuntime {
           private:
+            LogRuntimeParamList m_params;
             LogRuntime() = default;
             ~LogRuntime() = default;
             LogRuntime(const LogRuntime &) = delete;
@@ -32,6 +39,7 @@ namespace ruac::rstd::logsystem {
             bool m_once_msgs{false};
 
           public:
+            void setting(const LogRuntimeParamList &params_ = {});
             static auto instance() -> LogRuntime &;
             void init(const LoaderParamList &params_ = {});
             void write(logenum::Level level_, const logtype::string &message_, const logtype::string &file_,

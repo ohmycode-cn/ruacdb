@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_nullproc.cpp
  * Description of header file function declaration
  *
+ * Defines null-output placeholder functions for no-op operations
+ *
  */
 
 #pragma once

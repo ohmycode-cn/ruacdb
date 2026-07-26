@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_manager.cpp
  * Description of header file function declaration
  *
+ * Defines the Manager class that orchestrates log system initialization, configuration, and message routing
+ *
  */
 
 #pragma once

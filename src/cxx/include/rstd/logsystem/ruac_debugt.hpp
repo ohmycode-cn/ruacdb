@@ -5,6 +5,7 @@
  * include/rstd/logsystem/ruac_debugt.hpp
  * src/rstd/logsystem/ruac_debugt.cpp
  * Description of header file function declaration
+ *
  * Temporary debug logger with configurable output and source location tracking
  *
  */

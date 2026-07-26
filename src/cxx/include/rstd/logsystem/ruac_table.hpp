@@ -6,7 +6,8 @@
  * src/rstd/logsystem/ruac_table.cpp
  * Description of header file function declaration
  *
- * Table renderer that prints key-value maps as ASCII-formatted tables to stdout.
+ * Table renderer that prints key-value maps as ASCII-formatted tables to stdout
+ *
  */
 
 #pragma once

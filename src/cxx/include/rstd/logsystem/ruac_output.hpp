@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_output.cpp
  * Description of header file function declaration
  *
+ * Defines the abstract Output interface for log message output destinations
+ *
  */
 
 #pragma once

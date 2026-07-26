@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_output_file.cpp
  * Description of header file function declaration
  *
+ * Defines the file output sink for writing log messages to disk
+ *
  */
 
 #pragma once

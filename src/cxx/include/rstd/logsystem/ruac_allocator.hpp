@@ -6,6 +6,8 @@
  * src/rstd/logsystem/ruac_allocator.cpp
  * Description of header file function declaration
  *
+ * Defines the Allocator class and parameter struct for parsing and managing log system configuration
+ *
  */
 
 #pragma once
