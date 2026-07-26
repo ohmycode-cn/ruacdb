@@ -128,6 +128,27 @@ namespace ruac::rstd::logsystem {
             return map;
         }
 
+        auto get_text_level_map() -> logtype::strmap {
+            logtype::strmap map{
+                {k::G_DEBUG, v::G_DEBUG},
+                {k::G_INFO, v::G_INFO},
+                {k::G_WARNING, v::G_WARNING},
+                {k::G_ERROR, v::G_ERROR},
+                {k::G_FATAL, v::G_FATAL}};
+            return map;
+        }
+
+        auto get_ansi_level_map() -> logtype::strmap {
+            Colored t(true, true, true);
+            logtype::strmap map{
+                {k::G_DEBUG, t.g(v::G_DEBUG)},
+                {k::G_INFO, t.c(v::G_INFO)},
+                {k::G_WARNING, t.y(v::G_WARNING)},
+                {k::G_ERROR, t.r(v::G_ERROR)},
+                {k::G_FATAL, t.m(v::G_FATAL)}};
+            return map;
+        }
+
     } // namespace logmaps
 
 } // namespace ruac::rstd::logsystem
