@@ -71,14 +71,10 @@ namespace ruac::rstd::logsystem {
     void Manager::init_sink_pipeline(const AllocatorParamList &params_) {
         m_wf_path = params_.m_wf_path;
         m_wf_name = params_.m_wf_name;
-        create_sink_output(m_sink_pipeline.m_file_sink.m_output_,
-                           params_.m_file_output);
-        create_sink_output(m_sink_pipeline.m_term_sink.m_output_,
-                           params_.m_term_output);
-        create_sink_format(m_sink_pipeline.m_file_sink.m_format_,
-                           params_.m_file_format);
-        create_sink_format(m_sink_pipeline.m_term_sink.m_format_,
-                           params_.m_term_format);
+        create_sink_output(m_sink_pipeline.m_file_sink.m_output_, params_.m_file_output);
+        create_sink_output(m_sink_pipeline.m_term_sink.m_output_, params_.m_term_output);
+        create_sink_format(m_sink_pipeline.m_file_sink.m_format_, params_.m_file_format);
+        create_sink_format(m_sink_pipeline.m_term_sink.m_format_, params_.m_term_format);
     }
 
     void Manager::over_sink_pipeline() {
@@ -88,19 +84,15 @@ namespace ruac::rstd::logsystem {
         delete_sink_format(m_sink_pipeline.m_term_sink.m_format_);
     }
 
-    void Manager::out_stream(Format *&format_, Output *&output_,
-                             const logtype::strmap &strmap_,
-                             const logtype::string &level_,
-                             const logtype::seqnum &sequence_,
-                             const logtype::string &message_,
-                             const logtype::string &file_,
-                             logtype::sd_int line_) {
+    void Manager::out_stream(Format *&format_, Output *&output_, const logtype::strmap &strmap_,
+                             const logtype::string &level_, const logtype::seqnum &sequence_,
+                             const logtype::string &message_, const logtype::string &file_, logtype::sd_int line_) {
+
         if (nullptr == format_ || nullptr == output_) {
             return;
         }
         auto time = logtime::get_time();
-        auto strs = format_->format(strmap_, time, level_, sequence_,
-                                    message_, file_, line_);
+        auto strs = format_->format(strmap_, time, level_, sequence_, message_, file_, line_);
         output_->output(strs);
     }
 

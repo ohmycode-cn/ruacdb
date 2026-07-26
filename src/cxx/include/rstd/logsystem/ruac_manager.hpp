@@ -23,10 +23,12 @@
 
 namespace ruac::rstd::logsystem {
 
-    struct SinkPair {
-        Output *m_output_{nullptr};
-        Format *m_format_{nullptr};
-    };
+    namespace {
+        struct SinkPair {
+            Output *m_output_{nullptr};
+            Format *m_format_{nullptr};
+        };
+    } // namespace
 
     struct SinkPipeline {
         SinkPair m_term_sink;
@@ -55,15 +57,9 @@ namespace ruac::rstd::logsystem {
         void init_sink_pipeline(const AllocatorParamList &params_);
         void over_sink_pipeline();
 
-        void out_stream(
-            Format *&format_,
-            Output *&output_,
-            const logtype::strmap &strmap_,
-            const logtype::string &level_,
-            const logtype::seqnum &sequence_,
-            const logtype::string &message_,
-            const logtype::string &file_,
-            logtype::sd_int line_);
+        void out_stream(Format *&format_, Output *&output_, const logtype::strmap &strmap_,
+                        const logtype::string &level_, const logtype::seqnum &sequence_,
+                        const logtype::string &message_, const logtype::string &file_, logtype::sd_int line_);
 
       public:
         Manager() = default;

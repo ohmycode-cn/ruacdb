@@ -44,18 +44,10 @@ namespace ruac::rstd::logsystem {
         bool m_once_lock_guard{false};
 
       private:
-        void parser_config_bool_value(
-            logtype::strmap &map_, const logtype::string key_,
-            bool &val_);
-        void parser_config_output(
-            logtype::strmap &map_, const logtype::string key_,
-            logenum::Output &val_, bool isf_);
-        void parser_config_format(
-            logtype::strmap &map_, const logtype::string key_,
-            logenum::Format &val_, bool isf_);
-        void parser_config_log_level(
-            logtype::strmap &map_, const logtype::string key_,
-            logenum::Level &val_);
+        void parser_config_bool_value(logtype::strmap &map_, const logtype::string key_, bool &val_);
+        void parser_config_output(logtype::strmap &map_, const logtype::string key_, logenum::Output &val_, bool isf_);
+        void parser_config_format(logtype::strmap &map_, const logtype::string key_, logenum::Format &val_, bool isf_);
+        void parser_config_log_level(logtype::strmap &map_, const logtype::string key_, logenum::Level &val_);
 
       private:
         void init_default_map();
