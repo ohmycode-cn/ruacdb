@@ -48,6 +48,26 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
+     * @brief Parse a string configuration value
+     *
+     * @param map_ - Configuration map to read from
+     * @param key_ - Key to look up in the map
+     * @param val_ - Reference to store the parsed string value
+     *
+     * @details Safely looks up key_ in map_ using find(). If the key
+     *          exists and the value is non-empty, assigns it to val_.
+     *          Otherwise val_ remains unchanged.
+     *
+     */
+    void Allocator::parser_config_string_value(logtype::strmap &map_, const logtype::string &key_,
+                                               logtype::string &val_) {
+        auto it = map_.find(key_);
+        if (it != map_.end() && !it->second.empty()) {
+            val_ = it->second;
+        }
+    }
+
+    /**
      * @brief Parse a boolean configuration value
      *
      * @param map_ - Configuration map to read from
@@ -183,42 +203,33 @@ namespace ruac::rstd::logsystem {
             m_std_map[pair.first] = pair.second;
         }
 
-        auto tmp_path = m_std_map.at(w::G_LOG_WRITE_FILE_PATH);
-        if (!tmp_path.empty()) {
-            m_param_list.m_wf_path = tmp_path;
-        }
-        auto tmp_file = m_std_map.at(w::G_LOG_WRITE_FILE_NAME);
-        if (!tmp_file.empty()) {
-            m_param_list.m_wf_name = tmp_file;
-        }
-        auto tmp_size = m_std_map.at(w::G_LOG_FILE_SIZE_LIMIT);
-        if (!tmp_size.empty()) {
-            m_param_list.m_limit_f = tmp_size;
-        }
+        parser_config_string_value(m_std_map, w::G_LOG_WRITE_FILE_PATH, m_param_list.m_wf_path);
+        parser_config_string_value(m_std_map, w::G_LOG_WRITE_FILE_NAME, m_param_list.m_wf_name);
+        parser_config_string_value(m_std_map, w::G_LOG_FILE_SIZE_LIMIT, m_param_list.m_limit_f);
 
-        parser_config_bool_value(m_std_map, w::G_ENABLE_TERM_COMPATIBLE_MODE,
-                                 m_param_list.m_enable_ce);
-        parser_config_bool_value(m_std_map, w::G_ENABLE_TERM_HIGHLIGHT_MODE,
-                                 m_param_list.m_enable_ht);
-        parser_config_bool_value(m_std_map, w::G_ENABLE_TERM_BOLD_FONT_MODE,
-                                 m_param_list.m_enable_bf);
+        auto &enable_ce = m_param_list.m_enable_ce;
+        auto &enable_ht = m_param_list.m_enable_ht;
+        auto &enable_bf = m_param_list.m_enable_bf;
+        parser_config_bool_value(m_std_map, w::G_ENABLE_TERM_COMPATIBLE_MODE, enable_ce);
+        parser_config_bool_value(m_std_map, w::G_ENABLE_TERM_HIGHLIGHT_MODE, enable_ht);
+        parser_config_bool_value(m_std_map, w::G_ENABLE_TERM_BOLD_FONT_MODE, enable_bf);
 
-        parser_config_output(m_std_map, w::G_LOG_TERM_OUTPUT_MODE,
-                             m_param_list.m_term_output, false);
-        parser_config_output(m_std_map, w::G_LOG_FILE_OUTPUT_MODE,
-                             m_param_list.m_file_output, true);
+        auto &term_output = m_param_list.m_term_output;
+        auto &file_output = m_param_list.m_file_output;
+        parser_config_output(m_std_map, w::G_LOG_TERM_OUTPUT_MODE, term_output, false);
+        parser_config_output(m_std_map, w::G_LOG_FILE_OUTPUT_MODE, file_output, true);
 
-        parser_config_format(m_std_map, w::G_LOG_TERM_FORMAT_STYLE,
-                             m_param_list.m_term_format, false);
-        parser_config_format(m_std_map, w::G_LOG_FILE_FORMAT_STYLE,
-                             m_param_list.m_file_format, true);
+        auto &term_format = m_param_list.m_term_format;
+        auto &file_format = m_param_list.m_file_format;
+        parser_config_format(m_std_map, w::G_LOG_TERM_FORMAT_STYLE, term_format, false);
+        parser_config_format(m_std_map, w::G_LOG_FILE_FORMAT_STYLE, file_format, true);
 
-        parser_config_log_level(m_std_map, w::G_LOG_TERM_LEVEL_FILTER,
-                                m_param_list.m_term_level);
-        parser_config_log_level(m_std_map, w::G_LOG_FILE_LEVEL_FILTER,
-                                m_param_list.m_file_level);
-        parser_config_log_level(m_std_map, w::G_LOG_MINI_LEVEL_FILTER,
-                                m_param_list.m_mini_level);
+        auto &term_level = m_param_list.m_term_level;
+        auto &file_level = m_param_list.m_file_level;
+        auto &mini_level = m_param_list.m_mini_level;
+        parser_config_log_level(m_std_map, w::G_LOG_TERM_LEVEL_FILTER, term_level);
+        parser_config_log_level(m_std_map, w::G_LOG_FILE_LEVEL_FILTER, file_level);
+        parser_config_log_level(m_std_map, w::G_LOG_MINI_LEVEL_FILTER, mini_level);
     }
 
     /**
