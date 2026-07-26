@@ -6,3 +6,5 @@ out/
 !out/.gitkeep
 .mimo*
 old_project/
+tmp/
+
