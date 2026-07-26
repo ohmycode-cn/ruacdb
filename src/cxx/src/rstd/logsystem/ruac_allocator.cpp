@@ -185,15 +185,15 @@ namespace ruac::rstd::logsystem {
 
         auto tmp_path = m_std_map.at(w::G_LOG_WRITE_FILE_PATH);
         if (!tmp_path.empty()) {
-            m_wf_path = tmp_path;
+            m_param_list.m_wf_path = tmp_path;
         }
         auto tmp_file = m_std_map.at(w::G_LOG_WRITE_FILE_NAME);
         if (!tmp_file.empty()) {
-            m_wf_name = tmp_file;
+            m_param_list.m_wf_name = tmp_file;
         }
         auto tmp_size = m_std_map.at(w::G_LOG_FILE_SIZE_LIMIT);
         if (!tmp_size.empty()) {
-            m_limit_f = tmp_size;
+            m_param_list.m_limit_f = tmp_size;
         }
 
         parser_config_bool_value(m_std_map, w::G_ENABLE_TERM_COMPATIBLE_MODE,
@@ -232,14 +232,6 @@ namespace ruac::rstd::logsystem {
      */
     auto Allocator::get_param_list() -> AllocatorParamList {
         return m_param_list;
-    }
-
-    auto Allocator::get_wf_path() const -> const logtype::string & {
-        return m_wf_path;
-    }
-
-    auto Allocator::get_wf_name() const -> const logtype::string & {
-        return m_wf_name;
     }
 
     /**

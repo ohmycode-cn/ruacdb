@@ -42,14 +42,12 @@ namespace ruac::rstd::logsystem {
         bool m_guard_marker{false};
         std::unique_ptr<Allocator> m_allocator{nullptr};
         SinkPipeline m_sink_pipeline{};
+        logtype::string m_wf_path{""};
+        logtype::string m_wf_name{""};
 
       private:
-        void create_sink_output(Output *&out_,
-                                const logenum::Output &enum_out_,
-                                const logtype::string &wf_path_,
-                                const logtype::string &wf_name_);
-        void create_sink_format(Format *&fmt_,
-                                const logenum::Format &enum_fmt_);
+        void create_sink_output(Output *&out_, const logenum::Output &enum_out_);
+        void create_sink_format(Format *&fmt_, const logenum::Format &enum_fmt_);
         void delete_sink_output(Output *&out_);
         void delete_sink_format(Format *&fmt_);
 

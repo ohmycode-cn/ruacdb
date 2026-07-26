@@ -21,16 +21,13 @@ namespace ruac::rstd::logsystem {
         over_sink_pipeline();
     }
 
-    void Manager::create_sink_output(Output *&out_,
-                                     const logenum::Output &enum_out_,
-                                     const logtype::string &wf_path_,
-                                     const logtype::string &wf_name_) {
+    void Manager::create_sink_output(Output *&out_, const logenum::Output &enum_out_) {
         if (nullptr != out_) {
             return;
         }
         switch (enum_out_) {
         case logenum::Output::FILE:
-            out_ = new OutputFile(wf_path_, wf_name_, true);
+            out_ = new OutputFile(m_wf_path, m_wf_name, true);
             break;
         case logenum::Output::CONSOLE:
             out_ = new OutputConsole();
@@ -38,8 +35,7 @@ namespace ruac::rstd::logsystem {
         }
     }
 
-    void Manager::create_sink_format(Format *&fmt_,
-                                     const logenum::Format &enum_fmt_) {
+    void Manager::create_sink_format(Format *&fmt_, const logenum::Format &enum_fmt_) {
         if (nullptr != fmt_) {
             return;
         }
@@ -73,12 +69,12 @@ namespace ruac::rstd::logsystem {
     }
 
     void Manager::init_sink_pipeline(const AllocatorParamList &params_) {
-        const auto &wf_path = m_allocator->get_wf_path();
-        const auto &wf_name = m_allocator->get_wf_name();
+        m_wf_path = params_.m_wf_path;
+        m_wf_name = params_.m_wf_name;
         create_sink_output(m_sink_pipeline.m_file_sink.m_output_,
-                           params_.m_file_output, wf_path, wf_name);
+                           params_.m_file_output);
         create_sink_output(m_sink_pipeline.m_term_sink.m_output_,
-                           params_.m_term_output, wf_path, wf_name);
+                           params_.m_term_output);
         create_sink_format(m_sink_pipeline.m_file_sink.m_format_,
                            params_.m_file_format);
         create_sink_format(m_sink_pipeline.m_term_sink.m_format_,

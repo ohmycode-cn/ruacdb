@@ -19,6 +19,9 @@
 namespace ruac::rstd::logsystem {
 
     struct AllocatorParamList {
+        logtype::string m_wf_path{""};
+        logtype::string m_wf_name{""};
+        logtype::string m_limit_f{""};
         logenum::Output m_term_output{logenum::Output::CONSOLE};
         logenum::Output m_file_output{logenum::Output::CONSOLE};
         logenum::Format m_term_format{logenum::Format::TEXT};
@@ -32,11 +35,6 @@ namespace ruac::rstd::logsystem {
     };
 
     class Allocator {
-      private:
-        logtype::string m_wf_path{""};
-        logtype::string m_wf_name{""};
-        logtype::string m_limit_f{""};
-
       private:
         AllocatorParamList m_param_list{};
         logtype::strmap m_default_map{};
@@ -69,8 +67,6 @@ namespace ruac::rstd::logsystem {
 
       public:
         auto get_param_list() -> AllocatorParamList;
-        auto get_wf_path() const -> const logtype::string &;
-        auto get_wf_name() const -> const logtype::string &;
         void out_loader_msg();
     };
 
