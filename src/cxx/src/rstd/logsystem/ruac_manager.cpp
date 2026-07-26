@@ -94,7 +94,6 @@ namespace ruac::rstd::logsystem {
 
     void Manager::out_stream(Format *&format_, Output *&output_,
                              const logtype::strmap &strmap_,
-                             const logtype::string &time_,
                              const logtype::string &level_,
                              const logtype::seqnum &sequence_,
                              const logtype::string &message_,

@@ -23,12 +23,10 @@
 
 namespace ruac::rstd::logsystem {
 
-    namespace {
-        struct SinkPair {
-            Output *m_output_{nullptr};
-            Format *m_format_{nullptr};
-        };
-    } // namespace
+    struct SinkPair {
+        Output *m_output_{nullptr};
+        Format *m_format_{nullptr};
+    };
 
     struct SinkPipeline {
         SinkPair m_term_sink;
@@ -63,7 +61,6 @@ namespace ruac::rstd::logsystem {
             Format *&format_,
             Output *&output_,
             const logtype::strmap &strmap_,
-            const logtype::string &time_,
             const logtype::string &level_,
             const logtype::seqnum &sequence_,
             const logtype::string &message_,
