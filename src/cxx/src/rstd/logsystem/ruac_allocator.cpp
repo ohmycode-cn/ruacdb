@@ -98,25 +98,18 @@ namespace ruac::rstd::logsystem {
      * @param map_ - Configuration map to read from
      * @param key_ - Key to look up in the map
      * @param val_ - Reference to store the parsed Output enum value
-     * @param isf_ - Flag to check if the configuration is for a file output
      *
      * @details Looks up the value associated with key_ in map_ and sets val_
      *          to logenum::Output::FILE if the string equals "file", otherwise
      *          logenum::Output::CONSOLE.
      *
      */
-    void Allocator::parser_config_output(logtype::strmap &map_, const logtype::string key_, logenum::Output &val_,
-                                         bool isf_) {
-        if (isf_ && m_once_lock_guard) {
-            return;
-        }
-
+    void Allocator::parser_config_output(logtype::strmap &map_, const logtype::string key_, logenum::Output &val_) {
         if ("file" == map_.at(key_)) {
             val_ = logenum::Output::FILE;
         } else {
             val_ = logenum::Output::CONSOLE;
         }
-        m_once_lock_guard = true;
     }
 
     /**
@@ -125,20 +118,13 @@ namespace ruac::rstd::logsystem {
      * @param map_ - Configuration map to read from
      * @param key_ - Key to look up in the map
      * @param val_ - Reference to store the parsed Format enum value
-     * @param isf_ - Flag to check if the configuration is for a file output
      *
      * @details Looks up the value associated with key_ in map_ and sets val_
      *          to logenum::Format::JSON if "json", logenum::Format::XML if "xml",
      *          otherwise logenum::Format::TEXT as the default.
      *
      */
-    void Allocator::parser_config_format(logtype::strmap &map_, const logtype::string key_, logenum::Format &val_,
-                                         bool isf_) {
-
-        if (isf_ && m_once_lock_guard) {
-            return;
-        }
-
+    void Allocator::parser_config_format(logtype::strmap &map_, const logtype::string key_, logenum::Format &val_) {
         if ("json" == map_.at(key_)) {
             val_ = logenum::Format::JSON;
         } else if ("xml" == map_.at(key_)) {
@@ -146,8 +132,6 @@ namespace ruac::rstd::logsystem {
         } else {
             val_ = logenum::Format::TEXT;
         }
-
-        m_once_lock_guard = true;
     }
 
     /**
@@ -222,13 +206,13 @@ namespace ruac::rstd::logsystem {
 
         auto &term_output = m_param_list.m_term_output;
         auto &file_output = m_param_list.m_file_output;
-        parser_config_output(m_std_map, w::G_LOG_TERM_OUTPUT_MODE, term_output, false);
-        parser_config_output(m_std_map, w::G_LOG_FILE_OUTPUT_MODE, file_output, true);
+        parser_config_output(m_std_map, w::G_LOG_TERM_OUTPUT_MODE, term_output);
+        parser_config_output(m_std_map, w::G_LOG_FILE_OUTPUT_MODE, file_output);
 
         auto &term_format = m_param_list.m_term_format;
         auto &file_format = m_param_list.m_file_format;
-        parser_config_format(m_std_map, w::G_LOG_TERM_FORMAT_STYLE, term_format, false);
-        parser_config_format(m_std_map, w::G_LOG_FILE_FORMAT_STYLE, file_format, true);
+        parser_config_format(m_std_map, w::G_LOG_TERM_FORMAT_STYLE, term_format);
+        parser_config_format(m_std_map, w::G_LOG_FILE_FORMAT_STYLE, file_format);
 
         auto &term_level = m_param_list.m_term_level;
         auto &file_level = m_param_list.m_file_level;

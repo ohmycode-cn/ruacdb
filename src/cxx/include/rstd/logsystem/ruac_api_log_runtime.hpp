@@ -33,7 +33,7 @@ namespace ruac::rstd::logsystem {
 
           public:
             static auto instance() -> LogRuntime &;
-            void init();
+            void init(const LoaderParamList &params_ = {});
             void write(logenum::Level level_, const logtype::string &message_, const logtype::string &file_,
                        logtype::sd_int line_);
         };

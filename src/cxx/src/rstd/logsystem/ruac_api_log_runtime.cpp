@@ -21,9 +21,9 @@ namespace ruac::rstd::logsystem {
             return instance_object;
         }
 
-        void LogRuntime::init() {
+        void LogRuntime::init(const LoaderParamList &params_) {
             m_manager = std::make_unique<Manager>();
-            m_manager->init();
+            m_manager->init(params_);
             m_init_done = true;
         }
 
