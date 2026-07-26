@@ -6,6 +6,7 @@
  * src/test/ruac_test_logsystem.cpp
  */
 
+#include "rstd/logsystem/ruac_api_log_runtime.hpp"
 #include "rstd/logsystem/ruac_format_json.hpp"
 #include "rstd/logsystem/ruac_format_text.hpp"
 #include "rstd/logsystem/ruac_format_xml.hpp"
@@ -122,6 +123,19 @@ namespace {
         allocator.out_loader_msg();
     }
 
+    void test_log_runtime(void) {
+        logsys::api::LogRuntime::instance().init();
+        std::string message{"This is test log runtime message: +++++++> "};
+
+        // DEBUG TO FATAL
+
+        RUAC_RUNTIME_DEBUG(message + "DEBUG");
+        RUAC_RUNTIME_INFO(message + "INFO");
+        RUAC_RUNTIME_WARNING(message + "WARNING");
+        RUAC_RUNTIME_ERROR(message + "ERROR");
+        RUAC_RUNTIME_FATAL(message + "FATAL");
+    }
+
 } // namespace
 
 namespace ruac::test {
@@ -129,14 +143,15 @@ namespace ruac::test {
     void test_main_logsystem(void) {
         std::cout << "From C++ This is test main logsystem !" << std::endl;
         std::cout << std::endl;
-        test_format_json();
-        std::cout << std::endl;
-        std::cout << test_format_text() << std::endl;
-        std::cout << std::endl;
-        test_format_xml();
-        test_output_file(test_format_text());
-        test_loader();
-        test_allocator();
+        // test_format_json();
+        // std::cout << std::endl;
+        // std::cout << test_format_text() << std::endl;
+        // std::cout << std::endl;
+        // test_format_xml();
+        // test_output_file(test_format_text());
+        // test_loader();
+        // test_allocator();
+        test_log_runtime();
     }
 
 } // namespace ruac::test

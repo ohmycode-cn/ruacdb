@@ -10,12 +10,13 @@
 #include "rstd/logsystem/ruac_confmap.hpp"
 #include "rstd/logsystem/ruac_logenum.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
-// #include "rstd/logsystem/ruac_message.hpp"
-// #include "rstd/logsystem//ruac_debugt.hpp"
+#include "rstd/logsystem/ruac_message.hpp"
+#include "rstd/logsystem//ruac_debugt.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_loader.hpp"
 #include <syncstream>
 #include <iostream>
+#include <sstream>
 
 namespace ruac::rstd::logsystem {
 
@@ -64,6 +65,11 @@ namespace ruac::rstd::logsystem {
         auto it = map_.find(key_);
         if (it != map_.end() && !it->second.empty()) {
             val_ = it->second;
+        } else {
+            std::stringstream ss;
+            ss << "Not Found KeyVal: " << key_ << ": " << val_;
+            ss << DebugT::instance().ostrs("", __FILE__, __LINE__);
+            Message::instance().stdout_err(ss.str());
         }
     }
 
