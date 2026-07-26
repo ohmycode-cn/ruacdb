@@ -234,6 +234,14 @@ namespace ruac::rstd::logsystem {
         return m_param_list;
     }
 
+    auto Allocator::get_wf_path() const -> const logtype::string & {
+        return m_wf_path;
+    }
+
+    auto Allocator::get_wf_name() const -> const logtype::string & {
+        return m_wf_name;
+    }
+
     /**
      * @brief Output the loader message to standard output
      *

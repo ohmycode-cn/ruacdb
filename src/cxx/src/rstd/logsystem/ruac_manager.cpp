@@ -73,10 +73,12 @@ namespace ruac::rstd::logsystem {
     }
 
     void Manager::init_sink_pipeline(const AllocatorParamList &params_) {
+        const auto &wf_path = m_allocator->get_wf_path();
+        const auto &wf_name = m_allocator->get_wf_name();
         create_sink_output(m_sink_pipeline.m_file_sink.m_output_,
-                           params_.m_file_output, "", "");
+                           params_.m_file_output, wf_path, wf_name);
         create_sink_output(m_sink_pipeline.m_term_sink.m_output_,
-                           params_.m_term_output, "", "");
+                           params_.m_term_output, wf_path, wf_name);
         create_sink_format(m_sink_pipeline.m_file_sink.m_format_,
                            params_.m_file_format);
         create_sink_format(m_sink_pipeline.m_term_sink.m_format_,

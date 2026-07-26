@@ -69,6 +69,8 @@ namespace ruac::rstd::logsystem {
 
       public:
         auto get_param_list() -> AllocatorParamList;
+        auto get_wf_path() const -> const logtype::string &;
+        auto get_wf_name() const -> const logtype::string &;
         void out_loader_msg();
     };
 
