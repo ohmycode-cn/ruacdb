@@ -9,18 +9,19 @@
  */
 
 #pragma once
-#include "rstd/logsystem/ruac_logtype.hpp"
 #ifndef RUAC_ALLOCATOR_HPP
 #define RUAC_ALLOCATOR_HPP
 
 #include "rstd/logsystem/ruac_logenum.hpp"
-#include "rstd/logsystem/ruac_output.hpp"
-#include "rstd/logsystem/ruac_format.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_loader.hpp"
 
 namespace ruac::rstd::logsystem {
 
     struct AllocatorParamList {
+        logtype::string m_wf_path{""};
+        logtype::string m_wf_name{""};
+        logtype::string m_limit_f{""};
         logenum::Output m_term_output{logenum::Output::CONSOLE};
         logenum::Output m_file_output{logenum::Output::CONSOLE};
         logenum::Format m_term_format{logenum::Format::TEXT};
@@ -33,57 +34,30 @@ namespace ruac::rstd::logsystem {
         bool m_enable_ce{true};
     };
 
-    namespace {
-        struct SinkPair {
-            Output *m_output_{nullptr};
-            Format *m_format_{nullptr};
-        };
-
-    } // namespace
-
-    struct AllocatorSinkPipeline {
-        SinkPair m_term_sink;
-        SinkPair m_file_sink;
-    };
-
     class Allocator {
       private:
-        logtype::string m_wf_path{""};
-        logtype::string m_wf_name{""};
-        logtype::string m_limit_f{""};
-
-      private:
-        AllocatorSinkPipeline m_sink_pipeline{};
         AllocatorParamList m_param_list{};
         logtype::strmap m_default_map{};
         logtype::strmap m_loader_map{};
         logtype::strmap m_std_map{};
         logtype::string m_loader_msg{""};
+        bool m_once_lock_guard{false};
 
       private:
         void parser_config_bool_value(logtype::strmap &map_, const logtype::string key_, bool &val_);
-        void parser_config_output(logtype::strmap &map_, const logtype::string key_, logenum::Output &val_);
-        void parser_config_format(logtype::strmap &map_, const logtype::string key_, logenum::Format &val_);
+        void parser_config_output(logtype::strmap &map_, const logtype::string key_, logenum::Output &val_, bool isf_);
+        void parser_config_format(logtype::strmap &map_, const logtype::string key_, logenum::Format &val_, bool isf_);
         void parser_config_log_level(logtype::strmap &map_, const logtype::string key_, logenum::Level &val_);
-
-      private:
-        void create_sink_output(Output *&out_, logenum::Output &enum_out_);
-        void create_sink_format(Format *&fmt_, logenum::Format &enum_fmt_);
-        void delete_sink_output(Output *&out_);
-        void delete_sink_format(Format *&fmt_);
 
       private:
         void init_default_map();
         void parser_verify_configure_map();
-        void init_sink_pipeline();
-        void over_sink_pipeline();
 
       public:
         Allocator(const LoaderParamList &loader_param_list = {});
-        ~Allocator();
+        ~Allocator() = default;
 
       public:
-        auto get_sink_pipeline() -> AllocatorSinkPipeline &;
         auto get_param_list() -> AllocatorParamList;
         void out_loader_msg();
     };
