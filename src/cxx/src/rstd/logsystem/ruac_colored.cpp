@@ -84,7 +84,7 @@ namespace ruac::rstd::logsystem {
         case ColoredName::CYAN:
             return m_cyan;
         case ColoredName::WHITE:
-            break;
+            return m_white;
         }
         return m_reset;
     }

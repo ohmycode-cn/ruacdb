@@ -5,5 +5,4 @@
 int main(void) {
     test_c_main();
     ruac::test::test_main();
-    return 0;
 }

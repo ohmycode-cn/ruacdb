@@ -144,7 +144,7 @@ namespace ruac::test {
 
     void test_main_logsystem(void) {
         std::cout << "From C++ This is test main logsystem !" << std::endl;
-        std::cout << std::endl;
+        // std::cout << std::endl;
         // test_format_json();
         // std::cout << std::endl;
         // std::cout << test_format_text() << std::endl;

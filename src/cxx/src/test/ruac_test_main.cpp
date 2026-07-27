@@ -6,6 +6,7 @@
  * src/test/ruac_test_main.cpp
  */
 
+#include "test/ruac_test_type_list_out.hpp"
 #include "test/ruac_test_logsystem.hpp"
 #include "test/ruac_test_main.hpp"
 #include <iostream>
@@ -14,6 +15,7 @@ namespace ruac::test {
 
     void test_main(void) {
         std::cout << "From C++ This This is test main !" << std::endl;
+        test_main_type_list_out();
         test_main_logsystem();
     }
 
