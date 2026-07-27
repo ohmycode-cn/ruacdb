@@ -1,6 +1,7 @@
 .mimocode/
 .superpowers/
 .vscode/
+docs/
 target/
 build/
 out/
@@ -8,5 +9,6 @@ out/
 .mimo*
 old_project/
 tmp/
+docs/
 
 
