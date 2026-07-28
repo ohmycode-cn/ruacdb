@@ -28,6 +28,7 @@ namespace ruac::welcome {
             BaseInfoColorParamList m_param_list{};
 
           private:
+            void show_guide_message();
             void show_color_background();
 
           public:
