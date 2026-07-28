@@ -10,6 +10,16 @@
 
 namespace ruac::rstd::messages {
 
+    /**
+     * @brief Get the singleton instance of StdMsg
+     *
+     * @return StdMsg& - Reference to the singleton instance
+     *
+     * @details Implements the singleton pattern using a static local variable.
+     *          Returns a reference to the single StdMsg instance, ensuring
+     *          only one instance exists throughout the application.
+     *
+     */
     auto StdMsg::instance() -> StdMsg & {
         static StdMsg instance_object;
         return instance_object;

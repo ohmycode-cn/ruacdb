@@ -65,6 +65,7 @@ function init_cxx_file() {
 
     if is_empty_param "${fpath}"; then
         warning "You not provide path parameter, use default path !"
+        fpath=""
         cxx_namespace="${cxx_root_namespace}"
     else
         cxx_include="${PATH_INCLUDE}/${fpath}"
@@ -81,12 +82,19 @@ function init_cxx_file() {
     local fhpp="${cxx_prefix}${fname}.hpp"
     local fcpp="${cxx_prefix}${fname}.cpp"
 
-    if is_exist_file "${fhpp}" || is_exist_file "${fcpp}"; then
-        error "File ${fhpp} or ${fcpp} already exist."
+    if is_exist_file "${cxx_include}/${fhpp}" || is_exist_file "${cxx_src}/${fcpp}"; then
+        error "File ${cxx_include}/${fhpp} or ${cxx_src}/${fcpp} already exist."
         return 1
     fi
 
-    pub_cxx_paths=(" * include/${fpath}/${fhpp}" " * src/${fpath}/${fcpp}")
+    if [[ -z "${fpath}" ]]; then
+        pub_cxx_paths=(" * include/${fhpp}" " * src/${fcpp}")
+        local include_hpp="#include \"${fhpp}\""
+    else
+        pub_cxx_paths=(" * include/${fpath}/${fhpp}" " * src/${fpath}/${fcpp}")
+        local include_hpp="#include \"${fpath}/${fhpp}\""
+    fi
+
     prv_hpp_content=(
         ""
         "#pragma once"
@@ -106,7 +114,7 @@ function init_cxx_file() {
     prv_cpp_content=(
         "*/"
         ""
-        "#include \"${fpath}/${fhpp}\""
+        "${include_hpp}"
         ""
         "namespace ${cxx_namespace}"
         "{"
@@ -147,6 +155,7 @@ function init_c_file() {
 
     if is_empty_param "${fpath}"; then
         warning "You not provide path parameter, use default path !"
+        fpath=""
     else
         c_include="${PATH_INCLUDE}/${fpath}"
         c_src="${PATH_SRC}/${fpath}"
@@ -160,12 +169,19 @@ function init_c_file() {
     local fh="${c_prefix}${fname}.h"
     local fc="${c_prefix}${fname}.c"
 
-    if is_exist_file "${fh}" || is_exist_file "${fc}"; then
-        error "File ${fh} or ${fc} already exist."
+    if is_exist_file "${c_include}/${fh}" || is_exist_file "${c_src}/${fc}"; then
+        error "File ${c_include}/${fh} or ${c_src}/${fc} already exist."
         return 1
     fi
 
-    pub_cxx_paths=(" * include/${fpath}/${fh}" " * src/${fpath}/${fc}")
+    if [[ -z "${fpath}" ]]; then
+        pub_cxx_paths=(" * include/${fh}" " * src/${fc}")
+        local include_h="#include \"${fh}\""
+    else
+        pub_cxx_paths=(" * include/${fpath}/${fh}" " * src/${fpath}/${fc}")
+        local include_h="#include \"${fpath}/${fh}\""
+    fi
+
     prv_h_content=(
         ""
         "#ifndef ${c_prefix^^}${fname^^}_H"
@@ -186,7 +202,7 @@ function init_c_file() {
     prv_c_content=(
         "*/"
         ""
-        "#include \"${fpath}/${fh}\""
+        "${include_h}"
     )
 
     printf "%s\n" "${PUB_CONTENT[@]}" >"${c_include}/${fh}"
