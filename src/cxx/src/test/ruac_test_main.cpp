@@ -8,6 +8,7 @@
 
 #include "test/ruac_test_type_list_out.hpp"
 #include "test/ruac_test_logsystem.hpp"
+#include "test/ruac_test_colors.hpp"
 #include "test/ruac_test_main.hpp"
 #include <iostream>
 
@@ -17,6 +18,7 @@ namespace ruac::test {
         std::cout << "From C++ This This is test main !" << std::endl;
         test_main_type_list_out();
         test_main_logsystem();
+        test_main_colors();
     }
 
 } // namespace ruac::test
