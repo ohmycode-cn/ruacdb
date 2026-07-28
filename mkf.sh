@@ -18,7 +18,7 @@ fi
 source .shared.sh
 PATH_INCLUDE="src/cxx/include"
 PATH_SRC="src/cxx/src"
-CURRENT_AUTHOR="$(cat .current_author.ini)"
+CURRENT_AUTHOR="$(grep -E "ISUSER=" .current_author.ini | cut -d'=' -f2)"
 
 function is_empty_param() {
     if [[ "${1}" == "nll" ]]; then
