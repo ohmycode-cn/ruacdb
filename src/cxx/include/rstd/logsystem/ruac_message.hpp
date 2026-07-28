@@ -19,6 +19,7 @@
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include <iostream>
 #include <syncstream>
+#include <mutex>
 
 namespace ruac::rstd::logsystem {
 
@@ -30,6 +31,7 @@ namespace ruac::rstd::logsystem {
     class Message {
       private:
         Colored *m_colored{nullptr};
+        std::mutex m_out_mtx;
 
       private:
         logtype::string M_WARNING{"WARNING"};
@@ -61,12 +63,14 @@ namespace ruac::rstd::logsystem {
 
     template <typename E>
     void Message::stdout_err(const E &message_, const logtype::string &msg_prefix_) {
+        std::lock_guard<std::mutex> lock(m_out_mtx);
         logtype::string msg_string{"[ " + m_red + msg_prefix_ + M_ERROR + m_reset + " ] " + message_};
         std::osyncstream(std::cout) << msg_string << std::endl;
     }
 
     template <typename W>
     void Message::stdout_war(const W &message_, const logtype::string &msg_prefix_) {
+        std::lock_guard<std::mutex> lock(m_out_mtx);
         logtype::string msg_string{"[ " + m_yellow + msg_prefix_ + M_WARNING + m_reset + " ] " + message_};
         std::osyncstream(std::cout) << msg_string << std::endl;
     }

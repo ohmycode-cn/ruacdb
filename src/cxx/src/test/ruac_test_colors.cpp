@@ -14,8 +14,9 @@
 namespace ruac::test {
 
     namespace {
-
-        namespace u = ruac::rstd::colors;
+        namespace {
+            namespace u = ruac::rstd::colors;
+        } // namespace
 
         auto test_dark_background(void) -> std::string {
 
