@@ -9,9 +9,13 @@
 #include "rstd/colors/ruac_color26.hpp"
 #include "welcome/ruac_guidance.hpp"
 #include "ruac_interaction.hpp"
+#include "ruac_shell_exec.hpp"
+#include "ruac_shell_pipe.hpp"
 #include <syncstream>
 #include <iostream>
 #include <string>
+#include <cctype>
+#include <vector>
 
 namespace ruac {
 
@@ -66,19 +70,16 @@ namespace ruac {
     }
 
     /**
-     * @brief Check if the input line matches a quit/exit command
+     * @brief Convert the input string to lower case
      *
-     * @param line_ - User input line to check
+     * @param str_ - The input string to convert
      *
-     * @return bool - True if the line matches a quit/exit command, false otherwise
-     *
-     * @details Returns true if the input line matches one of four variations:
-     *          "quit", "exit", "quit;", or "exit;". Used to determine when
-     *          the interactive REPL loop should terminate.
+     * @details Uses std::transform to apply std::tolower to each character in the
+     *          input string, converting it to lower case.
      *
      */
-    auto Interaction::end_whiled(const std::string &line_) -> bool {
-        return "quit" == line_ || "exit" == line_ || "quit;" == line_ || "exit;" == line_;
+    void Interaction::str_tolower(std::string &str_) {
+        std::transform(str_.begin(), str_.end(), str_.begin(), [](unsigned char c) { return std::tolower(c); });
     }
 
     /**
@@ -109,17 +110,27 @@ namespace ruac {
      */
     auto Interaction::run() -> bool {
         show_base_info_guidance();
+
+        ShellExec sexec;
+        std::vector<std::string> cmd_history_records;
+        auto cmd_history_records_ptr = &cmd_history_records;
+        ShellPipeList pipe;
+        pipe.m_cmd_history_records_ptr = cmd_history_records_ptr; // copy the pointer
+        ShellPipe::instance().set_shell_pipe_list(pipe);
+
         while (true) {
             std::osyncstream(std::cout) << m_prompt;
-            std::string line;
-            std::getline(std::cin, line);
-            if (line.empty()) {
+            std::string lines;
+            std::getline(std::cin, lines);
+            str_tolower(lines);
+            if (lines.empty()) {
                 continue;
             }
-            if ("#" == line.substr(0, 1) || "//" == line.substr(0, 2)) {
-                continue;
+            int code = sexec.exec(lines);
+            if (1 == code) {
+                return false;
             }
-            if (end_whiled(line)) {
+            if (0 == code) {
                 return true;
             }
         }

@@ -33,7 +33,7 @@ namespace ruac {
 
       private:
         void set_prompt(const bool enable_ht_ = false);
-        auto end_whiled(const std::string &line_) -> bool;
+        void str_tolower(std::string &str_);
 
       public:
         Interaction() = default;

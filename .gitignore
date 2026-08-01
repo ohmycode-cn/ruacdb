@@ -10,5 +10,6 @@ out/
 old_project/
 tmp/
 docs/
+.idea/
 
 
