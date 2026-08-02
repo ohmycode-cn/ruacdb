@@ -21,7 +21,7 @@ namespace ruac::rstd::logsystem {
     namespace logmaps {
 
         auto get_text_map() -> logtype::strmap;
-        auto get_ansi_map(const bool enable_ce_, const bool enable_ht_, const bool enable_bf_) -> logtype::strmap;
+        auto get_ansi_map(bool enable_ce_,  bool enable_ht_, bool enable_bf_) -> logtype::strmap;
         auto get_text_level_map() -> logtype::strmap;
         auto get_ansi_level_map() -> logtype::strmap;
 

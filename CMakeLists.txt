@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.4.0)
+cmake_minimum_required(VERSION 4.3.1)
 
 project(ruacdb LANGUAGES C CXX)
 
@@ -13,11 +13,16 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(OUTPUT_DIR ${CMAKE_SOURCE_DIR}/out)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_AUTOMOC ON) 
 
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)
 
+add_compile_options(-Wall -Wextra -Wpedantic)
+# add_compile_options(-Werror)
 add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIR}")
 
 target_include_directories(${PROJECT_NAME} PRIVATE src/cxx/include)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)

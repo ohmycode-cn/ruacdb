@@ -45,7 +45,7 @@ namespace ruac::rstd::logsystem {
         logtype::strmap m_ansi_token_map;
 
       private:
-        bool m_guard_marker{false};
+        // bool m_guard_marker{false};
         std::unique_ptr<Allocator> m_allocator{nullptr};
         AllocatorParamList m_allocator_list{};
         SinkPipeline m_sink_pipeline{};

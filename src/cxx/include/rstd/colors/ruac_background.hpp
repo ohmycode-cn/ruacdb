@@ -35,7 +35,6 @@ namespace ruac::rstd::colors {
         const char *const M_ANSI_BRIGHT_SEQS[9]{"0m", "100m", "101m", "102m", "103m", "104m",
                                                 "105m", "106m", "107m"};
         const char *const M_FONT_NORMAL{"[0;"};
-        const char *const M_FONT_BOLD{"[1;"};
         const char *const M_ANSI_OLD{"\033"};
         const char *const M_ANSI_NEW{"\x1b"};
         bool m_enable_ht{false};

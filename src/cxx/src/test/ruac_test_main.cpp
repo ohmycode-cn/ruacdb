@@ -8,6 +8,7 @@
 
 #include "test/ruac_test_type_list_out.hpp"
 #include "test/ruac_test_rstd_messages.hpp"
+#include "test/ruac_test_gui_window.hpp"
 #include "test/ruac_test_logsystem.hpp"
 #include "test/ruac_test_colors.hpp"
 #include "test/ruac_test_main.hpp"
@@ -21,6 +22,8 @@ namespace ruac::test {
         test_main_logsystem();
         test_main_colors();
         test_main_rstd_messages();
+        TestGuiWindow tgw;
+        tgw.show_window(0, nullptr);
     }
 
 } // namespace ruac::test

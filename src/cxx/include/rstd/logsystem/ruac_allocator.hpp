@@ -21,9 +21,9 @@
 namespace ruac::rstd::logsystem {
 
     struct AllocatorParamList {
-        logtype::string m_wf_path{""};
-        logtype::string m_wf_name{""};
-        logtype::string m_limit_f{""};
+        logtype::string m_wf_path;
+        logtype::string m_wf_name;
+        logtype::string m_limit_f;
         logenum::Output m_term_output{logenum::Output::CONSOLE};
         logenum::Output m_file_output{logenum::Output::CONSOLE};
         logenum::Format m_term_format{logenum::Format::TEXT};
@@ -42,21 +42,21 @@ namespace ruac::rstd::logsystem {
         logtype::strmap m_default_map{};
         logtype::strmap m_loader_map{};
         logtype::strmap m_std_map{};
-        logtype::string m_loader_msg{""};
+        logtype::string m_loader_msg;
 
       private:
         void parser_config_string_value(logtype::strmap &map_, const logtype::string &key_, logtype::string &val_);
-        void parser_config_bool_value(logtype::strmap &map_, const logtype::string key_, bool &val_);
-        void parser_config_output(logtype::strmap &map_, const logtype::string key_, logenum::Output &val_);
-        void parser_config_format(logtype::strmap &map_, const logtype::string key_, logenum::Format &val_);
-        void parser_config_log_level(logtype::strmap &map_, const logtype::string key_, logenum::Level &val_);
+        void parser_config_bool_value(logtype::strmap &map_, logtype::string key_, bool &val_);
+        void parser_config_output(logtype::strmap &map_, logtype::string key_, logenum::Output &val_);
+        void parser_config_format(logtype::strmap &map_,  logtype::string key_, logenum::Format &val_);
+        void parser_config_log_level(logtype::strmap &map_, logtype::string key_, logenum::Level &val_);
 
       private:
         void init_default_map();
         void parser_verify_configure_map();
 
       public:
-        Allocator(const LoaderParamList &loader_param_list = {});
+        explicit Allocator(const LoaderParamList &loader_param_list = {});
         ~Allocator() = default;
 
       public:

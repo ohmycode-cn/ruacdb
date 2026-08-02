@@ -1,15 +1,14 @@
+.idea/
 .mimocode/
 .superpowers/
 .vscode/
-docs/
-target/
 build/
+cmake-build-debug/
+docs/
 out/
 !out/.gitkeep
-.mimo*
 old_project/
+target/
 tmp/
-docs/
-.idea/
-
+.mimo*
 
