@@ -9,6 +9,7 @@
 #include "rstd/colors/ruac_background.hpp"
 #include "welcome/ruac_guidance.hpp"
 #include "rstd/colors/ruac_ansi.hpp"
+#include "rstd/colors/ruac_color26.hpp"
 #include "rstd/ruac_donone.hpp"
 #include <iostream>
 #include <sstream>
@@ -58,14 +59,24 @@ namespace ruac::welcome {
             auto len_x{max_len + 2};
 
             namespace tb = ruac::rstd::colors::ansi::table_item;
+            auto ce = m_param_list.m_enable_ce;
+            auto ht = m_param_list.m_enable_ht;
+            auto bf = m_param_list.m_enable_bf;
+            crlib::Color26 cr(ht, ce, bf);
+            auto HLINE{cr.r(tb::double_line::G_HLINE)};
+            auto VLINE{cr.r(tb::double_line::G_VLINE)};
+            auto TL{cr.r(tb::double_line::G_TL)};
+            auto TR{cr.r(tb::double_line::G_TR)};
+            auto BL{cr.r(tb::double_line::G_BL)};
+            auto BR{cr.r(tb::double_line::G_BR)};
 
             std::string hline;
             for (auto i{0}; i < len_x; ++i) {
-                hline += tb::double_line::G_HLINE;
+                hline += HLINE;
             }
 
             // Top border
-            std::print("{}{}{}\n", tb::double_line::G_TL, hline, tb::double_line::G_TR);
+            std::print("{}{}{}\n", TL, hline, TR);
 
             // Message rows
             for (const auto &msg : GUIDE_MESSAGE_LIST) {
@@ -74,11 +85,11 @@ namespace ruac::welcome {
                 for (auto i{0}; i < padding; ++i) {
                     pad += tb::basic::G_SPACE;
                 }
-                std::print("{} {}{} {}\n", tb::double_line::G_VLINE, msg, pad, tb::double_line::G_VLINE);
+                std::print("{} {}{} {}\n", VLINE, msg, pad, VLINE);
             }
 
             // Bottom border
-            std::print("{}{}{}\n", tb::double_line::G_BL, hline, tb::double_line::G_BR);
+            std::print("{}{}{}\n", BL, hline, BR);
         }
 
         /**
