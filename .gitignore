@@ -11,4 +11,5 @@ old_project/
 target/
 tmp/
 .mimo*
-
+termlite/.idea/
+termlite/cmake-build-debug/
