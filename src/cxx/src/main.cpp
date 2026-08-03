@@ -1,10 +1,10 @@
-// #include "test/ruac_c_test_main.h"
-// #include "test/ruac_test_main.hpp"
+#include "test/ruac_c_test_main.h"
+#include "test/ruac_test_main.hpp"
 #include "ruac_interaction.hpp"
 
 int main(void) {
-    // test_c_main();
-    // ruac::test::test_main();
+    test_c_main();
+    ruac::test::test_main();
 
     auto interaction = new ruac::Interaction();
     interaction->init({

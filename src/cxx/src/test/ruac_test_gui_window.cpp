@@ -15,9 +15,10 @@ namespace ruac::test {
     void TestGuiWindow::show_window(int argc, char **argv) {
         QApplication app(argc, argv);
         QWidget window;
-        window.setWindowTitle("我的第一个窗口");
-        window.resize(800, 600);
+        window.setWindowTitle("ruac terminal lite");
+        window.resize(900, 700);
         window.show();
         app.exec();
     }
+
 } // namespace ruac::test
