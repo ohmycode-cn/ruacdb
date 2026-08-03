@@ -18,9 +18,7 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 # add_compile_options(-Werror)
-add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp
-)
+add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIR}")
-
 target_include_directories(${PROJECT_NAME} PRIVATE src/cxx/include)
