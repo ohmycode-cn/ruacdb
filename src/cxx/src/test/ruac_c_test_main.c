@@ -9,6 +9,6 @@
 #include "test/ruac_c_test_main.h"
 #include <stdio.h>
 
-void test_c_main(void) {
+void test_c_main() {
     printf("From C   This is test main !\n");
 }

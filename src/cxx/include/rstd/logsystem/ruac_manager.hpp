@@ -25,12 +25,10 @@
 
 namespace ruac::rstd::logsystem {
 
-    namespace {
-        struct SinkPair {
-            Output *m_output_{nullptr};
-            Format *m_format_{nullptr};
-        };
-    } // namespace
+    struct SinkPair {
+        Output *m_output_{nullptr};
+        Format *m_format_{nullptr};
+    };
 
     struct SinkPipeline {
         SinkPair m_term_sink;
@@ -49,16 +47,16 @@ namespace ruac::rstd::logsystem {
         std::unique_ptr<Allocator> m_allocator{nullptr};
         AllocatorParamList m_allocator_list{};
         SinkPipeline m_sink_pipeline{};
-        logtype::string m_wf_path{""};
-        logtype::string m_wf_name{""};
+        logtype::string m_wf_path;
+        logtype::string m_wf_name;
 
       private:
         logenum::Level m_term_level;
         logenum::Level m_file_level;
         logenum::Level m_mini_level;
-        bool m_enable_ht;
-        bool m_enable_bf;
-        bool m_enable_ce;
+        bool m_enable_ht{};
+        bool m_enable_bf{};
+        bool m_enable_ce{};
 
       private:
         void increment(logtype::seqnum &sequence_);

@@ -32,8 +32,9 @@ namespace ruac::rstd::logsystem {
      */
     template <typename V>
     auto FormatXML::fmt(const logtype::strmap &strmap_, const logtype::string &key_, const V &val_) -> logtype::string {
+        std::lock_guard<std::mutex> lock(M_FORMAT_XML_MTX);
         std::stringstream ss;
-        logtype::strmap map{strmap_};
+        const logtype::strmap &map{strmap_};
         ss << v::G_SPACE_08;
         ss << map.at(k::G_LT);
         ss << map.at(key_);
@@ -78,7 +79,7 @@ namespace ruac::rstd::logsystem {
                            const logtype::string &file_,
                            const logtype::sd_int line_) -> logtype::string {
         std::stringstream ss;
-        logtype::strmap map{strmap_};
+        const logtype::strmap &map{strmap_};
 
         ss << v::G_SPACE_04;
         ss << map.at(k::G_LT);

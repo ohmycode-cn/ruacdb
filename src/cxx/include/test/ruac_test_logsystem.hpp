@@ -14,7 +14,7 @@
 
 namespace ruac::test {
 
-    void test_main_logsystem(void);
+    void test_main_logsystem();
 
 } // namespace ruac::test
 

@@ -14,7 +14,7 @@
 
 namespace ruac::test {
 
-    void test_main_rstd_messages(void);
+    void test_main_rstd_messages();
 
 } // namespace ruac::test
 

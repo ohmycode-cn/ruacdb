@@ -16,13 +16,13 @@ namespace ruac::test {
             namespace t = ruac::rstd::messages;
         } // namespace
 
-        void base_output(void) {
+        void base_output() {
             t::StdMsg::instance().print("This is rstd messages base output");
         }
 
     } // namespace
 
-    void test_main_rstd_messages(void) {
+    void test_main_rstd_messages() {
         base_output();
     }
 

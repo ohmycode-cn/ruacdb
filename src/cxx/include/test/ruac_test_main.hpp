@@ -14,7 +14,7 @@
 
 namespace ruac::test {
 
-    void test_main(void);
+    void test_main();
 
 } // namespace ruac::test
 

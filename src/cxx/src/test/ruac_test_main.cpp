@@ -15,7 +15,7 @@
 
 namespace ruac::test {
 
-    void test_main(void) {
+    void test_main() {
         std::cout << "From C++ This This is test main !" << std::endl;
         test_main_type_list_out();
         test_main_logsystem();

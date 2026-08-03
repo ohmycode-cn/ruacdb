@@ -25,20 +25,20 @@ namespace {
 
     namespace logsys = ruac::rstd::logsystem;
 
-    void test_format_json(void) {
+    void test_format_json() {
         logsys::FormatJson josn;
-        auto map{logsys::logmaps::get_ansi_map(true, true, false)};
-        auto time{logsys::logtime::get_time()};
-        auto message{"This is format json message !"};
-        auto str0 = josn.format(map, time, "DEBUG", 12002, message,
+        const auto map{logsys::logmaps::get_ansi_map(true, true, false)};
+        const auto time{logsys::logtime::get_time()};
+        constexpr auto message{"This is format json message !"};
+        const auto str0 = josn.format(map, time, "DEBUG", 12002, message,
                                 __FILE__, __LINE__);
-        auto str1 = josn.format(map, time, "INFO", 12003, message,
+        const auto str1 = josn.format(map, time, "INFO", 12003, message,
                                 __FILE__, __LINE__);
-        auto str2 = josn.format(map, time, "WARNING", 12004, message,
+        const auto str2 = josn.format(map, time, "WARNING", 12004, message,
                                 __FILE__, __LINE__);
-        auto str3 = josn.format(map, time, "ERROR", 12005, message,
+        const auto str3 = josn.format(map, time, "ERROR", 12005, message,
                                 __FILE__, __LINE__);
-        auto str4 = josn.format(map, time, "FATAL", 12006, message,
+        const auto str4 = josn.format(map, time, "FATAL", 12006, message,
                                 __FILE__, __LINE__);
         std::cout << str0 << "\n";
         std::cout << str1 << "\n";
@@ -47,7 +47,7 @@ namespace {
         std::cout << str4 << std::endl;
     }
 
-    auto test_format_text(void) -> std::string {
+    auto test_format_text() -> std::string {
         logsys::FormatText text;
         std::stringstream ss;
         auto map{logsys::logmaps::get_ansi_map(true, false, false)};
@@ -72,20 +72,20 @@ namespace {
         return ss.str();
     }
 
-    void test_format_xml(void) {
+    void test_format_xml() {
         logsys::FormatXML xml;
-        auto map{logsys::logmaps::get_ansi_map(true, true, false)};
-        auto time{logsys::logtime::get_time()};
-        auto message{"This is format XML message !"};
-        auto str0 = xml.format(map, time, "DEBUG", 12002, message,
+        const auto map{logsys::logmaps::get_ansi_map(true, true, false)};
+        const auto time{logsys::logtime::get_time()};
+        constexpr  auto message{"This is format XML message !"};
+        const auto str0 = xml.format(map, time, "DEBUG", 12002, message,
                                __FILE__, __LINE__);
-        auto str1 = xml.format(map, time, "INFO", 12003, message,
+        const auto str1 = xml.format(map, time, "INFO", 12003, message,
                                __FILE__, __LINE__);
-        auto str2 = xml.format(map, time, "WARNING", 12004, message,
+        const auto str2 = xml.format(map, time, "WARNING", 12004, message,
                                __FILE__, __LINE__);
-        auto str3 = xml.format(map, time, "ERROR", 12005, message,
+        const auto str3 = xml.format(map, time, "ERROR", 12005, message,
                                __FILE__, __LINE__);
-        auto str4 = xml.format(map, time, "FATAL", 12006, message,
+        const auto str4 = xml.format(map, time, "FATAL", 12006, message,
                                __FILE__, __LINE__);
         std::cout << str0 << "\n";
         std::cout << str1 << "\n";
@@ -99,10 +99,10 @@ namespace {
         params.m_enable_color = true;
         logsys::DebugT::instance().set_param_mode(params);
 
-        const char *const FILE_PATH_NOT_EXIST{"/home/repox/Engdev/ruacdb/tmp/unexist"};
-        const char *const FILE_PATH{"/home/repox/Engdev/ruacdb/tmp/test"};
-        const char *const FILE_NAME{"ruacdb.test.log.txt"};
-        const bool ENABLE_THREAD_SEPARATION_MODE{true};
+        constexpr auto FILE_PATH_NOT_EXIST{"/home/repox/Engdev/ruacdb/tmp/unexist"};
+        constexpr auto FILE_PATH{"/home/repox/Engdev/ruacdb/tmp/test"};
+        constexpr auto FILE_NAME{"ruacdb.test.log.txt"};
+        constexpr bool ENABLE_THREAD_SEPARATION_MODE{true};
         logsys::Message::instance().init({true, true, true});
         logsys::OutputFile file(FILE_PATH_NOT_EXIST,
                                 FILE_NAME,
@@ -110,20 +110,20 @@ namespace {
         file.output(message_);
     }
 
-    void test_loader(void) {
+    void test_loader() {
         logsys::Loader loader({"/home/repox/Engdev/ruacdb/document/config",
                                "ruacdb.log.conf"});
         auto map = loader.getmap();
         loader.outmap(map);
     }
 
-    void test_allocator(void) {
+    void test_allocator() {
         logsys::Allocator allocator({"/home/repox/Engdev/ruacdb/document/config",
                                      "ruacdb.log.conf"});
         allocator.out_loader_msg();
     }
 
-    void test_log_runtime(void) {
+    void test_log_runtime() {
         logsys::api::LogRuntime::instance().init({"/home/repox/Engdev/ruacdb/document/config",
                                                   "ruacdb.log.conf"});
         logsys::api::LogRuntime::instance().setting({true});
@@ -142,7 +142,7 @@ namespace {
 
 namespace ruac::test {
 
-    void test_main_logsystem(void) {
+    void test_main_logsystem() {
         std::cout << "From C++ This is test main logsystem !" << std::endl;
         // std::cout << std::endl;
         // test_format_json();

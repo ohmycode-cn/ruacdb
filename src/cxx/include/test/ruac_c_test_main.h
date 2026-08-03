@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-void test_c_main(void);
+void test_c_main();
 
 #ifdef __cplusplus
 }

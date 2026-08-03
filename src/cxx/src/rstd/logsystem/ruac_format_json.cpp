@@ -31,10 +31,10 @@ namespace ruac::rstd::logsystem {
      * <space:8>"key":<space:1>"value",<next_line>
      */
     template <typename V>
-    auto FormatJson::fmt(const logtype::strmap &strmap_,
-                         const logtype::string &key_, const V &val_) -> logtype::string {
+    auto FormatJson::fmt(const logtype::strmap &strmap_, const logtype::string &key_, const V &val_) -> logtype::string {
+        std::lock_guard<std::mutex> lock(M_FORMAT_JSON_MTX);
         std::stringstream ss;
-        logtype::strmap map{strmap_};
+        const logtype::strmap &map{strmap_};
         ss << v::G_SPACE_08;
         ss << map.at(k::G_QUOTE);
         ss << map.at(key_);
@@ -81,7 +81,7 @@ namespace ruac::rstd::logsystem {
                             const logtype::string &file_,
                             const logtype::sd_int line_) -> logtype::string {
         std::stringstream ss;
-        logtype::strmap map{strmap_};
+        const logtype::strmap &map{strmap_};
 
         // start.
         ss << v::G_SPACE_04;

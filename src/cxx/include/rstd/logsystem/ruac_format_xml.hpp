@@ -16,6 +16,7 @@
 
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_format.hpp"
+#include <mutex>
 
 namespace ruac::rstd::logsystem {
 
@@ -25,12 +26,13 @@ namespace ruac::rstd::logsystem {
      */
     class FormatXML : public Format {
       private:
+        std::mutex M_FORMAT_XML_MTX;
         template <typename V>
         auto fmt(const logtype::strmap &map, const logtype::string &key_, const V &val_) -> logtype::string;
 
       public:
         FormatXML() = default;
-        ~FormatXML() = default;
+        ~FormatXML() override = default;
 
       public:
         auto format(const logtype::strmap &strmap_,
@@ -39,7 +41,7 @@ namespace ruac::rstd::logsystem {
                     const logtype::seqnum &sequence_,
                     const logtype::string &message_,
                     const logtype::string &file_,
-                    const logtype::sd_int line_) -> logtype::string;
+                    logtype::sd_int line_) -> logtype::string override;
     };
 
 } // namespace ruac::rstd::logsystem

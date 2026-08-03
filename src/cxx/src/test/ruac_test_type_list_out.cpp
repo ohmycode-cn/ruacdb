@@ -16,7 +16,7 @@ namespace ruac::test {
 
         namespace clr = ruac::rstd::colors::ansi;
 
-        void test_out_line_basic(void) {
+        void test_out_line_basic() {
             namespace T = clr::table_item::basic;
             std::cout << T::G_CROSS << T::G_HLINE << T::G_HLINE << T::G_HLINE
                       << T::G_HLINE << T::G_HLINE << T::G_HLINE
@@ -47,7 +47,7 @@ namespace ruac::test {
                       << T::G_CROSS << std::endl;
         }
 
-        void test_out_line_single(void) {
+        void test_out_line_single() {
             namespace T = clr::table_item::single_line;
             std::cout << T::G_TL << T::G_HLINE << T::G_HLINE << T::G_HLINE
                       << T::G_HLINE << T::G_HLINE << T::G_HLINE
@@ -78,7 +78,7 @@ namespace ruac::test {
                       << T::G_BR << std::endl;
         }
 
-        void test_out_line_double(void) {
+        void test_out_line_double() {
             namespace T = clr::table_item::double_line;
             std::cout << T::G_TL << T::G_HLINE << T::G_HLINE << T::G_HLINE
                       << T::G_HLINE << T::G_HLINE << T::G_HLINE
@@ -109,7 +109,7 @@ namespace ruac::test {
                       << T::G_BR << std::endl;
         }
 
-        void test_out_line_bold(void) {
+        void test_out_line_bold() {
             namespace T = clr::table_item::bold;
             std::cout << T::G_TL << T::G_HLINE << T::G_HLINE << T::G_HLINE
                       << T::G_HLINE << T::G_HLINE << T::G_HLINE
@@ -140,7 +140,7 @@ namespace ruac::test {
                       << T::G_BR << std::endl;
         }
 
-        void test_out_line_mixed(void) {
+        void test_out_line_mixed() {
             namespace M = clr::table_item::mixed;
             std::cout << M::G_TL_SL << M::G_HLINE_DL << M::G_HLINE_DL
                       << M::G_HLINE_DL << M::G_HLINE_DL << M::G_HLINE_DL

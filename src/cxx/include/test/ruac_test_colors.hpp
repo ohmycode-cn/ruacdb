@@ -14,7 +14,7 @@
 
 namespace ruac::test {
 
-    void test_main_colors(void);
+    void test_main_colors();
 
 } // namespace ruac::test
 

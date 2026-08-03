@@ -26,7 +26,7 @@ namespace ruac::rstd::logsystem {
     class FormatText : public Format {
       public:
         FormatText() = default;
-        ~FormatText() = default;
+        ~FormatText() override = default;
 
       public:
         auto format(const logtype::strmap &strmap_,
@@ -35,7 +35,7 @@ namespace ruac::rstd::logsystem {
                     const logtype::seqnum &sequence_,
                     const logtype::string &message_,
                     const logtype::string &file_,
-                    const logtype::sd_int line_) -> logtype::string;
+                    logtype::sd_int line_) -> logtype::string override;
     };
 
 } // namespace ruac::rstd::logsystem

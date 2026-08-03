@@ -18,12 +18,12 @@ namespace ruac::test {
             namespace u = ruac::rstd::colors;
         } // namespace
 
-        auto test_dark_background(void) -> std::string {
+        auto test_dark_background() -> std::string {
 
             constexpr const char *const SPACE{"    "};
             std::stringstream ss;
 
-            u::Background *bd = new u::Background(true, true, false);
+            auto bd = new u::Background(true, true, false);
             ss << bd->d(SPACE);
             ss << bd->r(SPACE);
             ss << bd->g(SPACE);
@@ -35,7 +35,7 @@ namespace ruac::test {
             delete bd;
             bd = nullptr;
 
-            u::Background *db = new u::Background(true, true, true);
+            auto db = new u::Background(true, true, true);
             ss << "\n";
             ss << db->d(SPACE);
             ss << db->r(SPACE);
@@ -53,7 +53,7 @@ namespace ruac::test {
 
     } // namespace
 
-    void test_main_colors(void) {
+    void test_main_colors() {
         std::cout << test_dark_background() << std::endl;
     }
 

@@ -42,7 +42,7 @@ namespace ruac::rstd::logsystem {
                             const logtype::string &file_,
                             const logtype::sd_int line_) -> logtype::string {
         std::stringstream ss;
-        logtype::strmap map{strmap_};
+        const logtype::strmap& map{strmap_};
 
         ss << time_;
         ss << v::G_SPACE_01;

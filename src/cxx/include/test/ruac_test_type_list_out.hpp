@@ -14,7 +14,7 @@
 
 namespace ruac::test {
 
-    void test_main_type_list_out(void);
+    void test_main_type_list_out();
 
 } // namespace ruac::test
 
