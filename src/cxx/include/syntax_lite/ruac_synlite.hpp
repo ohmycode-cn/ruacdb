@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/ruac_synlite.hpp
  * src/syntax_lite/ruac_synlite.cpp
- * Description of header file function declaration
  *
+ * @brief Provides the SynLite class for thread-safe RUAC syntax analysis.
  */
 
 #pragma once
@@ -18,6 +18,13 @@
 
 namespace ruac::syntax_lite {
 
+    /**
+     * @brief Lightweight syntax analyzer for RUAC commands.
+     *
+     * Provides a thread-safe interface for parsing single-line RUAC syntax commands,
+     * with methods to submit a line for analysis and retrieve the resulting status
+     * code.
+     */
     class SynLite {
       private:
         std::mutex M_SYN_LITE_MTX;

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/ruac_synlite_status_code.hpp
  * src/syntax_lite/ruac_synlite_status_code.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the HookCode enumeration for syntax analysis status codes.
  */
 
 #pragma once

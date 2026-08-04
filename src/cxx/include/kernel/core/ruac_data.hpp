@@ -5,11 +5,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * Header File : include/kernel/core/ruac_data.hpp
  * Source File : src/kernel/core/ruac_data.cpp
- * 
- * File Function Description:
- * Defines core data structures (Field, Row, Table, Database) for the RUAC
- * database system, providing schema definitions with versioning and identification.
- * 
+ *
+ * @brief Defines core data structures (Field, Row, Table, Database) for the RUAC database system with versioning and identification.
  */
 
 #pragma once

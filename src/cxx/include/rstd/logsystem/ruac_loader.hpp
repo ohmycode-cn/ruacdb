@@ -4,9 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_loader.hpp
  * src/rstd/logsystem/ruac_loader.cpp
- * Description of header file function declaration
  *
- * Configuration file loader that reads and parses log config files into key-value maps
+ * @brief Configuration file loader that reads and parses log config files into key-value maps.
  *
  */
 

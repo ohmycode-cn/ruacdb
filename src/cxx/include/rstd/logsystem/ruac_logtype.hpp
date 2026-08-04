@@ -4,10 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_logtype.hpp
  * src/rstd/logsystem/ruac_logtype.cpp
- * Description of header file function declaration
- *
- * Defines type aliases used in the log system including string maps, integer types, and template map utilities
- *
+ * @brief Defines type aliases used throughout the log system.
  */
 
 #pragma once

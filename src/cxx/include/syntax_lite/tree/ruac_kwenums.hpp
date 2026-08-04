@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/ruac_kwenums.hpp
  * src/syntax_lite/tree/ruac_kwenums.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the TokenType enumeration for token classification.
  */
 
 #pragma once
@@ -16,6 +16,13 @@ namespace ruac::syntax_lite::tree {
 
     namespace kwenums {
 
+        /**
+         * @brief Enumeration of token type classifications.
+         *
+         * Defines the possible categories for tokens parsed from RUAC syntax input,
+         * including identifiers, object keywords, attribute keywords, symbol keywords,
+         * and datatype keywords.
+         */
         enum class TokenType {
             IDENTIFIER = 0,
             KEYWORD_OBJECT,

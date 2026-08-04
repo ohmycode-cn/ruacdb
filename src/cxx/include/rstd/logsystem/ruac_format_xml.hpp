@@ -4,9 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_format_xml.hpp
  * src/rstd/logsystem/ruac_format_xml.cpp
- * Description of header file function declaration
  *
- * Defines the XML log formatter that serializes log entries into structured XML elements
+ * @brief Defines the XML log formatter that serializes log entries into structured XML elements.
  *
  */
 

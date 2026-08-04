@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/ruac_shell_pipe.hpp
  * src/ruac_shell_pipe.cpp
- * Description of header file function declaration
  *
+ * @brief Singleton pipe mechanism for sharing command history across shell components.
  */
 
 #pragma once

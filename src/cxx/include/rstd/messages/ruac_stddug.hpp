@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/messages/ruac_stddug.hpp
  * src/rstd/messages/ruac_stddug.cpp
- * Description of header file function declaration
  *
+ * @brief Provides debug output utilities with configurable output behavior.
  */
 
 #pragma once

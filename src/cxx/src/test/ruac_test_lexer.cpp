@@ -6,11 +6,11 @@
  * src/test/ruac_test_lexer.cpp
  */
 
+#include "test/ruac_test_lexer.hpp"
 #include "rstd/ruac_lowercase_characters.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
-#include "test/ruac_test_lexer.hpp"
-#include <sstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 

@@ -4,10 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_logpath.hpp
  * src/rstd/logsystem/ruac_logpath.cpp
- * Description of header file function declaration
- *
- * Defines file paths and file names for the log system configuration and log output, with platform-specific paths for Linux and Windows
- *
+ * @brief Defines platform-specific file paths and names for log system configuration and output.
  */
 
 #pragma once

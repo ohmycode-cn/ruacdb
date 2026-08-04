@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/messages/ruac_stdmsg.hpp
  * src/rstd/messages/ruac_stdmsg.cpp
- * Description of header file function declaration
  *
+ * @brief Provides thread-safe message output utilities for stdout and stderr.
  */
 
 #pragma once

@@ -4,10 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_manager.hpp
  * src/rstd/logsystem/ruac_manager.cpp
- * Description of header file function declaration
  *
- * Defines the Manager class that orchestrates log system initialization, configuration, and message routing
- *
+ * @brief Manager class that orchestrates log system initialization, configuration, and message routing
  */
 
 #pragma once

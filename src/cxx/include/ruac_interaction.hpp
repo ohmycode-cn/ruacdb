@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/ruac_interaction.hpp
  * src/ruac_interaction.cpp
- * Description of header file function declaration
  *
+ * @brief Interactive REPL shell for the RUAC database system with command-line parsing and execution.
  */
 
 #pragma once

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/ruac_keyword.hpp
  * src/syntax_lite/tree/ruac_keyword.cpp
- * Description of header file function declaration
  *
+ * @brief Defines keyword constants for RUAC syntax parsing.
  */
 
 #pragma once

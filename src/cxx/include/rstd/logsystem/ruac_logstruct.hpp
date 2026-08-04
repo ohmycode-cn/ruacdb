@@ -4,10 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_logstruct.hpp
  * src/rstd/logsystem/ruac_logstruct.cpp
- * Description of header file function declaration
- *
- * Defines common data structures used in the log system
- *
+ * @brief Defines common data structures for the log system.
  */
 
 #pragma once
@@ -18,6 +15,11 @@ namespace ruac::rstd::logsystem {
 
     namespace logstruct {
 
+        /**
+         * @brief Configuration parameters for the colorizer in log output.
+         *
+         * Controls color enable, highlight mode, and bold font settings for colored log output.
+         */
         struct ColoredParamList {
             bool m_enable_ce{true};
             bool m_enable_ht{false};

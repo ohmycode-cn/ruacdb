@@ -5,11 +5,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * Header File : include/kernel/core/ruac_vals.hpp
  * Source File : src/kernel/core/ruac_vals.cpp
- * 
- * File Function Description:
- * Defines the rval variant type alias for polymorphic value storage,
- * supporting integers, floating-point, characters, and string types.
- * 
+ *
+ * @brief Defines the rval variant type alias for polymorphic value storage supporting integers, floating-point, characters, and string types.
  */
 
 #pragma once

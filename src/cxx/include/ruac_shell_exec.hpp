@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/ruac_shell_exec.hpp
  * src/ruac_shell_exec.cpp
- * Description of header file function declaration
  *
+ * @brief Thread-safe shell command executor with history tracking and built-in command dispatching.
  */
 
 #pragma once

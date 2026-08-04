@@ -6,10 +6,7 @@
  * Header File : include/kernel/object/ruac_object_single.hpp
  * Source File : src/kernel/object/ruac_object_single.cpp
  *
- * File Function Description:
- * Singleton object manager for kernel object operations.
- * Manages the lifecycle of the Kernel instance.
- *
+ * @brief Singleton object manager holding a vector of Database objects with mutable reference access via getdbs().
  */
 
 #pragma once

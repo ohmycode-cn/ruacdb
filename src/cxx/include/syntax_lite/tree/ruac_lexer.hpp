@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/ruac_lexer.hpp
  * src/syntax_lite/tree/ruac_lexer.cpp
- * Description of header file function declaration
  *
+ * @brief Implements Lexer class for tokenizing RUAC syntax input.
  */
 
 #pragma once
@@ -18,11 +18,24 @@
 
 namespace ruac::syntax_lite::tree {
 
+    /**
+     * @brief Represents a single lexical token.
+     *
+     * A simple data structure holding the token's type classification (TokenType)
+     * and its string value, produced by the Lexer during tokenization of input lines.
+     */
     struct Token {
         kwenums::TokenType type;
         std::string value;
     };
 
+    /**
+     * @brief Lexical analyzer that converts input lines into tokens.
+     *
+     * Provides methods to parse a line into a vector of Token objects, with support
+     * for skipping whitespace, extracting string literals, and classifying keywords
+     * via the keyword mapping.
+     */
     class Lexer {
       private:
         std::string m_line;

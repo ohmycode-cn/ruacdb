@@ -4,10 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_output_file.hpp
  * src/rstd/logsystem/ruac_output_file.cpp
- * Description of header file function declaration
  *
- * Defines the file output sink for writing log messages to disk
- *
+ * @brief File output sink for writing log messages to disk
  */
 
 #pragma once

@@ -4,10 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_nullproc.hpp
  * src/rstd/logsystem/ruac_nullproc.cpp
- * Description of header file function declaration
  *
- * Defines null-output placeholder functions for no-op operations
- *
+ * @brief Null-output placeholder functions for no-op operations
  */
 
 #pragma once

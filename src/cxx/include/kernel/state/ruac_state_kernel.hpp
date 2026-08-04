@@ -6,10 +6,7 @@
  * Header File : include/kernel/state/ruac_state_kernel.hpp
  * Source File : src/kernel/state/ruac_state_kernel.cpp
  *
- * File Function Description:
- * Defines the kernel state data structure for tracking current database
- * and table number state in the RUAC database system.
- *
+ * @brief State tracker holding current database name and table number with getter/setter methods for state management.
  */
 
 #pragma once

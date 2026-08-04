@@ -6,10 +6,7 @@
  * Header File : include/kernel/track/ruac_track_multis.hpp
  * Source File : src/kernel/track/ruac_track_multis.cpp
  *
- * File Function Description:
- * Multi-instance track manager for kernel track operations.
- * Manages the lifecycle of the Kernel instance.
- *
+ * @brief Multi-instance track manager wrapping a Kernel pointer with init/over lifecycle management.
  */
 
 #pragma once
@@ -22,6 +19,10 @@ namespace ruac::kernel::track {
 
     /**
      * @brief Multi-instance track manager for kernel track operations.
+     *
+     * Wraps a Kernel pointer and manages init/over lifecycle
+     * for track metadata tracking. Provides getKernel() access
+     * to the underlying Kernel instance for CRUD operations.
      */
     class Multis {
       private:

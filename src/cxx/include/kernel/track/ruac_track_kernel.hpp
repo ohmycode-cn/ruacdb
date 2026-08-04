@@ -6,10 +6,7 @@
  * Header File : include/kernel/track/ruac_track_kernel.hpp
  * Source File : src/kernel/track/ruac_track_kernel.cpp
  *
- * File Function Description:
- * Tracks and manages kernel object metadata.
- * Provides CRUD operations for databases, tables, rows, and fields.
- *
+ * @brief Defines mapper structs and provides CRUD operations for database, table, row, and field metadata tracking with nested unordered_map storage.
  */
 
 #pragma once
@@ -23,21 +20,41 @@
 namespace ruac::kernel::track {
 
     namespace mapper {
+        /**
+         * @brief Map entry for database metadata.
+         *
+         * Stores the index, id, and version for a database entry.
+         */
         struct DatabasesMap {
             uint64_t m_index{0};
             uint64_t m_id{0};
             uint64_t m_version{0};
         };
+        /**
+         * @brief Map entry for table metadata.
+         *
+         * Stores the index, id, and version for a table entry.
+         */
         struct TablesMap {
             uint64_t m_index{0};
             uint64_t m_id{0};
             uint64_t m_version{0};
         };
+        /**
+         * @brief Map entry for row metadata.
+         *
+         * Stores the index, id, and version for a row entry.
+         */
         struct RowsMap {
             uint64_t m_index{0};
             uint64_t m_id{0};
             uint64_t m_version{0};
         };
+        /**
+         * @brief Map entry for field metadata.
+         *
+         * Stores the index, id, and version for a field entry.
+         */
         struct FieldsMap {
             uint64_t m_index{0};
             uint64_t m_id{0};
@@ -47,6 +64,11 @@ namespace ruac::kernel::track {
 
     /**
      * @brief Tracks and manages kernel object metadata.
+     *
+     * Provides CRUD operations for database, table, row, and field metadata tracking
+     * with nested unordered_map storage. Each entity level is stored in a separate
+     * unordered_map hierarchy: databases by name, tables by database and table name,
+     * rows by database, table, and row id, and fields by database, table, and field name.
      */
     class Kernel {
       public:

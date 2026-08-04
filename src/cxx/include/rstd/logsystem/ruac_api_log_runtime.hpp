@@ -4,9 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_api_log_runtime.hpp
  * src/rstd/logsystem/ruac_api_log_runtime.cpp
- * Description of header file function declaration
  *
- * Defines the LogRuntime singleton API for runtime log initialization and writing with convenience macros
+ * @brief Defines the LogRuntime singleton API for runtime log initialization and writing with convenience macros.
  *
  */
 

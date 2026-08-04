@@ -4,7 +4,9 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/colors/ruac_background.hpp
  * src/rstd/colors/ruac_background.cpp
- * Description of header file function declaration
+ * @brief Defines the Background class for applying ANSI background colors to terminal output.
+ *
+ * Provides configurable highlight and display modes, supporting 9 color variants (reset, dark, red, green, yellow, blue, magenta, cyan, white).
  *
  */
 

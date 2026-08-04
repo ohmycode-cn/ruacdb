@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/colors/ruac_ansi.hpp
  * src/rstd/colors/ruac_ansi.cpp
- * Description of header file function declaration
  *
+ * @brief Defines ANSI escape sequences and table-drawing character constants for terminal colorization and ASCII table rendering.
  */
 
 #pragma once

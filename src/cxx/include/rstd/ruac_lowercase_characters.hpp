@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/ruac_lowercase_characters.hpp
  * src/rstd/ruac_lowercase_characters.cpp
- * Description of header file function declaration
  *
+ * @brief Provides a tolower() utility function for case conversion.
  */
 
 #pragma once

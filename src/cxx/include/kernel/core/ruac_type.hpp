@@ -5,11 +5,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * Header File : include/kernel/core/ruac_type.hpp
  * Source File : src/kernel/core/ruac_type.cpp
- * 
- * File Function Description:
- * Defines the rtype enumeration for runtime type identification, supporting
- * all data types used in the RUAC variant value system.
- * 
+ *
+ * @brief Defines the rtype enumeration for runtime type identification supporting all data types used in the RUAC variant value system.
  */
 
 #pragma once

@@ -6,10 +6,7 @@
  * Header File : include/kernel/object/ruac_object_multis.hpp
  * Source File : src/kernel/object/ruac_object_multis.cpp
  *
- * File Function Description:
- * Multi-instance object manager for kernel object operations.
- * Manages the lifecycle of the Kernel instance.
- *
+ * @brief Multi-instance object manager holding a vector of Database objects with mutable reference access via getdbs().
  */
 
 #pragma once

@@ -4,10 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_message.hpp
  * src/rstd/logsystem/ruac_message.cpp
- * Description of header file function declaration
  *
- * Singleton message output utility with colored error and warning output to stdout
- *
+ * @brief Singleton message output utility with colored error and warning output to stdout
  */
 
 #pragma once

@@ -12,6 +12,16 @@ namespace ruac::rstd {
 
     namespace lowercase_characters {
 
+        /**
+         * @brief Convert all characters in a string to lowercase
+         *
+         * @param str_ - String to convert (modified in-place)
+         *
+         * @details Iterates over each character in str_ and applies
+         *          std::tolower to convert uppercase letters to lowercase.
+         *          Non-letter characters are unaffected by std::tolower.
+         *
+         */
         void tolower(std::string &str_) {
             for (auto &c : str_) {
                 c = std::tolower(c);

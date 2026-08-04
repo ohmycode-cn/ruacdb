@@ -6,10 +6,7 @@
  * Header File : include/kernel/state/ruac_state_multis.hpp
  * Source File : src/kernel/state/ruac_state_multis.cpp
  *
- * File Function Description:
- * Multi-instance state manager for kernel state operations.
- * Manages the lifecycle of the Kernel instance.
- *
+ * @brief Multi-instance state manager wrapping a Kernel state pointer with init/over lifecycle management.
  */
 
 #pragma once

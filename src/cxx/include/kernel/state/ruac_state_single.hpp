@@ -6,10 +6,7 @@
  * Header File : include/kernel/state/ruac_state_single.hpp
  * Source File : src/kernel/state/ruac_state_single.cpp
  *
- * File Function Description:
- * Singleton state manager for kernel state operations.
- * Manages the lifecycle of the Kernel instance.
- *
+ * @brief Singleton state manager with static obitan() access wrapping a Kernel state pointer with init/over lifecycle management.
  */
 
 #pragma once

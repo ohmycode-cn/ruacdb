@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/ruac_parser_cmd_line.hpp
  * src/ruac_parser_cmd_line.cpp
- * Description of header file function declaration
  *
+ * @brief Thread-safe command-line parser that splits semicolon-delimited input into individual commands.
  */
 
 #pragma once

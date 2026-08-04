@@ -4,9 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_allocator.hpp
  * src/rstd/logsystem/ruac_allocator.cpp
- * Description of header file function declaration
  *
- * Defines the Allocator class and parameter struct for parsing and managing log system configuration
+ * @brief Defines the Allocator class and parameter struct for parsing and managing log system configuration.
  *
  */
 

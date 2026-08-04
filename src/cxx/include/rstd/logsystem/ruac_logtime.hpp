@@ -4,10 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_logtime.hpp
  * src/rstd/logsystem/ruac_logtime.cpp
- * Description of header file function declaration
- *
- * Declares functions for retrieving formatted timestamps used in log output
- *
+ * @brief Provides a get_time() function for log output timestamp generation.
  */
 
 #pragma once

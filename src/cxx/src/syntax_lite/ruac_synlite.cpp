@@ -4,10 +4,9 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/ruac_synlite.hpp
  * src/syntax_lite/ruac_synlite.cpp
-*/
+ */
 
 #include "syntax_lite/ruac_synlite.hpp"
 
-namespace ruac::syntax_lite
-{
+namespace ruac::syntax_lite {
 } // namespace ruac::syntax_lite

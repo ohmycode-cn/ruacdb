@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/welcome/ruac_guidance.hpp
  * src/welcome/ruac_guidance.cpp
- * Description of header file function declaration
  *
+ * @brief Defines BaseInfo class for displaying welcome guidance messages with color options.
  */
 
 #pragma once

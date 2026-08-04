@@ -4,10 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_confmap.hpp
  * src/rstd/logsystem/ruac_confmap.cpp
- * Description of header file function declaration
- *
- * Declares functions for retrieving the default configuration map used to initialize the log system
- *
+ * @brief Provides get_default_config_map() for retrieving default log system configuration.
  */
 
 #pragma once

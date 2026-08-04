@@ -4,9 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_format_text.hpp
  * src/rstd/logsystem/ruac_format_text.cpp
- * Description of header file function declaration
  *
- * Defines the plain-text log formatter for human-readable log output
+ * @brief Defines the plain-text log formatter for human-readable log output.
  *
  */
 

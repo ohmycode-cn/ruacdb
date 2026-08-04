@@ -6,10 +6,7 @@
  * Header File : include/kernel/track/ruac_track_single.hpp
  * Source File : src/kernel/track/ruac_track_single.cpp
  *
- * File Function Description:
- * Singleton track manager for kernel track operations.
- * Manages the lifecycle of the Kernel instance.
- *
+ * @brief Singleton track manager with static obitan() access wrapping a Kernel pointer with init/over lifecycle management.
  */
 
 #pragma once
@@ -22,6 +19,11 @@ namespace ruac::kernel::track {
 
     /**
      * @brief Singleton track manager for kernel track operations.
+     *
+     * Provides static obitan() access to the single instance.
+     * Wraps a Kernel pointer with init/over lifecycle management.
+     * Deleted copy constructor and assignment operator enforce
+     * the singleton pattern.
      */
     class Single {
       private:

@@ -4,10 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_table.hpp
  * src/rstd/logsystem/ruac_table.cpp
- * Description of header file function declaration
  *
- * Table renderer that prints key-value maps as ASCII-formatted tables to stdout
- *
+ * @brief ASCII table renderer for printing key-value maps as formatted tables to stdout
  */
 
 #pragma once

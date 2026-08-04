@@ -4,7 +4,9 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/colors/ruac_color26.hpp
  * src/rstd/colors/ruac_color26.cpp
- * Description of header file function declaration
+ * @brief Defines the Color26 class for applying ANSI foreground/text colors to terminal output.
+ *
+ * Provides configurable highlight and bold-font modes, supporting 9 color variants (reset, dark, red, green, yellow, blue, magenta, cyan, white).
  *
  */
 

@@ -4,9 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_format.hpp
  * src/rstd/logsystem/ruac_format.cpp
- * Description of header file function declaration
  *
- * Defines the abstract Format interface for log message formatting
+ * @brief Defines the abstract Format interface for log message formatting.
  *
  */
 

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/ruac_donone.hpp
  * src/rstd/ruac_donone.cpp
- * Description of header file function declaration
  *
+ * @brief Provides null utility functions for default initialization and fallback scenarios.
  */
 
 #pragma once

@@ -4,10 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_output_console.hpp
  * src/rstd/logsystem/ruac_output_console.cpp
- * Description of header file function declaration
  *
- * Defines the console output sink for writing log messages to stdout
- *
+ * @brief Console output sink for writing log messages to stdout
  */
 
 #pragma once

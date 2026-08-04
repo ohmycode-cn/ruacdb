@@ -4,9 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_colored.hpp
  * src/rstd/logsystem/ruac_colored.cpp
- * Description of header file function declaration
  *
- * Defines ANSI color utilities for colorizing terminal log output with configurable escape sequences and font weight
+ * @brief Defines ANSI color utilities for colorizing terminal log output with configurable escape sequences and font weight.
  *
  */
 

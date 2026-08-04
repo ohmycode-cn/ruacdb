@@ -4,10 +4,7 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/logsystem/ruac_logkeys.hpp
  * src/rstd/logsystem/ruac_logkeys.cpp
- * Description of header file function declaration
- *
- * Defines constant string keys and token values for the log system configuration and formatting
- *
+ * @brief Defines constant string keys, token values, and mapping keys used throughout the log system.
  */
 
 #pragma once
@@ -16,6 +13,11 @@
 
 namespace ruac::rstd::logsystem::logkeys {
 
+    /**
+     * @brief Configuration key constants for log system parsing.
+     *
+     * Provides string keys used for configuration file parsing and value lookup.
+     */
     namespace kword {
 
         // keys.
@@ -62,6 +64,11 @@ namespace ruac::rstd::logsystem::logkeys {
 
     }; // namespace kword
 
+    /**
+     * @brief Token value constants for log output formatting.
+     *
+     * Provides string token values used in message serialization for text, JSON, and XML output.
+     */
     namespace token_v {
 
         constexpr auto G_SPACE_08{"        "};      // space 8
@@ -105,6 +112,11 @@ namespace ruac::rstd::logsystem::logkeys {
 
     } // namespace token_v
 
+    /**
+     * @brief Token key name constants for log output formatting.
+     *
+     * Provides string key names used to identify token types in formatted log output.
+     */
     namespace token_k {
 
         constexpr auto G_LEFT_BRACE{"left_brace"};                     // {

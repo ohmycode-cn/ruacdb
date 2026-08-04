@@ -6,10 +6,7 @@
  * Header File : include/kernel/ruac_controller.hpp
  * Source File : src/kernel/ruac_controller.cpp
  *
- * File Function Description:
- * Controller operation class that manages object, state, and track strategies.
- * Uses std::variant to hold different strategy types with proper ownership semantics.
- *
+ * @brief Controller operation class that manages object, state, and track strategy variants using std::variant with set/get methods for each strategy type.
  */
 
 #pragma once

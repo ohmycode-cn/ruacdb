@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/ruac_kwmapps.hpp
  * src/syntax_lite/tree/ruac_kwmapps.cpp
- * Description of header file function declaration
  *
+ * @brief Defines keyword-to-TokenType mapping for lexer classification.
  */
 
 #pragma once
@@ -28,6 +28,13 @@ namespace ruac::syntax_lite::tree {
         namespace kw = kwenums;
         using kw::TokenType;
 
+        /**
+         * @brief Mapping from keyword strings to their TokenType classifications.
+         *
+         * An unordered hash map that associates each defined keyword constant
+         * (datatype, object, attribute, symbol) with its corresponding TokenType
+         * enumeration value for fast lookup during lexical analysis.
+         */
         const std::unordered_map<std::string, kw::TokenType> maps{
             // datatype
             {k_datatype::G_DATETIME, TokenType::KEYWORD_DATATYPE},

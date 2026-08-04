@@ -6,10 +6,7 @@
  * Header File : include/kernel/object/ruac_object_kernel.hpp
  * Source File : src/kernel/object/ruac_object_kernel.cpp
  *
- * File Function Description:
- * Singleton kernel object that manages database instances.
- * Provides safe copy access to database collections.
- *
+ * @brief Singleton kernel object that manages a vector of Database objects with safe copy access via getdbs().
  */
 
 #pragma once
@@ -22,6 +19,10 @@
 namespace ruac::kernel::object {
     /**
      * @brief Singleton kernel object managing database instances.
+     *
+     * Private constructor and deleted copy semantics enforce the singleton pattern.
+     * Manages a vector of Database objects with safe copy access via getdbs(),
+     * returning a copy of the database collection rather than a mutable reference.
      */
     class Kernel {
       private:
