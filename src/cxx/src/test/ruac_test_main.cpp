@@ -10,6 +10,7 @@
 #include "test/ruac_test_rstd_messages.hpp"
 #include "test/ruac_test_logsystem.hpp"
 #include "test/ruac_test_colors.hpp"
+#include "test/ruac_test_lexer.hpp"
 #include "test/ruac_test_main.hpp"
 #include <iostream>
 
@@ -17,10 +18,11 @@ namespace ruac::test {
 
     void test_main() {
         std::cout << "From C++ This This is test main !" << std::endl;
-        test_main_type_list_out();
-        test_main_logsystem();
-        test_main_colors();
-        test_main_rstd_messages();
+        // test_main_type_list_out();
+        // test_main_logsystem();
+        // test_main_colors();
+        // test_main_rstd_messages();
+        test_main_lexer();
     }
 
 } // namespace ruac::test

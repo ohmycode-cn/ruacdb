@@ -1,0 +1,50 @@
+/**
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
+ * Author: ohmycode-cn(ohcode@163.com)
+ * include/test/ruac_test_lexer.hpp
+ * src/test/ruac_test_lexer.cpp
+ */
+
+#include "rstd/ruac_lowercase_characters.hpp"
+#include "syntax_lite/tree/ruac_lexer.hpp"
+#include "test/ruac_test_lexer.hpp"
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
+namespace ruac::test {
+
+    namespace {
+
+        void test_read_token() {
+
+            std::vector<std::string> lines{
+                "SELECT * FROM user;",
+                "SHOW DATABASES;",
+                "USE DATABASE test;"};
+
+            ruac::syntax_lite::tree::Lexer lexer;
+
+            for (std::size_t line_id{0}; line_id < lines.size(); ++line_id) {
+                ruac::rstd::lowercase_characters::tolower(lines[line_id]);
+                lexer.parse_line(lines[line_id]);
+                std::stringstream ss;
+                ss << "Line ID: " << line_id << " -> [\n";
+                for (const auto &token : lexer.get_tokens()) {
+                    ss << "    Token Type ID: " << static_cast<int>(token.type) << "\n"
+                       << "    Token Value  : " << token.value << "\n";
+                }
+                ss << "]\n";
+                std::cout << ss.str() << std::endl;
+            }
+        }
+
+    } // namespace
+
+    void test_main_lexer() {
+        test_read_token();
+    }
+
+} // namespace ruac::test
