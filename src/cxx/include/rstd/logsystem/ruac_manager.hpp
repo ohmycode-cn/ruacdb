@@ -24,8 +24,8 @@
 namespace ruac::rstd::logsystem {
 
     struct SinkPair {
-        Output *m_output_{nullptr};
-        Format *m_format_{nullptr};
+        std::unique_ptr<Output> m_output_;
+        std::unique_ptr<Format> m_format_;
     };
 
     struct SinkPipeline {
@@ -41,8 +41,7 @@ namespace ruac::rstd::logsystem {
         logtype::strmap m_ansi_token_map;
 
       private:
-        // bool m_guard_marker{false};
-        std::unique_ptr<Allocator> m_allocator{nullptr};
+        std::unique_ptr<Allocator> m_allocator;
         AllocatorParamList m_allocator_list{};
         SinkPipeline m_sink_pipeline{};
         logtype::string m_wf_path;
@@ -65,26 +64,30 @@ namespace ruac::rstd::logsystem {
         logtype::seqnum m_seq_fatal{0};
 
       private:
-        void create_sink_output(Output *&out_, const logenum::Output &enum_out_);
-        void create_sink_format(Format *&fmt_, const logenum::Format &enum_fmt_);
-        void delete_sink_output(Output *&out_);
-        void delete_sink_format(Format *&fmt_);
+        void create_sink_output(std::unique_ptr<Output> &out_, const logenum::Output &enum_out_);
+        void create_sink_format(std::unique_ptr<Format> &fmt_, const logenum::Format &enum_fmt_);
 
       private:
         void init_sink_pipeline(const AllocatorParamList &params_);
-        void over_sink_pipeline();
 
-        void out_stream(Format *&format_, Output *&output_, const logtype::strmap &strmap_,
-                        const logtype::string &level_, const logtype::seqnum &sequence_,
-                        const logtype::string &message_, const logtype::string &file_, logtype::sd_int line_);
+        void out_stream(std::unique_ptr<Format> &format_,
+                        std::unique_ptr<Output> &output_,
+                        const logtype::strmap &strmap_,
+                        const logtype::string &level_,
+                        const logtype::seqnum &sequence_,
+                        const logtype::string &message_,
+                        const logtype::string &file_,
+                        logtype::sd_int line_);
 
       public:
         Manager() = default;
-        ~Manager();
+        ~Manager() = default;
 
       public:
         void init(const LoaderParamList &params_ = {});
-        void write(logenum::Level level_, const logtype::string &message_, const logtype::string &file_,
+        void write(logenum::Level level_,
+                   const logtype::string &message_,
+                   const logtype::string &file_,
                    logtype::sd_int line_);
     };
 

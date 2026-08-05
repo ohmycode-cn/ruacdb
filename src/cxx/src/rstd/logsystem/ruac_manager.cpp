@@ -26,17 +26,6 @@ namespace ruac::rstd::logsystem {
     }; // namespace
 
     /**
-     * @brief Destroy the Manager and clean up resources
-     *
-     * @details Calls over_sink_pipeline() to delete all sink output and format
-     *          objects, ensuring proper cleanup of dynamically allocated resources.
-     *
-     */
-    Manager::~Manager() {
-        over_sink_pipeline();
-    }
-
-    /**
      * @brief Increment the sequence number
      *
      * @param sequence_ - Reference to the sequence number to increment
@@ -52,7 +41,7 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Create a sink output object based on output type
      *
-     * @param out_ - Reference to pointer where the output object will be stored
+     * @param out_ - Reference to unique_ptr where the output object will be stored
      * @param enum_out_ - Output type enum specifying FILE or CONSOLE (const ref)
      *
      * @details Creates a new OutputFile or OutputConsole instance based on
@@ -60,16 +49,16 @@ namespace ruac::rstd::logsystem {
      *          m_wf_path and m_wf_name for file output configuration.
      *
      */
-    void Manager::create_sink_output(Output *&out_, const logenum::Output &enum_out_) {
+    void Manager::create_sink_output(std::unique_ptr<Output> &out_, const logenum::Output &enum_out_) {
         if (nullptr != out_) {
             return;
         }
         switch (enum_out_) {
         case logenum::Output::FILE:
-            out_ = new OutputFile(m_wf_path, m_wf_name, true);
+            out_ = std::make_unique<OutputFile>(m_wf_path, m_wf_name, true);
             break;
         case logenum::Output::CONSOLE:
-            out_ = new OutputConsole();
+            out_ = std::make_unique<OutputConsole>();
             break;
         }
     }
@@ -77,62 +66,28 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Create a sink format object based on format type
      *
-     * @param fmt_ - Reference to pointer where the format object will be stored
+     * @param fmt_ - Reference to unique_ptr where the format object will be stored
      * @param enum_fmt_ - Format type enum specifying JSON, TEXT, or XML (const ref)
      *
      * @details Creates a new FormatJson, FormatText, or FormatXML instance based
      *          on enum_fmt_. Does nothing if fmt_ is already not null.
      *
      */
-    void Manager::create_sink_format(Format *&fmt_, const logenum::Format &enum_fmt_) {
+    void Manager::create_sink_format(std::unique_ptr<Format> &fmt_, const logenum::Format &enum_fmt_) {
         if (nullptr != fmt_) {
             return;
         }
         switch (enum_fmt_) {
         case logenum::Format::JSON:
-            fmt_ = new FormatJson();
+            fmt_ = std::make_unique<FormatJson>();
             break;
         case logenum::Format::TEXT:
-            fmt_ = new FormatText();
+            fmt_ = std::make_unique<FormatText>();
             break;
         case logenum::Format::XML:
-            fmt_ = new FormatXML();
+            fmt_ = std::make_unique<FormatXML>();
             break;
         }
-    }
-
-    /**
-     * @brief Delete a sink output object and nullify the pointer
-     *
-     * @param out_ - Reference to pointer of the output object to delete
-     *
-     * @details Deletes the Output object pointed to by out_ and sets the
-     *          pointer to nullptr. Does nothing if out_ is already null.
-     *
-     */
-    void Manager::delete_sink_output(Output *&out_) {
-        if (nullptr == out_) {
-            return;
-        }
-        delete out_;
-        out_ = nullptr;
-    }
-
-    /**
-     * @brief Delete a sink format object and nullify the pointer
-     *
-     * @param fmt_ - Reference to pointer of the format object to delete
-     *
-     * @details Deletes the Format object pointed to by fmt_ and sets the
-     *          pointer to nullptr. Does nothing if fmt_ is already null.
-     *
-     */
-    void Manager::delete_sink_format(Format *&fmt_) {
-        if (nullptr == fmt_) {
-            return;
-        }
-        delete fmt_;
-        fmt_ = nullptr;
     }
 
     /**
@@ -155,25 +110,10 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * @brief Clean up and delete all sink pipeline objects
-     *
-     * @details Deletes output and format objects for both file and terminal
-     *          sinks by calling delete_sink_output and delete_sink_format.
-     *          Called by the destructor to ensure proper resource cleanup.
-     *
-     */
-    void Manager::over_sink_pipeline() {
-        delete_sink_output(m_sink_pipeline.m_file_sink.m_output_);
-        delete_sink_output(m_sink_pipeline.m_term_sink.m_output_);
-        delete_sink_format(m_sink_pipeline.m_file_sink.m_format_);
-        delete_sink_format(m_sink_pipeline.m_term_sink.m_format_);
-    }
-
-    /**
      * @brief Output a formatted log message to the specified output sink
      *
-     * @param format_ - Reference to pointer of Format object for message formatting
-     * @param output_ - Reference to pointer of Output object for message output
+     * @param format_ - Reference to unique_ptr of Format object for message formatting
+     * @param output_ - Reference to unique_ptr of Output object for message output
      * @param strmap_ - Token map containing format tokens and their values
      * @param level_ - Log level string (plain-text or ANSI-colored)
      * @param sequence_ - Sequence number for this log message
@@ -187,9 +127,14 @@ namespace ruac::rstd::logsystem {
      *          or output_ is null.
      *
      */
-    void Manager::out_stream(Format *&format_, Output *&output_, const logtype::strmap &strmap_,
-                             const logtype::string &level_, const logtype::seqnum &sequence_,
-                             const logtype::string &message_, const logtype::string &file_, logtype::sd_int line_) {
+    void Manager::out_stream(std::unique_ptr<Format> &format_,
+                             std::unique_ptr<Output> &output_,
+                             const logtype::strmap &strmap_,
+                             const logtype::string &level_,
+                             const logtype::seqnum &sequence_,
+                             const logtype::string &message_,
+                             const logtype::string &file_,
+                             logtype::sd_int line_) {
 
         if (nullptr == format_ || nullptr == output_) {
             return;
@@ -242,16 +187,19 @@ namespace ruac::rstd::logsystem {
      *          >= m_file_level using the plain-text token map.
      *
      */
-    void Manager::write(logenum::Level level_, const logtype::string &message_, const logtype::string &file_,
+    void Manager::write(logenum::Level level_,
+                        const logtype::string &message_,
+                        const logtype::string &file_,
                         logtype::sd_int line_) {
+
         if (level_ < m_mini_level) {
             return;
         }
 
-        auto term_output = m_sink_pipeline.m_term_sink.m_output_;
-        auto file_output = m_sink_pipeline.m_file_sink.m_output_;
-        auto term_format = m_sink_pipeline.m_term_sink.m_format_;
-        auto file_format = m_sink_pipeline.m_file_sink.m_format_;
+        auto &term_output = m_sink_pipeline.m_term_sink.m_output_;
+        auto &file_output = m_sink_pipeline.m_file_sink.m_output_;
+        auto &term_format = m_sink_pipeline.m_term_sink.m_format_;
+        auto &file_format = m_sink_pipeline.m_file_sink.m_format_;
         auto &tmap = m_text_token_map;
         auto &amap = m_ansi_token_map;
         logtype::string term_level_str;

@@ -13,17 +13,6 @@
 namespace ruac::rstd::logsystem {
 
     /**
-     * @brief Safely deletes the internal Colored pointer and resets it to nullptr
-     *
-     */
-    void Message::delete_colored_ptr() {
-        if (nullptr != m_colored) {
-            delete m_colored;
-            m_colored = nullptr;
-        }
-    }
-
-    /**
      * @brief Return the global singleton Message instance
      *
      * @return Reference to the static Message object
@@ -41,13 +30,10 @@ namespace ruac::rstd::logsystem {
      *
      */
     void Message::init(const logstruct::ColoredParamList &param_) {
-        delete_colored_ptr();
-        m_colored = new Colored(param_.m_enable_ce, param_.m_enable_ht,
-                                param_.m_enable_bf);
-        m_reset = m_colored->get_var(ColoredName::RESET);
-        m_red = m_colored->get_var(ColoredName::RED);
-        m_yellow = m_colored->get_var(ColoredName::YELLOW);
-        delete_colored_ptr();
+        Colored colored(param_.m_enable_ce, param_.m_enable_ht, param_.m_enable_bf);
+        m_reset = colored.get_var(ColoredName::RESET);
+        m_red = colored.get_var(ColoredName::RED);
+        m_yellow = colored.get_var(ColoredName::YELLOW);
     }
 
 } // namespace ruac::rstd::logsystem

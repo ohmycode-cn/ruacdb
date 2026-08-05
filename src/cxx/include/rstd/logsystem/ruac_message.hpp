@@ -13,7 +13,6 @@
 #define RUAC_MESSAGE_HPP
 
 #include "rstd/logsystem/ruac_logstruct.hpp"
-#include "rstd/logsystem/ruac_colored.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include <iostream>
 #include <syncstream>
@@ -28,7 +27,6 @@ namespace ruac::rstd::logsystem {
      */
     class Message {
       private:
-        Colored *m_colored{nullptr};
         std::mutex m_out_mtx;
 
       private:
@@ -43,7 +41,6 @@ namespace ruac::rstd::logsystem {
         ~Message() = default;
         Message(const Message &) = delete;
         Message &operator=(const Message &) = delete;
-        void delete_colored_ptr();
 
       public:
         static auto instance() -> Message &;
