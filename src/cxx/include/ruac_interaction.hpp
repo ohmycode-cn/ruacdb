@@ -16,7 +16,7 @@
 
 namespace ruac {
 
-    struct InteractionParamList {
+    struct InteractionConfig {
         bool m_enable_ce{true};
         bool m_enable_ht{false};
         bool m_enable_bf{false};
@@ -25,7 +25,7 @@ namespace ruac {
 
     class Interaction {
       private:
-        InteractionParamList m_param_list{};
+        InteractionConfig m_config{};
         void show_base_info_guidance();
 
       private:
@@ -40,7 +40,7 @@ namespace ruac {
         ~Interaction() = default;
 
       public:
-        void init(const InteractionParamList &param_list_ = {});
+        void init(const InteractionConfig &config_ = {});
         auto run() -> bool;
     };
 

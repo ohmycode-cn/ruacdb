@@ -23,7 +23,7 @@ namespace ruac {
      * @brief Display the base information guidance
      *
      * @details Creates a heap-allocated BaseInfo object, initializes it with
-     *          color and display flags from m_param_list (enable_ce, enable_ht,
+     *          color and display flags from m_config (enable_ce, enable_ht,
      *          enable_bf, enable_dp), displays the base info, then safely
      *          deletes the object and nullifies the pointer.
      *
@@ -31,10 +31,10 @@ namespace ruac {
     void Interaction::show_base_info_guidance() {
         auto base_info = new ruac::welcome::guidance::BaseInfo();
         base_info->init({
-            .m_enable_ce = m_param_list.m_enable_ce,
-            .m_enable_ht = m_param_list.m_enable_ht,
-            .m_enable_bf = m_param_list.m_enable_bf,
-            .m_enable_dp = m_param_list.m_enable_dp,
+            .m_enable_ce = m_config.m_enable_ce,
+            .m_enable_ht = m_config.m_enable_ht,
+            .m_enable_bf = m_config.m_enable_bf,
+            .m_enable_dp = m_config.m_enable_dp,
         });
         base_info->show();
         if (nullptr != base_info) {
@@ -59,9 +59,9 @@ namespace ruac {
             return;
         }
         auto *tmp = new ruac::rstd::colors::Color26(
-            m_param_list.m_enable_ce,
-            m_param_list.m_enable_ht,
-            m_param_list.m_enable_bf);
+            m_config.m_enable_ce,
+            m_config.m_enable_ht,
+            m_config.m_enable_bf);
         m_prompt = tmp->r("ruacdb") + tmp->c(">") + " ";
         if (nullptr != tmp) {
             delete tmp;
@@ -85,14 +85,14 @@ namespace ruac {
     /**
      * @brief Initialize the Interaction with parameter list
      *
-     * @param param_list_ - Interaction parameter list containing configuration
+     * @param config_ - Interaction configuration
      *
-     * @details Stores the provided parameter list into m_param_list for later
+     * @details Stores the provided configuration into m_config for later
      *          use during the interactive session.
      *
      */
-    void Interaction::init(const InteractionParamList &param_list_) {
-        m_param_list = param_list_;
+    void Interaction::init(const InteractionConfig &config_) {
+        m_config = config_;
     }
 
     /**
