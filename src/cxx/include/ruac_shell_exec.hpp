@@ -14,7 +14,6 @@
 
 #include <string>
 #include <mutex>
-#include <vector>
 
 namespace ruac {
 
@@ -24,17 +23,14 @@ namespace ruac {
         static constexpr const char *const M_F_YELLOW{"\033[33m"};
         static constexpr const char *const M_B_GREEN{"\033[42m"};
         static constexpr const char *const M_RESET{"\033[0m"};
-
-      private:
-        std::vector<std::string> m_cmd_history_records_bak;
+        std::mutex M_SHELL_EXEC_MTX;
 
       private:
         auto end_whiled(const std::string &line_) -> bool;
-        void cat_cmd_history();
-        void cat_cmd_history_bak();
+        void cat_command_history();
+        void clr_command_history();
 
       private:
-        std::mutex M_SHELL_EXEC_MTX;
         auto inner_exec(const std::string &line_) -> int;
 
       public:

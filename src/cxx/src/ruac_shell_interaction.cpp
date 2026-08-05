@@ -2,20 +2,23 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/ruac_interaction.hpp
- * src/ruac_interaction.cpp
+ * include/ruac_shell_interaction.hpp
+ * src/ruac_shell_interaction.cpp
  */
 
 #include "rstd/colors/ruac_color26.hpp"
+#include "ruac_shell_interaction.hpp"
 #include "welcome/ruac_guidance.hpp"
-#include "ruac_interaction.hpp"
-#include "ruac_shell_exec.hpp"
 #include "ruac_shell_pipe.hpp"
+#include "ruac_shell_exec.hpp"
+#include <mutex>
 #include <syncstream>
 #include <iostream>
-#include <string>
 #include <cctype>
-#include <vector>
+#include <unistd.h>
+#if defined(_WIN32) || defined(_WIN64)
+#include <io.h>
+#endif
 
 namespace ruac {
 
@@ -28,7 +31,7 @@ namespace ruac {
      *          deletes the object and nullifies the pointer.
      *
      */
-    void Interaction::show_base_info_guidance() {
+    void ShellInteraction::print_welcome_guidance() {
         auto base_info = new ruac::welcome::guidance::BaseInfo();
         base_info->init({
             .m_enable_ce = m_config.m_enable_ce,
@@ -43,6 +46,16 @@ namespace ruac {
         }
     }
 
+    void ShellInteraction::print_message() {
+#if defined(_WIN32) || defined(_WIN64)
+        if (_isatty(_fileno(stdin))) {
+#elif defined(__linux__)
+        if (isatty(fileno(stdin))) {
+            print_welcome_guidance();
+#endif
+        }
+    }
+
     /**
      * @brief Set the interactive command prompt
      *
@@ -54,18 +67,19 @@ namespace ruac {
      *          deletes the temporary object.
      *
      */
-    void Interaction::set_prompt(const bool enable_ht_) {
+    void ShellInteraction::set_prompt(bool enable_ht_) {
         if (!enable_ht_) {
+            m_prompt = "ruac-db> ";
             return;
         }
-        auto *tmp = new ruac::rstd::colors::Color26(
+        auto *color26 = new ruac::rstd::colors::Color26(
             m_config.m_enable_ce,
             m_config.m_enable_ht,
             m_config.m_enable_bf);
-        m_prompt = tmp->r("ruacdb") + tmp->c(">") + " ";
-        if (nullptr != tmp) {
-            delete tmp;
-            tmp = nullptr;
+        m_prompt = color26->r("ruac-db") + color26->g(">") + " ";
+        if (nullptr != color26) {
+            delete color26;
+            color26 = nullptr;
         }
     }
 
@@ -78,8 +92,11 @@ namespace ruac {
      *          input string, converting it to lower case.
      *
      */
-    void Interaction::str_tolower(std::string &str_) {
-        std::transform(str_.begin(), str_.end(), str_.begin(), [](unsigned char c) { return std::tolower(c); });
+    void ShellInteraction::to_lower(std::string &str_) {
+        std::transform(str_.begin(),
+                       str_.end(),
+                       str_.begin(),
+                       [](unsigned char c) -> int { return std::tolower(c); });
     }
 
     /**
@@ -91,7 +108,7 @@ namespace ruac {
      *          use during the interactive session.
      *
      */
-    void Interaction::init(const InteractionConfig &config_) {
+    void ShellInteraction::init(const ShellInteractionConfig &config_) {
         m_config = config_;
     }
 
@@ -108,32 +125,33 @@ namespace ruac {
      *          end_whiled() detects a quit/exit command.
      *
      */
-    auto Interaction::run() -> bool {
-        show_base_info_guidance();
+    auto ShellInteraction::run() -> bool {
+        std::lock_guard<std::mutex> lock(M_INTERACTION_MTX);
+        print_message();
 
-        ShellExec sexec;
-        std::vector<std::string> cmd_history_records;
-        auto cmd_history_records_ptr = &cmd_history_records;
-        ShellPipeList pipe;
-        pipe.m_cmd_history_records_ptr = cmd_history_records_ptr; // copy the pointer
-        ShellPipe::instance().set_shell_pipe_list(pipe);
+        ShellPipe::instance().set_context({&m_history_commands_count});
+        ShellExec shell_exec;
+        int ret;
 
         while (true) {
+
             std::osyncstream(std::cout) << m_prompt;
             std::string lines;
             std::getline(std::cin, lines);
-            str_tolower(lines);
+
             if (lines.empty()) {
                 continue;
             }
-            int code = sexec.exec(lines);
-            if (1 == code) {
-                return false;
-            }
-            if (0 == code) {
-                return true;
+            to_lower(lines);
+
+            m_history_commands_count.push_back(lines);
+
+            ret = shell_exec.exec(lines);
+            if (0 == ret || 1 == ret) {
+                break;
             }
         }
+
         return true;
     }
 

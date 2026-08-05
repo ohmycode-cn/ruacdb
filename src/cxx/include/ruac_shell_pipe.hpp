@@ -9,21 +9,21 @@
  */
 
 #pragma once
-#include <vector>
 #ifndef RUAC_SHELL_PIPE_HPP
 #define RUAC_SHELL_PIPE_HPP
 
 #include <string>
+#include <vector>
 
 namespace ruac {
 
-    struct ShellPipeList {
-        std::vector<std::string> *m_cmd_history_records_ptr{nullptr};
+    struct ShellPipeContext {
+        std::vector<std::string> *m_ptr_history_commands_count{nullptr};
     };
 
     class ShellPipe {
       private:
-        ShellPipeList m_shell_pipe_list;
+        ShellPipeContext m_context;
 
       public:
         ShellPipe() = default;
@@ -33,8 +33,8 @@ namespace ruac {
 
       public:
         auto static instance() -> ShellPipe &;
-        void set_shell_pipe_list(const ShellPipeList &shell_pipe_list_ = {});
-        auto get_shell_pipe_list() -> ShellPipeList &;
+        void set_context(const ShellPipeContext &context_ = {});
+        auto get_context() -> ShellPipeContext &;
     };
 
 } // namespace ruac

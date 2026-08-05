@@ -2,12 +2,11 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/ruac_parser_cmd_line.hpp
- * src/ruac_parser_cmd_line.cpp
+ * include/ruac_shell_parser.hpp
+ * src/ruac_shell_parser.cpp
  */
 
-#include "ruac_parser_cmd_line.hpp"
-#include <mutex>
+#include "ruac_shell_parser.hpp"
 
 namespace ruac {
 
@@ -26,8 +25,8 @@ namespace ruac {
      *          fresh parse. Consecutive semicolons produce empty-string entries.
      *
      */
-    void ParserCmdLine::get_cmd_lines(std::string &lines_) {
-        std::lock_guard<std::mutex> lock(M_PARSER_CMD_LINE_MTX);
+    void ShellParser::get_lines(std::string &lines_) {
+        std::lock_guard<std::mutex> lock(M_SHELL_PARSER_MTX);
         auto lines{lines_};
         lines = lines.substr(0, lines.find_last_not_of("\t\n ") + 1);
         lines = lines.substr(lines.find_first_not_of("\t\n "));
@@ -35,7 +34,7 @@ namespace ruac {
         bool one_space{false};
         for (auto &c : lines) {
             if (c == M_SEMICOLON) {
-                m_cmd_list.push_back(line);
+                m_command_line_list.push_back(std::move(line));
                 line.clear();
             } else if (c == ' ') {
                 if (!one_space) {
@@ -48,7 +47,7 @@ namespace ruac {
             }
         }
         if (!line.empty()) {
-            m_cmd_list.push_back(line);
+            m_command_line_list.push_back(std::move(line));
         }
     }
 
@@ -64,9 +63,9 @@ namespace ruac {
      *          independent and requires no lock to read.
      *
      */
-    auto ParserCmdLine::ret_cmd_line() -> std::vector<std::string> {
-        std::lock_guard<std::mutex> lock(M_PARSER_CMD_LINE_MTX);
-        return m_cmd_list;
+    auto ShellParser::ret_lines() -> std::vector<std::string> {
+        std::lock_guard<std::mutex> lock(M_SHELL_PARSER_MTX);
+        return m_command_line_list;
     }
 
     /**
@@ -78,8 +77,8 @@ namespace ruac {
      *          get_cmd_lines()'s append semantics for a non-accumulating parse.
      *
      */
-    void ParserCmdLine::clr_cmd_list() {
-        std::lock_guard<std::mutex> lock(M_PARSER_CMD_LINE_MTX);
-        m_cmd_list.clear();
+    void ShellParser::clr_lines() {
+        std::lock_guard<std::mutex> lock(M_SHELL_PARSER_MTX);
+        m_command_line_list.clear();
     }
 } // namespace ruac

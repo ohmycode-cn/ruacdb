@@ -6,11 +6,11 @@
  * src/ruac_shell_exec.cpp
  */
 
-#include "ruac_parser_cmd_line.hpp"
+#include "ruac_shell_parser.hpp"
 #include "ruac_shell_pipe.hpp"
 #include "ruac_shell_exec.hpp"
-#include <iostream>
 #include <syncstream>
+#include <iostream>
 #include <sstream>
 
 namespace ruac {
@@ -45,9 +45,9 @@ namespace ruac {
      *          output from cat_cmd_history_bak()'s red background.
      *
      */
-    void ShellExec::cat_cmd_history() {
-        auto pipe = ShellPipe::instance().get_shell_pipe_list();
-        auto cmdh = pipe.m_cmd_history_records_ptr;
+    void ShellExec::cat_command_history() {
+        auto pipe = ShellPipe::instance().get_context();
+        auto cmdh = pipe.m_ptr_history_commands_count;
         if (nullptr == cmdh) {
             return;
         }
@@ -56,7 +56,7 @@ namespace ruac {
             return;
         }
         std::stringstream ss;
-        ss << M_B_GREEN << M_F_YELLOW << "From Backup history records:" << M_RESET << "\n";
+        ss << M_B_GREEN << M_F_YELLOW << "From history records:" << M_RESET << "\n";
         for (const auto &cmd : *cmdh) {
             ss << cmd << "\n";
         }
@@ -64,25 +64,20 @@ namespace ruac {
     }
 
     /**
-     * @brief Dump the backup command-history records to stdout
+     * @brief Clear the command-history records in the parser
      *
-     * @details Iterates the member m_cmd_history_records_bak directly. Uses a
-     *          colored header with M_B_RED background + M_F_YELLOW foreground
-     *          (red distinguishes backup output from cat_cmd_history()'s green)
-     *          and flushes via std::osyncstream. Note: the empty-check guard
-     *          is commented out, so the colored header is printed even when
-     *          the backup vector is empty.
+     * @details Calls ShellParser::clr_lines() to clear the parser's list of
+     *          parsed command lines.
      *
      */
-    void ShellExec::cat_cmd_history_bak() {
-        // if (m_cmd_history_records_bak.empty()) {
-        //     return;
-        // }
-        std::stringstream ss;
-        ss << M_B_RED << M_F_YELLOW << "From Backup history records:" << M_RESET << "\n";
-        for (const auto &cmd : m_cmd_history_records_bak) {
-            ss << cmd << "\n";
+    void ShellExec::clr_command_history() {
+        auto history = ShellPipe::instance().get_context().m_ptr_history_commands_count;
+        if (history->empty()) {
+            return;
         }
+        history->clear();
+        std::stringstream ss;
+        ss << M_B_RED << M_F_YELLOW << "Clear history records done." << M_RESET << "\n";
         std::osyncstream(std::cout) << ss.str() << std::endl;
     }
 
@@ -107,8 +102,10 @@ namespace ruac {
             return 0;
         }
         if ("cat history" == line_) {
-            cat_cmd_history();
-            cat_cmd_history_bak();
+            cat_command_history();
+        }
+        if ("clr history" == line_) {
+            clr_command_history();
         }
         return 2;
     }
@@ -137,27 +134,20 @@ namespace ruac {
      */
     auto ShellExec::exec(const std::string &lines_) -> int {
         std::lock_guard<std::mutex> lock(M_SHELL_EXEC_MTX);
-        auto pipe = ShellPipe::instance().get_shell_pipe_list();
-        auto cmdh = pipe.m_cmd_history_records_ptr;
-        auto vect = &m_cmd_history_records_bak;
-        if (nullptr != cmdh) {
-            vect = &(*cmdh);
-        }
-        ParserCmdLine pcl;
-        std::string tmp = lines_;
-        pcl.get_cmd_lines(tmp);
-        auto cmd_lines = pcl.ret_cmd_line();
-        pcl.clr_cmd_list();
-        if (cmd_lines.empty()) {
-            return 2;
-        }
-        for (int i{0}; i < cmd_lines.size(); i++) {
-            vect->push_back(cmd_lines.at(i));
-            int code = inner_exec(cmd_lines.at(i));
+        std::string lines = lines_;
+
+        ShellParser shell_parser;
+        shell_parser.get_lines(lines);
+        auto cmd_lines = shell_parser.ret_lines();
+        shell_parser.clr_lines();
+
+        for (unsigned long index{0}; index < cmd_lines.size(); index++) {
+            int code = inner_exec(cmd_lines.at(index));
             if (0 == code || 1 == code) {
                 return code;
             }
         }
+
         return 2;
     }
 

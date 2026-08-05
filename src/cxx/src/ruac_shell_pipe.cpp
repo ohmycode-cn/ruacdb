@@ -26,29 +26,29 @@ namespace ruac {
     }
 
     /**
-     * @brief Set the shell pipe list
+     * @brief Set the shell pipe context
      *
-     * @param shell_pipe_list_ - ShellPipeList to store (const ref)
+     * @param context_ - ShellPipeContext to store (const ref)
      *
-     * @details Copies the provided ShellPipeList into m_shell_pipe_list for
-     *          later retrieval via get_shell_pipe_list().
+     * @details Copies the provided ShellPipeContext into m_context for
+     *          later retrieval via get_context().
      *
      */
-    auto ShellPipe::set_shell_pipe_list(const ShellPipeList &shell_pipe_list_) -> void {
-        m_shell_pipe_list = shell_pipe_list_;
+    auto ShellPipe::set_context(const ShellPipeContext &context_) -> void {
+        m_context = context_;
     }
 
     /**
-     * @brief Get the shell pipe list
+     * @brief Get the shell pipe context
      *
-     * @return ShellPipeList& - Reference to the internal shell pipe list
+     * @return ShellPipeContext& - Reference to the internal shell pipe context
      *
-     * @details Returns a reference (not a copy) to m_shell_pipe_list, allowing
-     *          callers to read and modify the shared pipe list directly.
+     * @details Returns a reference (not a copy) to m_context, allowing
+     *          callers to read and modify the shared pipe context directly.
      *
      */
-    auto ShellPipe::get_shell_pipe_list() -> ShellPipeList & {
-        return m_shell_pipe_list;
+    auto ShellPipe::get_context() -> ShellPipeContext & {
+        return m_context;
     }
 
 } // namespace ruac
