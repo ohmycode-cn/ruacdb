@@ -15,6 +15,10 @@
 
 namespace ruac {
 
+    ShellExec::ShellExec() {
+        M_PARSER = std::make_unique<ruac::syntax_lite::tree::Parser>();
+    }
+
     /**
      * @brief Check if the input line matches a quit/exit command
      *
@@ -100,12 +104,16 @@ namespace ruac {
     auto ShellExec::inner_exec(const std::string &line_) -> int {
         if (end_whiled(line_)) {
             return 0;
-        }
-        if ("cat history" == line_) {
+        } else if ("cat history" == line_) {
             cat_command_history();
-        }
-        if ("clr history" == line_) {
+        } else if ("clr history" == line_) {
             clr_command_history();
+        } else {
+            if (nullptr == M_PARSER) {
+                std::osyncstream(std::cout) << "Not initialized parser." << std::endl;
+                return 1;
+            }
+            M_PARSER->get_query(line_);
         }
         return 2;
     }

@@ -1,10 +1,10 @@
 // #include "test/ruac_c_test_main.h"
-#include "test/ruac_test_main.hpp"
+// #include "test/ruac_test_main.hpp"
 #include "ruac_shell_interaction.hpp"
 
 int main() {
     // test_c_main();
-    ruac::test::test_main();
+    // ruac::test::test_main();
 
     auto shell_interaction = new ruac::ShellInteraction();
     shell_interaction->init({
