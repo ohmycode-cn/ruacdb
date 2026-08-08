@@ -12,8 +12,30 @@
 
 namespace ruac::syntax_lite::tree {
 
+    /**
+     * @brief Construct the PrExec and own its node list
+     *
+     * @details Initialises M_EXEC_NODE_LIST via std::make_unique so the
+     *          pre-executor holds a fresh PrExecNodeList ready to act on
+     *          parsed nodes.
+     *
+     */
     PrExec::PrExec() : M_EXEC_NODE_LIST{std::make_unique<PrExecNodeList>()} {}
 
+    /**
+     * @brief Dispatch the parsed node tree to its pre-execution handler
+     *
+     * @param synx_list_ - Pointer to the SynxList holding the parsed node tree
+     *
+     * @details Retrieves the node_tree variant from synx_list_ and applies
+     *          std::visit with a generic lambda. The lambda uses if constexpr
+     *          on std::decay_t of the variant alternative to select the
+     *          matching handler; currently only CreateDatabase is wired up
+     *          (delegated to M_CREATE_DATABASE.create_database), while
+     *          CreateTable, UseDatabase, ShowDatabases and ShowTables are
+     *          recognised but left as no-ops.
+     *
+     */
     void PrExec::dispatcher(SynxList *synx_list_) {
         auto &node = synx_list_->get_node_tree();
         std::visit([this](auto &arg) {

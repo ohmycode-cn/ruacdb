@@ -7,6 +7,22 @@
 #include "kernel/track/ruac_track_single.hpp"
 #include "ruac_shell_interaction.hpp"
 
+/**
+ * @brief Program entry point
+ *
+ * @return int - Process exit status (implicit 0 on normal completion)
+ *
+ * @details Creates a heap-allocated Operation controller and configures its
+ *          object, state, and track strategies to the Single singleton (via
+ *          obitan()), then registers it into ControllerTable at index 0.
+ *          Next constructs a ShellInteraction, initializes it with the
+ *          runtime config flags (ce=true, ht=true, bf=false, dp=true), and
+ *          invokes run() to start the interactive shell. When run() returns
+ *          true the ShellInteraction is deleted and its pointer nullified;
+ *          the controller remains registered in ControllerTable. Relies on
+ *          main's implicit return 0 when run() completes.
+ *
+ */
 int main() {
     // test_c_main();
     // ruac::test::test_main();

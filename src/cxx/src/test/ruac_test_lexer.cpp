@@ -18,6 +18,18 @@ namespace ruac::test {
 
     namespace {
 
+        /**
+         * @brief Exercise the Lexer with three sample SQL lines
+         *
+         * @details Feeds three sample SQL statements ("SELECT * FROM user;",
+         *          "SHOW DATABASES;", "USE DATABASE test;") into a
+         *          ruac::syntax_lite::tree::Lexer. Each line is first
+         *          lowercased via ruac::rstd::lowercase_characters::tolower
+         *          and then parsed with parse_line. For every produced
+         *          token the type id (cast to int) and value are streamed
+         *          to std::cout, prefixed by the originating line id.
+         *
+         */
         void test_read_token() {
 
             std::vector<std::string> lines{
@@ -43,6 +55,13 @@ namespace ruac::test {
 
     } // namespace
 
+    /**
+     * @brief Drive the lexer test cases
+     *
+     * @details Delegates to test_read_token() to run the SQL token
+     *          parsing scenarios.
+     *
+     */
     void test_main_lexer() {
         test_read_token();
     }

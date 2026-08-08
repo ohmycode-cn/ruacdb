@@ -25,6 +25,16 @@ namespace {
 
     namespace logsys = ruac::rstd::logsystem;
 
+    /**
+     * @brief Render five log levels through the JSON formatter
+     *
+     * @details Constructs a logsys::FormatJson formatter and obtains an
+     *          ANSI map plus the current time. Formats a fixed message
+     *          at the DEBUG, INFO, WARNING, ERROR and FATAL levels
+     *          (with codes 12002-12006), capturing the source file and
+     *          line, and streams each formatted record to std::cout.
+     *
+     */
     void test_format_json() {
         logsys::FormatJson josn;
         const auto map{logsys::logmaps::get_ansi_map(true, true, false)};
@@ -47,6 +57,19 @@ namespace {
         std::cout << str4 << std::endl;
     }
 
+    /**
+     * @brief Render five log levels through the plain text formatter
+     *
+     * @return std::string - newline-joined formatted log records
+     *
+     * @details Constructs a logsys::FormatText formatter and obtains an
+     *          ANSI map (without background colours) plus the current
+     *          time. Formats a fixed message at the DEBUG, INFO,
+     *          WARNING, ERROR and FATAL levels (codes 12002-12006) with
+     *          the originating file and line, accumulates them into a
+     *          stringstream, and returns the joined string.
+     *
+     */
     auto test_format_text() -> std::string {
         logsys::FormatText text;
         std::stringstream ss;
@@ -72,6 +95,16 @@ namespace {
         return ss.str();
     }
 
+    /**
+     * @brief Render five log levels through the XML formatter
+     *
+     * @details Constructs a logsys::FormatXML formatter and obtains an
+     *          ANSI map plus the current time. Formats a fixed message
+     *          at the DEBUG, INFO, WARNING, ERROR and FATAL levels
+     *          (codes 12002-12006), capturing the source file and line,
+     *          and streams each formatted record to std::cout.
+     *
+     */
     void test_format_xml() {
         logsys::FormatXML xml;
         const auto map{logsys::logmaps::get_ansi_map(true, true, false)};
@@ -94,6 +127,18 @@ namespace {
         std::cout << str4 << std::endl;
     }
 
+    /**
+     * @brief Exercise OutputFile error handling against a missing path
+     *
+     * @param message_ - text payload to attempt writing
+     *
+     * @details Enables colour output on the DebugT singleton, initialises
+     *          the Message singleton, and constructs a logsys::OutputFile
+     *          targeting a non-existent directory (/home/repox/Engdev/
+     *          ruacdb/tmp/unexist) to verify the failure path when
+     *          attempting to output message_.
+     *
+     */
     void test_output_file(const std::string &message_) {
         logsys::DebugTParamList params;
         params.m_enable_color = true;
@@ -110,6 +155,15 @@ namespace {
         file.output(message_);
     }
 
+    /**
+     * @brief Load the log configuration file and dump its map
+     *
+     * @details Constructs a logsys::Loader bound to
+     *          /home/repox/Engdev/ruacdb/document/config/ruacdb.log.conf,
+     *          retrieves the parsed configuration map via getmap(), and
+     *          prints it through loader.outmap().
+     *
+     */
     void test_loader() {
         logsys::Loader loader({"/home/repox/Engdev/ruacdb/document/config",
                                "ruacdb.log.conf"});
@@ -117,12 +171,32 @@ namespace {
         loader.outmap(map);
     }
 
+    /**
+     * @brief Construct a log Allocator and print its loader message
+     *
+     * @details Constructs a logsys::Allocator bound to
+     *          /home/repox/Engdev/ruacdb/document/config/ruacdb.log.conf
+     *          and invokes out_loader_msg() to emit the loader
+     *          diagnostic message.
+     *
+     */
     void test_allocator() {
         logsys::Allocator allocator({"/home/repox/Engdev/ruacdb/document/config",
                                      "ruacdb.log.conf"});
         allocator.out_loader_msg();
     }
 
+    /**
+     * @brief Initialise the LogRuntime singleton and emit five log levels
+     *
+     * @details Initialises logsys::api::LogRuntime with the configuration
+     *          file at /home/repox/Engdev/ruacdb/document/config/
+     *          ruacdb.log.conf, applies a settings object, and emits a
+     *          single message through each of the RUAC_RUNTIME_DEBUG,
+     *          RUAC_RUNTIME_INFO, RUAC_RUNTIME_WARNING, RUAC_RUNTIME_ERROR
+     *          and RUAC_RUNTIME_FATAL macros.
+     *
+     */
     void test_log_runtime() {
         logsys::api::LogRuntime::instance().init({"/home/repox/Engdev/ruacdb/document/config",
                                                   "ruacdb.log.conf"});
@@ -142,6 +216,15 @@ namespace {
 
 namespace ruac::test {
 
+    /**
+     * @brief Entry point for the log system test suite
+     *
+     * @details Prints a startup banner to std::cout and invokes
+     *          test_log_runtime() to exercise the runtime logging
+     *          path. Several sibling format/output/loader/allocator
+     *          invocations are commented out.
+     *
+     */
     void test_main_logsystem() {
         std::cout << "From C++ This is test main logsystem !" << std::endl;
         // std::cout << std::endl;

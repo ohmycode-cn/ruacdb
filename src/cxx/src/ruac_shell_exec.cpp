@@ -15,6 +15,14 @@
 
 namespace ruac {
 
+    /**
+     * @brief Construct the ShellExec and initialize its parser
+     *
+     * @details Initializes M_PARSER via std::make_unique to a new
+     *          ruac::syntax_lite::tree::Parser instance, which is later used
+     *          by inner_exec() to handle non-builtin command lines.
+     *
+     */
     ShellExec::ShellExec() {
         M_PARSER = std::make_unique<ruac::syntax_lite::tree::Parser>();
     }

@@ -65,6 +65,21 @@ namespace ruac::rstd::logsystem {
         return color_ + message_ + m_reset;
     }
 
+    /**
+     * @brief Resolve a ColoredName enum to its underlying color sequence
+     *
+     * @param color_ - The ColoredName enumerator to resolve
+     *
+     * @return logtype::string - The ANSI color sequence member matching the
+     *         given enumerator
+     *
+     * @details Switches on color_ and returns the corresponding colour
+     *          member variable (m_reset, m_dark, m_red, m_green, m_yellow,
+     *          m_blue, m_magenta, m_cyan or m_white). Any value not handled
+     *          by a case label falls through to the trailing return of
+     *          m_reset.
+     *
+     */
     auto Colored::get_var(ColoredName color_) -> logtype::string {
         switch (color_) {
         case ColoredName::RESET:

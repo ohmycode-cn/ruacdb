@@ -68,6 +68,24 @@ namespace ruac::terminal_lite {
         }
     )";
 
+    /**
+     * @brief Build and launch the terminal lite GUI main window
+     *
+     * @param argc_ - argument count forwarded to QApplication
+     * @param argv_ - argument vector forwarded to QApplication
+     *
+     * @details Constructs a QApplication and a QMainWindow titled
+     *          "Ruac Terminal Lite" sized 960x640. Builds a sidebar
+     *          widget containing 54 menu-item QPushButtons and a
+     *          QMdiArea multi-document region in tabbed view mode.
+     *          Each button is wired so that clicking it either
+     *          activates an existing matching sub-window or creates
+     *          a new QMdiSubWindow with title and body labels. A
+     *          custom QScrollBar stylesheet is applied to the
+     *          scrollable sidebar. Finally enters the Qt event
+     *          loop via QApplication::exec().
+     *
+     */
     void Window::run(int argc, char **argv) {
         QApplication app(argc, argv);
         QMainWindow mainWindow;

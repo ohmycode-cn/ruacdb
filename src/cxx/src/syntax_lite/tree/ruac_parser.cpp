@@ -284,6 +284,15 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Construct the Parser and own its core subsystems
+     *
+     * @details Initialises the three owning members M_SYNX_LIST, M_PREEXEC
+     *          and M_LEXER via std::make_unique so the parser holds a fresh
+     *          SynxList, PrExec and Lexer instance ready for the first
+     *          query.
+     *
+     */
     Parser::Parser()
         : M_SYNX_LIST(std::make_unique<SynxList>()),
           M_PREEXEC(std::make_unique<PrExec>()),
@@ -356,11 +365,31 @@ namespace ruac::syntax_lite::tree {
         }
     }
 
+    /**
+     * @brief Drive the parse and pre-execution pipeline
+     *
+     * @details Runs the token-stream dispatcher() to populate the AST in
+     *          M_SYNX_LIST, then forwards that SynxList to the PrExec
+     *          dispatcher so the pre-execution pass can act on the parsed
+     *          node tree.
+     *
+     */
     void Parser::parser() {
         dispatcher();
         M_PREEXEC->dispatcher(M_SYNX_LIST.get());
     }
 
+    /**
+     * @brief Accept a raw query line and run the full parse pipeline
+     *
+     * @param line_ - The raw input line to parse
+     *
+     * @details Acquires M_PARSER_MTX to serialise access, asks M_LEXER to
+     *          tokenise the line, copies the resulting tokens into M_TOKENS
+     *          and finally invokes parser() to dispatch parsing and pre-
+     *          execution.
+     *
+     */
     void Parser::get_query(const std::string &line_) {
         std::lock_guard<std::mutex> lock(M_PARSER_MTX);
         M_LEXER->parse_line(line_);

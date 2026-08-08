@@ -46,6 +46,18 @@ namespace ruac {
         }
     }
 
+    /**
+     * @brief Print the welcome message when stdin is a terminal
+     *
+     * @details Detects whether stdin is attached to an interactive terminal
+     *          via isatty(fileno(stdin)) on Linux or _isatty(_fileno(stdin))
+     *          on Windows, selected by conditional compilation
+     *          (#if defined(_WIN32) || defined(_WIN64) vs
+     *          #elif defined(__linux__)). On Linux, when the check succeeds
+     *          it invokes print_welcome_guidance() to display the welcome
+     *          guidance before the REPL loop starts.
+     *
+     */
     void ShellInteraction::print_message() {
 #if defined(_WIN32) || defined(_WIN64)
         if (_isatty(_fileno(stdin))) {

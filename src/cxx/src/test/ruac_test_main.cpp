@@ -16,6 +16,14 @@
 
 namespace ruac::test {
 
+    /**
+     * @brief Entry point for the ruac test suite
+     *
+     * @details Prints a startup banner to std::cout and invokes
+     *          test_main_lexer() to run the lexer tests. Several
+     *          sibling test entry points are commented out.
+     *
+     */
     void test_main() {
         std::cout << "From C++ This This is test main !" << std::endl;
         // test_main_type_list_out();

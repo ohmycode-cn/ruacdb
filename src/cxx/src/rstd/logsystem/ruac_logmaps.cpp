@@ -128,6 +128,18 @@ namespace ruac::rstd::logsystem {
             return map;
         }
 
+        /**
+         * @brief Get a plain-text log level map
+         *
+         * @return logtype::strmap - A string map of the five log level
+         *         keys (DEBUG, INFO, WARNING, ERROR, FATAL) to their
+         *         plain-text values
+         *
+         * @details Builds and returns a strmap mapping each log level token
+         *          key to its uncoloured plain-text representation. Used for
+         *          log output that does not require ANSI colour codes.
+         *
+         */
         auto get_text_level_map() -> logtype::strmap {
             logtype::strmap map{
                 {k::G_DEBUG, v::G_DEBUG},
@@ -138,6 +150,20 @@ namespace ruac::rstd::logsystem {
             return map;
         }
 
+        /**
+         * @brief Get an ANSI-colored log level map
+         *
+         * @return logtype::strmap - A string map of the five log level
+         *         keys (DEBUG, INFO, WARNING, ERROR, FATAL) to their
+         *         ANSI-colored values
+         *
+         * @details Constructs a Colored helper with classic ESC, high
+         *          intensity and bold enabled, then maps each log level
+         *          token key to its colourised value: DEBUG in green, INFO
+         *          in cyan, WARNING in yellow, ERROR in red and FATAL in
+         *          magenta.
+         *
+         */
         auto get_ansi_level_map() -> logtype::strmap {
             Colored t(true, true, true);
             logtype::strmap map{

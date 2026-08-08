@@ -18,6 +18,19 @@ namespace ruac::test {
             namespace u = ruac::rstd::colors;
         } // namespace
 
+        /**
+         * @brief Render an 8-colour palette under bright and dark backgrounds
+         *
+         * @return std::string - concatenated ANSI-coloured space blocks
+         *
+         * @details Creates two ruac::rstd::colors::Background instances:
+         *          one in bright mode and one in dark mode. For each
+         *          instance, streams the eight colour variants
+         *          (d, r, g, y, b, m, c, w) of a four-space block into a
+         *          stringstream, separating the bright and dark rows
+         *          with a newline, and returns the assembled string.
+         *
+         */
         auto test_dark_background() -> std::string {
 
             constexpr const char *const SPACE{"    "};
@@ -53,6 +66,13 @@ namespace ruac::test {
 
     } // namespace
 
+    /**
+     * @brief Drive the colour palette test case
+     *
+     * @details Invokes test_dark_background() and writes the
+     *          resulting ANSI-coloured string to std::cout.
+     *
+     */
     void test_main_colors() {
         std::cout << test_dark_background() << std::endl;
     }
