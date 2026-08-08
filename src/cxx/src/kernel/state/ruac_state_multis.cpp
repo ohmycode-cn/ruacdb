@@ -52,7 +52,7 @@ namespace ruac::kernel::state {
      * @brief Gets the Kernel instance.
      * @return Reference to the Kernel object.
      */
-    auto Multis::getKernelState() -> Kernel & {
+    auto Multis::get_kernel_state() -> Kernel & {
         return *m_kernel;
     }
 

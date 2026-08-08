@@ -40,7 +40,7 @@ namespace ruac::rstd::logsystem {
         logtype::string m_header{"[ TEMP DEBUG:( ] "};
         DebugTParamList m_param_mode{};
 
-      public:
+      private:
         DebugT() = default;
         ~DebugT() = default;
         DebugT(const DebugT &) = delete;

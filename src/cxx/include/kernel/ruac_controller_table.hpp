@@ -15,11 +15,11 @@
 #include "kernel/ruac_controller.hpp"
 #include <unordered_map>
 
-namespace ruac::kernel {
+namespace ruac::kernel::controller {
 
     class ControllerTable {
       private:
-        std::unordered_map<int, ruac::kernel::controller::Operation *> m_controller_table;
+        std::unordered_map<int, Operation *> m_controller_table;
 
       private:
         ControllerTable() = default;
@@ -29,10 +29,10 @@ namespace ruac::kernel {
 
       public:
         static auto instance() -> ControllerTable &;
-        auto set_controller(int uid, ruac::kernel::controller::Operation &controller) -> bool;
-        auto get_controller(int uid) -> ruac::kernel::controller::Operation &;
+        auto set_controller(int uid, Operation &controller) -> bool;
+        auto get_controller(int uid) -> Operation &;
     };
 
-} // namespace ruac::kernel
+} // namespace ruac::kernel::controller
 
 #endif // RUAC_CONTROLLER_TABLE_HPP

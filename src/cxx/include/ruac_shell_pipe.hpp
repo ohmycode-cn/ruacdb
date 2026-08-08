@@ -25,14 +25,14 @@ namespace ruac {
       private:
         ShellPipeContext m_context;
 
-      public:
+      private:
         ShellPipe() = default;
         ~ShellPipe() = default;
         ShellPipe(const ShellPipe &) = delete;
         ShellPipe &operator=(const ShellPipe &) = delete;
 
       public:
-        auto static instance() -> ShellPipe &;
+        static auto instance() -> ShellPipe &;
         void set_context(const ShellPipeContext &context_ = {});
         auto get_context() -> ShellPipeContext &;
     };

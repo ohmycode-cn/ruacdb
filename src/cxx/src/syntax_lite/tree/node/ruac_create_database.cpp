@@ -26,13 +26,13 @@ namespace ruac::syntax_lite::tree::node {
      *
      * @details Fetches controller 0 from ControllerTable, extracts the
      *          Single track strategy from its variant, and forwards the
-     *          query to the underlying kernel's existDatabase().
+     *          query to the underlying kernel's exist_database().
      *
      */
     auto CreateDatabase::exist_database(const std::string &name) -> bool {
-        auto &controller = ruac::kernel::ControllerTable::instance().get_controller(0);
-        auto *track = std::get<ruac::kernel::track::Single *>(controller.getTrackStrategy());
-        return track->getKernel().existDatabase(name);
+        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(0);
+        auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
+        return track->get_kernel().exist_database(name);
     }
 
     /**
@@ -46,7 +46,7 @@ namespace ruac::syntax_lite::tree::node {
      *          database already exists, an error message is written to stdout
      *          and the function returns without creating anything. Otherwise
      *          it fetches controller 0, extracts the Single track strategy
-     *          and calls addDatabase(name, 0, 0) on the underlying kernel.
+     *          and calls add_database(name, 0, 0) on the underlying kernel.
      *
      */
     void CreateDatabase::create_database(const std::string &name, bool in_advance_check) {
@@ -65,9 +65,9 @@ namespace ruac::syntax_lite::tree::node {
             std::osyncstream(std::cout) << ss.str() << std::endl;
             return;
         }
-        auto &controller = ruac::kernel::ControllerTable::instance().get_controller(0);
-        auto *track = std::get<ruac::kernel::track::Single *>(controller.getTrackStrategy());
-        track->getKernel().addDatabase(name, 0, 0);
+        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(0);
+        auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
+        track->get_kernel().add_database(name, 0, 0);
     }
 
 } // namespace ruac::syntax_lite::tree::node

@@ -59,17 +59,17 @@ namespace ruac::kernel::controller {
         ~Operation();
 
       public:
-        void setObjectStrategy(defname::objs &single_);
-        void setObjectStrategy(std::unique_ptr<defname::objm> multis_);
-        auto getObjectStrategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> &;
+        void set_object_strategy(defname::objs &single_);
+        void set_object_strategy(std::unique_ptr<defname::objm> multis_);
+        auto get_object_strategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> &;
 
-        void setStateStrategy(defname::stas &state_single_);
-        void setStateStrategy(std::unique_ptr<defname::stam> state_multis_);
-        auto getStateStrategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> &;
+        void set_state_strategy(defname::stas &state_single_);
+        void set_state_strategy(std::unique_ptr<defname::stam> state_multis_);
+        auto get_state_strategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> &;
 
-        void setTrackStrategy(defname::tras &track_single_);
-        void setTrackStrategy(std::unique_ptr<defname::tram> track_multis_);
-        auto getTrackStrategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> &;
+        void set_track_strategy(defname::tras &track_single_);
+        void set_track_strategy(std::unique_ptr<defname::tram> track_multis_);
+        auto get_track_strategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> &;
     }; // Operation
 
 } // namespace ruac::kernel::controller
@@ -99,10 +99,10 @@ Operation();
 
 ### 对象策略（Object Strategy）
 
-#### setObjectStrategy(defname::objs &)
+#### set_object_strategy(defname::objs &)
 
 ```cpp
-void setObjectStrategy(defname::objs &single_);
+void set_object_strategy(defname::objs &single_);
 ```
 
 以单例引用形式设置对象策略。内部将传入引用取地址后存入变体，`Operation` 不接管该单例的生命周期。
@@ -113,10 +113,10 @@ void setObjectStrategy(defname::objs &single_);
 |------------|---------------------|----------------------------|
 | `single_`  | `defname::objs &`   | 对象单例 `Single` 的引用。 |
 
-#### setObjectStrategy(std::unique_ptr\<defname::objm\>)
+#### set_object_strategy(std::unique_ptr\<defname::objm\>)
 
 ```cpp
-void setObjectStrategy(std::unique_ptr<defname::objm> multis_);
+void set_object_strategy(std::unique_ptr<defname::objm> multis_);
 ```
 
 以独占指针形式设置对象策略。通过 `std::move` 转移所有权，`Operation` 将接管该多例对象的生命周期。
@@ -127,10 +127,10 @@ void setObjectStrategy(std::unique_ptr<defname::objm> multis_);
 |------------|-----------------------------------|-----------------------------------|
 | `multis_`  | `std::unique_ptr<defname::objm>`  | 指向对象多例 `Multis` 的独占指针。 |
 
-#### getObjectStrategy()
+#### get_object_strategy()
 
 ```cpp
-auto getObjectStrategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> &;
+auto get_object_strategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> &;
 ```
 
 获取对象策略变体的可变引用，供上层通过 `std::visit` 进行策略派发。
@@ -145,10 +145,10 @@ auto getObjectStrategy() -> std::variant<defname::objs *, std::unique_ptr<defnam
 
 ### 状态策略（State Strategy）
 
-#### setStateStrategy(defname::stas &)
+#### set_state_strategy(defname::stas &)
 
 ```cpp
-void setStateStrategy(defname::stas &state_single_);
+void set_state_strategy(defname::stas &state_single_);
 ```
 
 以单例引用形式设置状态策略。内部将传入引用取地址后存入变体，`Operation` 不接管该单例的生命周期。
@@ -159,10 +159,10 @@ void setStateStrategy(defname::stas &state_single_);
 |-------------------|---------------------|----------------------------|
 | `state_single_`   | `defname::stas &`   | 状态单例 `Single` 的引用。 |
 
-#### setStateStrategy(std::unique_ptr\<defname::stam\>)
+#### set_state_strategy(std::unique_ptr\<defname::stam\>)
 
 ```cpp
-void setStateStrategy(std::unique_ptr<defname::stam> state_multis_);
+void set_state_strategy(std::unique_ptr<defname::stam> state_multis_);
 ```
 
 以独占指针形式设置状态策略。通过 `std::move` 转移所有权，`Operation` 将接管该多例对象的生命周期。
@@ -173,10 +173,10 @@ void setStateStrategy(std::unique_ptr<defname::stam> state_multis_);
 |-------------------|-----------------------------------|-----------------------------------|
 | `state_multis_`   | `std::unique_ptr<defname::stam>`  | 指向状态多例 `Multis` 的独占指针。 |
 
-#### getStateStrategy()
+#### get_state_strategy()
 
 ```cpp
-auto getStateStrategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> &;
+auto get_state_strategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> &;
 ```
 
 获取状态策略变体的可变引用，供上层通过 `std::visit` 进行策略派发。
@@ -191,10 +191,10 @@ auto getStateStrategy() -> std::variant<defname::stas *, std::unique_ptr<defname
 
 ### 轨迹策略（Track Strategy）
 
-#### setTrackStrategy(defname::tras &)
+#### set_track_strategy(defname::tras &)
 
 ```cpp
-void setTrackStrategy(defname::tras &track_single_);
+void set_track_strategy(defname::tras &track_single_);
 ```
 
 以单例引用形式设置轨迹策略。内部将传入引用取地址后存入变体，`Operation` 不接管该单例的生命周期。
@@ -205,10 +205,10 @@ void setTrackStrategy(defname::tras &track_single_);
 |-------------------|---------------------|----------------------------|
 | `track_single_`   | `defname::tras &`   | 轨迹单例 `Single` 的引用。 |
 
-#### setTrackStrategy(std::unique_ptr\<defname::tram\>)
+#### set_track_strategy(std::unique_ptr\<defname::tram\>)
 
 ```cpp
-void setTrackStrategy(std::unique_ptr<defname::tram> track_multis_);
+void set_track_strategy(std::unique_ptr<defname::tram> track_multis_);
 ```
 
 以独占指针形式设置轨迹策略。通过 `std::move` 转移所有权，`Operation` 将接管该多例对象的生命周期。
@@ -219,10 +219,10 @@ void setTrackStrategy(std::unique_ptr<defname::tram> track_multis_);
 |-------------------|-----------------------------------|-----------------------------------|
 | `track_multis_`   | `std::unique_ptr<defname::tram>`  | 指向轨迹多例 `Multis` 的独占指针。 |
 
-#### getTrackStrategy()
+#### get_track_strategy()
 
 ```cpp
-auto getTrackStrategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> &;
+auto get_track_strategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> &;
 ```
 
 获取轨迹策略变体的可变引用，供上层通过 `std::visit` 进行策略派发。
@@ -244,15 +244,15 @@ using namespace ruac::kernel;
 controller::Operation op;
 
 // 方式一：使用单例策略（Operation 不接管生命周期）
-auto &obj_single = object::Single::obitan();
-op.setObjectStrategy(obj_single);
+auto &obj_single = object::Single::instance();
+op.set_object_strategy(obj_single);
 
 // 方式二：使用多例策略（Operation 接管生命周期）
 auto track_multis = std::make_unique<track::Multis>();
-op.setTrackStrategy(std::move(track_multis));
+op.set_track_strategy(std::move(track_multis));
 
 // 取回变体并通过 std::visit 派发
-auto &obj_variant = op.getObjectStrategy();
+auto &obj_variant = op.get_object_strategy();
 std::visit([](auto &&strategy) {
     using T = std::decay_t<decltype(strategy)>;
     if constexpr (std::is_same_v<T, defname::objs *>) {

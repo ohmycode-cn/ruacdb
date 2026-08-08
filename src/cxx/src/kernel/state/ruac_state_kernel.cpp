@@ -19,7 +19,7 @@ namespace ruac::kernel::state {
      * @brief Gets the current database name.
      * @return Reference to the current database name string.
      */
-    auto Kernel::getCurrentDatabaseName() -> std::string & {
+    auto Kernel::get_current_database_name() -> std::string & {
         return m_database;
     }
 
@@ -27,7 +27,7 @@ namespace ruac::kernel::state {
      * @brief Gets the current table number.
      * @return Reference to the current table number string.
      */
-    auto Kernel::getCurrentTableNumber() -> std::string & {
+    auto Kernel::get_current_table_number() -> std::string & {
         return m_tbnumber;
     }
 
@@ -35,7 +35,7 @@ namespace ruac::kernel::state {
      * @brief Sets the current database name.
      * @param name_ The new database name to set.
      */
-    void Kernel::setCurrentDatabaseName(const std::string &name_) {
+    void Kernel::set_current_database_name(const std::string &name_) {
         m_database = name_;
     }
 
@@ -43,7 +43,7 @@ namespace ruac::kernel::state {
      * @brief Sets the current table number.
      * @param number_ The new table number to set.
      */
-    void Kernel::setCurrentTableNumber(const int number_) {
+    void Kernel::set_current_table_number(const int number_) {
         m_tbnumber = std::to_string(number_);
     }
 

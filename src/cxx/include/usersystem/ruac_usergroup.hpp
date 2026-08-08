@@ -30,7 +30,7 @@ namespace ruac::usersystem {
             {"root", group_list[0]},
             {"live", group_list[1]}};
 
-      public:
+      private:
         UserGroup() = default;
         ~UserGroup() = default;
         UserGroup(const UserGroup &) = delete;

@@ -19,7 +19,7 @@ namespace ruac::kernel::object {
      * @brief Gets the singleton instance of Kernel.
      * @return Reference to the single Kernel instance.
      */
-    auto Kernel::obitan() -> Kernel & {
+    auto Kernel::instance() -> Kernel & {
         static Kernel instance;
         return instance;
     }

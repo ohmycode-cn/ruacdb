@@ -14,7 +14,7 @@
  *
  * @details Creates a heap-allocated Operation controller and configures its
  *          object, state, and track strategies to the Single singleton (via
- *          obitan()), then registers it into ControllerTable at index 0.
+ *          instance()), then registers it into ControllerTable at index 0.
  *          Next constructs a ShellInteraction, initializes it with the
  *          runtime config flags (ce=true, ht=true, bf=false, dp=true), and
  *          invokes run() to start the interactive shell. When run() returns
@@ -28,10 +28,10 @@ int main() {
     // ruac::test::test_main();
 
     auto controller = new ruac::kernel::controller::Operation();
-    controller->setObjectStrategy(ruac::kernel::object::Single::obitan());
-    controller->setStateStrategy(ruac::kernel::state::Single::obitan());
-    controller->setTrackStrategy(ruac::kernel::track::Single::obitan());
-    ruac::kernel::ControllerTable::instance().set_controller(0, *controller);
+    controller->set_object_strategy(ruac::kernel::object::Single::instance());
+    controller->set_state_strategy(ruac::kernel::state::Single::instance());
+    controller->set_track_strategy(ruac::kernel::track::Single::instance());
+    ruac::kernel::controller::ControllerTable::instance().set_controller(0, *controller);
 
     auto shell_interaction = new ruac::ShellInteraction();
     shell_interaction->init({

@@ -37,7 +37,7 @@ namespace ruac::kernel {
          * Args:
          *   single_: Reference to the Single singleton.
          */
-        void Operation::setObjectStrategy(defname::objs &single_) {
+        void Operation::set_object_strategy(defname::objs &single_) {
             m_object_strategy = &single_;
         }
 
@@ -47,7 +47,7 @@ namespace ruac::kernel {
          * Args:
          *   multis_: Unique pointer to the Multis instance.
          */
-        void Operation::setObjectStrategy(std::unique_ptr<defname::objm> multis_) {
+        void Operation::set_object_strategy(std::unique_ptr<defname::objm> multis_) {
             m_object_strategy = std::move(multis_);
         }
 
@@ -57,7 +57,7 @@ namespace ruac::kernel {
          * Returns:
          *   Reference to the object strategy variant.
          */
-        auto Operation::getObjectStrategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> & {
+        auto Operation::get_object_strategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> & {
             return m_object_strategy;
         }
 
@@ -67,7 +67,7 @@ namespace ruac::kernel {
          * Args:
          *   state_single_: Reference to the state Single singleton.
          */
-        void Operation::setStateStrategy(defname::stas &state_single_) {
+        void Operation::set_state_strategy(defname::stas &state_single_) {
             m_state_strategy = &state_single_;
         }
 
@@ -77,7 +77,7 @@ namespace ruac::kernel {
          * Args:
          *   state_multis_: Unique pointer to the state Multis instance.
          */
-        void Operation::setStateStrategy(std::unique_ptr<defname::stam> state_multis_) {
+        void Operation::set_state_strategy(std::unique_ptr<defname::stam> state_multis_) {
             m_state_strategy = std::move(state_multis_);
         }
 
@@ -87,7 +87,7 @@ namespace ruac::kernel {
          * Returns:
          *   Reference to the state strategy variant.
          */
-        auto Operation::getStateStrategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> & {
+        auto Operation::get_state_strategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> & {
             return m_state_strategy;
         }
 
@@ -97,7 +97,7 @@ namespace ruac::kernel {
          * Args:
          *   track_single_: Reference to the track Single singleton.
          */
-        void Operation::setTrackStrategy(defname::tras &track_single_) {
+        void Operation::set_track_strategy(defname::tras &track_single_) {
             m_track_strategy = &track_single_;
         }
 
@@ -107,7 +107,7 @@ namespace ruac::kernel {
          * Args:
          *   track_multis_: Unique pointer to the track Multis instance.
          */
-        void Operation::setTrackStrategy(std::unique_ptr<defname::tram> track_multis_) {
+        void Operation::set_track_strategy(std::unique_ptr<defname::tram> track_multis_) {
             m_track_strategy = std::move(track_multis_);
         }
 
@@ -117,7 +117,7 @@ namespace ruac::kernel {
          * Returns:
          *   Reference to the track strategy variant.
          */
-        auto Operation::getTrackStrategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> & {
+        auto Operation::get_track_strategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> & {
             return m_track_strategy;
         }
 

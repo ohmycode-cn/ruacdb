@@ -19,7 +19,7 @@ namespace ruac::kernel::object {
     /**
      * @brief Constructs a Multis object and initializes database copy.
      */
-    Multis::Multis() : m_databases{ruac::kernel::object::Kernel::obitan().getdbs()} {}
+    Multis::Multis() : m_databases{ruac::kernel::object::Kernel::instance().getdbs()} {}
 
     /**
      * @brief Gets a reference to the database collection.

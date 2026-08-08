@@ -52,7 +52,7 @@ namespace ruac::kernel::state {
      * @brief Gets the singleton instance of Single.
      * @return Reference to the single Single instance.
      */
-    auto Single::obitan() -> Single & {
+    auto Single::instance() -> Single & {
         static Single instance;
         return instance;
     }
@@ -61,7 +61,7 @@ namespace ruac::kernel::state {
      * @brief Gets the Kernel instance.
      * @return Reference to the Kernel object.
      */
-    auto Single::getKernelState() -> Kernel & {
+    auto Single::get_kernel_state() -> Kernel & {
         return *m_kernel;
     }
 

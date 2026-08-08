@@ -21,7 +21,7 @@ namespace ruac::kernel::track {
      * @brief Multi-instance track manager for kernel track operations.
      *
      * Wraps a Kernel pointer and manages init/over lifecycle
-     * for track metadata tracking. Provides getKernel() access
+     * for track metadata tracking. Provides get_kernel() access
      * to the underlying Kernel instance for CRUD operations.
      */
     class Multis {
@@ -34,7 +34,7 @@ namespace ruac::kernel::track {
       public:
         Multis();
         ~Multis();
-        auto getKernel() -> Kernel &;
+        auto get_kernel() -> Kernel &;
     }; // Multis
 
 } // namespace ruac::kernel::track

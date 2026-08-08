@@ -33,7 +33,7 @@ namespace ruac::kernel::object {
         std::vector<ruac::kernel::core::data::Database> m_databases;
 
       public:
-        static auto obitan() -> Kernel &;
+        static auto instance() -> Kernel &;
         auto getdbs() -> std::vector<ruac::kernel::core::data::Database>;
     }; // Kernel
 

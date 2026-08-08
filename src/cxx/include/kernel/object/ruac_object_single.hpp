@@ -30,7 +30,7 @@ namespace ruac::kernel::object {
         Single &operator=(const Single &) = delete;
 
       public:
-        static auto obitan() -> Single &;
+        static auto instance() -> Single &;
         auto getdbs() -> std::vector<ruac::kernel::core::data::Database> &;
     }; // Single
 

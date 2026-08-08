@@ -92,49 +92,49 @@ namespace ruac::kernel::track {
         std::unordered_map<std::string, std::unordered_map<std::string, std::unordered_map<std::string, mapper::FieldsMap>>> m_field_map;
 
       public:
-        auto existDatabase(const std::string &database_name_) -> bool;
-        void addDatabase(const std::string &database_name_, uint64_t id_, uint64_t version_);
-        void updateDatabaseIndex(const std::string &database_name_, uint64_t index_);
-        void updateDatabaseId(const std::string &database_name_, uint64_t id_);
-        void updateDatabaseVersion(const std::string &database_name_, uint64_t version_);
-        void deleteDatabase(const std::string &database_name_);
-        auto getDatabaseIndex(const std::string &database_name_) -> uint64_t;
-        auto getDatabaseId(const std::string &database_name_) -> uint64_t;
-        auto getDatabaseVersion(const std::string &database_name_) -> uint64_t;
-        auto getDatabaseNameMaxWidth() -> uint32_t;
+        auto exist_database(const std::string &database_name_) -> bool;
+        void add_database(const std::string &database_name_, uint64_t id_, uint64_t version_);
+        void update_database_index(const std::string &database_name_, uint64_t index_);
+        void update_database_id(const std::string &database_name_, uint64_t id_);
+        void update_database_version(const std::string &database_name_, uint64_t version_);
+        void delete_database(const std::string &database_name_);
+        auto get_database_index(const std::string &database_name_) -> uint64_t;
+        auto get_database_id(const std::string &database_name_) -> uint64_t;
+        auto get_database_version(const std::string &database_name_) -> uint64_t;
+        auto get_database_name_max_width() -> uint32_t;
 
       public:
-        void addTable(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_);
-        void updateTableIndex(const std::string &database_name_, const std::string &table_name_, uint64_t index_);
-        void updateTableId(const std::string &database_name_, const std::string &table_name_, uint64_t id_);
-        void updateTableVersion(const std::string &database_name_, const std::string &table_name_, uint64_t version_);
-        void deleteTable(const std::string &database_name_, const std::string &table_name_);
-        auto getTableIndex(const std::string &database_name_, const std::string &table_name_) -> uint64_t;
-        auto getTableId(const std::string &database_name_, const std::string &table_name_) -> uint64_t;
-        auto getTableVersion(const std::string &database_name_, const std::string &table_name_) -> uint64_t;
-        auto getTableNameMaxWidth() -> uint32_t;
+        void add_table(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_);
+        void update_table_index(const std::string &database_name_, const std::string &table_name_, uint64_t index_);
+        void update_table_id(const std::string &database_name_, const std::string &table_name_, uint64_t id_);
+        void update_table_version(const std::string &database_name_, const std::string &table_name_, uint64_t version_);
+        void delete_table(const std::string &database_name_, const std::string &table_name_);
+        auto get_table_index(const std::string &database_name_, const std::string &table_name_) -> uint64_t;
+        auto get_table_id(const std::string &database_name_, const std::string &table_name_) -> uint64_t;
+        auto get_table_version(const std::string &database_name_, const std::string &table_name_) -> uint64_t;
+        auto get_table_name_max_width() -> uint32_t;
 
       public:
-        void addRow(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_);
-        void updateRowIndex(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t index_);
-        void updateRowId(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t new_id_);
-        void updateRowVersion(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t version_);
-        void deleteRow(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_);
-        auto getRowIndex(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t;
-        auto getRowId(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t;
-        auto getRowVersion(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t;
-        auto getRowIdMaxWidth() -> uint32_t;
+        void add_row(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_);
+        void update_row_index(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t index_);
+        void update_row_id(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t new_id_);
+        void update_row_version(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t version_);
+        void delete_row(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_);
+        auto get_row_index(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t;
+        auto get_row_id(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t;
+        auto get_row_version(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t;
+        auto get_row_id_max_width() -> uint32_t;
 
       public:
-        void addField(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_, uint64_t version_);
-        void updateFieldIndex(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t index_);
-        void updateFieldId(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_);
-        void updateFieldVersion(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t version_);
-        void deleteField(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_);
-        auto getFieldIndex(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t;
-        auto getFieldId(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t;
-        auto getFieldVersion(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t;
-        auto getFieldNameMaxWidth() -> uint32_t;
+        void add_field(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_, uint64_t version_);
+        void update_field_index(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t index_);
+        void update_field_id(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_);
+        void update_field_version(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t version_);
+        void delete_field(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_);
+        auto get_field_index(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t;
+        auto get_field_id(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t;
+        auto get_field_version(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t;
+        auto get_field_name_max_width() -> uint32_t;
     }; // Kernel
 
 } // namespace ruac::kernel::track

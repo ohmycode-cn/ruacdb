@@ -30,7 +30,7 @@ namespace ruac::kernel::state {
       public:
         Multis();
         ~Multis();
-        auto getKernelState() -> Kernel &;
+        auto get_kernel_state() -> Kernel &;
     }; // Multis
 
 } // namespace ruac::kernel::state

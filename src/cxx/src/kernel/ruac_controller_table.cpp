@@ -8,7 +8,7 @@
 
 #include "kernel/ruac_controller_table.hpp"
 
-namespace ruac::kernel {
+namespace ruac::kernel::controller {
 
     /**
      * @brief Access the singleton instance of ControllerTable.
@@ -40,7 +40,7 @@ namespace ruac::kernel {
      *          uid and the call returns true.
      *
      */
-    auto ControllerTable::set_controller(int uid, ruac::kernel::controller::Operation &controller) -> bool {
+    auto ControllerTable::set_controller(int uid, Operation &controller) -> bool {
         auto itr = m_controller_table.find(uid);
         if (itr != m_controller_table.end()) {
             return false;
@@ -54,15 +54,14 @@ namespace ruac::kernel {
      *
      * @param uid_ - Unique identifier used to look up the controller.
      *
-     * @return ruac::kernel::controller::Operation & - Reference to the stored
-     *         controller operation for the uid.
+     * @return Operation & - Reference to the stored controller operation for the uid.
      *
      * @details When the uid is found in the controller table a reference to the
      *          stored controller is returned. If no matching entry exists a
      *          std::runtime_error is thrown describing the missing uid.
      *
      */
-    auto ControllerTable::get_controller(int uid) -> ruac::kernel::controller::Operation & {
+    auto ControllerTable::get_controller(int uid) -> Operation & {
         auto itr = m_controller_table.find(uid);
         if (itr != m_controller_table.end()) {
             return *itr->second;
@@ -71,4 +70,4 @@ namespace ruac::kernel {
         }
     }
 
-} // namespace ruac::kernel
+} // namespace ruac::kernel::controller

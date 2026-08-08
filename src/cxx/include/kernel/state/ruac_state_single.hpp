@@ -6,7 +6,7 @@
  * Header File : include/kernel/state/ruac_state_single.hpp
  * Source File : src/kernel/state/ruac_state_single.cpp
  *
- * @brief Singleton state manager with static obitan() access wrapping a Kernel state pointer with init/over lifecycle management.
+ * @brief Singleton state manager with static instance() access wrapping a Kernel state pointer with init/over lifecycle management.
  */
 
 #pragma once
@@ -33,8 +33,8 @@ namespace ruac::kernel::state {
         void over();
 
       public:
-        static auto obitan() -> Single &;
-        auto getKernelState() -> Kernel &;
+        static auto instance() -> Single &;
+        auto get_kernel_state() -> Kernel &;
     }; // Single
 
 } // namespace ruac::kernel::state

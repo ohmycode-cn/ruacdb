@@ -64,17 +64,17 @@ namespace ruac::kernel {
             ~Operation();
 
           public:
-            void setObjectStrategy(defname::objs &single_);
-            void setObjectStrategy(std::unique_ptr<defname::objm> multis_);
-            auto getObjectStrategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> &;
+            void set_object_strategy(defname::objs &single_);
+            void set_object_strategy(std::unique_ptr<defname::objm> multis_);
+            auto get_object_strategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> &;
 
-            void setStateStrategy(defname::stas &state_single_);
-            void setStateStrategy(std::unique_ptr<defname::stam> state_multis_);
-            auto getStateStrategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> &;
+            void set_state_strategy(defname::stas &state_single_);
+            void set_state_strategy(std::unique_ptr<defname::stam> state_multis_);
+            auto get_state_strategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> &;
 
-            void setTrackStrategy(defname::tras &track_single_);
-            void setTrackStrategy(std::unique_ptr<defname::tram> track_multis_);
-            auto getTrackStrategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> &;
+            void set_track_strategy(defname::tras &track_single_);
+            void set_track_strategy(std::unique_ptr<defname::tram> track_multis_);
+            auto get_track_strategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> &;
         }; // Operation
     } // namespace controller
 

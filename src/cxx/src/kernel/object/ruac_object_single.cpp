@@ -19,13 +19,13 @@ namespace ruac::kernel::object {
     /**
      * @brief Constructs a Single object and initializes database copy.
      */
-    Single::Single() : m_databases{ruac::kernel::object::Kernel::obitan().getdbs()} {}
+    Single::Single() : m_databases{ruac::kernel::object::Kernel::instance().getdbs()} {}
 
     /**
      * @brief Gets the singleton instance of Single.
      * @return Reference to the single Single instance.
      */
-    auto Single::obitan() -> Single & {
+    auto Single::instance() -> Single & {
         static Single instance;
         return instance;
     }

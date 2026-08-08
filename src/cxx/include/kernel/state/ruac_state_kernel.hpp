@@ -29,10 +29,10 @@ namespace ruac::kernel::state {
         Kernel() = default;
         ~Kernel() = default;
 
-        auto getCurrentDatabaseName() -> std::string &;
-        auto getCurrentTableNumber() -> std::string &;
-        void setCurrentDatabaseName(const std::string &name_);
-        void setCurrentTableNumber(const int number_);
+        auto get_current_database_name() -> std::string &;
+        auto get_current_table_number() -> std::string &;
+        void set_current_database_name(const std::string &name_);
+        void set_current_table_number(const int number_);
     }; // Kernel
 
 } // namespace ruac::kernel::state

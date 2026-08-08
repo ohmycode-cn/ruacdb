@@ -24,7 +24,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   True if the database exists, false otherwise.
      */
-    auto Kernel::existDatabase(const std::string &database_name_) -> bool {
+    auto Kernel::exist_database(const std::string &database_name_) -> bool {
         return m_database_map.find(database_name_) != m_database_map.end();
     }
 
@@ -36,7 +36,7 @@ namespace ruac::kernel::track {
      *   id_: The unique identifier for the database.
      *   version_: The version number of the database.
      */
-    void Kernel::addDatabase(const std::string &database_name_, uint64_t id_, uint64_t version_) {
+    void Kernel::add_database(const std::string &database_name_, uint64_t id_, uint64_t version_) {
         mapper::DatabasesMap map;
         map.m_index = m_database_map.size();
         map.m_id = id_;
@@ -52,7 +52,7 @@ namespace ruac::kernel::track {
      *   database_name_: The name of the database.
      *   index_: The new index value.
      */
-    void Kernel::updateDatabaseIndex(const std::string &database_name_, uint64_t index_) {
+    void Kernel::update_database_index(const std::string &database_name_, uint64_t index_) {
         auto it = m_database_map.find(database_name_);
         if (it != m_database_map.end()) {
             it->second.m_index = index_;
@@ -66,7 +66,7 @@ namespace ruac::kernel::track {
      *   database_name_: The name of the database.
      *   id_: The new unique identifier.
      */
-    void Kernel::updateDatabaseId(const std::string &database_name_, uint64_t id_) {
+    void Kernel::update_database_id(const std::string &database_name_, uint64_t id_) {
         auto it = m_database_map.find(database_name_);
         if (it != m_database_map.end()) {
             it->second.m_id = id_;
@@ -80,7 +80,7 @@ namespace ruac::kernel::track {
      *   database_name_: The name of the database.
      *   version_: The new version number.
      */
-    void Kernel::updateDatabaseVersion(const std::string &database_name_, uint64_t version_) {
+    void Kernel::update_database_version(const std::string &database_name_, uint64_t version_) {
         auto it = m_database_map.find(database_name_);
         if (it != m_database_map.end()) {
             it->second.m_version = version_;
@@ -93,7 +93,7 @@ namespace ruac::kernel::track {
      * Args:
      *   database_name_: The name of the database to delete.
      */
-    void Kernel::deleteDatabase(const std::string &database_name_) {
+    void Kernel::delete_database(const std::string &database_name_) {
         m_database_map.erase(database_name_);
         m_table_map.erase(database_name_);
         m_row_map.erase(database_name_);
@@ -117,7 +117,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The index of the database.
      */
-    auto Kernel::getDatabaseIndex(const std::string &database_name_) -> uint64_t {
+    auto Kernel::get_database_index(const std::string &database_name_) -> uint64_t {
         return m_database_map[database_name_].m_index;
     }
 
@@ -130,7 +130,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The unique identifier of the database.
      */
-    auto Kernel::getDatabaseId(const std::string &database_name_) -> uint64_t {
+    auto Kernel::get_database_id(const std::string &database_name_) -> uint64_t {
         return m_database_map[database_name_].m_id;
     }
 
@@ -143,7 +143,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The version number of the database.
      */
-    auto Kernel::getDatabaseVersion(const std::string &database_name_) -> uint64_t {
+    auto Kernel::get_database_version(const std::string &database_name_) -> uint64_t {
         return m_database_map[database_name_].m_version;
     }
 
@@ -153,7 +153,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The maximum width of database names.
      */
-    auto Kernel::getDatabaseNameMaxWidth() -> uint32_t {
+    auto Kernel::get_database_name_max_width() -> uint32_t {
         return m_database_name_max_width;
     }
 
@@ -166,7 +166,7 @@ namespace ruac::kernel::track {
      *   id_: The unique identifier for the table.
      *   version_: The version number of the table.
      */
-    void Kernel::addTable(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_) {
+    void Kernel::add_table(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_) {
         mapper::TablesMap map;
         map.m_index = m_table_map[database_name_].size();
         map.m_id = id_;
@@ -183,7 +183,7 @@ namespace ruac::kernel::track {
      *   table_name_: The name of the table.
      *   index_: The new index value.
      */
-    void Kernel::updateTableIndex(const std::string &database_name_, const std::string &table_name_, uint64_t index_) {
+    void Kernel::update_table_index(const std::string &database_name_, const std::string &table_name_, uint64_t index_) {
         auto db_it = m_table_map.find(database_name_);
         if (db_it != m_table_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -201,7 +201,7 @@ namespace ruac::kernel::track {
      *   table_name_: The name of the table.
      *   id_: The new unique identifier.
      */
-    void Kernel::updateTableId(const std::string &database_name_, const std::string &table_name_, uint64_t id_) {
+    void Kernel::update_table_id(const std::string &database_name_, const std::string &table_name_, uint64_t id_) {
         auto db_it = m_table_map.find(database_name_);
         if (db_it != m_table_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -219,7 +219,7 @@ namespace ruac::kernel::track {
      *   table_name_: The name of the table.
      *   version_: The new version number.
      */
-    void Kernel::updateTableVersion(const std::string &database_name_, const std::string &table_name_, uint64_t version_) {
+    void Kernel::update_table_version(const std::string &database_name_, const std::string &table_name_, uint64_t version_) {
         auto db_it = m_table_map.find(database_name_);
         if (db_it != m_table_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -236,7 +236,7 @@ namespace ruac::kernel::track {
      *   database_name_: The name of the database.
      *   table_name_: The name of the table to delete.
      */
-    void Kernel::deleteTable(const std::string &database_name_, const std::string &table_name_) {
+    void Kernel::delete_table(const std::string &database_name_, const std::string &table_name_) {
         auto db_it = m_table_map.find(database_name_);
         if (db_it != m_table_map.end()) {
             db_it->second.erase(table_name_);
@@ -271,7 +271,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The index of the table.
      */
-    auto Kernel::getTableIndex(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
+    auto Kernel::get_table_index(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
         return m_table_map[database_name_][table_name_].m_index;
     }
 
@@ -285,7 +285,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The ID of the table.
      */
-    auto Kernel::getTableId(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
+    auto Kernel::get_table_id(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
         return m_table_map[database_name_][table_name_].m_id;
     }
 
@@ -299,7 +299,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The version number of the table.
      */
-    auto Kernel::getTableVersion(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
+    auto Kernel::get_table_version(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
         return m_table_map[database_name_][table_name_].m_version;
     }
 
@@ -309,7 +309,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The maximum width of table names.
      */
-    auto Kernel::getTableNameMaxWidth() -> uint32_t {
+    auto Kernel::get_table_name_max_width() -> uint32_t {
         return m_table_name_max_width;
     }
 
@@ -322,7 +322,7 @@ namespace ruac::kernel::track {
      *   id_: The unique identifier for the row.
      *   version_: The version number of the row.
      */
-    void Kernel::addRow(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_) {
+    void Kernel::add_row(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_) {
         mapper::RowsMap map;
         map.m_index = m_row_map[database_name_][table_name_].size();
         map.m_id = id_;
@@ -340,7 +340,7 @@ namespace ruac::kernel::track {
      *   row_id_: The ID of the row.
      *   index_: The new index value.
      */
-    void Kernel::updateRowIndex(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t index_) {
+    void Kernel::update_row_index(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t index_) {
         auto db_it = m_row_map.find(database_name_);
         if (db_it != m_row_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -362,7 +362,7 @@ namespace ruac::kernel::track {
      *   row_id_: The current ID of the row.
      *   new_id_: The new ID value.
      */
-    void Kernel::updateRowId(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t new_id_) {
+    void Kernel::update_row_id(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t new_id_) {
         auto db_it = m_row_map.find(database_name_);
         if (db_it != m_row_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -387,7 +387,7 @@ namespace ruac::kernel::track {
      *   row_id_: The ID of the row.
      *   version_: The new version number.
      */
-    void Kernel::updateRowVersion(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t version_) {
+    void Kernel::update_row_version(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t version_) {
         auto db_it = m_row_map.find(database_name_);
         if (db_it != m_row_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -408,7 +408,7 @@ namespace ruac::kernel::track {
      *   table_name_: The name of the table.
      *   row_id_: The ID of the row to delete.
      */
-    void Kernel::deleteRow(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) {
+    void Kernel::delete_row(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) {
         auto db_it = m_row_map.find(database_name_);
         if (db_it != m_row_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -441,7 +441,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The index of the row.
      */
-    auto Kernel::getRowIndex(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
+    auto Kernel::get_row_index(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
         return m_row_map[database_name_][table_name_][row_id_].m_index;
     }
 
@@ -456,7 +456,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The ID of the row.
      */
-    auto Kernel::getRowId(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
+    auto Kernel::get_row_id(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
         return m_row_map[database_name_][table_name_][row_id_].m_id;
     }
 
@@ -471,7 +471,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The version number of the row.
      */
-    auto Kernel::getRowVersion(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
+    auto Kernel::get_row_version(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
         return m_row_map[database_name_][table_name_][row_id_].m_version;
     }
 
@@ -481,7 +481,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The maximum width of row IDs.
      */
-    auto Kernel::getRowIdMaxWidth() -> uint32_t {
+    auto Kernel::get_row_id_max_width() -> uint32_t {
         return m_row_id_max_width;
     }
 
@@ -495,7 +495,7 @@ namespace ruac::kernel::track {
      *   id_: The unique identifier for the field.
      *   version_: The version number of the field.
      */
-    void Kernel::addField(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_, uint64_t version_) {
+    void Kernel::add_field(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_, uint64_t version_) {
         mapper::FieldsMap map;
         map.m_index = m_field_map[database_name_][table_name_].size();
         map.m_id = id_;
@@ -513,7 +513,7 @@ namespace ruac::kernel::track {
      *   field_name_: The name of the field.
      *   index_: The new index value.
      */
-    void Kernel::updateFieldIndex(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t index_) {
+    void Kernel::update_field_index(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t index_) {
         auto db_it = m_field_map.find(database_name_);
         if (db_it != m_field_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -535,7 +535,7 @@ namespace ruac::kernel::track {
      *   field_name_: The name of the field.
      *   id_: The new ID value.
      */
-    void Kernel::updateFieldId(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_) {
+    void Kernel::update_field_id(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_) {
         auto db_it = m_field_map.find(database_name_);
         if (db_it != m_field_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -557,7 +557,7 @@ namespace ruac::kernel::track {
      *   field_name_: The name of the field.
      *   version_: The new version number.
      */
-    void Kernel::updateFieldVersion(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t version_) {
+    void Kernel::update_field_version(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t version_) {
         auto db_it = m_field_map.find(database_name_);
         if (db_it != m_field_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -578,7 +578,7 @@ namespace ruac::kernel::track {
      *   table_name_: The name of the table.
      *   field_name_: The name of the field to delete.
      */
-    void Kernel::deleteField(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) {
+    void Kernel::delete_field(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) {
         auto db_it = m_field_map.find(database_name_);
         if (db_it != m_field_map.end()) {
             auto table_it = db_it->second.find(table_name_);
@@ -611,7 +611,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The index of the field.
      */
-    auto Kernel::getFieldIndex(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
+    auto Kernel::get_field_index(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
         return m_field_map[database_name_][table_name_][field_name_].m_index;
     }
 
@@ -626,7 +626,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The ID of the field.
      */
-    auto Kernel::getFieldId(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
+    auto Kernel::get_field_id(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
         return m_field_map[database_name_][table_name_][field_name_].m_id;
     }
 
@@ -641,7 +641,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The version number of the field.
      */
-    auto Kernel::getFieldVersion(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
+    auto Kernel::get_field_version(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
         return m_field_map[database_name_][table_name_][field_name_].m_version;
     }
 
@@ -651,7 +651,7 @@ namespace ruac::kernel::track {
      * Returns:
      *   The maximum width of field names.
      */
-    auto Kernel::getFieldNameMaxWidth() -> uint32_t {
+    auto Kernel::get_field_name_max_width() -> uint32_t {
         return m_field_name_max_width;
     }
 

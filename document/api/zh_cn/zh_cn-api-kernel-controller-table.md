@@ -2,24 +2,24 @@
 
 ## 模块概述
 
-`ControllerTable` 类归属于 `ruac::kernel` 命名空间，是内核层的控制器注册表。它采用单例模式（线程安全的函数局部静态变量），以 `uid`（唯一标识符）为键，维护 `controller::Operation` 实例的引用映射，供上层按 uid 注册并检索控制器操作。
+`ControllerTable` 类归属于 `ruac::kernel::controller` 命名空间，与 `Operation` 同层级，是内核层的控制器注册表。它采用单例模式（线程安全的函数局部静态变量），以 `uid`（唯一标识符）为键，维护 `Operation` 实例的引用映射，供上层按 uid 注册并检索控制器操作。
 
 `ControllerTable` 自身不持有 `Operation` 的所有权，仅保存指向 `Operation` 的裸指针，因此调用方必须保证被注册的 `Operation` 对象生命周期长于其在表中的使用期。
 
 ## 命名空间与头文件
 
-- 命名空间：`ruac::kernel`
+- 命名空间：`ruac::kernel::controller`
 - 头文件：`include/kernel/ruac_controller_table.hpp`
 - 源文件：`src/kernel/ruac_controller_table.cpp`
 
 ## 类定义
 
 ```cpp
-namespace ruac::kernel {
+namespace ruac::kernel::controller {
 
     class ControllerTable {
       private:
-        std::unordered_map<int, ruac::kernel::controller::Operation *> m_controller_table;
+        std::unordered_map<int, Operation *> m_controller_table;
 
       private:
         ControllerTable() = default;
@@ -29,17 +29,17 @@ namespace ruac::kernel {
 
       public:
         static auto instance() -> ControllerTable &;
-        auto set_controller(int uid, ruac::kernel::controller::Operation &controller) -> bool;
-        auto get_controller(int uid) -> ruac::kernel::controller::Operation &;
+        auto set_controller(int uid, Operation &controller) -> bool;
+        auto get_controller(int uid) -> Operation &;
     };
 
-} // namespace ruac::kernel
+} // namespace ruac::kernel::controller
 ```
 
 ## 设计说明
 
 - **单例模式**：构造、析构、拷贝构造与拷贝赋值均为 `private` 或 `delete`，仅能通过静态方法 `instance()` 获取唯一实例。`instance()` 内部使用函数局部静态变量，由 C++11 起保证其初始化的线程安全性。
-- **存储结构**：内部使用 `std::unordered_map<int, controller::Operation *>`，以 `uid` 为键、`Operation` 指针为值。
+- **存储结构**：内部使用 `std::unordered_map<int, Operation *>`，以 `uid` 为键、`Operation` 指针为值。
 - **非拥有式**：表中存储的是 `Operation *` 裸指针，`ControllerTable` 不管理 `Operation` 的生命周期，调用方需自行保证对象有效。
 
 ## 成员函数
@@ -63,7 +63,7 @@ static auto instance() -> ControllerTable &;
 ### set_controller(int, controller::Operation &)
 
 ```cpp
-auto set_controller(int uid, ruac::kernel::controller::Operation &controller) -> bool;
+auto set_controller(int uid, Operation &controller) -> bool;
 ```
 
 按 `uid` 注册一个控制器操作。首先在表中查找该 `uid`：
@@ -89,7 +89,7 @@ auto set_controller(int uid, ruac::kernel::controller::Operation &controller) ->
 ### get_controller(int)
 
 ```cpp
-auto get_controller(int uid) -> ruac::kernel::controller::Operation &;
+auto get_controller(int uid) -> Operation &;
 ```
 
 按 `uid` 检索已注册的控制器操作。
@@ -125,10 +125,10 @@ using namespace ruac::kernel;
 
 // 创建并配置控制器操作
 controller::Operation op;
-op.setObjectStrategy(object::Single::obitan());
+op.set_object_strategy(object::Single::instance());
 
 // 注册到控制器表
-auto &table = ControllerTable::instance();
+auto &table = controller::ControllerTable::instance();
 bool ok = table.set_controller(1001, op);   // 返回 true
 
 // 按 uid 检索

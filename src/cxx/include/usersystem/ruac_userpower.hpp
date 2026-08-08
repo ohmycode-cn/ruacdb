@@ -35,7 +35,7 @@ namespace ruac::usersystem {
             {"root", {"root", 0, "root", true, true, true, true}},
             {"live", {"live", 1, "live", false, false, false, false}}};
 
-      public:
+      private:
         UserPower() = default;
         ~UserPower() = default;
         UserPower(const UserPower &) = delete;

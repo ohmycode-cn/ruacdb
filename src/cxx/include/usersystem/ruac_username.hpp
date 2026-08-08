@@ -36,7 +36,7 @@ namespace ruac::usersystem {
         std::mutex M_USER_NAME_MTX;
         bool m_init_once{false};
 
-      public:
+      private:
         UserName() = default;
         ~UserName() = default;
         UserName(const UserName &) = delete;

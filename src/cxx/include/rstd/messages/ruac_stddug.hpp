@@ -34,7 +34,7 @@ namespace ruac::rstd::messages {
         std::string m_header{"[ TEMP DEBUG:( ] "};
         StdDebugParamList m_param_mode{};
 
-      public:
+      private:
         StdDug() = default;
         ~StdDug() = default;
         StdDug(const StdDug &) = delete;

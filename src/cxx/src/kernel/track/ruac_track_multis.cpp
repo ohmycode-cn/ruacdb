@@ -52,7 +52,7 @@ namespace ruac::kernel::track {
      * @brief Gets the Kernel instance.
      * @return Reference to the Kernel object.
      */
-    auto Multis::getKernel() -> Kernel & {
+    auto Multis::get_kernel() -> Kernel & {
         return *m_kernel;
     }
 
