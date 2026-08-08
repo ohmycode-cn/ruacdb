@@ -120,6 +120,7 @@ namespace ruac::syntax_lite::tree {
      */
     bool Parser::parse_create_database() {
 
+        // tmp debug line;
         rstd::messages::StdMsg::instance()
             .print(rstd::messages::StdDug::instance()
                        .ostrs(
@@ -357,6 +358,7 @@ namespace ruac::syntax_lite::tree {
 
     void Parser::parser() {
         dispatcher();
+        M_PREEXEC->dispatcher(M_SYNX_LIST.get());
     }
 
     void Parser::get_query(const std::string &line_) {

@@ -9,6 +9,8 @@
 #include "syntax_lite/tree/node/ruac_create_database.hpp"
 #include "kernel/track/ruac_track_single.hpp"
 #include "kernel/ruac_controller_table.hpp"
+#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rstd/messages/ruac_stddug.hpp"
 #include <syncstream>
 #include <iostream>
 #include <sstream>
@@ -22,6 +24,15 @@ namespace ruac::syntax_lite::tree::node {
     }
 
     void CreateDatabase::create_database(const std::string &name, bool in_advance_check) {
+
+        // tmp debug line;
+        rstd::messages::StdMsg::instance()
+            .print(rstd::messages::StdDug::instance()
+                       .ostrs(
+                           "Class: CreateDatabase",
+                           __FILE__,
+                           __LINE__));
+
         if (in_advance_check && exist_database(name)) {
             std::stringstream ss;
             ss << "Error: Database '" << name << "' already exists";
