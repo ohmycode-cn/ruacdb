@@ -35,8 +35,9 @@ namespace ruac::syntax_lite::tree {
         ~SynxList() = default;
 
       public:
-        // void set_node_tree(const decltype(M_NODE_TREE) &node_tree_);
+        void set_node_tree(const decltype(M_NODE_TREE) &node_tree_);
         auto get_node_tree() const -> const decltype(M_NODE_TREE) &;
+        void clr_node_tree();
     };
 
 } // namespace ruac::syntax_lite::tree

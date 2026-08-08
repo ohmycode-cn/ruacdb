@@ -52,7 +52,7 @@ namespace ruac::syntax_lite::tree {
       private:
         void print_tokens();
         void dispatcher();
-        void parser_tokens();
+        void parser();
 
       public:
         void get_query(const std::string &line_);
