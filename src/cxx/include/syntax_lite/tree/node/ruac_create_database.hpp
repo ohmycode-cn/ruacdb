@@ -12,12 +12,20 @@
 #ifndef RUAC_CREATE_DATABASE_HPP
 #define RUAC_CREATE_DATABASE_HPP
 
+#include <string>
+
 namespace ruac::syntax_lite::tree::node {
 
     class CreateDatabase {
+      private:
+        auto exist_database(const std::string &name) -> bool;
+
       public:
         CreateDatabase() = default;
         ~CreateDatabase() = default;
+
+      public:
+        void create_database(const std::string &name, bool in_advance_check = false);
     };
 
 } // namespace ruac::syntax_lite::tree::node

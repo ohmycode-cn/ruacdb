@@ -1,0 +1,43 @@
+/**
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
+ * Author: ohmycode-cn(ohcode@163.com)
+ * include/usersystem/ruac_userid.hpp
+ * src/usersystem/ruac_userid.cpp
+ * Description of header file function declaration
+ *
+ */
+
+#pragma once
+#ifndef RUAC_USERID_HPP
+#define RUAC_USERID_HPP
+
+#include <unordered_map>
+#include <string>
+#include <mutex>
+
+namespace ruac::usersystem {
+
+    class UserId {
+      private:
+        std::unordered_map<std::string, int> m_user_id_table{
+            {"root", 0},
+            {"live", 1}, // default user
+        }; // Predefined user "root" with ID 0
+        std::mutex M_USER_ID_MTX;
+
+      private:
+        UserId() = default;
+        ~UserId() = default;
+        UserId(const UserId &) = delete;
+        UserId &operator=(const UserId &) = delete;
+
+      public:
+        static auto instance() -> UserId &;
+        auto get_user_id(const std::string &username_) -> int;
+        auto add_user(const std::string &username_) -> bool;
+    };
+
+} // namespace ruac::usersystem
+
+#endif // RUAC_USERID_HPP

@@ -16,6 +16,19 @@
 namespace ruac::kernel::track {
 
     /**
+     * Checks if a database exists in the tracking map.
+     *
+     * Args:
+     *   database_name_: The name of the database.
+     *
+     * Returns:
+     *   True if the database exists, false otherwise.
+     */
+    auto Kernel::existDatabase(const std::string &database_name_) -> bool {
+        return m_database_map.find(database_name_) != m_database_map.end();
+    }
+
+    /**
      * Adds a new database entry to the tracking map.
      *
      * Args:

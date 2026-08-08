@@ -17,8 +17,6 @@
 #include <syncstream>
 #include <iostream>
 #include <sstream>
-#include <type_traits>
-#include <variant>
 
 namespace ruac::syntax_lite::tree {
 
@@ -285,7 +283,10 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
-    Parser::Parser() : M_SYNX_LIST(std::make_unique<SynxList>()), M_LEXER(std::make_unique<Lexer>()) {}
+    Parser::Parser()
+        : M_SYNX_LIST(std::make_unique<SynxList>()),
+          M_PREEXEC(std::make_unique<PrExec>()),
+          M_LEXER(std::make_unique<Lexer>()) {}
 
     /**
      * @brief Test helper: dump all parsed tokens to stdout
@@ -356,17 +357,6 @@ namespace ruac::syntax_lite::tree {
 
     void Parser::parser() {
         dispatcher();
-        auto &node = M_SYNX_LIST->get_node_tree();
-        std::visit([](auto &arg) {
-            using T = std::decay_t<decltype(arg)>;
-            if constexpr (std::is_same_v<T, node::nodelist::CreateDatabase>) {
-            } else if constexpr (std::is_same_v<T, node::nodelist::CreateTable>) {
-            } else if constexpr (std::is_same_v<T, node::nodelist::UseDatabase>) {
-            } else if constexpr (std::is_same_v<T, node::nodelist::ShowDatabases>) {
-            } else if constexpr (std::is_same_v<T, node::nodelist::ShowTables>) {
-            }
-        },
-                   node);
     }
 
     void Parser::get_query(const std::string &line_) {

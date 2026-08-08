@@ -13,16 +13,17 @@
 #define RUAC_PREXEC_HPP
 
 #include "syntax_lite/tree/node/ruac_nodeproc.hpp" // IWYU pragma: keep
+#include "syntax_lite/tree/ruac_synxlist.hpp"
 #include <memory>
 
 namespace ruac::syntax_lite::tree {
 
     struct PrExecNodeList {
-        node::CreateDatabase M_NODE_CREATE_DATABASE;
-        node::CreateTable M_NODE_CREATE_TABLE;
-        node::UseDatabase M_NODE_USE_DATABASE;
-        node::ShowDatabases M_NODE_SHOW_DATABASES;
-        node::ShowTables M_NODE_SHOW_TABLES;
+        node::CreateDatabase M_CREATE_DATABASE;
+        node::CreateTable M_CREATE_TABLE;
+        node::UseDatabase M_USE_DATABASE;
+        node::ShowDatabases M_SHOW_DATABASES;
+        node::ShowTables M_SHOW_TABLES;
     };
 
     class PrExec {
@@ -34,7 +35,7 @@ namespace ruac::syntax_lite::tree {
         ~PrExec() = default;
 
       public:
-        auto get_execute_node_list() const -> const PrExecNodeList &;
+        void dispatcher(SynxList *synx_list_);
     };
 
 } // namespace ruac::syntax_lite::tree

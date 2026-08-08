@@ -15,6 +15,7 @@
 #include "syntax_lite/tree/ruac_synxlist.hpp"
 #include "syntax_lite/tree/ruac_kwenums.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
+#include "syntax_lite/tree/ruac_prexec.hpp"
 #include <cstddef>
 #include <memory>
 #include <string>
@@ -26,6 +27,7 @@ namespace ruac::syntax_lite::tree {
     class Parser {
       private:
         std::unique_ptr<SynxList> M_SYNX_LIST;
+        std::unique_ptr<PrExec> M_PREEXEC;
         std::unique_ptr<Lexer> M_LEXER;
         std::mutex M_PARSER_MTX;
 
