@@ -25,4 +25,15 @@ namespace ruac::rstd::messages {
         return instance_object;
     }
 
+    /**
+     * @brief Enable or disable printing messages
+     *
+     * @param enable_ Whether to enable or disable printing messages
+     *
+     * @details void
+     */
+    void StdMsg::enable_stdmsg(const bool enable_) {
+        m_enable_msg = enable_;
+    }
+
 } // namespace ruac::rstd::messages

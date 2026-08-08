@@ -59,7 +59,7 @@ namespace ruac::syntax_lite::tree::node {
                            __FILE__,
                            __LINE__));
 
-        if (in_advance_check && exist_database(name)) {
+        if (in_advance_check || exist_database(name)) {
             std::stringstream ss;
             ss << "Error: Database '" << name << "' already exists";
             std::osyncstream(std::cout) << ss.str() << std::endl;

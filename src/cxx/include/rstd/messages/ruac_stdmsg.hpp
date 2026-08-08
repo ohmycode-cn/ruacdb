@@ -27,6 +27,7 @@ namespace ruac::rstd::messages {
 
       private:
         std::mutex m_print_mtx;
+        bool m_enable_msg{false};
 
       public:
         template <typename T>
@@ -34,6 +35,7 @@ namespace ruac::rstd::messages {
 
       public:
         static auto instance() -> StdMsg &;
+        void enable_stdmsg(const bool enable_);
     };
 
     /**
@@ -47,6 +49,9 @@ namespace ruac::rstd::messages {
     template <typename T>
     void StdMsg::print(const T &msg_, const bool &stdout_) {
         std::lock_guard<std::mutex> lock(m_print_mtx);
+        if (!m_enable_msg) {
+            return;
+        }
         (!stdout_) ? std::osyncstream(std::cerr) << msg_ << std::endl
                    : std::osyncstream(std::cout) << msg_ << std::endl;
     }

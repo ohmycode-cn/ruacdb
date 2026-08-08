@@ -6,6 +6,7 @@
  * src/ruac_shell_exec.cpp
  */
 
+#include "rstd/messages/ruac_stdmsg.hpp"
 #include "ruac_shell_parser.hpp"
 #include "ruac_shell_pipe.hpp"
 #include "ruac_shell_exec.hpp"
@@ -116,6 +117,12 @@ namespace ruac {
             cat_command_history();
         } else if ("clr history" == line_) {
             clr_command_history();
+        } else if ("stdmsg on" == line_) {
+            ruac::rstd::messages::StdMsg::instance().enable_stdmsg(true);
+            std::osyncstream(std::cout) << "Enable stdmsg done." << std::endl;
+        } else if ("stdmsg off" == line_) {
+            ruac::rstd::messages::StdMsg::instance().enable_stdmsg(false);
+            std::osyncstream(std::cout) << "Disable stdmsg done." << std::endl;
         } else {
             if (nullptr == M_PARSER) {
                 std::osyncstream(std::cout) << "Not initialized parser." << std::endl;
