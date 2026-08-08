@@ -1,11 +1,2 @@
-[package]
-name = "ruacdb"
-version = "0.1.0"
-edition = "2024"
-
-[[bin]]
-name = "ruacdb_rust"
-path = "src/rust/main.rs"
-
-
-[dependencies]
+[workspace]
+members = ["src/rust/tcpclient","src/rust/tcpserver"]
