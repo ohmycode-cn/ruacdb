@@ -24,7 +24,7 @@ namespace ruac {
         std::vector<std::string> m_command_line_list;
         std::mutex M_SHELL_PARSER_MTX;
         const char M_SEMICOLON{';'};
-        const char M_SPACE{' '};
+        [[maybe_unused]] const char M_SPACE{' '};
 
       public:
         ShellParser() = default;
