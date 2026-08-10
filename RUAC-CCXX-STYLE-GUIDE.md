@@ -1,181 +1,220 @@
-# RUAC C And C++ Style Guide
+# RUAC C and C++ Style Guide
 
-## 1. File Layout
+# C++ Style Guide
 
-### 1.1 File Header Block
+## Table of Contents
 
-Every source file (`.hpp`, `.cpp`, `.h`, `.c`) must begin with a block comment in the following format:
+[C/C++ Comment Rules](#ccxx-comment-rules)
+[C++ File Rules](#cxx-file-rules)
+[C++ Namespaces](#cxx-namespaces)
+[C++ Global Variables and Constants](#cxx-global-variables-and-constants)
+[C++ Member Variables and Constants](#cxx-member-variables-and-constants)
+[C++ Parameter Rules](#cxx-parameter-rules)
+[C++ Classes](#cxx-classes)
+[C++ Function Return Syntax Standard](#cxx-function-return-syntax-standard)
+[C++ Function Names](#cxx-function-names)
 
+## CCXX Comment Rules
+
+- The comment language for C/C++ is English.
+- Comments for C/C++ must accurately annotate the actual code.
+- If only a header file exists, the member functions inside the class must be annotated.
+- If both a header file and a source file exist, the member functions declared in the header need not be annotated; annotations should be placed in the source file.
+- Function annotations: when a function uses delegation or a relatively complex implementation, an additional description must be provided in `@details`. Optional otherwise.
+  - For example:
+  ```cpp
+  /**
+   * @brief
+   *
+   * @param
+   * 
+   * @return
+   *
+   * @details
+   *
+   */
+   auto example(type param_) -> type;
+  ```
+- Class annotations: the annotation for a class (if a class exists) primarily describes what the class does, whether it is a singleton, polymorphic, has inheritance dependencies, ... etc.
+  - For example:
+  ```cpp
+  /**
+   * @brief
+   *
+   */
+   class Example{};
+  ```
+- Header file annotation header: the annotation header of a header file is a complete description of the header file's functional content.
+  - Note: in a header file, the internal declaration content of a class needs no annotations; only the class itself needs to be annotated.
+  - For example:
+  ```cpp
+  /**
+   * ...
+   * Description of header file function declaration
+   * // start adding the hpp file annotation description on this line
+   */
+  ```
+- Source file annotation header: the annotation header of a source file remains unchanged.
+
+## CXX File Rules
+
+- C++ file names must use only lowercase letters, or separate words with underscores.
+- C++ files must use UTF-8 encoding.
+- C++ files must use LF line endings.
+- The creation and initialization of C++ files must use the `mkf.sh` script.
+
+
+## CXX Namespaces
+
+- This project's C++ code uses `ruac` as the root namespace; all C++ code located inside the RUAC project must be under the `ruac` namespace.
+- Namespace management is delegated to the `mkf.sh` script, which is responsible for initializing `.hpp` and `.cpp` files that conform to the project conventions.
+- Namespaces must use only lowercase letters, or separate words with underscores. CamelCase is forbidden.
+- For example:
 ```cpp
-/**
- * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
- * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
- * Author: <name>(<email>)
- * <relative-path-to-header>
- * <relative-path-to-implementation>
- * <brief description of the file's purpose>
- *
- */
+// Valid namespaces
+// For example:
+namespace ruac { /* code */ } // namespace ruac
+namespace ruac::target { /* code */ } // namespace ruac::target
+namespace ruac::target_other { /* code */ } // namespace ruac::target_other
+
+// Invalid namespaces
+// For example:
+namespace Ruac { /* code */ } // namespace Ruac
+namespace ruac::_target { /* code */ } // namespace ruac::_target
+namespace ruac::target_ { /* code */ } // namespace ruac::target_
+
 ```
 
-- `Style Guide` — always reference this document.
-- `File Rule` — state the column-wrap policy.
-- `Author` — `<name>(<email>)`, e.g. `ohmycode-cn(ohcode@163.com)`.
-- Lines 5–6 — relative paths to the header (`.hpp`) and its implementation (`.cpp`), one per line.
-- Last content line — a concise description of what the file declares or implements.
+## CXX Global Variables and Constants
 
-### 1.2 Include Guard
-
-Use `#pragma once` followed by a traditional `#ifndef` / `#define` / `#endif` guard:
+- C++ global variables must use the `g_` prefix. Global constants must use the `G_` prefix.
+- Global variables should use only lowercase letters, or separate words with underscores.
+- Global constants should use only uppercase letters, or separate words with underscores.
+- Note: the use of global variables should be minimized.
 
 ```cpp
-#pragma once
-#ifndef RUAC_<MODULE>_HPP
-#define RUAC_<MODULE>_HPP
-// ...
-#endif // RUAC_<MODULE>_HPP
+// Valid global variables
+int g_target = 0; // g_target
+int g_target_other = 0; // g_target_other
+
+// Invalid global variables
+int g_Target = 0; // g_Target
+int g_TargetOther = 0; // g_TargetOther
+
+// Valid global constants
+const int G_TARGET = 0; // G_TARGET
+const int G_TARGET_OTHER = 0; // G_TARGET_OTHER
+
+// Invalid global constants
+const int g_target = 0; // g_target
+const int g_target_other = 0; // g_target_other
 ```
 
-### 1.3 Include Order
+## CXX Member Variables and Constants
 
-1. Standard library headers
-2. Third-party library headers
-3. Project headers (quoted `"rstd/..."` paths)
-
-Separate each group with a blank line.
-
----
-
-## 2. Naming Conventions
-
-| Element             | Convention             | Example                  |
-|---------------------|------------------------|--------------------------|
-| Namespace           | lowercase, nested      | `ruac::rstd::logsystem`  |
-| Class / Struct      | PascalCase             | `Format`, `Colored`      |
-| Method              | camelCase              | `format()`, `output()`   |
-| Variable            | camelCase              | `sequence_`, `message_`  |
-| Constant / Enum     | UPPER_SNAKE_CASE       | `MAX_BUFFER_SIZE`        |
-| Template parameter  | PascalCase             | `StringMap`, `Seqnum`    |
-| Type alias          | PascalCase             | `using String = ...`     |
-| File name           | snake_case with prefix | `ruac_format.hpp`        |
-
----
-
-## 3. Formatting
-
-### 3.1 Column Limits
-
-- **Soft wrap** around **100** columns.
-- **Hard wrap** at **120** columns — lines exceeding this must be broken.
-
-### 3.2 Indentation
-
-- **4 spaces** per indent level inside namespaces.
-- **2 spaces** for access-specifier-relative members (`public:`, `private:`, `protected:`).
+- C++ member variables must use the `m_` prefix. Member constants must use the `M_` prefix.
+- Member variables should use only lowercase letters, or separate words with underscores.
+- Member constants should use only uppercase letters, or separate words with underscores.
 
 ```cpp
-namespace ruac::rstd::logsystem {
+// Valid member variables
+int m_target = 0; // m_target
+int m_target_other = 0; // m_target_other
 
-    class Foo {
-      public:
-        void bar();
-    };
+// Invalid member variables
+int m_Target = 0; // m_Target
+int m_TargetOther = 0; // m_TargetOther
 
-} // namespace ruac::rstd::logsystem
+// Valid member constants
+const int M_TARGET = 0; // M_TARGET
+const int M_TARGET_OTHER = 0; // M_TARGET_OTHER
+
+// Invalid member constants
+const int M_target = 0; // M_target
+const int M_target_other = 0; // M_target_other
 ```
 
-### 3.3 Braces
+## CXX Parameter Rules
 
-- Opening brace on the same line as the statement (K&R style).
-- Closing brace on its own line, optionally with a trailing comment.
-
-### 3.4 Trailing Return Type
-
-Use C++ trailing return type syntax for methods:
+- C++ parameters must use only lowercase letters with an underscore suffix, or separate words with underscores.
+- Parameters should use only lowercase letters, or separate words with underscores.
 
 ```cpp
-auto format(...) -> logtype::string;
+// Valid parameters
+void fn(type param_ = 0); // param_
+void fn(type param_, type param_other_ = 0); // param_other_
+
+// Invalid parameters
+void fn(type Param_ = 0); // Param_
+void fn(type ParamOther_ = 0); // ParamOther_
 ```
 
----
 
-## 4. Documentation Comments
 
-### 4.1 File Header
+## CXX Classes
 
-Described in §1.1.
+- C++ classes include (class/struct/enum/enum class/union ...)
+- All classes must use PascalCase (UpperCamelCase).
+- Class constructors may use the `=default` keyword.
+- Class destructors may use the `=default` keyword.
+- For example:
+```cpp
+// Valid classes
+class Target {
+public:
+    Target() = default;
+    ~Target() = default;
+};
 
-### 4.2 Class Documentation
+class TargetOther {
+public:
+    TargetOther(type param_);
+    ~TargetOther() = default;
+};
 
-Place a `/** */` block immediately before the class declaration:
+// Invalid classes
+class TargetOther {
+public:
+    // Constructor or destructor not needed but the `=default` keyword is not used
+    TargetOther(); 
+    ~TargetOther();
+};
+
+class Target_Other { ... } // invalid class
+class targetOther { ... } // invalid class
+class Targetother { ... } // invalid class
+
+// struct / enum / enum class / union and so on
+```
+
+## CXX Function Return Syntax Standard
+
+- When the function return type is void, the following syntax standard should be used:
+```cpp
+// leading return syntax
+void fn(type param_, ...);
+```
+- When the function return type is non-void, the following syntax standard should be used:
+```cpp
+// trailing return syntax
+auto fn(type param_, ...) -> type;
+```
+
+## CXX Function Names
+
+- C++ function names must use only lowercase letters, or separate words with underscores.
+- C++ function names must not use CamelCase. Any form of prefix or suffix is forbidden.
 
 ```cpp
-/**
- * @brief One-line summary.
- *
- * Detailed description if needed.
- */
-class Foo {
+// Valid function names
+auto fn_example(type param_, ...) -> type; // fn_example_;
+void fn(type param_, ...); // fn_
+
+// Invalid function names
+auto Fn_example(type param_, ...) -> type; // fn_example
+void Fn(type param_, ...); // fn
+auto FnExample(type param_, ...) -> type; // fn_example_example
+auto fn_(type param_, ...) -> type; // fn_
+auto _fn(type param_, ...) -> type; // _fn_
+auto fnExample(type param_, ...) -> type; // fn_example_example
 ```
-
-### 4.3 Method Documentation
-
-Place a `/** */` block immediately before the method declaration:
-
-```cpp
-/**
- * @brief Brief description of what the method does.
- *
- * @param name_  Description of the parameter.
- * @return Description of the return value.
- */
-auto doSomething(const logtype::string &name_) -> logtype::string;
-```
-
-- Use `@brief`, `@param`, `@return`, `@note`, `@see` tags.
-- Parameter names in the doc must match the actual parameter names.
-
-### 4.4 Member Variable Documentation
-
-Use `///` for inline single-line comments when the purpose is obvious, or `/** */` for non-trivial members:
-
-```cpp
-    int count_;  ///< Number of entries processed.
-```
-
----
-
-## 5. Class Design
-
-### 5.1 Interfaces (Pure Abstract Classes)
-
-- Class name is a noun describing the contract: `Format`, `Output`.
-- All public methods are pure virtual (`= 0`).
-- Provide a virtual destructor: `virtual ~ClassName() = default;`
-- No data members in interfaces.
-
-### 5.2 Parameter Conventions
-
-- Suffix mutable / by-value parameters with `_` (e.g. `message_`, `time_`).
-- Use `const` references for non-trivial types (`std::string`, containers).
-- Pass fundamental types by value.
-
----
-
-## 6. Namespaces
-
-- Use nested form: `ruac::rstd::logsystem`.
-- Indent contents by 4 spaces.
-- Close with a trailing comment: `} // namespace ruac::rstd::logsystem`
-
----
-
-## 7. Header Guard Naming
-
-| File                    | Guard Macro             |
-|-------------------------|-------------------------|
-| `ruac_format.hpp`       | `RUAC_FORMAT_HPP`       |
-| `ruac_output.hpp`       | `RUAC_OUTPUT_HPP`       |
-| `ruac_logtype.hpp`      | `RUAC_LOGTYPE_HPP`      |
-
-Pattern: `RUAC_<FILENAME_UPPER>_HPP`.
