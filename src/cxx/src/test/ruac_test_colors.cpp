@@ -73,7 +73,7 @@ namespace ruac::test {
      *          resulting ANSI-coloured string to std::cout.
      *
      */
-    void test_main_colors() {
+    [[maybe_unused]] void test_main_colors() {
         std::cout << test_dark_background() << std::endl;
     }
 

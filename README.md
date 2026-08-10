@@ -15,3 +15,7 @@ RUACDB has its own database model, kernel layer, user layer, and network layer. 
 ## ruacdb Project Standard Library
 
 RUACDB's standard library, rstd, is a strictly isolated library module. Any dependencies between submodules of rstd are explicitly prohibited. Each submodule is only responsible for its own functionality and provides clear interfaces.
+
+## License
+
+RUACDB is licensed under the **GNU General Public License v3.0 or later (GPL-3.0-or-later)**, with additional attribution terms applied pursuant to Section 7 of the GPL-3.0. See [LICENSE](LICENSE) for the full text.

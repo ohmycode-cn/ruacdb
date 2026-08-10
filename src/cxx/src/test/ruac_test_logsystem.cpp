@@ -35,21 +35,21 @@ namespace {
      *          line, and streams each formatted record to std::cout.
      *
      */
-    void test_format_json() {
+    [[maybe_unused]] void test_format_json() {
         logsys::FormatJson josn;
         const auto map{logsys::logmaps::get_ansi_map(true, true, false)};
         const auto time{logsys::logtime::get_time()};
         constexpr auto message{"This is format json message !"};
         const auto str0 = josn.format(map, time, "DEBUG", 12002, message,
-                                __FILE__, __LINE__);
+                                      __FILE__, __LINE__);
         const auto str1 = josn.format(map, time, "INFO", 12003, message,
-                                __FILE__, __LINE__);
+                                      __FILE__, __LINE__);
         const auto str2 = josn.format(map, time, "WARNING", 12004, message,
-                                __FILE__, __LINE__);
+                                      __FILE__, __LINE__);
         const auto str3 = josn.format(map, time, "ERROR", 12005, message,
-                                __FILE__, __LINE__);
+                                      __FILE__, __LINE__);
         const auto str4 = josn.format(map, time, "FATAL", 12006, message,
-                                __FILE__, __LINE__);
+                                      __FILE__, __LINE__);
         std::cout << str0 << "\n";
         std::cout << str1 << "\n";
         std::cout << str2 << "\n";
@@ -70,7 +70,7 @@ namespace {
      *          stringstream, and returns the joined string.
      *
      */
-    auto test_format_text() -> std::string {
+    [[maybe_unused]] auto test_format_text() -> std::string {
         logsys::FormatText text;
         std::stringstream ss;
         auto map{logsys::logmaps::get_ansi_map(true, false, false)};
@@ -105,21 +105,21 @@ namespace {
      *          and streams each formatted record to std::cout.
      *
      */
-    void test_format_xml() {
+    [[maybe_unused]] void test_format_xml() {
         logsys::FormatXML xml;
         const auto map{logsys::logmaps::get_ansi_map(true, true, false)};
         const auto time{logsys::logtime::get_time()};
-        constexpr  auto message{"This is format XML message !"};
+        constexpr auto message{"This is format XML message !"};
         const auto str0 = xml.format(map, time, "DEBUG", 12002, message,
-                               __FILE__, __LINE__);
+                                     __FILE__, __LINE__);
         const auto str1 = xml.format(map, time, "INFO", 12003, message,
-                               __FILE__, __LINE__);
+                                     __FILE__, __LINE__);
         const auto str2 = xml.format(map, time, "WARNING", 12004, message,
-                               __FILE__, __LINE__);
+                                     __FILE__, __LINE__);
         const auto str3 = xml.format(map, time, "ERROR", 12005, message,
-                               __FILE__, __LINE__);
+                                     __FILE__, __LINE__);
         const auto str4 = xml.format(map, time, "FATAL", 12006, message,
-                               __FILE__, __LINE__);
+                                     __FILE__, __LINE__);
         std::cout << str0 << "\n";
         std::cout << str1 << "\n";
         std::cout << str2 << "\n";
@@ -139,13 +139,13 @@ namespace {
      *          attempting to output message_.
      *
      */
-    void test_output_file(const std::string &message_) {
+    [[maybe_unused]] void test_output_file(const std::string &message_) {
         logsys::DebugTParamList params;
         params.m_enable_color = true;
         logsys::DebugT::instance().set_param_mode(params);
 
         constexpr auto FILE_PATH_NOT_EXIST{"/home/repox/Engdev/ruacdb/tmp/unexist"};
-        constexpr auto FILE_PATH{"/home/repox/Engdev/ruacdb/tmp/test"};
+        [[maybe_unused]] constexpr auto FILE_PATH{"/home/repox/Engdev/ruacdb/tmp/test"};
         constexpr auto FILE_NAME{"ruacdb.test.log.txt"};
         constexpr bool ENABLE_THREAD_SEPARATION_MODE{true};
         logsys::Message::instance().init({true, true, true});
@@ -164,7 +164,7 @@ namespace {
      *          prints it through loader.outmap().
      *
      */
-    void test_loader() {
+    [[maybe_unused]] void test_loader() {
         logsys::Loader loader({"/home/repox/Engdev/ruacdb/document/config",
                                "ruacdb.log.conf"});
         auto map = loader.getmap();
@@ -180,7 +180,7 @@ namespace {
      *          diagnostic message.
      *
      */
-    void test_allocator() {
+    [[maybe_unused]] void test_allocator() {
         logsys::Allocator allocator({"/home/repox/Engdev/ruacdb/document/config",
                                      "ruacdb.log.conf"});
         allocator.out_loader_msg();

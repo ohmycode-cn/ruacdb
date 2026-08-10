@@ -1,7 +1,7 @@
 {
-    "ohmycode-cn(ohcode@163.com)":{
+    "ohmycode-cn(ohcode@163.com)": {
         "attribute": "Copyright (c) 2024 ohmycode-cn, repository master",
-        "license": "MIT License",
+        "license": "GPL-3.0-or-later",
         "permission": "rwx",
         "operation": "handle manipulate files",
         "op-detail": {

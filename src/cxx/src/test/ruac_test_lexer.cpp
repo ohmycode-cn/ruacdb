@@ -62,7 +62,7 @@ namespace ruac::test {
      *          parsing scenarios.
      *
      */
-    void test_main_lexer() {
+    [[maybe_unused]] void test_main_lexer() {
         test_read_token();
     }
 
