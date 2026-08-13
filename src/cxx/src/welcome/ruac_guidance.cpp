@@ -55,7 +55,7 @@ namespace ruac::welcome {
                 max_len = std::max(max_len, static_cast<int>(msg.size()));
             }
 
-            auto len_y{GUIDE_MESSAGE_LIST.size()};
+            [[maybe_unused]] auto len_y{GUIDE_MESSAGE_LIST.size()};
             auto len_x{max_len + 2};
 
             namespace tb = ruac::rstd::colors::ansi::table_item;
