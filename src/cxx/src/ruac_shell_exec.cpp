@@ -17,18 +17,6 @@
 namespace ruac {
 
     /**
-     * @brief Construct the ShellExec and initialize its parser
-     *
-     * @details Initializes M_PARSER via std::make_unique to a new
-     *          ruac::syntax_lite::tree::Parser instance, which is later used
-     *          by inner_exec() to handle non-builtin command lines.
-     *
-     */
-    ShellExec::ShellExec() {
-        M_PARSER = std::make_unique<ruac::syntax_lite::tree::Parser>();
-    }
-
-    /**
      * @brief Check if the input line matches a quit/exit command
      *
      * @param line_ - Single, trimmed command line to check
@@ -124,11 +112,7 @@ namespace ruac {
             ruac::rstd::messages::StdMsg::instance().enable_stdmsg(false);
             std::osyncstream(std::cout) << "Disable stdmsg done." << std::endl;
         } else {
-            if (nullptr == M_PARSER) {
-                std::osyncstream(std::cout) << "Not initialized parser." << std::endl;
-                return 1;
-            }
-            M_PARSER->get_query(line_);
+            M_SYN_LITE.syntax_line_hook(line_);
         }
         return 2;
     }

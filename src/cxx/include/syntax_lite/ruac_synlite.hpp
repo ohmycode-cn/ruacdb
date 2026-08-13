@@ -12,7 +12,7 @@
 #ifndef RUAC_SYNLITE_HPP
 #define RUAC_SYNLITE_HPP
 
-#include "syntax_lite/ruac_synlite_status_code.hpp"
+#include "syntax_lite/tree/ruac_parser.hpp"
 #include <string>
 #include <mutex>
 
@@ -27,15 +27,15 @@ namespace ruac::syntax_lite {
      */
     class SynLite {
       private:
+        std::unique_ptr<ruac::syntax_lite::tree::Parser> M_PARSER;
         std::mutex M_SYN_LITE_MTX;
 
       public:
-        SynLite() = default;
+        SynLite();
         ~SynLite() = default;
 
       public:
         void syntax_line_hook(const std::string &line_);
-        auto syntax_line_hret() -> status_code::HookCode;
     };
 
 } // namespace ruac::syntax_lite

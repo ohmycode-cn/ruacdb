@@ -12,23 +12,21 @@
 #ifndef RUAC_SHELL_EXEC_HPP
 #define RUAC_SHELL_EXEC_HPP
 
-#include "syntax_lite/tree/ruac_parser.hpp"
+#include "syntax_lite/ruac_synlite.hpp"
 #include <string>
-#include <memory>
 #include <mutex>
 
 namespace ruac {
 
     class ShellExec {
-      private:
-        std::unique_ptr<ruac::syntax_lite::tree::Parser> M_PARSER;
 
       private:
+        syntax_lite::SynLite M_SYN_LITE{syntax_lite::SynLite()};
+        std::mutex M_SHELL_EXEC_MTX;
         static constexpr const char *const M_B_RED{"\033[41m"};
         static constexpr const char *const M_F_YELLOW{"\033[33m"};
         static constexpr const char *const M_B_GREEN{"\033[42m"};
         static constexpr const char *const M_RESET{"\033[0m"};
-        std::mutex M_SHELL_EXEC_MTX;
 
       private:
         auto end_whiled(const std::string &line_) -> bool;
@@ -39,7 +37,7 @@ namespace ruac {
         auto inner_exec(const std::string &line_) -> int;
 
       public:
-        ShellExec();
+        ShellExec() = default;
         ~ShellExec() = default;
 
       public:
