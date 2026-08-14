@@ -16,6 +16,16 @@
 namespace ruac::kernel::track {
 
     /**
+     * Checks if the tracking map is empty.
+     *
+     * Returns:
+     *   True if the map is empty, false otherwise.
+     */
+    auto Kernel::empty_database() -> bool {
+        return m_database_map.empty();
+    }
+
+    /**
      * Checks if a database exists in the tracking map.
      *
      * Args:

@@ -51,12 +51,12 @@ namespace ruac::syntax_lite::tree::node {
     void CreateDatabase::database_create(const std::string &name_, bool in_advance_check) {
 
         // tmp debug line;
-        rstd::messages::StdMsg::instance()
-            .print(rstd::messages::StdDug::instance()
-                       .ostrs(
-                           "Class: CreateDatabase",
-                           __FILE__,
-                           __LINE__));
+        auto &stdmsg = rstd::messages::StdMsg::instance();
+        auto &stdbug = rstd::messages::StdDug::instance();
+        constexpr const char *const dugmsg{"Class: CreateDatabase, Func: database_create"};
+        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+
+        std::lock_guard<std::mutex> lock(M_CREATE_DATABASE_MTX);
 
         if (in_advance_check || database_exist(name_)) {
             std::stringstream ss;
@@ -64,6 +64,7 @@ namespace ruac::syntax_lite::tree::node {
             std::osyncstream(std::cout) << ss.str() << std::endl;
             return;
         }
+
         auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(0);
         auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
         track->get_kernel().add_database(name_, 0, 0);

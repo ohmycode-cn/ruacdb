@@ -43,7 +43,7 @@ namespace ruac::syntax_lite::tree {
      *          to avoid out-of-range access.
      *
      */
-    bool Parser::has_more() {
+    auto Parser::has_more() -> bool {
         return m_pos < M_TOKENS.size();
     }
 
@@ -92,14 +92,17 @@ namespace ruac::syntax_lite::tree {
      *          failure m_pos is left unchanged so the caller can backtrack.
      *
      */
-    bool Parser::expect(kwenums::TokenType type_, const std::string &value_) {
-        if (!has_more())
+    auto Parser::expect(kwenums::TokenType type_, const std::string &value_) -> bool {
+        if (!has_more()) {
             return false;
+        }
         const auto &t = peek();
-        if (t.type != type_)
+        if (t.type != type_) {
             return false;
-        if (!value_.empty() && t.value != value_)
+        }
+        if (!value_.empty() && t.value != value_) {
             return false;
+        }
         consume();
         return true;
     }
@@ -117,15 +120,13 @@ namespace ruac::syntax_lite::tree {
      *          to wrap the struct into the variant type.
      *
      */
-    bool Parser::parse_create_database() {
+    auto Parser::parse_create_database() -> bool {
 
         // tmp debug line;
-        rstd::messages::StdMsg::instance()
-            .print(rstd::messages::StdDug::instance()
-                       .ostrs(
-                           "Parser: CreateDatabase",
-                           __FILE__,
-                           __LINE__));
+        auto &stdmsg = rstd::messages::StdMsg::instance();
+        auto &stdbug = rstd::messages::StdDug::instance();
+        constexpr const char *const dugmsg{"Class: Parser, Func: parse_create_database"};
+        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
 
         // namespace ka = keyword::attribute;
         namespace ks = keyword::symbol;
@@ -175,14 +176,13 @@ namespace ruac::syntax_lite::tree {
      *          punctuation tokens separately from identifiers.
      *
      */
-    bool Parser::parse_create_table() {
+    auto Parser::parse_create_table() -> bool {
 
-        rstd::messages::StdMsg::instance()
-            .print(rstd::messages::StdDug::instance()
-                       .ostrs(
-                           "Parser: CreateDatabase",
-                           __FILE__,
-                           __LINE__));
+        // Tmp debug.
+        auto &stdmsg = rstd::messages::StdMsg::instance();
+        auto &stdbug = rstd::messages::StdDug::instance();
+        constexpr const char *const dugmsg{"Class: Parser, Func: parse_create_table"};
+        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
 
         using kw = kwenums::TokenType;
         namespace ks = keyword::symbol;
@@ -232,7 +232,7 @@ namespace ruac::syntax_lite::tree {
      *          node and stores it via SynxList.
      *
      */
-    bool Parser::parse_use_database() {
+    auto Parser::parse_use_database() -> bool {
         using kw = kwenums::TokenType;
         if (!has_more() || peek().type != kw::IDENTIFIER)
             return false;
@@ -255,12 +255,35 @@ namespace ruac::syntax_lite::tree {
      *          node via SynxList.
      *
      */
-    bool Parser::parse_show_databases() {
+    auto Parser::parse_show_databases() -> bool {
         using kw = kwenums::TokenType;
         node::nodelist::ShowDatabases node;
         if (has_more() && peek().type == kw::IDENTIFIER) {
             node.name = consume().value;
+            if (!node.name.empty()) {
+                const auto tar{"\n" + M_SPACE_SEVEN + "Target is '" + node.name + "'"};
+                const auto msg{"Error: Not supported parameter target -> show databases <target>"};
+                std::osyncstream(std::cout) << msg << tar << std::endl;
+                return false;
+            }
         }
+        node.name = "*";
+        M_SYNX_LIST->set_node_tree(node);
+        return true;
+    }
+
+    auto Parser::parse_show_database_specific() -> bool {
+        using kw = kwenums::TokenType;
+        node::nodelist::ShowDatabases node;
+        if (has_more() && peek().type == kw::IDENTIFIER) {
+            node.name = consume().value;
+        } else {
+            node.name = "*"; // default to show all databases. show database * = show databases
+            const auto tar{"\n" + M_SPACE_SEVEN + "Target is '" + node.name + "'"};
+            const auto msg{"Warn : You not specific parameter target -> show database <target>, default use * !"};
+            std::osyncstream(std::cout) << msg << tar << std::endl;
+        }
+
         M_SYNX_LIST->set_node_tree(node);
         return true;
     }
@@ -278,7 +301,7 @@ namespace ruac::syntax_lite::tree {
      *          node via SynxList.
      *
      */
-    bool Parser::parse_show_tables() {
+    auto Parser::parse_show_tables() -> bool {
         using kw = kwenums::TokenType;
         node::nodelist::ShowTables node;
         if (has_more() && peek().type == kw::IDENTIFIER) {
@@ -352,19 +375,21 @@ namespace ruac::syntax_lite::tree {
         consume();
         if (attr_val == keyword::attribute::G_CREATE) {
             if (obj_v == keyword::object::G_DATABASE) {
-                parse_create_database();
+                m_parser_success = parse_create_database();
             } else if (obj_v == keyword::object::G_TABLE) {
-                parse_create_table();
+                m_parser_success = parse_create_table();
             }
         } else if (attr_val == keyword::attribute::G_SHOW) {
             if (obj_v == keyword::object::G_DATABASES) {
-                parse_show_databases();
+                m_parser_success = parse_show_databases();
+            } else if (obj_v == keyword::object::G_DATABASE) {
+                m_parser_success = parse_show_database_specific();
             } else if (obj_v == keyword::object::G_TABLES) {
-                parse_show_tables();
+                m_parser_success = parse_show_tables();
             }
         } else if (attr_val == keyword::attribute::G_USE) {
             if (obj_v == keyword::object::G_DATABASE) {
-                parse_use_database();
+                m_parser_success = parse_use_database();
             }
         }
     }
@@ -380,6 +405,9 @@ namespace ruac::syntax_lite::tree {
      */
     void Parser::parser() {
         dispatcher();
+        if (!m_parser_success) {
+            return;
+        }
         M_PREEXEC->dispatcher(M_SYNX_LIST.get());
     }
 
@@ -398,6 +426,7 @@ namespace ruac::syntax_lite::tree {
         std::lock_guard<std::mutex> lock(M_PARSER_MTX);
         M_LEXER->parse_line(line_);
         M_TOKENS = M_LEXER->get_tokens();
+        M_LEXER->out_tokens(); // Tmp debug line.
         parser();
     }
 

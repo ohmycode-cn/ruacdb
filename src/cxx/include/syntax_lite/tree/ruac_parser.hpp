@@ -32,20 +32,25 @@ namespace ruac::syntax_lite::tree {
         std::mutex M_PARSER_MTX;
 
       private:
+        std::string M_SPACE_SEVEN{"       "};
+        bool m_parser_success{false};
+
+      private:
         std::vector<Token> M_TOKENS;
         size_t m_pos{0};
         void reset();
-        bool has_more();
+        auto has_more() -> bool;
         auto peek() const -> const Token &;
         auto consume() -> const Token &;
-        bool expect(kwenums::TokenType type_, const std::string &value_ = "");
+        auto expect(kwenums::TokenType type_, const std::string &value_ = "") -> bool;
 
       private:
-        bool parse_create_database();
-        bool parse_create_table();
-        bool parse_use_database();
-        bool parse_show_databases();
-        bool parse_show_tables();
+        auto parse_create_database() -> bool;
+        auto parse_create_table() -> bool;
+        auto parse_use_database() -> bool;
+        auto parse_show_databases() -> bool;
+        auto parse_show_database_specific() -> bool;
+        auto parse_show_tables() -> bool;
 
       public:
         Parser();

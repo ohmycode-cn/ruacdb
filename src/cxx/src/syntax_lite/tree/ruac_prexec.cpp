@@ -45,6 +45,7 @@ namespace ruac::syntax_lite::tree {
             } else if constexpr (std::is_same_v<T, node::nodelist::CreateTable>) {
             } else if constexpr (std::is_same_v<T, node::nodelist::UseDatabase>) {
             } else if constexpr (std::is_same_v<T, node::nodelist::ShowDatabases>) {
+                M_EXEC_NODE_LIST->M_SHOW_DATABASES.interface(arg.name, arg.if_not_exists);
             } else if constexpr (std::is_same_v<T, node::nodelist::ShowTables>) {
             }
         },

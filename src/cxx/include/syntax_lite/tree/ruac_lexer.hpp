@@ -38,6 +38,9 @@ namespace ruac::syntax_lite::tree {
      */
     class Lexer {
       private:
+        int m_tmp_debug_count{0};
+
+      private:
         std::string m_line;
         size_t m_pos{0};
         std::vector<Token> m_tokens;
@@ -54,6 +57,7 @@ namespace ruac::syntax_lite::tree {
       public:
         void parse_line(const std::string &line_);
         auto get_tokens() -> std::vector<Token>;
+        void out_tokens();
     };
 
 } // namespace ruac::syntax_lite::tree

@@ -92,6 +92,7 @@ namespace ruac::kernel::track {
         std::unordered_map<std::string, std::unordered_map<std::string, std::unordered_map<std::string, mapper::FieldsMap>>> m_field_map;
 
       public:
+        auto empty_database() -> bool;
         auto exist_database(const std::string &database_name_) -> bool;
         void add_database(const std::string &database_name_, uint64_t id_, uint64_t version_);
         void update_database_index(const std::string &database_name_, uint64_t index_);

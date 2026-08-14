@@ -9,6 +9,9 @@
 #include "syntax_lite/tree/ruac_keyword.hpp"
 #include "syntax_lite/tree/ruac_kwmapps.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
+#include <syncstream>
+#include <iostream>
+#include <sstream>
 #include <cctype>
 
 namespace ruac::syntax_lite::tree {
@@ -104,5 +107,26 @@ namespace ruac::syntax_lite::tree {
     auto Lexer::get_tokens() -> std::vector<Token> {
         return m_tokens;
     }
+
+    /**
+     * @brief Print the parsed tokens to the console
+     *
+     * @details Iterates through m_tokens, printing each token's index, type, and value.
+     *
+     */
+    void Lexer::out_tokens() {
+        std::stringstream ss;
+        auto list{m_tokens};
+        ss << "THIS IS TEMPORARY DEBUG OUTPUT THE X TIME : X->" << m_tmp_debug_count++ << "\n";
+        ss << "TOKENS:[\n";
+        for (size_t index{0}; index < list.size(); index++) {
+            ss << "Token   item: " << index << "\n";
+            ss << "Token int id: " << static_cast<int>(list[index].type) << "\n";
+            ss << "Token  value: " << list[index].value << "\n";
+            ss << "\n";
+        }
+        ss << "];\n";
+        std::osyncstream(std::cout) << ss.str() << std::endl;
+    };
 
 } // namespace ruac::syntax_lite::tree

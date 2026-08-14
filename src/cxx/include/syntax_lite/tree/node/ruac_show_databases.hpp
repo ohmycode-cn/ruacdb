@@ -12,14 +12,27 @@
 #ifndef RUAC_SHOW_DATABASES_HPP
 #define RUAC_SHOW_DATABASES_HPP
 
+#include <string>
+#include <mutex>
+
 namespace ruac::syntax_lite::tree::node {
 
     class ShowDatabases {
+      private:
+        std::mutex M_SHOW_DATABASES_MTX;
+        [[maybe_unused]] int m_uid{1};
+
+      private:
+        auto database_exist(const std::string &name_) -> bool;
+        void database_show(const std::string &name_, const bool in_advance_check_ = false);
+        void database_show_all();
+
       public:
         ShowDatabases() = default;
         ~ShowDatabases() = default;
 
       public:
+        void interface(const std::string &name_, bool in_advance_check_ = false);
     };
 
 } // namespace ruac::syntax_lite::tree::node

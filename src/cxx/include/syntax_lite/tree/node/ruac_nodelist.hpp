@@ -34,6 +34,7 @@ namespace ruac::syntax_lite::tree::node {
 
         struct ShowDatabases {
             std::string name;
+            bool if_not_exists{false};
         };
 
         struct ShowTables {
