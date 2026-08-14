@@ -9,4 +9,5 @@
 #include "syntax_lite/tree/node/ruac_show_databases.hpp"
 
 namespace ruac::syntax_lite::tree::node {
+
 } // namespace ruac::syntax_lite::tree::node

@@ -18,14 +18,15 @@ namespace ruac::syntax_lite::tree::node {
 
     class CreateDatabase {
       private:
-        auto exist_database(const std::string &name) -> bool;
+        auto database_exist(const std::string &name_) -> bool;
+        void database_create(const std::string &name_, bool in_advance_check_ = false);
 
       public:
         CreateDatabase() = default;
         ~CreateDatabase() = default;
 
       public:
-        void create_database(const std::string &name, bool in_advance_check = false);
+        void interface(const std::string &name_);
     };
 
 } // namespace ruac::syntax_lite::tree::node

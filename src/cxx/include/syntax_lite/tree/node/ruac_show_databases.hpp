@@ -18,6 +18,8 @@ namespace ruac::syntax_lite::tree::node {
       public:
         ShowDatabases() = default;
         ~ShowDatabases() = default;
+
+      public:
     };
 
 } // namespace ruac::syntax_lite::tree::node

@@ -41,7 +41,7 @@ namespace ruac::syntax_lite::tree {
         std::visit([this](auto &arg) {
             using T = std::decay_t<decltype(arg)>;
             if constexpr (std::is_same_v<T, node::nodelist::CreateDatabase>) {
-                M_EXEC_NODE_LIST->M_CREATE_DATABASE.create_database(arg.name, arg.if_not_exists);
+                M_EXEC_NODE_LIST->M_CREATE_DATABASE.interface(arg.name);
             } else if constexpr (std::is_same_v<T, node::nodelist::CreateTable>) {
             } else if constexpr (std::is_same_v<T, node::nodelist::UseDatabase>) {
             } else if constexpr (std::is_same_v<T, node::nodelist::ShowDatabases>) {
