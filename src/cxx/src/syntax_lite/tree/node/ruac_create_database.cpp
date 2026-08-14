@@ -79,8 +79,8 @@ namespace ruac::syntax_lite::tree::node {
      *          performed before the actual creation.
      *
      */
-    void CreateDatabase::interface(const std::string &name_) {
-        database_create(name_);
+    void CreateDatabase::interface(const std::string &name_, bool in_advance_check_) {
+        database_create(name_, in_advance_check_);
     }
 
 } // namespace ruac::syntax_lite::tree::node

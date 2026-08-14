@@ -26,7 +26,7 @@ namespace ruac::syntax_lite::tree::node {
         ~CreateDatabase() = default;
 
       public:
-        void interface(const std::string &name_);
+        void interface(const std::string &name_, bool in_advance_check_ = false);
     };
 
 } // namespace ruac::syntax_lite::tree::node
