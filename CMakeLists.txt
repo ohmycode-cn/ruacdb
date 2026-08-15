@@ -13,7 +13,9 @@ set(OUTPUT_DIR ${CMAKE_SOURCE_DIR}/out)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_AUTOMOC ON) 
 
+#if (NOT WIN32)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+#endif()
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)
 
 add_compile_options(-Wall -Wextra -Wpedantic)
