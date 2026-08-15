@@ -11,10 +11,11 @@
 #include "welcome/ruac_guidance.hpp"
 #include "ruac_shell_pipe.hpp"
 #include "ruac_shell_exec.hpp"
-#include <mutex>
 #include <syncstream>
+#include <algorithm>
 #include <iostream>
 #include <cctype>
+#include <mutex>
 #if defined(__linux__) || defined(__gnu_linux__)
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)
@@ -67,6 +68,7 @@ namespace ruac {
             print_welcome_guidance();
 #elif defined(_WIN32) || defined(_WIN64)
         if (_isatty(_fileno(stdin))) {
+            print_welcome_guidance();
 #else
 #error "Unsupported platform: only Windows and Linux are supported"
 #endif
