@@ -1,0 +1,24 @@
+# Auto detect text files; normalize to LF in repo, checkout follows system (CRLF on Windows)
+* text=auto
+
+# Shell scripts must always be LF (even on Windows, or they break)
+*.sh text eol=lf
+
+# Windows scripts stay CRLF on checkout
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Lock files - do not modify
+*.lock -text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary

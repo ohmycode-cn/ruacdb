@@ -27,7 +27,7 @@ function main() {
     local include="src/cxx/include"
     local src="src/cxx/src"
     local dirname="${1}"
-
+    
     if [[ -z "${dirname}" ]]; then
         error "Dirname is empty"
         return 1
@@ -35,27 +35,27 @@ function main() {
         include="src/cxx/include/${dirname}"
         src="src/cxx/src/${dirname}"
     fi
-
+    
     if [[ -d "${include}" ]]; then
         error "Include directory already exists: ${include}"
         return 1
     fi
-
+    
     if ! mkdir -p "${include}"; then
         error "Create include directory failed: ${include}"
         return 1
     fi
-
+    
     if [[ -d "${src}" ]]; then
         error "Src directory already exists: ${src}"
         return 1
     fi
-
+    
     if ! mkdir -p "${src}"; then
         error "Create src directory failed: ${src}"
         return 1
     fi
-
+    
     ok "Create directory ${include} and ${src} success"
     return 0
 }
