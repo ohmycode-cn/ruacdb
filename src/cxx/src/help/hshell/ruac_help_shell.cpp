@@ -49,7 +49,7 @@ namespace ruac::help::hshell {
         } else if ("exit" == line_ || "quit" == line_) {
             {
                 std::stringstream ss;
-                ss << "Error: Not supported help shell syntax: exit, ";
+                ss << "Error: Not supported help shell syntax: exit or quit, ";
                 ss << "You maybe mean exit help shell. So ! You should use 'exit help' or 'quit help'";
                 std::osyncstream(std::cout) << ss.str() << std::endl;
                 return true;
