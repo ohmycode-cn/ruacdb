@@ -66,13 +66,13 @@ namespace ruac::syntax_lite::tree {
         std::string word;
         skip_whitespace();
         get_string(word);
-        if (word.empty())
+        if (word.empty()) {
             return;
-        auto it = kwmapps::maps.find(word);
-        if (it != kwmapps::maps.end()) {
-            m_tokens.push_back({it->second, word});
+        }
+        if (const auto it = kwmapps::maps.find(word); it != kwmapps::maps.end()) {
+            m_tokens.push_back({.type = it->second, .value = word});
         } else {
-            m_tokens.push_back({kwenums::TokenType::IDENTIFIER, word});
+            m_tokens.push_back({.type = kwenums::TokenType::IDENTIFIER, .value = word});
         }
     }
 

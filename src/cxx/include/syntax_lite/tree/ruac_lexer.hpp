@@ -41,9 +41,9 @@ namespace ruac::syntax_lite::tree {
         int m_tmp_debug_count{0};
 
       private:
+        std::vector<Token> m_tokens;
         std::string m_line;
         size_t m_pos{0};
-        std::vector<Token> m_tokens;
 
       public:
         Lexer() = default;
