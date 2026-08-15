@@ -16,6 +16,21 @@ RUACDB has its own database model, kernel layer, user layer, and network layer. 
 
 RUACDB's standard library, rstd, is a strictly isolated library module. Any dependencies between submodules of rstd are explicitly prohibited. Each submodule is only responsible for its own functionality and provides clear interfaces.
 
+## ruacdb Development Environment & Toolchain Requirements
+
+- **WINDOWS**
+  - compile env: clang-cl.exe/clang++.exe
+  - qt      env: qt6(>=6.5.0), recommended: msvc2022
+- **LINUX**
+  - compile env: clang++
+  - qt      env: your linux latest qt version (but >= 6.5.0)
+- **MACOS**
+  - Unsupported platform
+- **UNIX**
+  - Unsupported platform
+- **OTHER**
+  - Unsupported platform
+
 ## License
 
 RUACDB is licensed under the **GNU General Public License v3.0 or later (GPL-3.0-or-later)**, with additional attribution terms applied pursuant to Section 7 of the GPL-3.0. See [LICENSE](LICENSE) for the full text.

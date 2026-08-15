@@ -24,3 +24,22 @@
 ## ruacdb 项目标准库
 
   RUACDB 的标准库 rstd 是一个严格隔离的库模块， rstd 的各个子模块之间明确禁止任何依赖关系，每个子模块只负责自己的功能并且提供明确接口。
+
+## ruacdb 开发环境与工具链要求
+
+- **WINDOWS**
+  - compile env: clang-cl.exe/clang++.exe
+  - qt      env: qt6(>=6.5.0), recommended: msvc2022
+- **LINUX**
+  - compile env: clang++
+  - qt      env: your linux latest qt version (but >= 6.5.0)
+- **MACOS**
+  - 不支持的平台
+- **UNIX**
+  - 不支持的平台
+- **OTHER**
+  - 不支持的平台
+
+## 许可证
+
+RUACDB 采用 **GNU General Public License v3.0 or later (GPL-3.0-or-later)** 许可证，并依据 GPL-3.0 第 7 条附加了署名条款。完整文本详见 [LICENSE](../../../LICENSE)。
