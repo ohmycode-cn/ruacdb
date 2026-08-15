@@ -21,11 +21,11 @@ namespace ruac::rstd::logsystem {
 #if defined(__linux__) || defined(__gnu_linux__)
         const char *const G_READ_LOG_CONFIG_FILE_PATH{"/etc/ruacdb"};
         const char *const G_LOG_WRITE_FILE_PATH{"/var/log/ruacdb"};
-#endif
-
-#if defined(__Win32__) || defined(__Win64__) || defined(__WIN32__) || defined(__WIN64__)
+#elif defined(_WIN32) || defined(_WIN64)
         const char *const G_LOG_WRITE_FILE_PATH{"C:\\Users\\RuacDB\\Log"};
         const char *const G_READ_LOG_CONFIG_FILE_PATH{"C:\\Users\\RuacDB\\Etc"};
+#else
+#error "Unsupported platform: only Windows and Linux are supported"
 #endif
 
     } // namespace logpath

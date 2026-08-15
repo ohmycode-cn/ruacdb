@@ -7,6 +7,10 @@
  */
 
 #include "kernel/ruac_controller_table.hpp"
+// #include <syncstream>
+// #include <iostream>
+// #include <string>
+#include <stdexcept>
 
 namespace ruac::kernel::controller {
 
@@ -66,6 +70,7 @@ namespace ruac::kernel::controller {
         if (itr != m_controller_table.end()) {
             return *itr->second;
         } else {
+            // std::osyncstream(std::cout) << "Controller not found for the given UID: " << uid << std::endl;
             throw std::runtime_error("Controller not found for the given UID");
         }
     }

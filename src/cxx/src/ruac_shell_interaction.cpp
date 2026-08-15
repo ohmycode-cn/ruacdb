@@ -15,9 +15,12 @@
 #include <syncstream>
 #include <iostream>
 #include <cctype>
+#if defined(__linux__) || defined(__gnu_linux__)
 #include <unistd.h>
-#if defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64)
 #include <io.h>
+#else
+#error "Unsupported platform: only Windows and Linux are supported"
 #endif
 
 namespace ruac {
@@ -59,11 +62,13 @@ namespace ruac {
      *
      */
     void ShellInteraction::print_message() {
-#if defined(_WIN32) || defined(_WIN64)
-        if (_isatty(_fileno(stdin))) {
-#elif defined(__linux__)
+#if defined(__linux__) || defined(__gnu_linux__)
         if (isatty(fileno(stdin))) {
             print_welcome_guidance();
+#elif defined(_WIN32) || defined(_WIN64)
+        if (_isatty(_fileno(stdin))) {
+#else
+#error "Unsupported platform: only Windows and Linux are supported"
 #endif
         }
     }
