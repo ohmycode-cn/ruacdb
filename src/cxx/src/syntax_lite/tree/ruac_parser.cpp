@@ -274,14 +274,28 @@ namespace ruac::syntax_lite::tree {
 
     auto Parser::parse_show_database_specific() -> bool {
         using kw = kwenums::TokenType;
+        namespace ks = keyword::symbol;
         node::nodelist::ShowDatabases node;
+        if (has_more() && peek().type == kw::KEYWORD_SYMBOL && peek().value == ks::G_STAR) {
+            {
+                std::stringstream ss;
+                ss << "Error: Not supported parameter target syntax keyword star symbol '*', show database <target>. ";
+                ss << "You should replace * with to all. Or you can use show databases replace to show database all.";
+                ss << "\n" + M_SPACE_SEVEN + "Target is '*'";
+                std::osyncstream(std::cout) << ss.str() << std::endl;
+            }
+            return false;
+        }
         if (has_more() && peek().type == kw::IDENTIFIER) {
             node.name = consume().value;
         } else {
             node.name = "*"; // default to show all databases. show database * = show databases
-            const auto tar{"\n" + M_SPACE_SEVEN + "Target is '" + node.name + "'"};
-            const auto msg{"Warn : You not specific parameter target -> show database <target>, default use * !"};
-            std::osyncstream(std::cout) << msg << tar << std::endl;
+            {
+                std::stringstream ss;
+                ss << "Warn : You not specific parameter target -> show database <target>, default use * !";
+                ss << "\n" + M_SPACE_SEVEN + "Target is '" + node.name + "'";
+                std::osyncstream(std::cout) << ss.str() << std::endl;
+            }
         }
 
         M_SYNX_LIST->set_node_tree(node);
