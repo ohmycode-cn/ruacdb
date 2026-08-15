@@ -13,9 +13,9 @@
 #ifndef RUAC_ALLOCATOR_HPP
 #define RUAC_ALLOCATOR_HPP
 
+#include "rstd/logsystem/ruac_loader.hpp"
 #include "rstd/logsystem/ruac_logenum.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
-#include "rstd/logsystem/ruac_loader.hpp"
 
 namespace ruac::rstd::logsystem {
 

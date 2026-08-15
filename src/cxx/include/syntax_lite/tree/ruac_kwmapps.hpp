@@ -12,10 +12,10 @@
 #ifndef RUAC_KWMAPPS_HPP
 #define RUAC_KWMAPPS_HPP
 
-#include "syntax_lite/tree/ruac_kwenums.hpp"
 #include "syntax_lite/tree/ruac_keyword.hpp"
-#include <unordered_map>
+#include "syntax_lite/tree/ruac_kwenums.hpp"
 #include <string>
+#include <unordered_map>
 
 namespace ruac::syntax_lite::tree {
 

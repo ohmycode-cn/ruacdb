@@ -7,9 +7,9 @@
  */
 
 #include "rstd/messages/ruac_stddug.hpp"
-#include <syncstream>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::rstd::messages {
 

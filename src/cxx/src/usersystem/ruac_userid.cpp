@@ -7,10 +7,10 @@
  */
 
 #include "usersystem/ruac_userid.hpp"
-#include <mutex>
-#include <syncstream>
 #include <iostream>
+#include <mutex>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::usersystem {
 

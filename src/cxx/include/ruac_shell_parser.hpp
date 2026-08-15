@@ -13,9 +13,9 @@
 #ifndef RUAC_SHELL_PARSER_HPP
 #define RUAC_SHELL_PARSER_HPP
 
+#include <mutex>
 #include <string>
 #include <vector>
-#include <mutex>
 
 namespace ruac {
 

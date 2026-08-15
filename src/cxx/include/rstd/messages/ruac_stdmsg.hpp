@@ -12,9 +12,9 @@
 #ifndef RUAC_STDMSG_HPP
 #define RUAC_STDMSG_HPP
 
-#include <syncstream>
 #include <iostream>
 #include <mutex>
+#include <syncstream>
 
 namespace ruac::rstd::messages {
 

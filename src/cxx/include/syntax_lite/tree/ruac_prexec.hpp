@@ -12,7 +12,7 @@
 #ifndef RUAC_PREXEC_HPP
 #define RUAC_PREXEC_HPP
 
-#include "syntax_lite/tree/node/ruac_nodeproc.hpp" // IWYU pragma: keep
+#include "syntax_lite/tree/node/ruac_nodeproc.hpp"
 #include "syntax_lite/tree/ruac_synxlist.hpp"
 #include <memory>
 

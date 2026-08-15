@@ -12,9 +12,9 @@
 #ifndef RUAC_USERNAME_HPP
 #define RUAC_USERNAME_HPP
 
-#include <string>
 #include <memory>
 #include <mutex>
+#include <string>
 
 namespace ruac::usersystem {
 

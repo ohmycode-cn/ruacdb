@@ -6,8 +6,8 @@
  * src/test/ruac_test_rstd_messages.cpp
  */
 
-#include "test/ruac_test_rstd_messages.hpp"
 #include "rstd/messages/ruac_stdmsg.hpp"
+#include "test/ruac_test_rstd_messages.hpp"
 
 namespace ruac::test {
     namespace {

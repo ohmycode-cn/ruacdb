@@ -7,8 +7,8 @@
  */
 
 #include "rstd/logsystem/ruac_output_console.hpp"
-#include <syncstream>
 #include <iostream>
+#include <syncstream>
 
 namespace ruac::rstd::logsystem {
 

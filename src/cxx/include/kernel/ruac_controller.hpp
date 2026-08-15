@@ -13,12 +13,12 @@
 #ifndef RUAC_CONTROLLER_HPP
 #define RUAC_CONTROLLER_HPP
 
+#include "kernel/object/ruac_object_multis.hpp"
+#include "kernel/object/ruac_object_single.hpp"
 #include "kernel/state/ruac_state_multis.hpp"
 #include "kernel/state/ruac_state_single.hpp"
 #include "kernel/track/ruac_track_multis.hpp"
 #include "kernel/track/ruac_track_single.hpp"
-#include "kernel/object/ruac_object_multis.hpp"
-#include "kernel/object/ruac_object_single.hpp"
 #include <memory>
 #include <variant>
 

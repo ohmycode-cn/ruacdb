@@ -12,8 +12,8 @@
 #ifndef RUAC_OUTPUT_FILE_HPP
 #define RUAC_OUTPUT_FILE_HPP
 
-#include "rstd/logsystem/ruac_nullproc.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_nullproc.hpp"
 #include "rstd/logsystem/ruac_output.hpp"
 #include <fstream>
 #include <memory>

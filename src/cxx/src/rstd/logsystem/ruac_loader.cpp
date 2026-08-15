@@ -7,15 +7,15 @@
  * Configuration file loader implementation with buffer-based reading and key-value parsing.
  */
 
+#include "rstd/logsystem/ruac_debugt.hpp"
+#include "rstd/logsystem/ruac_loader.hpp"
+#include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_message.hpp"
-#include "rstd/logsystem/ruac_logkeys.hpp"
-#include "rstd/logsystem/ruac_loader.hpp"
-#include "rstd/logsystem/ruac_debugt.hpp"
 #include "rstd/logsystem/ruac_table.hpp"
 #include <filesystem>
-#include <sstream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 namespace ruac::rstd::logsystem {

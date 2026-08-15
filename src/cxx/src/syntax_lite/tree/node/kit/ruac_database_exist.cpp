@@ -6,9 +6,9 @@
  * src/syntax_lite/tree/node/kit/ruac_database_exist.cpp
  */
 
-#include "syntax_lite/tree/node/kit/ruac_database_exist.hpp"
-#include "kernel/track/ruac_track_single.hpp"
 #include "kernel/ruac_controller_table.hpp"
+#include "kernel/track/ruac_track_single.hpp"
+#include "syntax_lite/tree/node/kit/ruac_database_exist.hpp"
 
 namespace ruac::syntax_lite::tree::node::kit {
 

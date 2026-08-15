@@ -6,16 +6,16 @@
  * src/rstd/logsystem/ruac_manager.cpp
  */
 
-#include "rstd/logsystem/ruac_output_console.hpp"
-#include "rstd/logsystem/ruac_output_file.hpp"
 #include "rstd/logsystem/ruac_format_json.hpp"
 #include "rstd/logsystem/ruac_format_text.hpp"
 #include "rstd/logsystem/ruac_format_xml.hpp"
-#include "rstd/logsystem/ruac_manager.hpp"
-#include "rstd/logsystem/ruac_logtype.hpp"
-#include "rstd/logsystem/ruac_logtime.hpp"
-#include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_loader.hpp"
+#include "rstd/logsystem/ruac_logkeys.hpp"
+#include "rstd/logsystem/ruac_logtime.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_manager.hpp"
+#include "rstd/logsystem/ruac_output_console.hpp"
+#include "rstd/logsystem/ruac_output_file.hpp"
 
 namespace ruac::rstd::logsystem {
 

@@ -9,10 +9,10 @@
 #include "syntax_lite/tree/ruac_keyword.hpp"
 #include "syntax_lite/tree/ruac_kwmapps.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
-#include <syncstream>
+#include <cctype>
 #include <iostream>
 #include <sstream>
-#include <cctype>
+#include <syncstream>
 
 namespace ruac::syntax_lite::tree {
 

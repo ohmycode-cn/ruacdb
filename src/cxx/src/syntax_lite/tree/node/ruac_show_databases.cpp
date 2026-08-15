@@ -6,14 +6,14 @@
  * src/syntax_lite/tree/node/ruac_show_databases.cpp
  */
 
+#include "kernel/ruac_controller_table.hpp"
+#include "kernel/track/ruac_track_single.hpp"
+#include "rstd/messages/ruac_stddug.hpp"
+#include "rstd/messages/ruac_stdmsg.hpp"
 #include "syntax_lite/tree//node//kit/ruac_database_exist.hpp"
 #include "syntax_lite/tree/node/ruac_show_databases.hpp"
-#include "kernel/track/ruac_track_single.hpp"
-#include "kernel/ruac_controller_table.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
-#include "rstd/messages/ruac_stddug.hpp"
-#include <syncstream>
 #include <iostream>
+#include <syncstream>
 
 namespace ruac::syntax_lite::tree::node {
 

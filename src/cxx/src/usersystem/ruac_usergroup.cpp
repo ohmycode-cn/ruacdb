@@ -7,10 +7,10 @@
  */
 
 #include "usersystem/ruac_usergroup.hpp"
-#include <syncstream>
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::usersystem {
 

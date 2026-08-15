@@ -15,8 +15,8 @@
 #include "rstd/logsystem/ruac_logstruct.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include <iostream>
-#include <syncstream>
 #include <mutex>
+#include <syncstream>
 
 namespace ruac::rstd::logsystem {
 

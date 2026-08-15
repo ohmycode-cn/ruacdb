@@ -6,9 +6,9 @@
  * src/rstd/logsystem/ruac_confmap.cpp
  */
 
+#include "rstd/logsystem/ruac_confmap.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logpath.hpp"
-#include "rstd/logsystem/ruac_confmap.hpp"
 
 namespace ruac::rstd::logsystem {
 

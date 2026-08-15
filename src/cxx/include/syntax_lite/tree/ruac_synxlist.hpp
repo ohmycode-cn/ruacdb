@@ -13,8 +13,8 @@
 #define RUAC_SYNXLIST_HPP
 
 #include "syntax_lite/tree/node/ruac_nodelist.hpp"
-#include <variant>
 #include <mutex>
+#include <variant>
 
 namespace ruac::syntax_lite::tree {
 

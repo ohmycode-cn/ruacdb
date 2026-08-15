@@ -13,8 +13,8 @@
 #define RUAC_SHELL_EXEC_HPP
 
 #include "syntax_lite/ruac_synlite.hpp"
-#include <string>
 #include <mutex>
+#include <string>
 
 namespace ruac {
 

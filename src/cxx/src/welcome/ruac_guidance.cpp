@@ -6,17 +6,17 @@
  * src/welcome/ruac_guidance.cpp
  */
 
-#include "rstd/colors/ruac_background.hpp"
-#include "welcome/ruac_guidance.hpp"
 #include "rstd/colors/ruac_ansi.hpp"
+#include "rstd/colors/ruac_background.hpp"
 #include "rstd/colors/ruac_color26.hpp"
 #include "rstd/ruac_donone.hpp"
+#include "welcome/ruac_guidance.hpp"
+#include <algorithm>
 #include <iostream>
+#include <print>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <print>
 
 namespace ruac::welcome {
 

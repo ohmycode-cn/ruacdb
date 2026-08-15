@@ -6,17 +6,17 @@
  * src/rstd/logsystem/ruac_allocator.cpp
  */
 
+#include "rstd/logsystem//ruac_debugt.hpp"
 #include "rstd/logsystem/ruac_allocator.hpp"
 #include "rstd/logsystem/ruac_confmap.hpp"
+#include "rstd/logsystem/ruac_loader.hpp"
 #include "rstd/logsystem/ruac_logenum.hpp"
+#include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_message.hpp"
-#include "rstd/logsystem//ruac_debugt.hpp"
-#include "rstd/logsystem/ruac_logkeys.hpp"
-#include "rstd/logsystem/ruac_loader.hpp"
-#include <syncstream>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::rstd::logsystem {
 

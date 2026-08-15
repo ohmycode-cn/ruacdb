@@ -7,12 +7,12 @@
  * Table rendering implementation with ASCII border drawing and column width calculation.
  */
 
-#include "rstd/logsystem/ruac_table.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
-#include <syncstream>
+#include "rstd/logsystem/ruac_table.hpp"
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::rstd::logsystem {
 

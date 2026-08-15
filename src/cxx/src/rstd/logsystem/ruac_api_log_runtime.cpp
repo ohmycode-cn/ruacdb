@@ -7,9 +7,9 @@
  */
 
 #include "rstd/logsystem/ruac_api_log_runtime.hpp"
+#include "rstd/logsystem/ruac_debugt.hpp"
 #include "rstd/logsystem/ruac_logtime.hpp"
 #include "rstd/logsystem/ruac_message.hpp"
-#include "rstd/logsystem/ruac_debugt.hpp"
 #include <sstream>
 
 namespace ruac::rstd::logsystem {

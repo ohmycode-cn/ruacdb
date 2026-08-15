@@ -12,9 +12,9 @@
 #ifndef RUAC_USERID_HPP
 #define RUAC_USERID_HPP
 
-#include <unordered_map>
-#include <string>
 #include <mutex>
+#include <string>
+#include <unordered_map>
 
 namespace ruac::usersystem {
 

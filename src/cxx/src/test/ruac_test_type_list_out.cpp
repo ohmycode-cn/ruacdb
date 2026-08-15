@@ -6,8 +6,8 @@
  * src/test/ruac_test_type_list_out.cpp
  */
 
-#include "test/ruac_test_type_list_out.hpp"
 #include "rstd/colors/ruac_ansi.hpp"
+#include "test/ruac_test_type_list_out.hpp"
 #include <iostream>
 
 namespace ruac::test {

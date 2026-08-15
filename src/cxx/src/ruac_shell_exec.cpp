@@ -7,12 +7,12 @@
  */
 
 #include "rstd/messages/ruac_stdmsg.hpp"
+#include "ruac_shell_exec.hpp"
 #include "ruac_shell_parser.hpp"
 #include "ruac_shell_pipe.hpp"
-#include "ruac_shell_exec.hpp"
-#include <syncstream>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac {
 

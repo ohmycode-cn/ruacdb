@@ -7,15 +7,15 @@
  */
 
 #include "rstd/colors/ruac_color26.hpp"
-#include "ruac_shell_interaction.hpp"
-#include "welcome/ruac_guidance.hpp"
-#include "ruac_shell_pipe.hpp"
 #include "ruac_shell_exec.hpp"
-#include <syncstream>
+#include "ruac_shell_interaction.hpp"
+#include "ruac_shell_pipe.hpp"
+#include "welcome/ruac_guidance.hpp"
 #include <algorithm>
-#include <iostream>
 #include <cctype>
+#include <iostream>
 #include <mutex>
+#include <syncstream>
 #if defined(__linux__) || defined(__gnu_linux__)
 #include <unistd.h>
 #elif defined(_WIN32) || defined(_WIN64)

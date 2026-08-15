@@ -14,10 +14,10 @@
 #define RUAC_MANAGER_HPP
 
 #include "rstd/logsystem/ruac_allocator.hpp"
-#include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_format.hpp"
 #include "rstd/logsystem/ruac_logenum.hpp"
 #include "rstd/logsystem/ruac_logmaps.hpp"
-#include "rstd/logsystem/ruac_format.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_output.hpp"
 #include <memory>
 

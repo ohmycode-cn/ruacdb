@@ -13,8 +13,8 @@
 #ifndef RUAC_FORMAT_JSON_HPP
 #define RUAC_FORMAT_JSON_HPP
 
-#include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_format.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
 #include <mutex>
 
 namespace ruac::rstd::logsystem {

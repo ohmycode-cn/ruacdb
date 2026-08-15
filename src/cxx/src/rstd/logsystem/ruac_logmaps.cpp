@@ -6,10 +6,10 @@
  * src/rstd/logsystem/ruac_logmaps.cpp
  */
 
-#include "rstd/logsystem/ruac_logmaps.hpp"
-#include "rstd/logsystem/ruac_logkeys.hpp"
-#include "rstd/logsystem/ruac_logtype.hpp"
 #include "rstd/logsystem/ruac_colored.hpp"
+#include "rstd/logsystem/ruac_logkeys.hpp"
+#include "rstd/logsystem/ruac_logmaps.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
 
 namespace ruac::rstd::logsystem {
 

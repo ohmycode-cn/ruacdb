@@ -12,14 +12,14 @@
 #ifndef RUAC_PARSER_HPP
 #define RUAC_PARSER_HPP
 
-#include "syntax_lite/tree/ruac_synxlist.hpp"
 #include "syntax_lite/tree/ruac_kwenums.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
 #include "syntax_lite/tree/ruac_prexec.hpp"
+#include "syntax_lite/tree/ruac_synxlist.hpp"
 #include <cstddef>
 #include <memory>
-#include <string>
 #include <mutex>
+#include <string>
 #include <vector>
 
 namespace ruac::syntax_lite::tree {

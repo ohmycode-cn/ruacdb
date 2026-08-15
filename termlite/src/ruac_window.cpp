@@ -1,16 +1,16 @@
 #include "ruac_window.hpp"
 #include <QApplication>
-#include <QMainWindow>
-#include <QWidget>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QListWidget>
 #include <QGraphicsDropShadowEffect>
-#include <QPainter>
-#include <QScrollArea>
-#include <QMdiSubWindow>
-#include <QMdiArea>
 #include <QLabel>
+#include <QListWidget>
+#include <QMainWindow>
+#include <QMdiArea>
+#include <QMdiSubWindow>
+#include <QPainter>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include <QWidget>
 
 namespace ruac::terminal_lite {
 

@@ -11,8 +11,8 @@
 #ifndef RUAC_LOGTYPE_HPP
 #define RUAC_LOGTYPE_HPP
 
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 
 namespace ruac::rstd::logsystem {
 

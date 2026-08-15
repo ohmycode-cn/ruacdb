@@ -10,9 +10,9 @@
 
 #include "rstd/logsystem/ruac_debugt.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
-#include <syncstream>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::rstd::logsystem {
 

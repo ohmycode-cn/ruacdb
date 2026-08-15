@@ -8,8 +8,8 @@
 
 #include "rstd/colors/ruac_background.hpp"
 #include "test/ruac_test_colors.hpp"
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
 namespace ruac::test {
 

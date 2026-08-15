@@ -7,8 +7,8 @@
  */
 
 #include "syntax_lite/tree/ruac_prexec.hpp"
-#include <variant>
 #include <memory>
+#include <variant>
 
 namespace ruac::syntax_lite::tree {
 

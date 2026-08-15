@@ -6,9 +6,9 @@
  * src/rstd/logsystem/ruac_message.cpp
  */
 
-#include "rstd/logsystem/ruac_message.hpp"
 #include "rstd/logsystem/ruac_colored.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_message.hpp"
 
 namespace ruac::rstd::logsystem {
 

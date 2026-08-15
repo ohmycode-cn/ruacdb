@@ -12,10 +12,10 @@
 #ifndef RUAC_USERGROUP_HPP
 #define RUAC_USERGROUP_HPP
 
-#include <unordered_map>
-#include <string>
-#include <vector>
 #include <mutex>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace ruac::usersystem {
 

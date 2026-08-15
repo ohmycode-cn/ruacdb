@@ -6,9 +6,9 @@
  * src/rstd/logsystem/ruac_output_file.cpp
  */
 
-#include "rstd/logsystem/ruac_output_file.hpp"
-#include "rstd/logsystem/ruac_message.hpp"
 #include "rstd/logsystem/ruac_debugt.hpp"
+#include "rstd/logsystem/ruac_message.hpp"
+#include "rstd/logsystem/ruac_output_file.hpp"
 #include <filesystem>
 #include <sstream>
 

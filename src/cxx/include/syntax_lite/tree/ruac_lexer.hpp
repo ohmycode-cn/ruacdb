@@ -13,8 +13,8 @@
 #define RUAC_LEXER_HPP
 
 #include "syntax_lite/tree/ruac_kwenums.hpp"
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace ruac::syntax_lite::tree {
 

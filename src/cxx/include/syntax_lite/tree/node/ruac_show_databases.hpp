@@ -12,8 +12,8 @@
 #ifndef RUAC_SHOW_DATABASES_HPP
 #define RUAC_SHOW_DATABASES_HPP
 
-#include <string>
 #include <mutex>
+#include <string>
 
 namespace ruac::syntax_lite::tree::node {
 

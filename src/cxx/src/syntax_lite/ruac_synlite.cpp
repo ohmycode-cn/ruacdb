@@ -7,8 +7,8 @@
  */
 
 #include "syntax_lite/ruac_synlite.hpp"
-#include <syncstream>
 #include <iostream>
+#include <syncstream>
 
 namespace ruac::syntax_lite {
 
