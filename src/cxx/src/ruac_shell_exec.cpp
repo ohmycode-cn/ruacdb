@@ -6,6 +6,7 @@
  * src/ruac_shell_exec.cpp
  */
 
+#include "help/ruac_help_guide.hpp"
 #include "rstd/messages/ruac_stdmsg.hpp"
 #include "ruac_shell_exec.hpp"
 #include "ruac_shell_parser.hpp"
@@ -111,6 +112,11 @@ namespace ruac {
         } else if ("stdmsg off" == line_) {
             ruac::rstd::messages::StdMsg::instance().enable_stdmsg(false);
             std::osyncstream(std::cout) << "Disable stdmsg done." << std::endl;
+        } else if ("ruacdb help" == line_) {
+            {
+                ruac::help::HelpGuide hge;
+                hge.helpshell();
+            }
         } else {
             M_SYN_LITE.syntax_line_hook(line_);
         }
