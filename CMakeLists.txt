@@ -17,7 +17,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_AUTOMOC ON) 
 
 if (WIN32)
-    set(Qt6_ROOT "D:/AppProgram/CppQt/Qt6/6.11.1/msvc2022_64")
+    set(Qt6_ROOT "D:/AppProgram/Qt6/Qt6.11.1/6.11.1/msvc2022_64")
     set(CMAKE_PREFIX_PATH "${Qt6_ROOT}" CACHE PATH "Qt6 install root")
 endif()
 
