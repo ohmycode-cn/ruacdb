@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/test/ruac_test_type_list_out.hpp
  * src/test/ruac_test_type_list_out.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the test_main_type_list_out() function for testing type list output.
  */
 
 #pragma once

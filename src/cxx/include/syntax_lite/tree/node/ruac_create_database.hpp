@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/ruac_create_database.hpp
  * src/syntax_lite/tree/node/ruac_create_database.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the CreateDatabase class for creating databases with existence checking and thread-safe access.
  */
 
 #pragma once

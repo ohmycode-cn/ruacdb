@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/test/ruac_test_main.hpp
  * src/test/ruac_test_main.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the test_main() function as the C++ test entry point.
  */
 
 #pragma once

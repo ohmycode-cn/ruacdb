@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/help/hshell/ruac_help_shell.hpp
  * src/help/hshell/ruac_help_shell.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the HelpShell class for interactive shell command help with query support.
  */
 
 #pragma once

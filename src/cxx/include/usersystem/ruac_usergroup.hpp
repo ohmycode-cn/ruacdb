@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/usersystem/ruac_usergroup.hpp
  * src/usersystem/ruac_usergroup.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the UserGroup singleton class for managing user-to-group mappings with thread-safe access.
  */
 
 #pragma once

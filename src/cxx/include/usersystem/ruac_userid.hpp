@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/usersystem/ruac_userid.hpp
  * src/usersystem/ruac_userid.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the UserId singleton class for managing user ID assignments with thread-safe access.
  */
 
 #pragma once

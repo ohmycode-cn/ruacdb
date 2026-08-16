@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/ruac_use_database.hpp
  * src/syntax_lite/tree/node/ruac_use_database.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the UseDatabase class as a stub for database selection node processing.
  */
 
 #pragma once

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/ruac_show_tables.hpp
  * src/syntax_lite/tree/node/ruac_show_tables.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the ShowTables class as a stub for table listing node processing.
  */
 
 #pragma once

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/help/ruac_help_guide.hpp
  * src/help/ruac_help_guide.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the HelpGuide class for dispatching help subcommands in a thread-safe manner.
  */
 
 #pragma once

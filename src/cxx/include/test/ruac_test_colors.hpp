@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/test/ruac_test_colors.hpp
  * src/test/ruac_test_colors.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the test_main_colors() function for testing color utilities.
  */
 
 #pragma once

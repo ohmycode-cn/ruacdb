@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/ruac_prexec.hpp
  * src/syntax_lite/tree/ruac_prexec.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the PrExec class for dispatching parsed syntax nodes to their execution handlers.
  */
 
 #pragma once

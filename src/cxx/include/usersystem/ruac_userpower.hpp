@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/usersystem/ruac_userpower.hpp
  * src/usersystem/ruac_userpower.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the UserPower singleton class for managing user permissions (read, write, execute, link) with thread-safe access.
  */
 
 #pragma once

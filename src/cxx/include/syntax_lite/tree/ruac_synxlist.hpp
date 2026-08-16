@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/ruac_synxlist.hpp
  * src/syntax_lite/tree/ruac_synxlist.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the SynxList class for holding parsed node trees in a thread-safe variant container.
  */
 
 #pragma once

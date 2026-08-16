@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/ruac_show_databases.hpp
  * src/syntax_lite/tree/node/ruac_show_databases.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the ShowDatabases class for displaying databases (specific or all) with thread-safe access.
  */
 
 #pragma once

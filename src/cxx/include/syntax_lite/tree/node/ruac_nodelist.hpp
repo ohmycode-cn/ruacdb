@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/ruac_nodelist.hpp
  * src/syntax_lite/tree/node/ruac_nodelist.cpp
- * Description of header file function declaration
  *
+ * @brief Defines AST node data structures for parsed RUAC statements (CreateDatabase, CreateTable, UseDatabase, ShowDatabases, ShowTables).
  */
 
 #pragma once

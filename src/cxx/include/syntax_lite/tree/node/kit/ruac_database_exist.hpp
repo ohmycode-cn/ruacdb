@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/kit/ruac_database_exist.hpp
  * src/syntax_lite/tree/node/kit/ruac_database_exist.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the database_exist() utility function for checking database existence by name and UID.
  */
 
 #pragma once

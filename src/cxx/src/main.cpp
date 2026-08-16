@@ -1,3 +1,10 @@
+/**
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
+ * Author: ohmycode-cn(ohcode@163.com)
+ * src/main.cpp
+ */
+
 // #include "test/ruac_c_test_main.h"
 // #include "test/ruac_test_main.hpp"
 #include "kernel/object/ruac_object_single.hpp"

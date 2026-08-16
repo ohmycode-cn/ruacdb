@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/ruac_parser.hpp
  * src/syntax_lite/tree/ruac_parser.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the Parser class for tokenizing and parsing RUAC SQL-like queries with thread-safe access.
  */
 
 #pragma once

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/test/ruac_c_test_main.h
  * src/test/ruac_c_test_main.c
- * Description of header file function declaration
  *
+ * @brief Declares the test_c_main() C function as the C test entry point.
  */
 
 #ifndef RUAC_C_TEST_MAIN_H

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/ruac_nodeproc.hpp
  * src/syntax_lite/tree/node/ruac_nodeproc.cpp
- * Description of header file function declaration
  *
+ * @brief Aggregation header that includes all syntax node processor declarations.
  */
 
 #pragma once

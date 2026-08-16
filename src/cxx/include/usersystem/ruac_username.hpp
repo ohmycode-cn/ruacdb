@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/usersystem/ruac_username.hpp
  * src/usersystem/ruac_username.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the UserName singleton class with a doubly-linked list for thread-safe user name management.
  */
 
 #pragma once

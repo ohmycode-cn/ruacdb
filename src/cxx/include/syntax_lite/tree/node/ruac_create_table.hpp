@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/syntax_lite/tree/node/ruac_create_table.hpp
  * src/syntax_lite/tree/node/ruac_create_table.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the CreateTable class as a stub for table creation node processing.
  */
 
 #pragma once

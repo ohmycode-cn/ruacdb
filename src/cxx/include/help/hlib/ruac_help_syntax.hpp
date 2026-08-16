@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/help/hlib/ruac_help_syntax.hpp
  * src/help/hlib/ruac_help_syntax.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the show_help_syntax() function for displaying RUAC syntax help.
  */
 
 #pragma once

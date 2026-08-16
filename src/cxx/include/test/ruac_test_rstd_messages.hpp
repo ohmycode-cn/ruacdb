@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/test/ruac_test_rstd_messages.hpp
  * src/test/ruac_test_rstd_messages.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the test_main_rstd_messages() function for testing rstd message utilities.
  */
 
 #pragma once
