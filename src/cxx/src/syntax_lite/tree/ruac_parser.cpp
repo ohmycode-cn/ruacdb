@@ -149,14 +149,17 @@ namespace ruac::syntax_lite::tree {
             return true;
         };
         if (match_word("if")) {
-            if (!match_word(ks::G_NOT))
+            if (!match_word(ks::G_NOT)) {
                 return false;
-            if (!match_word("exists"))
+            }
+            if (!match_word("exists")) {
                 return false;
+            }
             node.if_not_exists = true;
         }
-        if (!has_more() || peek().type != kw::IDENTIFIER)
+        if (!has_more() || peek().type != kw::IDENTIFIER) {
             return false;
+        }
         node.name = consume().value;
         M_SYNX_LIST->set_node_tree(node);
         return true;
@@ -234,8 +237,9 @@ namespace ruac::syntax_lite::tree {
      */
     auto Parser::parse_use_database() -> bool {
         using kw = kwenums::TokenType;
-        if (!has_more() || peek().type != kw::IDENTIFIER)
+        if (!has_more() || peek().type != kw::IDENTIFIER) {
             return false;
+        }
         node::nodelist::UseDatabase node;
         node.name = consume().value;
         M_SYNX_LIST->set_node_tree(node);
