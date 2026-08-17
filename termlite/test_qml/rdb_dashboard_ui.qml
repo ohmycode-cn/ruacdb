@@ -41,7 +41,7 @@ ApplicationWindow {
             spacing: 5
 
             Repeater {
-                model: ["CPU", "GPU", "Memory", "Disk", "Network"]
+                model: ["Settings", "CPU", "GPU", "NPU", "Memory", "Disk", "Network"]
 
                 Item {
                     width: parent.width
