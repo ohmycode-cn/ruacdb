@@ -109,16 +109,16 @@ namespace ruac {
             clr_command_history();
         } else if ("stdmsg on" == line_) {
             ruac::rstd::messages::StdMsg::instance().enable_stdmsg(true);
-            std::osyncstream(std::cout) << "Enable stdmsg done." << std::endl;
+            std::osyncstream(std::cout) << "Done: Enabled standard temporarily debug message." << std::endl;
         } else if ("stdmsg off" == line_) {
             ruac::rstd::messages::StdMsg::instance().enable_stdmsg(false);
-            std::osyncstream(std::cout) << "Disable stdmsg done." << std::endl;
+            std::osyncstream(std::cout) << "Done: Disabled standard temporarily debug message." << std::endl;
         } else if ("ruacdb help" == line_) {
             {
                 ruac::help::HelpGuide hge;
                 hge.helpshell();
             }
-        } else if ("ruacdb users.info show" == line_.substr(0, 22)) {
+        } else if ("ruacdb users.info show" == line_) {
             {
                 ruac::usersystem::UsersMap usmap;
                 usmap.show_users_map();
@@ -154,19 +154,16 @@ namespace ruac {
     auto ShellExec::exec(const std::string &lines_) -> int {
         std::lock_guard<std::mutex> lock(M_SHELL_EXEC_MTX);
         std::string lines = lines_;
-
         ShellParser shell_parser;
         shell_parser.get_lines(lines);
         auto cmd_lines = shell_parser.ret_lines();
         shell_parser.clr_lines();
-
         for (unsigned long index{0}; index < cmd_lines.size(); index++) {
             int code = inner_exec(cmd_lines.at(index));
             if (0 == code || 1 == code) {
                 return code;
             }
         }
-
         return 2;
     }
 
