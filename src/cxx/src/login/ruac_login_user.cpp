@@ -18,6 +18,10 @@ namespace ruac::login {
         m_login_method = login_method_;
     }
 
+    void LoginUser::sets_login(const std::string &user_name_) {
+        m_user_name = user_name_;
+    }
+
     void LoginUser::init_login() {
         switch (m_login_method) {
         case LoginMethod::LOCAL:
@@ -27,15 +31,15 @@ namespace ruac::login {
             m_login = std::make_unique<LoginRemote>();
             break;
         default: // Default use live user. -> LoginMethod::OTHER
-        {
-            std::stringstream ss;
-            ss << "Error: Login method is not supported. Default use live user.\n";
-            ss << "Warn : You current use live user login. It not any permission.";
-            std::osyncstream(std::cout) << ss.str() << std::endl;
-        }
-            ruac::share::UserList::instance().add_map(1, "live");
-            m_user_name = "live";
-            m_user_id = 1;
+                 // Temporary test. It not last release.
+            ruac::share::UserList::instance().add_map(0, "root");
+            m_user_name = "root";
+            m_user_id = 0;
+            {
+                std::stringstream ss;
+                ss << "Error: Login method is not supported. Default use " << m_user_name << " user.\n";
+                std::osyncstream(std::cout) << ss.str() << std::endl;
+            }
         }
     }
 

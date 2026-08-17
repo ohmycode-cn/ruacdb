@@ -36,6 +36,10 @@ namespace ruac {
         void clr_command_history();
         auto get_current_user() -> std::string;
         auto get_current_uid() -> int;
+        auto group_weight(const std::string &group_) const -> int;
+        auto uid_permission_guard(const std::string &msg_,
+                                  const std::string &guard_group_ = "root",
+                                  bool out_msg_ = true) -> bool;
 
       private:
         auto inner_exec(const std::string &line_) -> int;

@@ -39,6 +39,7 @@ namespace ruac::login {
 
       public:
         void conf_login(const LoginMethod login_method_ = LoginMethod::LOCAL);
+        void sets_login(const std::string &user_name_);
         void init_login();
         auto get_uname() -> std::string;
         auto get_uid() -> int;

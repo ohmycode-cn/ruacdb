@@ -35,8 +35,13 @@ namespace ruac::usersystem {
 
       public:
         static auto instance() -> UserId &;
+
+      public:
         auto get_users_map() -> std::unordered_map<std::string, int>;
         auto get_user_id(const std::string &username_) -> int;
+        auto get_user_name(int user_id_) -> std::string;
+
+      public:
         auto add_user(const std::string &username_) -> bool;
     };
 

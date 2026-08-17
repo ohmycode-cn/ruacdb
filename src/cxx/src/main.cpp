@@ -6,7 +6,7 @@
  */
 
 // #include "test/ruac_c_test_main.h"
-#include "test/ruac_test_main.hpp"
+// #include "test/ruac_test_main.hpp"
 #include "kernel/object/ruac_object_single.hpp"
 #include "kernel/ruac_controller.hpp"
 #include "kernel/ruac_controller_table.hpp"
@@ -33,7 +33,7 @@
  */
 int main() {
     // test_c_main();
-    ruac::test::test_main();
+    // ruac::test::test_main();
 
     auto controller = new ruac::kernel::controller::Operation();
     controller->set_object_strategy(ruac::kernel::object::Single::instance());

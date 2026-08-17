@@ -64,6 +64,28 @@ namespace ruac::usersystem {
     }
 
     /**
+     * @brief Look up the name assigned to a user.
+     *
+     * @param user_id_ - Numeric id of the user whose name is requested.
+     *
+     * @return std::string - The stored user name, or an empty string when the user is not found.
+     *
+     * @details The mutex is locked before the table is searched. When the user is
+     *          found the stored name is returned; otherwise an empty string is returned
+     *          to signal absence.
+     *
+     */
+    auto UserId::get_user_name(int user_id_) -> std::string {
+        std::lock_guard<std::mutex> lock(M_USER_ID_MTX);
+        for (auto item : m_user_id_table) {
+            if (item.second == user_id_) {
+                return item.first;
+            }
+        }
+        return "";
+    }
+
+    /**
      * @brief Register a new user and assign the next available id.
      *
      * @param username_ - Name of the user to register.
