@@ -16,7 +16,7 @@ namespace ruac::syntax_lite::tree::node {
 
     class UseDatabase {
       private:
-        int m_uid{1};
+        [[maybe_unused]] int m_uid{1};
 
       public:
         explicit UseDatabase(int uid = 1);
