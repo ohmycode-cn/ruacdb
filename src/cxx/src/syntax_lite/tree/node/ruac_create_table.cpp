@@ -9,4 +9,7 @@
 #include "syntax_lite/tree/node/ruac_create_table.hpp"
 
 namespace ruac::syntax_lite::tree::node {
+
+    CreateTable::CreateTable(int uid) : m_uid(uid) {}
+
 } // namespace ruac::syntax_lite::tree::node

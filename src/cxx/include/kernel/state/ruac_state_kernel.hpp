@@ -14,6 +14,7 @@
 #define RUAC_STATE_KERNEL_HPP
 
 #include <string>
+#include <unordered_map>
 
 namespace ruac::kernel::state {
 
@@ -24,15 +25,24 @@ namespace ruac::kernel::state {
       private:
         std::string m_database{"none"};
         std::string m_tbnumber{"0"};
+        std::string m_current_user{"live"};
+        int m_current_user_id{1};
 
       public:
         Kernel() = default;
         ~Kernel() = default;
 
+      public:
         auto get_current_database_name() -> std::string &;
         auto get_current_table_number() -> std::string &;
+        auto get_current_user() -> std::unordered_map<std::string, int>;
+        auto get_current_user_name() -> std::string;
+        auto get_current_user_id() -> int;
+
+      public:
         void set_current_database_name(const std::string &name_);
         void set_current_table_number(const int number_);
+        void set_current_user(const std::string &username_, const int userid_);
     }; // Kernel
 
 } // namespace ruac::kernel::state

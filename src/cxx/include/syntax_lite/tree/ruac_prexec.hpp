@@ -24,6 +24,13 @@ namespace ruac::syntax_lite::tree {
         node::UseDatabase M_USE_DATABASE;
         node::ShowDatabases M_SHOW_DATABASES;
         node::ShowTables M_SHOW_TABLES;
+
+        explicit PrExecNodeList(int uid)
+            : M_CREATE_DATABASE(uid),
+              M_CREATE_TABLE(uid),
+              M_USE_DATABASE(uid),
+              M_SHOW_DATABASES(uid),
+              M_SHOW_TABLES(uid) {}
     };
 
     class PrExec {
@@ -31,7 +38,7 @@ namespace ruac::syntax_lite::tree {
         std::unique_ptr<PrExecNodeList> M_EXEC_NODE_LIST;
 
       public:
-        PrExec();
+        explicit PrExec(int uid = 1);
         ~PrExec() = default;
 
       public:

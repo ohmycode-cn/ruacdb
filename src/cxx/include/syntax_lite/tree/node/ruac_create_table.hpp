@@ -15,8 +15,11 @@
 namespace ruac::syntax_lite::tree::node {
 
     class CreateTable {
+      private:
+        int m_uid{1};
+
       public:
-        CreateTable() = default;
+        explicit CreateTable(int uid = 1);
         ~CreateTable() = default;
     };
 

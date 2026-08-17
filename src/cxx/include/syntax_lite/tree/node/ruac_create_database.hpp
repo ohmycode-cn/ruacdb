@@ -20,14 +20,14 @@ namespace ruac::syntax_lite::tree::node {
     class CreateDatabase {
       private:
         std::mutex M_CREATE_DATABASE_MTX;
-        [[maybe_unused]] int m_uid{1};
+        int m_uid{1};
 
       private:
         auto database_exist(const std::string &name_) -> bool;
         void database_create(const std::string &name_, bool in_advance_check_ = false);
 
       public:
-        CreateDatabase() = default;
+        explicit CreateDatabase(int uid = 1);
         ~CreateDatabase() = default;
 
       public:

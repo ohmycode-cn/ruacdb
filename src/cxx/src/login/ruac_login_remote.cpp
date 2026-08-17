@@ -10,4 +10,5 @@
 
 namespace ruac::login
 {
+    void LoginRemote::init_login() {}
 } // namespace ruac::login

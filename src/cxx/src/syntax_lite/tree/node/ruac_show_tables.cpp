@@ -9,4 +9,7 @@
 #include "syntax_lite/tree/node/ruac_show_tables.hpp"
 
 namespace ruac::syntax_lite::tree::node {
+
+    ShowTables::ShowTables(int uid) : m_uid(uid) {}
+
 } // namespace ruac::syntax_lite::tree::node

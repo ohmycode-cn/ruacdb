@@ -53,7 +53,7 @@ namespace ruac::syntax_lite::tree {
         auto parse_show_tables() -> bool;
 
       public:
-        Parser();
+        explicit Parser(int uid = 1);
         ~Parser() = default;
 
       private:

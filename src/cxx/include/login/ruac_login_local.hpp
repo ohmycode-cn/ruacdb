@@ -12,14 +12,16 @@
 #ifndef RUAC_LOGIN_LOCAL_HPP
 #define RUAC_LOGIN_LOCAL_HPP
 
+#include "login/ruac_login_absr.hpp"
 namespace ruac::login {
 
-    class LoginLocal {
+    class LoginLocal : public LoginAbsr {
       public:
         LoginLocal() = default;
         ~LoginLocal() = default;
 
       public:
+        void init_login() override;
     };
 
 } // namespace ruac::login

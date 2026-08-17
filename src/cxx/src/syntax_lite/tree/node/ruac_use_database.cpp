@@ -9,4 +9,7 @@
 #include "syntax_lite/tree/node/ruac_use_database.hpp"
 
 namespace ruac::syntax_lite::tree::node {
+
+    UseDatabase::UseDatabase(int uid) : m_uid(uid) {}
+
 } // namespace ruac::syntax_lite::tree::node

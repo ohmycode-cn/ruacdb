@@ -31,7 +31,7 @@ namespace ruac::syntax_lite {
         std::mutex M_SYN_LITE_MTX;
 
       public:
-        SynLite();
+        explicit SynLite(int uid = 1);
         ~SynLite() = default;
 
       public:

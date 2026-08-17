@@ -15,8 +15,11 @@
 namespace ruac::syntax_lite::tree::node {
 
     class UseDatabase {
+      private:
+        int m_uid{1};
+
       public:
-        UseDatabase() = default;
+        explicit UseDatabase(int uid = 1);
         ~UseDatabase() = default;
     };
 

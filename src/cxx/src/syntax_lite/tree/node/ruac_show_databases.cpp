@@ -17,8 +17,10 @@
 
 namespace ruac::syntax_lite::tree::node {
 
+    ShowDatabases::ShowDatabases(int uid) : m_uid(uid) {}
+
     auto ShowDatabases::database_exist(const std::string &name_) -> bool {
-        return ruac::syntax_lite::tree::node::kit::database_exist(name_, 0);
+        return ruac::syntax_lite::tree::node::kit::database_exist(name_, m_uid);
     }
 
     void ShowDatabases::database_show(const std::string &name_, const bool in_advance_check_) {
@@ -39,7 +41,7 @@ namespace ruac::syntax_lite::tree::node {
         std::lock_guard<std::mutex> lock(M_SHOW_DATABASES_MTX);
 
         auto &ct = ruac::kernel::controller::ControllerTable::instance();
-        auto &controller = ct.get_controller(0);
+        auto &controller = ct.get_controller(m_uid);
         auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
 
         if (track->get_kernel().empty_database()) {

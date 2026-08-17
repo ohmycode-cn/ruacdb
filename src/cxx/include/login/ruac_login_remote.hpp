@@ -12,14 +12,16 @@
 #ifndef RUAC_LOGIN_REMOTE_HPP
 #define RUAC_LOGIN_REMOTE_HPP
 
+#include "login/ruac_login_absr.hpp"
 namespace ruac::login {
 
-    class LoginRemote {
+    class LoginRemote : public LoginAbsr {
       public:
         LoginRemote() = default;
         ~LoginRemote() = default;
 
       public:
+        void init_login() override;
     };
 
 } // namespace ruac::login

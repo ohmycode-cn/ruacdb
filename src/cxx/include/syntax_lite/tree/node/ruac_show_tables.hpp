@@ -15,8 +15,11 @@
 namespace ruac::syntax_lite::tree::node {
 
     class ShowTables {
+      private:
+        int m_uid{1};
+
       public:
-        ShowTables() = default;
+        explicit ShowTables(int uid = 1);
         ~ShowTables() = default;
     };
 

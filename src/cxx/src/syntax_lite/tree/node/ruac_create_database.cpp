@@ -18,6 +18,8 @@
 
 namespace ruac::syntax_lite::tree::node {
 
+    CreateDatabase::CreateDatabase(int uid) : m_uid(uid) {}
+
     /**
      * @brief Check whether a database with the given name already exists
      *
@@ -26,12 +28,12 @@ namespace ruac::syntax_lite::tree::node {
      * @return bool - true if the database exists, false otherwise
      *
      * @details Delegates the lookup to the kit helper
-     *          kit::database_exist(), passing uid 0 to target the default
+     *          kit::database_exist(), passing m_uid to target the user's
      *          controller.
      *
      */
     auto CreateDatabase::database_exist(const std::string &name_) -> bool {
-        return ruac::syntax_lite::tree::node::kit::database_exist(name_, 0);
+        return ruac::syntax_lite::tree::node::kit::database_exist(name_, m_uid);
     }
 
     /**
@@ -65,7 +67,7 @@ namespace ruac::syntax_lite::tree::node {
             return;
         }
 
-        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(0);
+        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(m_uid);
         auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
         track->get_kernel().add_database(name_, 0, 0);
     }

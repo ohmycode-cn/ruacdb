@@ -10,4 +10,5 @@
 
 namespace ruac::login
 {
+    void LoginLocal::init_login() {}
 } // namespace ruac::login

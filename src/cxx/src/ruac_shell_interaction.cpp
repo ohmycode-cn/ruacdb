@@ -26,6 +26,9 @@
 
 namespace ruac {
 
+    ShellInteraction::ShellInteraction(kernel::state::Kernel &kernel_state)
+        : m_kernel_state(kernel_state) {}
+
     /**
      * @brief Display the base information guidance
      *
@@ -149,7 +152,7 @@ namespace ruac {
         print_message();
 
         ShellPipe::instance().set_context({&m_history_commands_count});
-        ShellExec shell_exec;
+        ShellExec shell_exec{m_kernel_state};
         int ret;
 
         while (true) {

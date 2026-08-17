@@ -12,6 +12,7 @@
 #ifndef RUAC_SHELL_EXEC_HPP
 #define RUAC_SHELL_EXEC_HPP
 
+#include "kernel/state/ruac_state_kernel.hpp"
 #include "syntax_lite/ruac_synlite.hpp"
 #include <mutex>
 #include <string>
@@ -21,7 +22,8 @@ namespace ruac {
     class ShellExec {
 
       private:
-        syntax_lite::SynLite M_SYN_LITE{syntax_lite::SynLite()};
+        kernel::state::Kernel &m_kernel_state;
+        syntax_lite::SynLite M_SYN_LITE;
         std::mutex M_SHELL_EXEC_MTX;
         static constexpr const char *const M_B_RED{"\033[41m"};
         static constexpr const char *const M_F_YELLOW{"\033[33m"};
@@ -32,12 +34,14 @@ namespace ruac {
         auto end_whiled(const std::string &line_) -> bool;
         void cat_command_history();
         void clr_command_history();
+        auto get_current_user() -> std::string;
+        auto get_current_uid() -> int;
 
       private:
         auto inner_exec(const std::string &line_) -> int;
 
       public:
-        ShellExec() = default;
+        explicit ShellExec(kernel::state::Kernel &kernel_state);
         ~ShellExec() = default;
 
       public:

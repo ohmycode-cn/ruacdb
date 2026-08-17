@@ -20,8 +20,8 @@ namespace ruac::syntax_lite {
      *          a working parser to delegate to.
      *
      */
-    SynLite::SynLite() {
-        M_PARSER = std::make_unique<ruac::syntax_lite::tree::Parser>();
+    SynLite::SynLite(int uid) {
+        M_PARSER = std::make_unique<ruac::syntax_lite::tree::Parser>(uid);
     }
 
     /**

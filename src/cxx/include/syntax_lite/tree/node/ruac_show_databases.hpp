@@ -20,7 +20,7 @@ namespace ruac::syntax_lite::tree::node {
     class ShowDatabases {
       private:
         std::mutex M_SHOW_DATABASES_MTX;
-        [[maybe_unused]] int m_uid{1};
+        int m_uid{1};
 
       private:
         auto database_exist(const std::string &name_) -> bool;
@@ -28,7 +28,7 @@ namespace ruac::syntax_lite::tree::node {
         void database_show_all();
 
       public:
-        ShowDatabases() = default;
+        explicit ShowDatabases(int uid = 1);
         ~ShowDatabases() = default;
 
       public:

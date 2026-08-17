@@ -12,6 +12,7 @@
 #ifndef RUAC_SHELL_INTERACTION_HPP
 #define RUAC_SHELL_INTERACTION_HPP
 
+#include "kernel/state/ruac_state_kernel.hpp"
 #include <mutex>
 #include <string>
 #include <vector>
@@ -27,6 +28,7 @@ namespace ruac {
 
     class ShellInteraction {
       private:
+        kernel::state::Kernel &m_kernel_state;
         std::vector<std::string> m_history_commands_count;
         ShellInteractionConfig m_config{};
         std::mutex M_INTERACTION_MTX;
@@ -39,7 +41,7 @@ namespace ruac {
         std::string m_prompt{"ruac-db> "};
 
       public:
-        ShellInteraction() = default;
+        explicit ShellInteraction(kernel::state::Kernel &kernel_state);
         ~ShellInteraction() = default;
 
       public:

@@ -18,6 +18,10 @@
 
 namespace ruac {
 
+    ShellExec::ShellExec(kernel::state::Kernel &kernel_state)
+        : m_kernel_state(kernel_state),
+          M_SYN_LITE(kernel_state.get_current_user_id()) {}
+
     /**
      * @brief Check if the input line matches a quit/exit command
      *
@@ -82,6 +86,14 @@ namespace ruac {
         std::stringstream ss;
         ss << M_B_RED << M_F_YELLOW << "Clear history records done." << M_RESET << "\n";
         std::osyncstream(std::cout) << ss.str() << std::endl;
+    }
+
+    auto ShellExec::get_current_user() -> std::string {
+        return m_kernel_state.get_current_user_name();
+    }
+
+    auto ShellExec::get_current_uid() -> int {
+        return m_kernel_state.get_current_user_id();
     }
 
     /**
