@@ -16,6 +16,7 @@
 #include "login/ruac_login_remote.hpp"
 #include "login/ruac_login_local.hpp"
 #include <memory>
+#include <string>
 
 namespace ruac::login {
 
