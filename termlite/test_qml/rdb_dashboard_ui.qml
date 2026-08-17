@@ -60,7 +60,7 @@ ApplicationWindow {
                         id: btn
                         width: parent.width
                         height: 36
-                        color: mouseArea.containsMouse ? "#e84040" : "#aa0000"
+                        color: mouseArea.containsMouse ? '#e84040' : "#aa0000"
                         radius: root.radius - 6
                         y: mouseArea.containsMouse ? -3 : 0
 
