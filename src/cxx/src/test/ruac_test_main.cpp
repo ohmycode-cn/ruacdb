@@ -6,12 +6,13 @@
  * src/test/ruac_test_main.cpp
  */
 
-#include "test/ruac_test_colors.hpp"
-#include "test/ruac_test_lexer.hpp"
-#include "test/ruac_test_logsystem.hpp"
-#include "test/ruac_test_main.hpp"
-#include "test/ruac_test_rstd_messages.hpp"
-#include "test/ruac_test_type_list_out.hpp"
+#include "test/ruac_test_colors.hpp"        // IWYU pragma: keep
+#include "test/ruac_test_lexer.hpp"         // IWYU pragma: keep
+#include "test/ruac_test_logsystem.hpp"     // IWYU pragma: keep
+#include "test/ruac_test_main.hpp"          // IWYU pragma: keep
+#include "test/ruac_test_rstd_messages.hpp" // IWYU pragma: keep
+#include "test/ruac_test_type_list_out.hpp" // IWYU pragma: keep
+#include "test/ruac_test_registere.hpp"     // IWYU pragma: keep
 #include <iostream>
 
 namespace ruac::test {
@@ -30,7 +31,8 @@ namespace ruac::test {
         // test_main_logsystem();
         // test_main_colors();
         // test_main_rstd_messages();
-        test_main_lexer();
+        test_main_register();
+        // test_main_lexer();
     }
 
 } // namespace ruac::test

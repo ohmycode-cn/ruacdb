@@ -11,6 +11,7 @@
 #include "ruac_shell_exec.hpp"
 #include "ruac_shell_parser.hpp"
 #include "ruac_shell_pipe.hpp"
+#include "usersystem/ruac_usersmap.hpp"
 #include <iostream>
 #include <sstream>
 #include <syncstream>
@@ -116,6 +117,11 @@ namespace ruac {
             {
                 ruac::help::HelpGuide hge;
                 hge.helpshell();
+            }
+        } else if ("ruacdb users.info show" == line_.substr(0, 22)) {
+            {
+                ruac::usersystem::UsersMap usmap;
+                usmap.show_users_map();
             }
         } else {
             M_SYN_LITE.syntax_line_hook(line_);

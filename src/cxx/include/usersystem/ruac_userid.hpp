@@ -21,6 +21,7 @@ namespace ruac::usersystem {
     class UserId {
       private:
         std::unordered_map<std::string, int> m_user_id_table{
+            /*user name, user id*/
             {"root", 0},
             {"live", 1}, // default user
         }; // Predefined user "root" with ID 0
@@ -34,6 +35,7 @@ namespace ruac::usersystem {
 
       public:
         static auto instance() -> UserId &;
+        auto get_users_map() -> std::unordered_map<std::string, int>;
         auto get_user_id(const std::string &username_) -> int;
         auto add_user(const std::string &username_) -> bool;
     };

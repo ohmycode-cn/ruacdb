@@ -5,7 +5,10 @@
  * include/usersystem/ruac_usergroup.hpp
  * src/usersystem/ruac_usergroup.cpp
  *
- * @brief Defines the UserGroup singleton class for managing user-to-group mappings with thread-safe access.
+ * @brief Defines the UserGroup singleton class for managing user-to-group
+ *        mappings with thread-safe access. Group definitions and their
+ *        default permissions are sourced from the shared M_GROUP_REGISTRY
+ *        in ruac_user_group_perm.hpp.
  */
 
 #pragma once
@@ -15,7 +18,6 @@
 #include <mutex>
 #include <string>
 #include <unordered_map>
-#include <vector>
 
 namespace ruac::usersystem {
 
@@ -23,12 +25,12 @@ namespace ruac::usersystem {
       private:
         std::mutex M_USER_GROUP_MTX;
 
-      private:
-        const std::vector<std::string> group_list = {"root", "live", "manager", "visitor"};
-        // username -> group
+        // username → group_name (group validity is checked against
+        // M_GROUP_REGISTRY in ruac_user_group_perm.hpp)
         std::unordered_map<std::string, std::string> m_user_group_table{
-            {"root", group_list[0]},
-            {"live", group_list[1]}};
+            /*user name, group name*/
+            {"root", "root"},
+            {"live", "visitor"}};
 
       private:
         UserGroup() = default;
@@ -38,6 +40,7 @@ namespace ruac::usersystem {
 
       public:
         static auto instance() -> UserGroup &;
+        auto get_groups() -> std::unordered_map<std::string, std::string>;
         auto get_group(const std::string &username) -> std::string;
         auto add_group(const std::string &username, const std::string &group) -> bool;
     };

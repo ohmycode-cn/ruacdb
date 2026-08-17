@@ -30,6 +30,19 @@ namespace ruac::usersystem {
     }
 
     /**
+     * @brief Get the current user ID table.
+     *
+     * @return std::unordered_map<std::string, int> - The current user ID table.
+     *
+     * @details The mutex is locked before the table is returned to ensure thread safety.
+     *
+     */
+    auto UserId::get_users_map() -> std::unordered_map<std::string, int> {
+        std::lock_guard<std::mutex> lock(M_USER_ID_MTX);
+        return m_user_id_table;
+    }
+
+    /**
      * @brief Look up the numeric id assigned to a user.
      *
      * @param username_ - Name of the user whose id is requested.

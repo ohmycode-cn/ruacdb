@@ -15,6 +15,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace ruac::usersystem {
 
@@ -34,7 +35,6 @@ namespace ruac::usersystem {
       private:
         UserNameList m_user_name_list;
         std::mutex M_USER_NAME_MTX;
-        bool m_init_once{false};
 
       private:
         UserName() = default;
@@ -47,10 +47,7 @@ namespace ruac::usersystem {
 
       public:
         static auto instance() -> UserName &;
-        auto user_exists(const std::string &username_) -> bool;
-        auto get_user_name(const std::string &username_) -> std::string;
         auto add_user(const std::string &username_) -> bool;
-        void init();
     };
 
 } // namespace ruac::usersystem

@@ -53,55 +53,6 @@ namespace ruac::usersystem {
     }
 
     /**
-     * @brief Check whether a user name already exists in the list.
-     *
-     * @param username_ - User name to search for.
-     *
-     * @return bool - true if the user name is found; false otherwise.
-     *
-     * @details The mutex is locked before traversal and the linked list is
-     *          walked from head to tail comparing each node name against the
-     *          requested value.
-     *
-     */
-    auto UserName::user_exists(const std::string &username_) -> bool {
-        std::lock_guard<std::mutex> lock(M_USER_NAME_MTX);
-        auto cur = m_user_name_list.head;
-        while (cur) {
-            if (cur->name == username_) {
-                return true;
-            }
-            cur = cur->next;
-        }
-        return false;
-    }
-
-    /**
-     * @brief Retrieve the stored name for a given user name.
-     *
-     * @param username_ - User name to search for.
-     *
-     * @return std::string - The matched user name, or an empty string when the
-     *         user is not found.
-     *
-     * @details The mutex is locked and the list is traversed node by node. When
-     *          a matching name is located the stored name is returned; if the
-     *          end of the list is reached an empty string is returned.
-     *
-     */
-    auto UserName::get_user_name(const std::string &username_) -> std::string {
-        std::lock_guard<std::mutex> lock(M_USER_NAME_MTX);
-        auto cur = m_user_name_list.head;
-        while (cur) {
-            if (cur->name == username_) {
-                return cur->name;
-            }
-            cur = cur->next;
-        }
-        return "";
-    }
-
-    /**
      * @brief Add a new user name if it is not already present.
      *
      * @param username_ - User name to add.
@@ -126,27 +77,6 @@ namespace ruac::usersystem {
         }
         push_back(username_);
         return true;
-    }
-
-    /**
-     * @brief Initialize the user name list with default users.
-     *
-     * @details The mutex is locked and the m_init_once guard is checked so the
-     *          initialization runs only once across the lifetime of the
-     *          singleton. On first invocation the guard is flipped and the
-     *          default users "root" and "live" are appended via push_back.
-     *
-     */
-    void UserName::init() {
-        std::lock_guard<std::mutex> lock(M_USER_NAME_MTX);
-        if (m_init_once) {
-            return;
-        }
-        m_init_once = true;
-        std::string default_users[] = {"root", "live"};
-        for (const auto &user : default_users) {
-            push_back(user);
-        }
     }
 
 } // namespace ruac::usersystem

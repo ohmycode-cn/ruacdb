@@ -5,9 +5,8 @@
  * include/usersystem/ruac_usergroup.hpp
  * src/usersystem/ruac_usergroup.cpp
  */
-
+#include "usersystem/ruac_user_group_perm.hpp"
 #include "usersystem/ruac_usergroup.hpp"
-#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <syncstream>
@@ -30,16 +29,31 @@ namespace ruac::usersystem {
     }
 
     /**
+     * @brief Get the current user-to-group mappings.
+     *
+     * @return std::unordered_map<std::string, std::string> - A copy of the
+     *        internal user-to-group table.
+     *
+     * @details The mutex is locked before the table is copied to ensure
+     *          thread-safety. The copy is then returned to the caller.
+     *
+     */
+    auto UserGroup::get_groups() -> std::unordered_map<std::string, std::string> {
+        return m_user_group_table;
+    }
+
+    /**
      * @brief Look up the group associated with a user.
      *
-     * @param username_ - Name of the user whose group is requested.
+     * @param username - Name of the user whose group is requested.
      *
-     * @return std::string - The group name for the user, or an empty string when
-     *         no entry exists.
+     * @return std::string - The group name for the user, or an empty string
+     *         when no entry exists.
      *
-     * @details The mutex is locked before the table is searched. When the user is
-     *          found the stored group name is returned; otherwise an empty string
-     *          is returned to indicate absence.
+     * @details The mutex is locked before the table is searched. When the
+     *          user is found the stored group name is returned; otherwise an
+     *          empty string is returned to indicate absence. The returned
+     *          group name is guaranteed to exist in M_GROUP_REGISTRY.
      *
      */
     auto UserGroup::get_group(const std::string &username) -> std::string {
@@ -54,18 +68,20 @@ namespace ruac::usersystem {
     /**
      * @brief Assign a group to a user.
      *
-     * @param username_ - Name of the user to assign the group to.
-     * @param group_ - Name of the group to assign.
+     * @param username - Name of the user to assign the group to.
+     * @param group - Name of the group to assign; must exist in
+     *                M_GROUP_REGISTRY.
      *
-     * @return bool - true if the assignment was stored; false if the user already
-     *                has a group or the group is not valid.
+     * @return bool - true if the assignment was stored; false if the user
+     *                already has a group or the group is not valid.
      *
-     * @details The mutex is locked before any check is performed. If the user
-     *          already has a group an error message including the existing group
-     *          is streamed to cout via std::osyncstream and false is returned.
-     *          If the supplied group is not present in group_list a second error
-     *          message is emitted and false is returned. Only when both checks
-     *          pass is the mapping stored and true returned.
+     * @details The mutex is locked before any check is performed. If the
+     *          user already has a group an error message including the
+     *          existing group is streamed to cout via std::osyncstream and
+     *          false is returned. If the supplied group is not present in
+     *          M_GROUP_REGISTRY a second error message is emitted and false
+     *          is returned. Only when both checks pass is the mapping stored
+     *          and true returned.
      *
      */
     auto UserGroup::add_group(const std::string &username, const std::string &group) -> bool {
@@ -78,7 +94,7 @@ namespace ruac::usersystem {
             std::osyncstream(std::cout) << ss.str() << std::endl;
             return false;
         }
-        if (std::find(group_list.begin(), group_list.end(), group) == group_list.end()) {
+        if (M_GROUP_REGISTRY.find(group) == M_GROUP_REGISTRY.end()) {
             std::stringstream ss;
             ss << "Error: Group '" << group << "' is not a valid group";
             std::osyncstream(std::cout) << ss.str() << std::endl;
