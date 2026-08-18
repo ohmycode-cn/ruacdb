@@ -44,10 +44,10 @@ namespace ruac::welcome {
                 "When multiple commands or statements need to be entered at once,",
                 "you can use semicolons as separators.",
                 "Repository: https://github.com/ohmycode-cn/ruacdb",
-                "Version: 0.0.1 Beta",
+                "Version: 0.0.2 Beta",
                 "Exit Program: Ctrl+C, quit, exit",
                 "Use annotations symbol: # or //",
-                "Get detail help: help --guide",
+                "Get detail help: ruacdb help",
             };
 
             auto max_len{0};

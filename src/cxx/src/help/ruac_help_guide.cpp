@@ -32,9 +32,10 @@ namespace ruac::help {
             ss << "|VERSION: 0.0.1                       |\n";
             ss << "|AUTHOR: ohmycode-cn(ohcode@163.com)  |\n";
             ss << "+-------------------------------------+\n";
-            ss << "Get syntax help:                      syntax help\n";
-            ss << "Exit help:                            exit help\n";
-            ss << "  |___________________________________quit help\n";
+            ss << "Get command help:                     help --command\n";
+            ss << "Get syntax help:                      help --syntax\n";
+            ss << "Exit help:                            help --exit\n";
+            ss << "  |___________________________________help --quit\n";
             std::osyncstream(std::cout) << ss.str() << std::endl;
         }
     }

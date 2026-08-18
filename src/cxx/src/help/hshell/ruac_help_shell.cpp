@@ -8,6 +8,8 @@
 
 #include "help/hlib/ruac_help_syntax.hpp"
 #include "help/hshell/ruac_help_shell.hpp"
+#include "rstd/convert/ruac_lowercase.hpp"
+#include "rstd/convert/ruac_rmspace.hpp"
 #include <iostream>
 #include <sstream>
 #include <syncstream>
@@ -28,34 +30,40 @@ namespace ruac::help::hshell {
      *
      * @param line_ - The raw input line entered by the user
      *
-     * @return bool - true if the line matched a known help command,
-     *         false if the line is unrecognised
+     * @return int - 0 if the command is an exit command,
+     *         1 otherwise
      *
      * @details Recognised commands:
-     *          - "syntax help": calls show_help_syntax() to print the
+     *          - "help --exit" / "help --quit": returns 0 to signal exit.
+     *          - "help --syntax": calls show_help_syntax() to print the
      *            syntax reference.
      *          - "exit" / "quit": prints a hint directing the user to
      *            use "exit help" or "quit help" to leave the shell.
-     *          Any other input returns false so the caller can report
-     *          an error.
+     *          Any other input prints an error message.
      *
      */
-    auto HelpShell::query(const std::string &line_) -> bool {
-        if ("syntax help" == line_) {
+    auto HelpShell::query(const std::string &line_) -> int {
+        if ("help --quit" == line_ || "help --exit" == line_) {
+            return 0;
+        } else if ("help --syntax" == line_) {
             {
                 ruac::help::hlib::syntax::show_help_syntax();
             }
-            return true;
+        } else if ("help --command" == line_) {
+            std::osyncstream(std::cout) << "Error: Current not implemented." << std::endl;
         } else if ("exit" == line_ || "quit" == line_) {
             {
                 std::stringstream ss;
                 ss << "Error: Not supported help shell syntax: exit or quit, ";
                 ss << "You maybe mean exit help shell. So ! You should use 'exit help' or 'quit help'";
                 std::osyncstream(std::cout) << ss.str() << std::endl;
-                return true;
+            }
+        } else {
+            {
+                std::osyncstream(std::cout) << "Error: Invalid help query sentence: " << line_ << std::endl;
             }
         }
-        return false;
+        return 1;
     }
 
     /**
@@ -63,25 +71,45 @@ namespace ruac::help::hshell {
      *
      * @details Acquires M_HELP_SHELL_MTX, then repeatedly prints the
      *          prompt, reads a line from stdin, skips empty lines and
-     *          comments (# or //), breaks on "exit help"/"quit help",
-     *          and otherwise dispatches the line to query(). Unmatched
-     *          lines produce an error message.
+     *          comments (# or //), splits input by semicolons to support
+     *          multiple commands per line, dispatches each command to
+     *          query(), and clears the command buffer after each dispatch.
+     *          Breaks on "help --exit"/"help --quit". Unmatched lines
+     *          produce an error message.
      *
      */
     void HelpShell::runhsh() {
         std::lock_guard<std::mutex> lock(M_HELP_SHELL_MTX);
+
         while (true) {
+
             std::osyncstream(std::cout) << m_prompt;
-            std::string line;
-            std::getline(std::cin, line);
-            if (line.empty() || "#" == line.substr(0, 1) || "//" == line.substr(0, 2)) {
+            std::string lines;
+            std::getline(std::cin, lines);
+            ruac::rstd::convert::lowercase::to_lower_string(lines);
+            if (lines.empty() || "#" == lines.substr(0, 1) || "//" == lines.substr(0, 2)) {
                 continue;
             }
-            if ("exit help" == line || "quit help" == line) {
-                break;
+
+            std::string line;
+            for (auto &c : lines) {
+                if (';' == c) {
+                    ruac::rstd::convert::rmspace::remove_string_spaces(line);
+                    if (0 == query(line)) {
+                        return;
+                    }
+                    line.clear();
+                } else {
+                    line += c;
+                }
             }
-            if (!query(line)) {
-                std::osyncstream(std::cout) << "Error: Invalid help query sentence: " << line << std::endl;
+
+            if (!line.empty()) {
+                ruac::rstd::convert::rmspace::remove_string_spaces(line);
+                if (0 == query(line)) {
+                    return;
+                }
+                line.clear();
             }
         };
     }

@@ -23,7 +23,7 @@ namespace ruac::help::hshell {
         std::string m_prompt;
 
       private:
-        auto query(const std::string &line_) -> bool;
+        auto query(const std::string &line_) -> int;
 
       public:
         HelpShell();
