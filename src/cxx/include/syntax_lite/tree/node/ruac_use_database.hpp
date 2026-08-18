@@ -19,7 +19,7 @@ namespace ruac::syntax_lite::tree::node {
         [[maybe_unused]] int m_uid{1};
 
       public:
-        explicit UseDatabase(int uid = 1);
+        explicit UseDatabase(int uid_ = 1);
         ~UseDatabase() = default;
     };
 

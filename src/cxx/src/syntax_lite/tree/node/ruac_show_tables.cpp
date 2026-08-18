@@ -10,6 +10,6 @@
 
 namespace ruac::syntax_lite::tree::node {
 
-    ShowTables::ShowTables(int uid) : m_uid(uid) {}
+    ShowTables::ShowTables(int uid_) : m_uid(uid_) {}
 
 } // namespace ruac::syntax_lite::tree::node

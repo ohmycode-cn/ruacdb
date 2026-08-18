@@ -43,7 +43,7 @@ namespace ruac::usersystem {
         UserName &operator=(const UserName &) = delete;
 
       private:
-        void push_back(const std::string &name);
+        void push_back(const std::string &name_);
 
       public:
         static auto instance() -> UserName &;

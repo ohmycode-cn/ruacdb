@@ -27,7 +27,7 @@ namespace ruac::rstd::logsystem {
       private:
         std::mutex M_FORMAT_XML_MTX;
         template <typename V>
-        auto fmt(const logtype::strmap &map, const logtype::string &key_, const V &val_) -> logtype::string;
+        auto fmt(const logtype::strmap &map_, const logtype::string &key_, const V &val_) -> logtype::string;
 
       public:
         FormatXML() = default;

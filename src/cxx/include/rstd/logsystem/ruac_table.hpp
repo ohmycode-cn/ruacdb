@@ -49,8 +49,8 @@ namespace ruac::rstd::logsystem {
         ~Table() = default;
 
       public:
-        void set_param_list(const TableParamList &params = {});
-        void print(TableType type);
+        void set_param_list(const TableParamList &params_ = {});
+        void print(TableType type_);
         auto print_fmt_string() -> logtype::string;
     };
 

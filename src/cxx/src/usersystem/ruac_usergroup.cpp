@@ -45,7 +45,7 @@ namespace ruac::usersystem {
     /**
      * @brief Look up the group associated with a user.
      *
-     * @param username - Name of the user whose group is requested.
+     * @param username_ - Name of the user whose group is requested.
      *
      * @return std::string - The group name for the user, or an empty string
      *         when no entry exists.
@@ -56,9 +56,9 @@ namespace ruac::usersystem {
      *          group name is guaranteed to exist in M_GROUP_REGISTRY.
      *
      */
-    auto UserGroup::get_group(const std::string &username) -> std::string {
+    auto UserGroup::get_group(const std::string &username_) -> std::string {
         std::lock_guard<std::mutex> lock(M_USER_GROUP_MTX);
-        auto itr = m_user_group_table.find(username);
+        auto itr = m_user_group_table.find(username_);
         if (itr != m_user_group_table.end()) {
             return itr->second;
         }
@@ -68,9 +68,9 @@ namespace ruac::usersystem {
     /**
      * @brief Assign a group to a user.
      *
-     * @param username - Name of the user to assign the group to.
-     * @param group - Name of the group to assign; must exist in
-     *                M_GROUP_REGISTRY.
+     * @param username_ - Name of the user to assign the group to.
+     * @param group_ - Name of the group to assign; must exist in
+     *                 M_GROUP_REGISTRY.
      *
      * @return bool - true if the assignment was stored; false if the user
      *                already has a group or the group is not valid.
@@ -84,23 +84,23 @@ namespace ruac::usersystem {
      *          and true returned.
      *
      */
-    auto UserGroup::add_group(const std::string &username, const std::string &group) -> bool {
+    auto UserGroup::add_group(const std::string &username_, const std::string &group_) -> bool {
         std::lock_guard<std::mutex> lock(M_USER_GROUP_MTX);
-        auto itr = m_user_group_table.find(username);
+        auto itr = m_user_group_table.find(username_);
         if (itr != m_user_group_table.end()) {
             std::stringstream ss;
-            ss << "Error: User '" << username << "' already exists in group '"
+            ss << "Error: User '" << username_ << "' already exists in group '"
                << itr->second << "'";
             std::osyncstream(std::cout) << ss.str() << std::endl;
             return false;
         }
-        if (M_GROUP_REGISTRY.find(group) == M_GROUP_REGISTRY.end()) {
+        if (M_GROUP_REGISTRY.find(group_) == M_GROUP_REGISTRY.end()) {
             std::stringstream ss;
-            ss << "Error: Group '" << group << "' is not a valid group";
+            ss << "Error: Group '" << group_ << "' is not a valid group";
             std::osyncstream(std::cout) << ss.str() << std::endl;
             return false;
         }
-        m_user_group_table[username] = group;
+        m_user_group_table[username_] = group_;
         return true;
     }
 

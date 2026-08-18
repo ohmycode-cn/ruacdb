@@ -28,7 +28,7 @@ namespace ruac::syntax_lite::tree::node {
         void database_show_all();
 
       public:
-        explicit ShowDatabases(int uid = 1);
+        explicit ShowDatabases(int uid_ = 1);
         ~ShowDatabases() = default;
 
       public:

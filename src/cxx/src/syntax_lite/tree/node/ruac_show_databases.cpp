@@ -17,7 +17,7 @@
 
 namespace ruac::syntax_lite::tree::node {
 
-    ShowDatabases::ShowDatabases(int uid) : m_uid(uid) {}
+    ShowDatabases::ShowDatabases(int uid_) : m_uid(uid_) {}
 
     auto ShowDatabases::database_exist(const std::string &name_) -> bool {
         return ruac::syntax_lite::tree::node::kit::database_exist(name_, m_uid);

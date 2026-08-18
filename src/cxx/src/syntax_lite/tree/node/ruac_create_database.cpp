@@ -18,7 +18,7 @@
 
 namespace ruac::syntax_lite::tree::node {
 
-    CreateDatabase::CreateDatabase(int uid) : m_uid(uid) {}
+    CreateDatabase::CreateDatabase(int uid_) : m_uid(uid_) {}
 
     /**
      * @brief Check whether a database with the given name already exists
@@ -50,7 +50,7 @@ namespace ruac::syntax_lite::tree::node {
      *          and calls add_database(name, 0, 0) on the underlying kernel.
      *
      */
-    void CreateDatabase::database_create(const std::string &name_, bool in_advance_check) {
+    void CreateDatabase::database_create(const std::string &name_, bool in_advance_check_) {
 
         // tmp debug line;
         auto &stdmsg = rstd::messages::StdMsg::instance();
@@ -60,7 +60,7 @@ namespace ruac::syntax_lite::tree::node {
 
         std::lock_guard<std::mutex> lock(M_CREATE_DATABASE_MTX);
 
-        if (in_advance_check || database_exist(name_)) {
+        if (in_advance_check_ || database_exist(name_)) {
             std::stringstream ss;
             ss << "Error: Database '" << name_ << "' already exists";
             std::osyncstream(std::cout) << ss.str() << std::endl;

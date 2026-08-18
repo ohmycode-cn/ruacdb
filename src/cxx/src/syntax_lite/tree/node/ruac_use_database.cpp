@@ -10,6 +10,6 @@
 
 namespace ruac::syntax_lite::tree::node {
 
-    UseDatabase::UseDatabase(int uid) : m_uid(uid) {}
+    UseDatabase::UseDatabase(int uid_) : m_uid(uid_) {}
 
 } // namespace ruac::syntax_lite::tree::node

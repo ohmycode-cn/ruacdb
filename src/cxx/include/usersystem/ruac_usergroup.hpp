@@ -41,8 +41,8 @@ namespace ruac::usersystem {
       public:
         static auto instance() -> UserGroup &;
         auto get_groups() -> std::unordered_map<std::string, std::string>;
-        auto get_group(const std::string &username) -> std::string;
-        auto add_group(const std::string &username, const std::string &group) -> bool;
+        auto get_group(const std::string &username_) -> std::string;
+        auto add_group(const std::string &username_, const std::string &group_) -> bool;
     };
 
 } // namespace ruac::usersystem

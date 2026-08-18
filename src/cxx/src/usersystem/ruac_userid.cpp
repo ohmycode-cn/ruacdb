@@ -54,9 +54,9 @@ namespace ruac::usersystem {
      *          signal absence.
      *
      */
-    auto UserId::get_user_id(const std::string &username) -> int {
+    auto UserId::get_user_id(const std::string &username_) -> int {
         std::lock_guard<std::mutex> lock(M_USER_ID_MTX);
-        auto itr = m_user_id_table.find(username);
+        auto itr = m_user_id_table.find(username_);
         if (itr != m_user_id_table.end()) {
             return itr->second;
         }

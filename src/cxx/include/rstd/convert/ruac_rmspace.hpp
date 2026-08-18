@@ -18,7 +18,7 @@ namespace ruac::rstd::convert {
 
     namespace rmspace {
 
-        void remove_string_spaces(std::string &str);
+        void remove_string_spaces(std::string &str_);
 
     } // namespace rmspace
 

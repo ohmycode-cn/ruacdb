@@ -26,8 +26,8 @@
 
 namespace ruac {
 
-    ShellInteraction::ShellInteraction(kernel::state::Kernel &kernel_state)
-        : m_kernel_state(kernel_state) {}
+    ShellInteraction::ShellInteraction(kernel::state::Kernel &kernel_state_)
+        : m_kernel_state(kernel_state_) {}
 
     /**
      * @brief Display the base information guidance

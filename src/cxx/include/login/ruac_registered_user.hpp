@@ -25,8 +25,8 @@ namespace ruac::login {
       private:
         auto set_user_ne(const std::string &user_ne_) -> bool;
         auto set_user_gp(const std::string &user_gp_) -> bool;
-        auto hdl_add_user(const std::string &user_ne) -> bool;
-        auto hdl_add_group(const std::string &user_gp) -> bool;
+        auto hdl_add_user(const std::string &user_ne_) -> bool;
+        auto hdl_add_group(const std::string &user_gp_) -> bool;
 
       public:
         RegisteredUser() = default;

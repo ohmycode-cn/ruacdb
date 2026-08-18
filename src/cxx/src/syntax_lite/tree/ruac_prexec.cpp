@@ -15,14 +15,14 @@ namespace ruac::syntax_lite::tree {
     /**
      * @brief Construct the PrExec and own its node list
      *
-     * @param uid - User ID for controller lookup
+     * @param uid_ - User ID for controller lookup
      *
      * @details Initialises M_EXEC_NODE_LIST via std::make_unique so the
      *          pre-executor holds a fresh PrExecNodeList ready to act on
      *          parsed nodes.
      *
      */
-    PrExec::PrExec(int uid) : M_EXEC_NODE_LIST{std::make_unique<PrExecNodeList>(uid)} {}
+    PrExec::PrExec(int uid_) : M_EXEC_NODE_LIST{std::make_unique<PrExecNodeList>(uid_)} {}
 
     /**
      * @brief Dispatch the parsed node tree to its pre-execution handler

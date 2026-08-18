@@ -27,7 +27,7 @@ namespace ruac::syntax_lite::tree::node {
         void database_create(const std::string &name_, bool in_advance_check_ = false);
 
       public:
-        explicit CreateDatabase(int uid = 1);
+        explicit CreateDatabase(int uid_ = 1);
         ~CreateDatabase() = default;
 
       public:

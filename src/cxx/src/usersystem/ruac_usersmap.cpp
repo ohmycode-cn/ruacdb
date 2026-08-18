@@ -19,8 +19,8 @@
 
 namespace ruac::usersystem {
 
-    static auto perm_code_str(UserPowerCode code) -> const char * {
-        switch (code) {
+    static auto perm_code_str(UserPowerCode code_) -> const char * {
+        switch (code_) {
         case UserPowerCode::OK:
             return "OK";
         case UserPowerCode::NO:

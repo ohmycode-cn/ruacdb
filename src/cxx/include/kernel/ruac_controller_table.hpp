@@ -29,8 +29,8 @@ namespace ruac::kernel::controller {
 
       public:
         static auto instance() -> ControllerTable &;
-        auto set_controller(int uid, Operation &controller) -> bool;
-        auto get_controller(int uid) -> Operation &;
+        auto set_controller(int uid_, Operation &controller_) -> bool;
+        auto get_controller(int uid_) -> Operation &;
     };
 
 } // namespace ruac::kernel::controller

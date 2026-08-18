@@ -92,12 +92,12 @@ namespace ruac::rstd::logsystem {
      *
      * @param fpath_  The directory path for the log file.
      * @param fname_  The log file name.
-     * @param thread_separation_mode  If true, each instance uses its own path;
-     *                                if false, all instances share static paths.
+     * @param thread_separation_mode_  If true, each instance uses its own path;
+     *                                 if false, all instances share static paths.
      */
     OutputFile::OutputFile(const logtype::string &fpath_, const logtype::string &fname_,
-                           const bool thread_separation_mode) {
-        init(fpath_, fname_, thread_separation_mode);
+                           const bool thread_separation_mode_) {
+        init(fpath_, fname_, thread_separation_mode_);
     }
 
     /**
@@ -116,13 +116,13 @@ namespace ruac::rstd::logsystem {
      *
      * @param fpath_  The directory path for the log file.
      * @param fname_  The log file name.
-     * @param thread_separation_mode  If true, uses instance-specific paths;
-     *                                if false, uses shared static paths.
+     * @param thread_separation_mode_  If true, uses instance-specific paths;
+     *                                 if false, uses shared static paths.
      */
     void OutputFile::init(const logtype::string &fpath_, const logtype::string &fname_,
-                          const bool thread_separation_mode) {
+                          const bool thread_separation_mode_) {
 
-        if (!thread_separation_mode && !m_is_lock_vals) {
+        if (!thread_separation_mode_ && !m_is_lock_vals) {
             m_static_fpath = fpath_;
             m_static_fname = fname_;
             m_is_lock_vals = true;
@@ -135,8 +135,8 @@ namespace ruac::rstd::logsystem {
         auto out = std::ios::out;
         auto app = std::ios::app;
 
-        logtype::string file_path = (thread_separation_mode) ? m_fpath : m_static_fpath;
-        logtype::string file_name = (thread_separation_mode) ? m_fname : m_static_fname;
+        logtype::string file_path = (thread_separation_mode_) ? m_fpath : m_static_fpath;
+        logtype::string file_name = (thread_separation_mode_) ? m_fname : m_static_fname;
 
         m_is_check = (checkfile(file_path, file_name));
         if (!m_is_check) {

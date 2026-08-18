@@ -41,7 +41,7 @@ namespace ruac {
         std::string m_prompt{"ruac-db> "};
 
       public:
-        explicit ShellInteraction(kernel::state::Kernel &kernel_state);
+        explicit ShellInteraction(kernel::state::Kernel &kernel_state_);
         ~ShellInteraction() = default;
 
       public:

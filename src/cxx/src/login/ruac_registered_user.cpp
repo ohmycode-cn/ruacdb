@@ -87,7 +87,7 @@ namespace ruac::login {
     /**
      * @brief Handle the "add user" command from the registration REPL
      *
-     * @param user_ne - The user name extracted from the command line
+     * @param user_ne_ - The user name extracted from the command line
      *
      * @return bool - true if the user was registered; false if validation
      *         failed
@@ -98,25 +98,25 @@ namespace ruac::login {
      *          a confirmation message to stdout.
      *
      */
-    auto RegisteredUser::hdl_add_user(const std::string &user_ne) -> bool {
+    auto RegisteredUser::hdl_add_user(const std::string &user_ne_) -> bool {
         auto &stdmsg = rstd::messages::StdMsg::instance();
         auto &stdbug = rstd::messages::StdDug::instance();
         std::stringstream ss;
-        ss << "Class: RegisteredUser, Func: registere, Branch: add user -> " << user_ne;
+        ss << "Class: RegisteredUser, Func: registere, Branch: add user -> " << user_ne_;
         stdmsg.print(stdbug.ostrs(ss.str(), __FILE__, __LINE__));
 
-        if (!set_user_ne(user_ne))
+        if (!set_user_ne(user_ne_))
             return false;
 
-        m_current_user_name = user_ne;
-        std::osyncstream(std::cout) << "Done: setting user name to " << user_ne << "." << std::endl;
+        m_current_user_name = user_ne_;
+        std::osyncstream(std::cout) << "Done: setting user name to " << user_ne_ << "." << std::endl;
         return true;
     }
 
     /**
      * @brief Handle the "add group" command from the registration REPL
      *
-     * @param user_gp - The group name extracted from the command line
+     * @param user_gp_ - The group name extracted from the command line
      *
      * @return bool - true if the group was assigned; false if assignment
      *         failed
@@ -128,18 +128,18 @@ namespace ruac::login {
      *          uses the return value to decide whether to break the loop.
      *
      */
-    auto RegisteredUser::hdl_add_group(const std::string &user_gp) -> bool {
+    auto RegisteredUser::hdl_add_group(const std::string &user_gp_) -> bool {
         auto &stdmsg = rstd::messages::StdMsg::instance();
         auto &stdbug = rstd::messages::StdDug::instance();
         std::stringstream ss;
-        ss << "Class: RegisteredUser, Func: registere, Branch: add group -> " << user_gp;
+        ss << "Class: RegisteredUser, Func: registere, Branch: add group -> " << user_gp_;
         stdmsg.print(stdbug.ostrs(ss.str(), __FILE__, __LINE__));
 
-        if (!set_user_gp(user_gp))
+        if (!set_user_gp(user_gp_))
             return false;
 
         m_current_user_name.clear();
-        std::osyncstream(std::cout) << "Done: setting user group to " << user_gp << "." << std::endl;
+        std::osyncstream(std::cout) << "Done: setting user group to " << user_gp_ << "." << std::endl;
         return true;
     }
 

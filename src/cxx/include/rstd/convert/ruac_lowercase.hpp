@@ -18,7 +18,7 @@ namespace ruac::rstd::convert {
 
     namespace lowercase {
 
-        void to_lower_string(std::string &str);
+        void to_lower_string(std::string &str_);
 
     }
 

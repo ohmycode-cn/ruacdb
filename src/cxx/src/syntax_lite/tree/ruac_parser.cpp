@@ -338,9 +338,9 @@ namespace ruac::syntax_lite::tree {
      *          query.
      *
      */
-    Parser::Parser(int uid)
+    Parser::Parser(int uid_)
         : M_SYNX_LIST(std::make_unique<SynxList>()),
-          M_PREEXEC(std::make_unique<PrExec>(uid)),
+          M_PREEXEC(std::make_unique<PrExec>(uid_)),
           M_LEXER(std::make_unique<Lexer>()) {}
 
     /**

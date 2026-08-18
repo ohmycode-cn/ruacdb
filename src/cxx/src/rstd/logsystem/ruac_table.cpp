@@ -80,19 +80,19 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Set the table headers and data source for rendering
      *
-     * @param params  Configuration containing column headers and StringMap data
+     * @param params_  Configuration containing column headers and StringMap data
      */
-    void Table::set_param_list(const TableParamList &params) {
-        m_params = params;
+    void Table::set_param_list(const TableParamList &params_) {
+        m_params = params_;
     }
 
     /**
      * @brief Print the table to stdout using osyncstream for thread-safe output
      *
-     * @param type  The table data source type to render (currently supports STRMAP)
+     * @param type_  The table data source type to render (currently supports STRMAP)
      */
-    auto Table::print(TableType type) -> void {
-        switch (type) {
+    auto Table::print(TableType type_) -> void {
+        switch (type_) {
         case TableType::STRMAP: {
             auto result = print_strmap();
             std::osyncstream(std::cout) << result;

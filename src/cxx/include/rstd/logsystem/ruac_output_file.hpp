@@ -42,12 +42,12 @@ namespace ruac::rstd::logsystem {
         bool m_is_openf{false};
 
       private:
-        void init(const logtype::string &fpath_, const logtype::string &fname_, const bool thread_separation_mode);
+        void init(const logtype::string &fpath_, const logtype::string &fname_, const bool thread_separation_mode_);
         void over();
 
       public:
         OutputFile(const logtype::string &fpath_, const logtype::string &fname_,
-                   const bool thread_separation_mode = true);
+                   const bool thread_separation_mode_ = true);
         ~OutputFile();
 
       public:

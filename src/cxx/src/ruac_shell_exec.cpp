@@ -25,18 +25,18 @@ namespace ruac {
     /**
      * @brief Construct a ShellExec bound to a given kernel state
      *
-     * @param kernel_state - Reference to the shared Kernel object that
-     *                       holds the current user identity
+     * @param kernel_state_ - Reference to the shared Kernel object that
+     *                        holds the current user identity
      *
      * @details Stores the kernel reference in m_kernel_state and
      *          initialises the inner SynLite instance (M_SYN_LITE) with
-     *          the user id currently carried by kernel_state. The
+     *          the user id currently carried by kernel_state_. The
      *          SynLite instance is used later to execute SQL-like lines.
      *
      */
-    ShellExec::ShellExec(kernel::state::Kernel &kernel_state)
-        : m_kernel_state(kernel_state),
-          M_SYN_LITE(kernel_state.get_current_user_id()) {}
+    ShellExec::ShellExec(kernel::state::Kernel &kernel_state_)
+        : m_kernel_state(kernel_state_),
+          M_SYN_LITE(kernel_state_.get_current_user_id()) {}
 
     /**
      * @brief Check if the input line matches a quit/exit command

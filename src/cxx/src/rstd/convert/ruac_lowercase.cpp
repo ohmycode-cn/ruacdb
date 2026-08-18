@@ -15,10 +15,10 @@ namespace ruac::rstd::convert {
         /**
          * @brief Convert a string to lowercase.
          *
-         * @param str The string to convert.
+         * @param str_ The string to convert.
          */
-        void to_lower_string(std::string &str) {
-            str.resize_and_overwrite(str.size(), [](char *buf, std::size_t n) -> std::size_t {
+        void to_lower_string(std::string &str_) {
+            str_.resize_and_overwrite(str_.size(), [](char *buf, std::size_t n) -> std::size_t {
                 for (std::size_t i = 0; i < n; ++i) {
                     buf[i] = static_cast<char>(std::tolower(static_cast<unsigned char>(buf[i])));
                 }

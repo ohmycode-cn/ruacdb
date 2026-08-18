@@ -44,12 +44,12 @@ namespace ruac::kernel::controller {
      *          uid and the call returns true.
      *
      */
-    auto ControllerTable::set_controller(int uid, Operation &controller) -> bool {
-        auto itr = m_controller_table.find(uid);
+    auto ControllerTable::set_controller(int uid_, Operation &controller_) -> bool {
+        auto itr = m_controller_table.find(uid_);
         if (itr != m_controller_table.end()) {
             return false;
         }
-        m_controller_table[uid] = &controller;
+        m_controller_table[uid_] = &controller_;
         return true;
     }
 
@@ -65,8 +65,8 @@ namespace ruac::kernel::controller {
      *          std::runtime_error is thrown describing the missing uid.
      *
      */
-    auto ControllerTable::get_controller(int uid) -> Operation & {
-        auto itr = m_controller_table.find(uid);
+    auto ControllerTable::get_controller(int uid_) -> Operation & {
+        auto itr = m_controller_table.find(uid_);
         if (itr != m_controller_table.end()) {
             return *itr->second;
         } else {

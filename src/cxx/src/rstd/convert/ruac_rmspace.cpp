@@ -15,15 +15,15 @@ namespace ruac::rstd::convert {
 
     namespace {
 
-        constexpr auto trim_view(std::string_view sv) noexcept -> std::string_view {
+        constexpr auto trim_view(std::string_view sv_) noexcept -> std::string_view {
             auto is_space = [](unsigned char c) { return std::isspace(c); };
-            auto start = std::find_if_not(sv.begin(), sv.end(), is_space);
-            if (start == sv.end()) {
+            auto start = std::find_if_not(sv_.begin(), sv_.end(), is_space);
+            if (start == sv_.end()) {
                 return {};
             }
             auto end = std::find_if_not(
-                sv.rbegin(),
-                sv.rend(),
+                sv_.rbegin(),
+                sv_.rend(),
                 is_space);
             return {start, end.base()};
         }
@@ -35,11 +35,11 @@ namespace ruac::rstd::convert {
         /**
          * @brief Remove string heading and trailing spaces.
          *
-         * @param str The string to remove heading and trailing spaces from.
+         * @param str_ The string to remove heading and trailing spaces from.
          */
-        void remove_string_spaces(std::string &str) {
-            auto trimmed = trim_view(str);
-            str.assign(trimmed.data(), trimmed.size());
+        void remove_string_spaces(std::string &str_) {
+            auto trimmed = trim_view(str_);
+            str_.assign(trimmed.data(), trimmed.size());
         }
 
     } // namespace rmspace

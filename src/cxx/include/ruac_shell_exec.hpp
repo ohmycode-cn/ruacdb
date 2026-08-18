@@ -45,7 +45,7 @@ namespace ruac {
         auto inner_exec(const std::string &line_) -> int;
 
       public:
-        explicit ShellExec(kernel::state::Kernel &kernel_state);
+        explicit ShellExec(kernel::state::Kernel &kernel_state_);
         ~ShellExec() = default;
 
       public:

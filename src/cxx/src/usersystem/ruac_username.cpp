@@ -38,9 +38,9 @@ namespace ruac::usersystem {
      *          itself, callers are expected to guard concurrent access.
      *
      */
-    void UserName::push_back(const std::string &name) {
+    void UserName::push_back(const std::string &name_) {
         auto node = std::make_shared<UserNameNode>();
-        node->name = name;
+        node->name = name_;
         if (!m_user_name_list.head) {
             m_user_name_list.head = node;
             m_user_name_list.tail = node;

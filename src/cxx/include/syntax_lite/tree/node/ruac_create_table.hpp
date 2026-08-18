@@ -19,7 +19,7 @@ namespace ruac::syntax_lite::tree::node {
         [[maybe_unused]] int m_uid{1};
 
       public:
-        explicit CreateTable(int uid = 1);
+        explicit CreateTable(int uid_ = 1);
         ~CreateTable() = default;
     };
 

@@ -10,6 +10,6 @@
 
 namespace ruac::syntax_lite::tree::node {
 
-    CreateTable::CreateTable(int uid) : m_uid(uid) {}
+    CreateTable::CreateTable(int uid_) : m_uid(uid_) {}
 
 } // namespace ruac::syntax_lite::tree::node
