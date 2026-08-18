@@ -6,20 +6,35 @@ Every rule below is distilled from the project's existing scripts and must be fo
 ## Table of Contents
 
 [Bash File Rules](#bash-file-rules)
+
 [Bash File Header](#bash-file-header)
+
 [Bash Column Width and Indentation](#bash-column-width-and-indentation)
+
 [Bash Comment Rules](#bash-comment-rules)
+
 [Bash Naming Rules](#bash-naming-rules)
+
 [Bash Variables and Constants](#bash-variables-and-constants)
+
 [Bash Strings and Quoting](#bash-strings-and-quoting)
+
 [Bash Function Rules](#bash-function-rules)
+
 [Bash Conditionals](#bash-conditionals)
+
 [Bash Control Flow](#bash-control-flow)
+
 [Bash Argument Parsing](#bash-argument-parsing)
+
 [Bash Array Rules](#bash-array-rules)
+
 [Bash Output and Logging](#bash-output-and-logging)
+
 [Bash Redirection Rules](#bash-redirection-rules)
+
 [Bash Exit and Return](#bash-exit-and-return)
+
 [Bash Shared Resources](#bash-shared-resources)
 
 ## Bash File Rules

@@ -5,13 +5,21 @@
 ## Table of Contents
 
 [C/C++ Comment Rules](#ccxx-comment-rules)
+
 [C++ File Rules](#cxx-file-rules)
+
 [C++ Namespaces](#cxx-namespaces)
+
 [C++ Global Variables and Constants](#cxx-global-variables-and-constants)
+
 [C++ Member Variables and Constants](#cxx-member-variables-and-constants)
+
 [C++ Parameter Rules](#cxx-parameter-rules)
+
 [C++ Classes](#cxx-classes)
+
 [C++ Function Return Syntax Standard](#cxx-function-return-syntax-standard)
+
 [C++ Function Names](#cxx-function-names)
 
 ## CCXX Comment Rules
