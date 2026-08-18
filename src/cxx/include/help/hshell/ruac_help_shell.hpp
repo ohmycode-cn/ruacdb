@@ -12,8 +12,9 @@
 #ifndef RUAC_HELP_SHELL_HPP
 #define RUAC_HELP_SHELL_HPP
 
-#include <mutex>
+#include <string_view>
 #include <string>
+#include <mutex>
 
 namespace ruac::help::hshell {
 
@@ -23,6 +24,7 @@ namespace ruac::help::hshell {
         std::string m_prompt;
 
       private:
+        [[nodiscard]] inline auto is_exit_command_safe(std::string_view input_) noexcept -> bool;
         auto query(const std::string &line_) -> int;
 
       public:
