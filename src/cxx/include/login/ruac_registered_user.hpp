@@ -12,8 +12,8 @@
 #ifndef RUAC_REGISTERED_USER_HPP
 #define RUAC_REGISTERED_USER_HPP
 
-#include <string>
 #include <mutex>
+#include <string>
 
 namespace ruac::login {
 

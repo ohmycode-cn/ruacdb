@@ -12,9 +12,9 @@
 #ifndef RUAC_HELP_SHELL_HPP
 #define RUAC_HELP_SHELL_HPP
 
-#include <string_view>
-#include <string>
 #include <mutex>
+#include <string>
+#include <string_view>
 
 namespace ruac::help::hshell {
 

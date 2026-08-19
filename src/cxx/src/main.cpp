@@ -12,8 +12,8 @@
 #include "kernel/ruac_controller_table.hpp"
 #include "kernel/state/ruac_state_single.hpp"
 #include "kernel/track/ruac_track_single.hpp"
-#include "ruac_shell_interaction.hpp"
 #include "login/ruac_login_user.hpp"
+#include "ruac_shell_interaction.hpp"
 
 /**
  * @brief Program entry point

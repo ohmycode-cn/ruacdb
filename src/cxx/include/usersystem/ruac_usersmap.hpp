@@ -14,9 +14,9 @@
 
 #include "ruac_user_group_perm.hpp"
 #include <cstddef>
-#include <unordered_map>
 #include <mutex>
 #include <string>
+#include <unordered_map>
 
 namespace ruac::usersystem {
 

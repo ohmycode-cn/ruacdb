@@ -6,8 +6,8 @@
  * src/test/ruac_test_registere.cpp
  */
 
-#include "test/ruac_test_registere.hpp"
 #include "login/ruac_registered_user.hpp"
+#include "test/ruac_test_registere.hpp"
 
 namespace ruac::test {
 

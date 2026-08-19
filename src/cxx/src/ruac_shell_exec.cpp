@@ -7,14 +7,14 @@
  */
 
 #include "help/ruac_help_guide.hpp"
+#include "login/ruac_registered_user.hpp"
 #include "rstd/messages/ruac_stdmsg.hpp"
 #include "ruac_shell_exec.hpp"
 #include "ruac_shell_parser.hpp"
 #include "ruac_shell_pipe.hpp"
-#include "usersystem/ruac_usersmap.hpp"
 #include "usersystem/ruac_usergroup.hpp"
 #include "usersystem/ruac_userid.hpp"
-#include "login/ruac_registered_user.hpp"
+#include "usersystem/ruac_usersmap.hpp"
 #include <iostream>
 #include <mutex>
 #include <sstream>

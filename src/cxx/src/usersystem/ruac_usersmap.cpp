@@ -6,16 +6,16 @@
  * src/usersystem/ruac_usersmap.cpp
  */
 
-#include "usersystem/ruac_usersmap.hpp"
 #include "usersystem/ruac_usergroup.hpp"
 #include "usersystem/ruac_userid.hpp"
+#include "usersystem/ruac_usersmap.hpp"
 #include <algorithm>
+#include <iomanip>
+#include <iostream>
 #include <mutex>
 #include <sstream>
 #include <string_view>
 #include <syncstream>
-#include <iostream>
-#include <iomanip>
 
 namespace ruac::usersystem {
 

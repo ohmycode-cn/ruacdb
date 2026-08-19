@@ -8,9 +8,9 @@
 
 #include "login/ruac_login_user.hpp"
 #include "share/ruac_userlist.hpp"
-#include <syncstream>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::login {
 

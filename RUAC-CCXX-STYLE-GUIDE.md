@@ -8,6 +8,8 @@
 
 [C++ File Rules](#cxx-file-rules)
 
+[C++ Include Order](#cxx-include-order)
+
 [C++ Namespaces](#cxx-namespaces)
 
 [C++ Global Variables and Constants](#cxx-global-variables-and-constants)
@@ -70,6 +72,63 @@
 - C++ files must use UTF-8 encoding.
 - C++ files must use LF line endings.
 - The creation and initialization of C++ files must use the `mkf.sh` script.
+
+
+## CXX Include Order
+
+### 1. Group Order (top to bottom)
+
+```
+┌─────────────────────────────────┐
+│ Group 1: Custom headers ("")    │  ← top
+├─────────────────────────────────┤
+│ Group 2: Standard library (<>)  │
+├─────────────────────────────────┤
+│ Group 3: Macro-conditional      │  ← bottom
+│ (#ifdef/#if ... #endif wrapped) │
+└─────────────────────────────────┘
+```
+
+### 2. Intra-group Sorting Rules
+
+- Within each group, sort by Aa~Zz alphabetical order
+- Aa~Zz means case-insensitive alphabetical order; when letters are the same, uppercase comes before lowercase (i.e., A, a, B, b, C, c ... Z, z)
+
+### 3. Macro-conditional Header Rules
+
+- Macro-conditional headers are placed last
+- Each branch internally still follows: custom headers on top, standard library below, each sorted Aa~Zz
+
+### 4. Platform Macro Rules
+
+- In platform-detection macros, Linux is the `#if` positive branch (first branch)
+- Other platforms (Windows, etc.) go in `#else` / `#elif` branches
+
+### 5. Applicability
+
+- The above rules apply uniformly to all files: `.h` / `.hpp` / `.cpp` / `.c`, etc.
+- Include guards (`#ifndef` / `#define` / `#endif`) are not macro-conditional headers and do not participate in Group 3
+
+### Example
+
+```cpp
+// 1. Custom headers (Aa~Zz)
+#include "bar.hpp"
+#include "foo.h"
+
+// 2. Standard library headers (Aa~Zz)
+#include <algorithm>
+#include <vector>
+
+// 3. Macro-conditional headers (Linux as positive branch)
+#ifdef __linux__
+    #include "linux_utils.h"
+    #include <unistd.h>
+#else
+    #include "win_utils.h"
+    #include <windows.h>
+#endif
+```
 
 
 ## CXX Namespaces

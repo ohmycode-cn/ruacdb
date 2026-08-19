@@ -9,12 +9,12 @@
  */
 
 #pragma once
-#include "login/ruac_login_absr.hpp"
 #ifndef RUAC_LOGIN_USER_HPP
 #define RUAC_LOGIN_USER_HPP
 
-#include "login/ruac_login_remote.hpp"
+#include "login/ruac_login_absr.hpp"
 #include "login/ruac_login_local.hpp"
+#include "login/ruac_login_remote.hpp"
 #include <memory>
 #include <string>
 

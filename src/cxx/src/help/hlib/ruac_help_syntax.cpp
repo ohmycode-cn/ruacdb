@@ -7,9 +7,9 @@
  */
 
 #include "help/hlib/ruac_help_syntax.hpp"
-#include <syncstream>
 #include <iostream>
 #include <sstream>
+#include <syncstream>
 
 namespace ruac::help::hlib::syntax {
 

@@ -7,16 +7,16 @@
  */
 
 #include "login/ruac_registered_user.hpp"
+#include "rstd/messages/ruac_stddug.hpp"
+#include "rstd/messages/ruac_stdmsg.hpp"
 #include "usersystem/ruac_usergroup.hpp"
 #include "usersystem/ruac_userid.hpp"
 #include "usersystem/ruac_username.hpp"
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
+#include <iostream>
+#include <mutex>
+#include <sstream>
 #include <string>
 #include <syncstream>
-#include <iostream>
-#include <sstream>
-#include <mutex>
 
 namespace ruac::login {
 
