@@ -23,8 +23,19 @@ This design leverages the strengths of each language to achieve optimal performa
 
 RUACDB will completely abandon outdated programming paradigms and language standards:
 - **C++**: Minimum standard C++17, actual usage C++26
+  - ISO Standard: https://isocpp.org
 - **C**: Directly adopt C23 standard
+  - Working Draft: https://www.open-std.org/jtc1/sc22/wg14/
+  - ISO Standard: https://www.iso.org/standard/82075.html
 - **Rust**: Use the latest long-term support version from the official Rust standard library
+
+| Resource | URL |
+|----------|-----|
+| Official Website | https://www.rust-lang.org/ |
+| Chinese Website | https://www.rust-lang.org/zh-CN/ |
+| RFC Repository | https://github.com/rust-lang/rfcs |
+| Standard Library Docs | https://doc.rust-lang.org/std/ |
+| Source Repository | https://github.com/rust-lang/rust |
 
 RUACDB adopts Rust's "use and discard" philosophy in C/C++ code, which may seem unconventional by industry standards. However, this makes RUACDB's code safer and more maintainable.
 

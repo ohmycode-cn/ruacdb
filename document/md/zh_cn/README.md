@@ -24,9 +24,21 @@ RUACDB 采用多语言实现策略：
 ### 语言标准策略
 
 RUACDB 将彻底摒弃过时的编程范式和语言标准：
-- **C++**：最低标准 C++17，实际使用 C++26
+- **C++**：采用 C++17，实际使用 C++26
+  - ISO 标准：https://isocpp.org
 - **C**：直接采用 C23 标准
+  - Working Draft：https://www.open-std.org/jtc1/sc22/wg14/
+  - ISO 标准：https://www.iso.org/standard/82075.html
 - **Rust**：使用官方最新长期支持版本
+
+| 资源 | 地址 |
+|------|------|
+| 官方网站 | https://www.rust-lang.org/ |
+| 中文官网 | https://www.rust-lang.org/zh-CN/ |
+| RFC 仓库 | https://github.com/rust-lang/rfcs |
+| 标准库文档 | https://doc.rust-lang.org/std/ |
+| 源码仓库 | https://github.com/rust-lang/rust |
+
 
 RUACDB 在 C/C++ 代码中借鉴了 Rust 的"用完即丢"哲学，这种做法虽不符合行业标准，但使代码更安全、更易维护。
 
