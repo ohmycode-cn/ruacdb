@@ -12,9 +12,11 @@
 #ifndef RUAC_HELP_SHELL_HPP
 #define RUAC_HELP_SHELL_HPP
 
+#include "rstd/rshell/filter/ruac_rshfer.hpp"
 #include <mutex>
 #include <string>
 #include <string_view>
+#include <memory>
 
 namespace ruac::help::hshell {
 
@@ -22,6 +24,7 @@ namespace ruac::help::hshell {
       private:
         std::mutex M_HELP_SHELL_MTX;
         std::string m_prompt;
+        std::unique_ptr<ruac::rstd::rshell::filter::api::Interface> m_rshell_cmds_filter;
 
       private:
         [[nodiscard]] inline auto is_exit_command_safe(std::string_view input_) noexcept -> bool;

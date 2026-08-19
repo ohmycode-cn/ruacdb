@@ -10,36 +10,30 @@
 #include "help/hshell/ruac_help_shell.hpp"
 #include "rstd/convert/ruac_lowercase.hpp"
 #include "rstd/convert/ruac_rmspace.hpp"
+#include "rstd/rshell/filter/ruac_rshfer.hpp"
 #include <algorithm>
 #include <array>
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <syncstream>
+#include <vector>
 
 namespace ruac::help::hshell {
 
-    /**
-     * @brief Construct the HelpShell with the default prompt string
-     *
-     * @details Initialises m_prompt to "ruac-db-(help)-> " which is
-     *          displayed before each input line in the interactive loop.
-     *
-     */
-    HelpShell::HelpShell() : m_prompt("ruac-db-(help)-> ") {}
-
-    /**
-     * @brief Compile-time FNV-1a hash and exit-command tables
-     *
-     * @details fnv1a_hash computes a 64-bit FNV-1a hash for short strings.
-     *          exit_cmd_hashes holds the pre-computed hashes of the two
-     *          valid exit commands ("help --exit", "help --quit") so that
-     *          is_exit_command_safe can reject non-exit inputs in O(1)
-     *          before falling through to an exact string comparison.
-     *
-     */
     namespace {
 
+        /**
+         * @brief Compile-time FNV-1a hash and exit-command tables
+         *
+         * @details fnv1a_hash computes a 64-bit FNV-1a hash for short strings.
+         *          exit_cmd_hashes holds the pre-computed hashes of the two
+         *          valid exit commands ("help --exit", "help --quit") so that
+         *          is_exit_command_safe can reject non-exit inputs in O(1)
+         *          before falling through to an exact string comparison.
+         *
+         */
         constexpr auto fnv1a_hash(std::string_view sv_) noexcept -> std::uint64_t {
             auto hash = std::uint64_t{0xcbf29ce484222325};
             for (auto c : sv_) {
@@ -57,6 +51,21 @@ namespace ruac::help::hshell {
         constexpr std::array<std::string_view, 2> exit_commands = {"help --exit", "help --quit"};
 
     } // anonymous namespace
+
+    /**
+     * @brief Construct the HelpShell with a filter and default prompt
+     *
+     * @details Allocates a rshell filter Interface via std::make_unique
+     *          and stores it in m_rshell_cmds_filter for semicolon-based
+     *          command splitting in runhsh(). Also initialises m_prompt
+     *          to "ruac-db-(help)-> " which is displayed before each
+     *          input line in the interactive loop.
+     *
+     */
+    HelpShell::HelpShell() {
+        m_rshell_cmds_filter = std::make_unique<ruac::rstd::rshell::filter::api::Interface>();
+        m_prompt = "ruac-db-(help)-> ";
+    }
 
     /**
      * @brief Check whether the input is a valid exit command
@@ -82,7 +91,8 @@ namespace ruac::help::hshell {
     /**
      * @brief Dispatch a single help query line
      *
-     * @param line_ - The raw input line entered by the user
+     * @param line_ - A pre-processed input line (spaces removed,
+     *               lowercased) produced by runhsh()'s filter pipeline
      *
      * @return int - 0 if the command is an exit command,
      *         1 otherwise
@@ -94,9 +104,13 @@ namespace ruac::help::hshell {
      *          - "help --command": prints a not-implemented error.
      *          - invailed_exit_commands ("exit", "quit", "exit help",
      *            "quit help", "help exit", "help quit", "exit --help",
-     *            "quit --help"): prints a hint directing the user to
-     *            use "help --exit" or "help --quit".
+     *            "quit --help"): guesses the user likely intended to exit
+     *            and prints a hint directing them to the correct syntax
+     *            "help --exit" or "help --quit".
      *          Any other input prints an invalid-query error.
+     *          Note: exit detection uses direct string comparison, not
+     *          is_exit_command_safe(); the latter is reserved for
+     *          compile-time hash-table validation.
      *
      */
     auto HelpShell::query(const std::string &line_) -> int {
@@ -131,12 +145,15 @@ namespace ruac::help::hshell {
      * @brief Run the interactive help shell read-eval loop
      *
      * @details Acquires M_HELP_SHELL_MTX, then repeatedly prints the
-     *          prompt, reads a line from stdin, skips empty lines and
-     *          comments (# or //), splits input by semicolons to support
-     *          multiple commands per line, dispatches each command to
-     *          query(), and clears the command buffer after each dispatch.
-     *          Breaks on "help --exit"/"help --quit". Unmatched lines
-     *          produce an error message.
+     *          prompt, reads a line from stdin, and preprocesses it by
+     *          removing all spaces (rmspace) and lowercasing. Skips
+     *          empty lines and comments (# or //). Checks m_rshell_cmds_filter
+     *          for null and aborts with a fatal error if missing. Splits
+     *          the input into semicolon-separated commands via
+     *          m_rshell_cmds_filter->rshfer(); aborts if filtering produces
+     *          no lines. For each split line, applies rmspace again then
+     *          dispatches to query(); if query() returns 0 (exit command),
+     *          the function returns immediately.
      *
      */
     void HelpShell::runhsh() {
@@ -147,30 +164,38 @@ namespace ruac::help::hshell {
             std::osyncstream(std::cout) << m_prompt;
             std::string lines;
             std::getline(std::cin, lines);
-            ruac::rstd::convert::lowercase::to_lower_string(lines);
+
+            {
+                ruac::rstd::convert::rmspace::remove_string_spaces(lines);
+                ruac::rstd::convert::lowercase::to_lower_string(lines);
+            }
+
             if (lines.empty() || "#" == lines.substr(0, 1) || "//" == lines.substr(0, 2)) {
                 continue;
             }
 
-            std::string line;
-            for (auto &c : lines) {
-                if (';' == c) {
-                    ruac::rstd::convert::rmspace::remove_string_spaces(line);
-                    if (0 == query(line)) {
-                        return;
-                    }
-                    line.clear();
-                } else {
-                    line += c;
+            std::vector<std::string> line_list;
+
+            if (nullptr == m_rshell_cmds_filter) {
+                {
+                    std::stringstream ss;
+                    ss << "Fatal: Program error ! Shell filter program lose, please contact the developer !";
+                    std::osyncstream(std::cout) << ss.str() << std::endl;
                 }
+                return;
             }
 
-            if (!line.empty()) {
-                ruac::rstd::convert::rmspace::remove_string_spaces(line);
+            if (!m_rshell_cmds_filter.get()->rshfer(lines, line_list)) {
+                return;
+            }
+
+            for (auto &line : line_list) {
+                {
+                    ruac::rstd::convert::rmspace::remove_string_spaces(line);
+                }
                 if (0 == query(line)) {
                     return;
                 }
-                line.clear();
             }
         };
     }
