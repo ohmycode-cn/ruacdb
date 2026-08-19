@@ -115,7 +115,7 @@ namespace ruac::help::hshell {
         } else if (std::find(invailed_exit_commands.begin(), invailed_exit_commands.end(), line_) != invailed_exit_commands.end()) {
             {
                 std::stringstream ss;
-                ss << "Error: Not supported help shell syntax: '" << line_ << "'";
+                ss << "Error: Not supported help shell syntax: '" << line_ << "' ";
                 ss << "You maybe mean exit help shell. So ! You should use 'help --exit' or 'help --quit'";
                 std::osyncstream(std::cout) << ss.str() << std::endl;
             }
