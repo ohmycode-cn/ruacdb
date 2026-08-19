@@ -16,10 +16,8 @@ set(OUTPUT_DIR ${CMAKE_SOURCE_DIR}/out)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_AUTOMOC ON) 
 
-if (WIN32)
-    set(Qt6_ROOT "D:/AppProgram/Qt6/Qt6.11.1/6.11.1/msvc2022_64")
-    set(CMAKE_PREFIX_PATH "${Qt6_ROOT}" CACHE PATH "Qt6 install root")
-endif()
+# Include local configuration (create local.cmake for your environment)
+-include(local.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)

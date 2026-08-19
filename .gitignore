@@ -14,3 +14,4 @@ target/
 termlite/.idea/
 termlite/cmake-build-debug/
 tmp/
+local.cmake

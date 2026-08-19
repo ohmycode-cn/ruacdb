@@ -1,35 +1,116 @@
-# ruacdb (Runtime Unified Access Controller Database)
+# RUACDB (Runtime Unified Access Control Database)
 
 ## Introduction
 
-RUACDB is a mini database for runtime unified access control, implemented in C/C++/Rust. Most of the functionality is written in C++. I'm not sure what RUACDB will become in the future, but I hope to explore a more radical database system. This means RUACDB may undergo major refactoring at certain milestones or specific version stages. The core philosophy of RUACDB is absolute modularity. Each module only needs to provide well-defined interfaces without knowing the internal implementation of other modules, ensuring long-term maintainability and extensibility. I am not a professional software engineer (maybe someday), just a free software enthusiast. If you are interested in RUACDB, you are welcome to participate in development and discussions.
+RUACDB is a mini database for runtime unified access control, implemented in C/C++/Rust, with most functionality written in C++. The project is dedicated to exploring a more radical database system architecture, and therefore may undergo major refactoring at certain milestones or specific version stages. RUACDB has been verified to compile and run on Windows 11 / Linux platforms.
+
+**Core Philosophy: Absolute Modularity** — Each module only needs to provide well-defined interfaces without knowing the internal implementation of other modules, ensuring long-term maintainability and extensibility.
 
 ## Vision
 
 RUACDB is inspired by the Linux philosophy, adhering to the principles of "small and focused," "large and comprehensive," "modular," and "extensible."
-RUACDB employs a multi-language implementation: most functionality is implemented in C++, memory-safety-critical parts use Rust, and performance-critical parts use C. This design leverages the strengths of each language to achieve optimal performance while ensuring development efficiency and safety.
-RUACDB adopts Rust's "use and discard" philosophy in C/C++ code, which may seem unconventional by industry standards. However, this makes RUACDB's code safer and more maintainable. In terms of language standards, RUACDB will completely abandon outdated programming paradigms and language standards. RUACDB's minimum C++ standard is C++17, but the actual project uses C++26, and the compiler standard is also set to C++26. For C components, RUACDB will directly adopt the C23 standard. Rust components will use the latest long-term support version of the official Rust standard library. RUACDB is a complex project and can be very challenging! In summary, RUACDB is a project that pursues new language standards, even though C++26 has not yet been officially released by the ISO C++ Standards Committee.
-RUACDB is like an operating system — it has its own standard library, which means third-party libraries will gradually be replaced by its own standard library. In the future, RUACDB will have its own project standard library, which may require reinventing some wheels — this is both a challenge and a learning opportunity.
-RUACDB has its own database model, kernel layer, user layer, and network layer. Similar to the Linux user system, RUACDB's user layer has its own user space, and the default root user has full permissions and controls the RUACDB system. In the future, RUACDB will also introduce a user + group permission model.
 
-## ruacdb Project Standard Library
+### Multi-Language Architecture
 
-RUACDB's standard library, rstd, is a strictly isolated library module. Any dependencies between submodules of rstd are explicitly prohibited. Each submodule is only responsible for its own functionality and provides clear interfaces.
+RUACDB employs a multi-language implementation strategy:
+- **C++**: Most functionality implementation
+- **Rust**: Memory-safety-critical parts
+- **C**: Performance-critical parts
 
-## ruacdb Development Environment & Toolchain Requirements
+This design leverages the strengths of each language to achieve optimal performance while ensuring development efficiency and safety.
 
+### Language Standard Strategy
+
+RUACDB will completely abandon outdated programming paradigms and language standards:
+- **C++**: Minimum standard C++17, actual usage C++26
+- **C**: Directly adopt C23 standard
+- **Rust**: Use the latest long-term support version from the official Rust standard library
+
+RUACDB adopts Rust's "use and discard" philosophy in C/C++ code, which may seem unconventional by industry standards. However, this makes RUACDB's code safer and more maintainable.
+
+### Standard Library & System Architecture
+
+RUACDB, like an operating system, has its own standard library `rstd`:
+- `rstd` is a strictly isolated library module with dependencies between submodules explicitly prohibited
+- Each submodule is only responsible for its own functionality and provides clear interfaces
+- In the future, third-party libraries will gradually be replaced by the project's standard library
+
+RUACDB has a complete system architecture:
+- Database model
+- Kernel layer
+- User layer (similar to the Linux user system, with user space; the default root user has full permissions)
+- Network layer
+
+A user + group permission model will be introduced in the future.
+
+## Participation Guidelines
+
+RUACDB is a complex project and can be very challenging!
+
+**Note**: I am not a professional software engineer (maybe someday I will be), just a free software enthusiast. If you are interested in RUACDB, you are welcome to participate in development and discussions.
+
+**Important**: All participants must strictly adhere to RUACDB's code standards and development workflow. If you cannot accept these standards and workflow, your submissions will be rejected.
+
+### Code Standards
+
+- RUACDB C/C++ Style Guide: `RUAC-CCXX-STYLE-GUIDE.md`
+  - [English](RUAC-CCXX-STYLE-GUIDE.md)
+  - [Chinese](document/md/zh_cn/RUAC-CCXX-STYLE-GUIDE.md)
+
+- RUACDB Rust Style Guide: `RUAC-RUST-STYLE-GUIDE.md`
+  - [English](RUAC-RUST-STYLE-GUIDE.md)
+  - [Chinese](document/md/zh_cn/RUAC-RUST-STYLE-GUIDE.md)
+
+- RUACDB BASH Style Guide: `RUAC-BASH-STYLE-GUIDE.md`
+  - [English](RUAC-BASH-STYLE-GUIDE.md)
+  - [Chinese](document/md/zh_cn/RUAC-BASH-STYLE-GUIDE.md)
+
+## Development Environment & Toolchain Requirements
+
+- **IDE Recommendations**
+  - Code IDE (Visual Studio Code(/Insider)/Trae/...)
+  - CLion (JetBrains)
 - **WINDOWS**
-  - compile env: clang-cl.exe/clang++.exe
-  - qt      env: qt6(>=6.5.0), recommended: msvc2022
+  - Compile env: clang-cl.exe/clang++.exe
+  - Qt env: Qt6(>=6.11.0), recommended: msvc2022
 - **LINUX**
-  - compile env: clang++
-  - qt      env: your linux latest qt version (but >= 6.5.0)
+  - Compile env: clang++
+  - Qt env: Your Linux latest Qt version (but >= 6.11.0)
 - **MACOS**
   - Unsupported platform
 - **UNIX**
   - Unsupported platform
 - **OTHER**
   - Unsupported platform
+
+### CMakeLists.txt Configuration
+
+If building RUACDB on Windows platform, you need to create a `local.cmake` file and modify the Qt6 path:
+
+```cmake
+# local.cmake
+if (WIN32)
+    set(Qt6_ROOT "your/Qt6/installation/path")
+    set(CMAKE_PREFIX_PATH "${Qt6_ROOT}" CACHE PATH "Qt6 install root")
+endif()
+```
+
+`local.cmake` has been added to `.gitignore` and will not be committed to version control.
+
+### Module API Documentation
+
+Each module has clear API interfaces. Documentation can be found in the `document/api/` directory.
+
+**Note**: API documentation may not be updated in a timely manner. Please be aware of version differences when using it.
+
+## Git Commit Guidelines
+
+- No limit on the number of commits
+- Before modifying code files (add/delete/update), always pull the latest code first to avoid conflicts with others' changes
+- Commit messages must be written in English and describe the changes in detail, including:
+  - Files modified
+  - Location of changes
+  - Reason for changes
 
 ## License
 
