@@ -12,10 +12,10 @@
 #ifndef RUAC_NODEPROC_HPP
 #define RUAC_NODEPROC_HPP
 
-#include "syntax_lite/tree/node/ruac_create_database.hpp"
-#include "syntax_lite/tree/node/ruac_create_table.hpp"
-#include "syntax_lite/tree/node/ruac_show_databases.hpp"
-#include "syntax_lite/tree/node/ruac_show_tables.hpp"
-#include "syntax_lite/tree/node/ruac_use_database.hpp"
+#include "syntax_lite/tree/node/ruac_create_database.hpp" // IWYU pragma: keep
+#include "syntax_lite/tree/node/ruac_create_table.hpp"    // IWYU pragma: keep
+#include "syntax_lite/tree/node/ruac_show_databases.hpp"  // IWYU pragma: keep
+#include "syntax_lite/tree/node/ruac_show_tables.hpp"     // IWYU pragma: keep
+#include "syntax_lite/tree/node/ruac_use_database.hpp"    // IWYU pragma: keep
 
 #endif // RUAC_NODEPROC_HPP
