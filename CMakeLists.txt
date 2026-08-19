@@ -17,7 +17,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_AUTOMOC ON) 
 
 # Include local configuration (create local.cmake for your environment)
--include(local.cmake)
+include(local.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)
