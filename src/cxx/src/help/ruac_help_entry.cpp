@@ -25,7 +25,6 @@ namespace ruac::help::api {
      *
      */
     void HelpEntry::show_banner() {
-        std::lock_guard<std::mutex> lock(M_HELP_ENTRY_MTX);
         {
             std::stringstream ss;
             ss << "+-------------------------------------+\n";
@@ -54,9 +53,9 @@ namespace ruac::help::api {
         std::lock_guard<std::mutex> lock(M_HELP_ENTRY_MTX);
         {
             show_banner();
-            ruac::help::shell::HelpShell hsh;
-            hsh.run();
         }
+        ruac::help::shell::HelpShell hsh;
+        hsh.run();
     }
 
 } // namespace ruac::help::api
