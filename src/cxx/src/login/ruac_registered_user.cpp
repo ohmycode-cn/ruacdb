@@ -29,10 +29,11 @@ namespace ruac::login {
      *         if it already exists or contains invalid characters
      *
      * @details First checks UserId for an existing uid; if found, reports
-     *          a duplicate-name error to stderr and returns false. Then
-     *          scans every character requiring isalpha or isdigit; any
-     *          invalid character produces an error and false. On success
-     *          the name is appended to both UserName and UserId singletons.
+     *          a duplicate-name error via osyncstream and returns false.
+     *          Then scans every character requiring isalpha or isdigit;
+     *          any invalid character produces an error and false. On
+     *          success the name is appended to both UserName and UserId
+     *          singletons.
      *
      */
     auto RegisteredUser::set_user_ne(const std::string &user_ne_) -> bool {
@@ -42,7 +43,7 @@ namespace ruac::login {
             {
                 std::stringstream ss;
                 ss << "Error: User name '" << user_ne_ << "' already exists.";
-                std::cerr << ss.str() << std::endl;
+                std::osyncstream(std::cout) << ss.str() << std::endl;
             }
             return false;
         }
@@ -51,8 +52,9 @@ namespace ruac::login {
             if (!isalpha(c) && !isdigit(c)) {
                 {
                     std::stringstream ss;
-                    ss << "Error: Invalid user name. Because include invalid character." << c;
-                    std::cerr << ss.str() << std::endl;
+                    ss << "Error: Invalid user name. Because user name include invalid character: ";
+                    ss << "'" << c << "'";
+                    std::osyncstream(std::cout) << ss.str() << std::endl;
                 }
                 return false;
             }
@@ -101,15 +103,24 @@ namespace ruac::login {
     auto RegisteredUser::hdl_add_user(const std::string &user_ne_) -> bool {
         auto &stdmsg = rstd::messages::StdMsg::instance();
         auto &stdbug = rstd::messages::StdDug::instance();
-        std::stringstream ss;
-        ss << "Class: RegisteredUser, Func: registere, Branch: add user -> " << user_ne_;
-        stdmsg.print(stdbug.ostrs(ss.str(), __FILE__, __LINE__));
 
-        if (!set_user_ne(user_ne_))
+        {
+            std::stringstream ss;
+            ss << "Class: RegisteredUser Func: hdl_add_user, Branch: add user'" << user_ne_ << "'";
+            stdmsg.print(stdbug.ostrs(ss.str(), __FILE__, __LINE__));
+        }
+
+        if (!set_user_ne(user_ne_)) {
             return false;
+        }
 
         m_current_user_name = user_ne_;
-        std::osyncstream(std::cout) << "Done: setting user name to " << user_ne_ << "." << std::endl;
+        {
+            std::stringstream ss;
+            ss << "Done: setting user name to " << user_ne_ << ".";
+            std::osyncstream(std::cout) << ss.str() << std::endl;
+        }
+
         return true;
     }
 
@@ -159,7 +170,7 @@ namespace ruac::login {
      *          - "add group <grp>": delegates to hdl_add_group() to assign
      *            the group, then breaks out of the loop to finish.
      *          - "stdmsg on"/"stdmsg off": toggle debug message output.
-     *          - "exit ruser"/"quit ruser": break out of the loop.
+     *          - "exit user.env"/"quit user.env": break out of the loop.
      *          Unrecognised input prints an error and continues without
      *          incrementing time_count. Each successful step resets
      *          time_count to 0.
@@ -186,7 +197,7 @@ namespace ruac::login {
                 rstd::messages::StdMsg::instance().enable_stdmsg(false);
                 continue;
             }
-            if ("exit ruser" == field || "quit ruser" == field) {
+            if ("exit user.env" == field || "quit user.env" == field) {
                 break;
             }
 

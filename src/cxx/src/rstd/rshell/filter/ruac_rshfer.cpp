@@ -27,7 +27,9 @@ namespace ruac::rstd::rshell::filter::api {
      *
      * @param lines_ - Input string to process; modified in place by the
      *                underlying Funnel
-     * @param line_list_ - Output vector to receive the split lines
+     * @param line_list_ - Output vector to receive the split lines; its
+     *                    existing contents are cleared inside
+     *                    Funnel::funnel() before the split is performed
      *
      * @return bool - true if at least one command line was produced;
      *               false if the Funnel is null, the input is empty, or

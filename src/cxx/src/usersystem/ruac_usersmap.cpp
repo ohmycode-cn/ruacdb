@@ -19,6 +19,14 @@
 
 namespace ruac::usersystem {
 
+    /**
+     * @brief Convert a UserPowerCode enum value to its string representation
+     *
+     * @param code_ - The UserPowerCode to convert
+     *
+     * @return const char * - "OK", "NO", "OT", or "??" for unknown values
+     *
+     */
     static auto perm_code_str(UserPowerCode code_) -> const char * {
         switch (code_) {
         case UserPowerCode::OK:
@@ -31,6 +39,20 @@ namespace ruac::usersystem {
         return "??";
     }
 
+    /**
+     * @brief Merge user identity and permission data into the display map
+     *
+     * @details Acquires M_USERS_MAP_MTX, then fetches the full uid map
+     *          from UserId and the full group map from UserGroup. Clears
+     *          m_usmap and all column-width trackers. For each user,
+     *          looks up their group; if the group exists in
+     *          M_GROUP_REGISTRY, stores the group's Permission; otherwise
+     *          stores an empty Permission with G_EMPTY_GROUP. Updates
+     *          the maximum column widths for name, uid, group, and each
+     *          permission code (R/W/X/L) so print_user_info() can align
+     *          the table.
+     *
+     */
     void UsersMap::merge_user_info() {
         std::lock_guard<std::mutex> lock(M_USERS_MAP_MTX);
         auto uid_map = ruac::usersystem::UserId::instance().get_users_map();
@@ -67,6 +89,19 @@ namespace ruac::usersystem {
         }
     }
 
+    /**
+     * @brief Build a formatted text table of all users and their permissions
+     *
+     * @return std::string - The formatted table as a single string
+     *
+     * @details Acquires M_USERS_MAP_MTX, then constructs a header row
+     *          (NAME, UID, GROUP, R, W, X, L) using the column widths
+     *          computed by merge_user_info(). Draws a separator line of
+     *          dashes, then iterates m_usmap (name → uid → group →
+     *          Permission) printing each user as a formatted row with
+     *          std::setw alignment. Returns the entire table as a string.
+     *
+     */
     auto UsersMap::print_user_info() -> std::string {
         std::lock_guard<std::mutex> lock(M_USERS_MAP_MTX);
         std::stringstream ss;
@@ -117,6 +152,14 @@ namespace ruac::usersystem {
         return ss.str();
     }
 
+    /**
+     * @brief Merge and print the full users map to stdout
+     *
+     * @details Calls merge_user_info() to populate the internal map,
+     *          then calls print_user_info() to build the formatted
+     *          table and flushes it to stdout via std::osyncstream.
+     *
+     */
     void UsersMap::show_users_map() {
         {
             merge_user_info();

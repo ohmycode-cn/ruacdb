@@ -13,7 +13,8 @@
 #include "kernel/state/ruac_state_single.hpp"
 #include "kernel/track/ruac_track_single.hpp"
 #include "login/ruac_login_user.hpp"
-#include "ruac_shell_interaction.hpp"
+#include "ruacsh/lib/ruac_ragrs.hpp"
+#include "ruacsh/ruac_rsh.hpp"
 
 /**
  * @brief Program entry point
@@ -22,13 +23,14 @@
  *
  * @details Creates a heap-allocated Operation controller and configures its
  *          object, state, and track strategies to the Single singleton (via
- *          instance()), then registers it into ControllerTable at index 0.
- *          Next constructs a ShellInteraction, initializes it with the
- *          runtime config flags (ce=true, ht=true, bf=false, dp=true), and
- *          invokes run() to start the interactive shell. When run() returns
- *          true the ShellInteraction is deleted and its pointer nullified;
- *          the controller remains registered in ControllerTable. Relies on
- *          main's implicit return 0 when run() completes.
+ *          instance()). Creates a LoginUser, configures it with LoginMethod::OTHER,
+ *          and calls init_login() to set up the default root user. Registers
+ *          the controller into ControllerTable at the user's uid, then retrieves
+ *          it and sets the kernel state's current user. Deletes the LoginUser
+ *          once the uid and name are propagated. Finally constructs a
+ *          ruacsh::api::Interface with the kernel state, sets runtime args
+ *          (ce=true, ht=true, bf=false, dp=true), and calls run_shell() to
+ *          start the interactive shell.
  *
  */
 int main() {
@@ -51,16 +53,15 @@ int main() {
         lu = nullptr;
     }
 
-    auto shell_interaction = new ruac::ShellInteraction(state->get_kernel_state());
-    shell_interaction->init({
-        .m_enable_ce = true,
-        .m_enable_ht = true,
-        .m_enable_bf = false,
-        .m_enable_dp = true,
-    });
-
-    if (const auto end = shell_interaction->run(); end && nullptr != shell_interaction) {
-        delete shell_interaction;
-        shell_interaction = nullptr;
+    {
+        ruac::ruacsh::lib::ragrs::RshellArgs ruac_shell_args{
+            .m_enable_ce = true,
+            .m_enable_ht = true,
+            .m_enable_bf = false,
+            .m_enable_dp = true,
+        };
+        ruac::ruacsh::api::Interface ruac_shell_interface(state->get_kernel_state());
+        ruac_shell_interface.set_ragrs(ruac_shell_args);
+        ruac_shell_interface.run_shell(true);
     }
 }

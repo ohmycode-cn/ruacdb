@@ -1,0 +1,23 @@
+/**
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
+ * Author: ohmycode-cn(ohcode@163.com)
+ * include/ruacsh/lib/ruac_guard.hpp
+ * src/ruacsh/lib/ruac_guard.cpp
+ * Description of header file function declaration
+ *
+ */
+
+#pragma once
+#ifndef RUAC_GUARD_HPP
+#define RUAC_GUARD_HPP
+
+#include <string>
+
+namespace ruac::ruacsh::lib::guard {
+
+    auto uid_permission_guard(const int uid_, const std::string &msg_, const std::string &guard_group_, bool out_msg_ = true) -> bool;
+
+} // namespace ruac::ruacsh::lib::guard
+
+#endif // RUAC_GUARD_HPP
