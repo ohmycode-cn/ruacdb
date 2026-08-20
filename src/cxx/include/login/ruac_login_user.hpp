@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/login/ruac_login_user.hpp
  * src/login/ruac_login_user.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the LoginUser class for managing login sessions (local/remote) with user identity and method tracking.
  */
 
 #pragma once

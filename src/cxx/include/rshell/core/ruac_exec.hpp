@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rshell/core/ruac_exec.hpp
  * src/rshell/core/ruac_exec.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the Exec class for executing parsed RUAC commands through SynxLite with thread-safe access.
  */
 
 #pragma once

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rshell/core/ruac_run.hpp
  * src/rshell/core/ruac_run.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the Run class for orchestrating shell command flow through CmdLex lexing and Exec execution.
  */
 
 #pragma once

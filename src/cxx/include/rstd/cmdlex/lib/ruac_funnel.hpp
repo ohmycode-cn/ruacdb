@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/cmdlex/lib/ruac_funnel.hpp
  * src/rstd/cmdlex/lib/ruac_funnel.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the Funnel helper class for filtering and splitting raw command-line input strings into a tokenized list.
  */
 
 #pragma once

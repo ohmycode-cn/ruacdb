@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rshell/lib/ruac_args.hpp
  * src/rshell/lib/ruac_args.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the ShellArgs struct carrying shell configuration flags (console compat, highlight, bold, background).
  */
 
 #pragma once

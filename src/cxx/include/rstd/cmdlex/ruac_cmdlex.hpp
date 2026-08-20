@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/cmdlex/ruac_cmdlex.hpp
  * src/rstd/cmdlex/ruac_cmdlex.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the CmdLex API class for command-line lexing that splits raw input into individual command strings.
  */
 
 #pragma once

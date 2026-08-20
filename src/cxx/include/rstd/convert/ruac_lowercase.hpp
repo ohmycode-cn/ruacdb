@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/convert/ruac_lowercase.hpp
  * src/rstd/convert/ruac_lowercase.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the to_lower_string() utility function for in-place lowercasing of strings.
  */
 
 #pragma once

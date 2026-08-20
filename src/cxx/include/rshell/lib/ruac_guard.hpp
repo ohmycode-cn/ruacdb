@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rshell/lib/ruac_guard.hpp
  * src/rshell/lib/ruac_guard.cpp
- * Description of header file function declaration
  *
+ * @brief Declares uid_permission_guard() for UID-based access control with optional group membership checks.
  */
 
 #pragma once

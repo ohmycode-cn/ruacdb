@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/test/ruac_test_registere.hpp
  * src/test/ruac_test_registere.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the test_main_register() function for testing user registration.
  */
 
 #pragma once

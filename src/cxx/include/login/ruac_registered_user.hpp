@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/login/ruac_registered_user.hpp
  * src/login/ruac_registered_user.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the RegisteredUser class for handling new user registration with thread-safe group and username assignment.
  */
 
 #pragma once

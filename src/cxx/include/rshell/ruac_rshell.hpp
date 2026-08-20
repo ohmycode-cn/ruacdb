@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rshell/ruac_rshell.hpp
  * src/rshell/ruac_rshell.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the RShell API facade that initializes and drives the interactive RUAC shell loop.
  */
 
 #pragma once

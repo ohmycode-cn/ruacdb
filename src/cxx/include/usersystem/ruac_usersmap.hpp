@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/usersystem/ruac_usersmap.hpp
  * src/usersystem/ruac_usersmap.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the UsersMap class for displaying nested user-group-permission maps with formatted column output.
  */
 
 #pragma once

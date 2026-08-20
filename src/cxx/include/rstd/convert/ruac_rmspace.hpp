@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rstd/convert/ruac_rmspace.hpp
  * src/rstd/convert/ruac_rmspace.cpp
- * Description of header file function declaration
  *
+ * @brief Declares the remove_string_spaces() utility function for in-place whitespace removal from strings.
  */
 
 #pragma once

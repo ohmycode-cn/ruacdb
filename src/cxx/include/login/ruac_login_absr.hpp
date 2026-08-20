@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/login/ruac_login_absr.hpp
  * src/login/ruac_login_absr.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the LoginAbsr abstract base class with a pure init_login() interface for polymorphic login providers.
  */
 
 #pragma once

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/login/ruac_login_remote.hpp
  * src/login/ruac_login_remote.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the LoginRemote concrete class implementing LoginAbsr for remote/non-interactive user login.
  */
 
 #pragma once

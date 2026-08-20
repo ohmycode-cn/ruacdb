@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/share/ruac_userlist.hpp
  * src/share/ruac_userlist.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the UserList singleton class for thread-safe UID-to-username bidirectional mapping used across the system.
  */
 
 #pragma once

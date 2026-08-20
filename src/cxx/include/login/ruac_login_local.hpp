@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/login/ruac_login_local.hpp
  * src/login/ruac_login_local.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the LoginLocal concrete class implementing LoginAbsr for local/interactive user login.
  */
 
 #pragma once

@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/rshell/lib/ruac_scode.hpp
  * src/rshell/lib/ruac_scode.cpp
- * Description of header file function declaration
  *
+ * @brief Defines the StatusCode enum for shell operation outcomes (ABNORMAL_EXIT, NORMAL_EXIT, CONTINUE).
  */
 
 #pragma once
