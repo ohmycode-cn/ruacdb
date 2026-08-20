@@ -13,13 +13,14 @@
 #define RUAC_RUN_HPP
 
 #include "kernel/state/ruac_state_kernel.hpp"
-#include "rshell/lib/ruac_args.hpp"
-#include "rstd/cmdlex/ruac_cmdlex.hpp"
 #include "rshell/core/ruac_exec.hpp"
+#include "rshell/lib/ruac_args.hpp"
 #include "rshell/lib/ruac_scode.hpp"
+#include "rstd/cmdlex/ruac_cmdlex.hpp"
+
+#include <memory>
 #include <mutex>
 #include <vector>
-#include <memory>
 
 namespace ruac::rshell::core {
 

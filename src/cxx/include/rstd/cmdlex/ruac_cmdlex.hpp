@@ -13,10 +13,11 @@
 #define RUAC_CMDLEX_HPP
 
 #include "rstd/cmdlex/lib/ruac_funnel.hpp"
-#include <string>
-#include <vector>
+
 #include <memory>
 #include <mutex>
+#include <string>
+#include <vector>
 
 namespace ruac::rstd::cmdlex::api {
 

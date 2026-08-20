@@ -10,9 +10,10 @@
 #include "rstd/messages/ruac_stdmsg.hpp"
 #include "syntax_lite/tree/node/ruac_node_types.hpp"
 #include "syntax_lite/tree/ruac_keyword.hpp"
-#include "syntax_lite/tree/ruac_token_type.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
 #include "syntax_lite/tree/ruac_parser.hpp"
+#include "syntax_lite/tree/ruac_token_type.hpp"
+
 #include <iostream>
 #include <sstream>
 #include <syncstream>

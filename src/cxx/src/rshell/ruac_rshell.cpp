@@ -7,9 +7,10 @@
  */
 
 #include "rshell/ruac_rshell.hpp"
-#include <syncstream>
-#include <sstream>
+
 #include <iostream>
+#include <sstream>
+#include <syncstream>
 
 namespace ruac::rshell::api {
 

@@ -8,9 +8,10 @@
 
 #include "help/ref/ruac_help_syntax.hpp"
 #include "help/shell/ruac_help_shell.hpp"
+#include "rstd/cmdlex/ruac_cmdlex.hpp"
 #include "rstd/convert/ruac_lowercase.hpp"
 #include "rstd/convert/ruac_rmspace.hpp"
-#include "rstd/cmdlex/ruac_cmdlex.hpp"
+
 #include <algorithm>
 #include <array>
 #include <cstdint>

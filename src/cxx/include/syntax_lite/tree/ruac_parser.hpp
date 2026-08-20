@@ -12,10 +12,11 @@
 #ifndef RUAC_PARSER_HPP
 #define RUAC_PARSER_HPP
 
-#include "syntax_lite/tree/ruac_token_type.hpp"
-#include "syntax_lite/tree/ruac_lexer.hpp"
 #include "syntax_lite/tree/ruac_executor.hpp"
+#include "syntax_lite/tree/ruac_lexer.hpp"
 #include "syntax_lite/tree/ruac_node_store.hpp"
+#include "syntax_lite/tree/ruac_token_type.hpp"
+
 #include <cstddef>
 #include <memory>
 #include <mutex>

@@ -7,6 +7,7 @@
  */
 
 #include "rstd/cmdlex/lib/ruac_funnel.hpp"
+
 #include <algorithm>
 
 namespace ruac::rstd::cmdlex::lib {

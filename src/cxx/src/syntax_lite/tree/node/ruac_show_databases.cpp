@@ -9,7 +9,10 @@
 #include "syntax_lite/tree/node/ruac_show_databases.hpp"
 #include "kernel/ruac_controller_table.hpp"
 #include "kernel/track/ruac_track_single.hpp"
+#include "rstd/messages/ruac_stddug.hpp"
+#include "rstd/messages/ruac_stdmsg.hpp"
 #include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
+
 #include <iostream>
 #include <syncstream>
 
@@ -22,30 +25,49 @@ namespace ruac::syntax_lite::tree::node {
     }
 
     void ShowDatabases::show_database(const std::string &name_, const bool in_advance_check_) {
-        if (in_advance_check_) {
-            if (!exist_database(name_)) {
-                std::osyncstream(std::cout) << "Error: Database '" << name_ << "' does not exist." << std::endl;
-                return;
-            }
+
+        std::lock_guard<std::mutex> lock(M_SHOW_DATABASES_MTX);
+
+        if (in_advance_check_ || !exist_database(name_)) {
+            std::osyncstream(std::cout) << "Error: Database not exist -> '" << name_ << "'" << std::endl;
+            return;
         }
-        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(m_uid);
-        auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
-        track->get_kernel().show_database(name_);
+
+        // TODO: show database
+        std::osyncstream(std::cout) << "tmp output debug: " << name_ << std::endl;
     }
 
     void ShowDatabases::show_all_databases() {
-        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(m_uid);
+
+        std::lock_guard<std::mutex> lock(M_SHOW_DATABASES_MTX);
+
+        auto &ct = ruac::kernel::controller::ControllerTable::instance();
+        auto &controller = ct.get_controller(m_uid);
         auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
-        track->get_kernel().show_all_databases();
+
+        if (track->get_kernel().empty_database()) {
+            std::osyncstream(std::cout) << "Error: Not any database." << std::endl;
+            return;
+        }
+
+        // TODO: show all databases
+        std::osyncstream(std::cout) << "tmp output debug: not implemented." << std::endl;
     }
 
     void ShowDatabases::execute(const std::string &name_, bool in_advance_check_) {
-        std::lock_guard<std::mutex> lock(M_SHOW_DATABASES_MTX);
-        if (name_ == "*") {
+        // tmp debug line;
+        auto &stdmsg = rstd::messages::StdMsg::instance();
+        auto &stdbug = rstd::messages::StdDug::instance();
+
+        if ("*" == name_ || "all" == name_) {
+            constexpr const char *const dugmsg{"Class: ShowDatabases, Func: show_all_databases"};
+            stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
             show_all_databases();
-        } else {
-            show_database(name_, in_advance_check_);
+            return;
         }
+        constexpr const char *const dugmsg{"Class: ShowDatabases, Func: show_database"};
+        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+        show_database(name_, in_advance_check_);
     }
 
 } // namespace ruac::syntax_lite::tree::node

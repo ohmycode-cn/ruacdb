@@ -6,11 +6,12 @@
  * src/rshell/lib/ruac_guard.cpp
  */
 
+#include "rshell/lib/ruac_guard.hpp"
 #include "usersystem/ruac_usergroup.hpp"
 #include "usersystem/ruac_userid.hpp"
-#include "rshell/lib/ruac_guard.hpp"
-#include <syncstream>
+
 #include <iostream>
+#include <syncstream>
 
 namespace ruac::rshell::lib::guard {
 

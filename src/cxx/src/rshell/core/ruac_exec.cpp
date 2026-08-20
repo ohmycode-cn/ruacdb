@@ -9,11 +9,12 @@
 #include "rshell/core/ruac_exec.hpp"
 #include "help/ruac_help_entry.hpp"
 #include "login/ruac_registered_user.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
 #include "rshell/lib/ruac_guard.hpp"
+#include "rstd/messages/ruac_stdmsg.hpp"
 #include "usersystem/ruac_usersmap.hpp"
-#include <syncstream>
+
 #include <iostream>
+#include <syncstream>
 
 namespace ruac::rshell::core {
 

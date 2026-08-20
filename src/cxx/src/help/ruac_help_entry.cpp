@@ -6,8 +6,9 @@
  * src/help/ruac_help_entry.cpp
  */
 
-#include "help/shell/ruac_help_shell.hpp"
 #include "help/ruac_help_entry.hpp"
+#include "help/shell/ruac_help_shell.hpp"
+
 #include <iostream>
 #include <sstream>
 #include <syncstream>

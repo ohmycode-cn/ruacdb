@@ -13,10 +13,11 @@
 #define RUAC_HELP_SHELL_HPP
 
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
+
+#include <memory>
 #include <mutex>
 #include <string>
 #include <string_view>
-#include <memory>
 
 namespace ruac::help::shell {
 

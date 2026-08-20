@@ -14,6 +14,7 @@
 
 #include "syntax_lite/tree/node/ruac_node_all.hpp" // IWYU pragma: keep
 #include "syntax_lite/tree/ruac_node_store.hpp"
+
 #include <memory>
 
 namespace ruac::syntax_lite::tree {

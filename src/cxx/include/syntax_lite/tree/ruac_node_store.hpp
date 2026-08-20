@@ -13,6 +13,7 @@
 #define RUAC_NODE_STORE_HPP
 
 #include "syntax_lite/tree/node/ruac_node_types.hpp"
+
 #include <mutex>
 #include <variant>
 

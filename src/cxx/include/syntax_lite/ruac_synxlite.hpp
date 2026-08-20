@@ -13,6 +13,7 @@
 #define RUAC_SYNLITE_HPP
 
 #include "syntax_lite/tree/ruac_parser.hpp"
+
 #include <mutex>
 #include <string>
 

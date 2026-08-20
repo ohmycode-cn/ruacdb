@@ -13,6 +13,7 @@
 
 #include "syntax_lite/tree/ruac_keyword.hpp"
 #include "syntax_lite/tree/ruac_token_type.hpp"
+
 #include <string>
 #include <unordered_map>
 

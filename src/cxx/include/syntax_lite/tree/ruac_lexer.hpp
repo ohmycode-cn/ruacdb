@@ -13,6 +13,7 @@
 #define RUAC_LEXER_HPP
 
 #include "syntax_lite/tree/ruac_token_type.hpp"
+
 #include <string>
 #include <vector>
 

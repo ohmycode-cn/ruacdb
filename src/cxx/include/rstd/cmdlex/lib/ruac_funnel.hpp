@@ -12,9 +12,9 @@
 #ifndef RUAC_FUNNEL_HPP
 #define RUAC_FUNNEL_HPP
 
+#include <mutex>
 #include <string>
 #include <vector>
-#include <mutex>
 
 namespace ruac::rstd::cmdlex::lib {
 

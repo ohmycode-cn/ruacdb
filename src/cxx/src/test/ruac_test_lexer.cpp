@@ -41,10 +41,10 @@ namespace ruac::test {
 
             for (std::size_t line_id{0}; line_id < lines.size(); ++line_id) {
                 ruac::rstd::lowercase_characters::tolower(lines[line_id]);
-                lexer.parse_line(lines[line_id]);
+                lexer.tokenize(lines[line_id]);
                 std::stringstream ss;
                 ss << "Line ID: " << line_id << " -> [\n";
-                for (const auto &token : lexer.get_tokens()) {
+                for (const auto &token : lexer.tokens()) {
                     ss << "    Token Type ID: " << static_cast<int>(token.type) << "\n"
                        << "    Token Value  : " << token.value << "\n";
                 }

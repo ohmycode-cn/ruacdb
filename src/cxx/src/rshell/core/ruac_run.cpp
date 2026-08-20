@@ -6,16 +6,17 @@
  * src/rshell/core/ruac_run.cpp
  */
 
+#include "rshell/core/ruac_run.hpp"
+#include "rshell/lib/ruac_guard.hpp"
+#include "rstd/cmdlex/ruac_cmdlex.hpp"
+#include "rstd/colors/ruac_color26.hpp"
 #include "rstd/convert/ruac_lowercase.hpp"
 #include "rstd/convert/ruac_rmspace.hpp"
-#include "rstd/colors/ruac_color26.hpp"
-#include "rshell/core/ruac_run.hpp"
-#include "rstd/cmdlex/ruac_cmdlex.hpp"
-#include "rshell/lib/ruac_guard.hpp"
 #include "welcome/ruac_guidance.hpp"
-#include <syncstream>
+
 #include <iostream>
 #include <string>
+#include <syncstream>
 #include <vector>
 
 namespace ruac::rshell::core {

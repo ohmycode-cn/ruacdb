@@ -13,10 +13,11 @@
 #define RUAC_EXEC_HPP
 
 #include "kernel/state/ruac_state_kernel.hpp"
-#include "syntax_lite/ruac_synxlite.hpp"
 #include "rshell/lib/ruac_scode.hpp"
-#include <string>
+#include "syntax_lite/ruac_synxlite.hpp"
+
 #include <mutex>
+#include <string>
 
 namespace ruac::rshell::core {
 
