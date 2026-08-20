@@ -2,21 +2,20 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/syntax_lite/tree/node/ruac_nodelist.hpp
- * src/syntax_lite/tree/node/ruac_nodelist.cpp
+ * include/syntax_lite/tree/node/ruac_node_types.hpp
  *
- * @brief Defines AST node data structures for parsed RUAC statements (CreateDatabase, CreateTable, UseDatabase, ShowDatabases, ShowTables).
+ * @brief Defines AST node data structures for parsed RUAC statements.
  */
 
 #pragma once
-#ifndef RUAC_NODELIST_HPP
-#define RUAC_NODELIST_HPP
+#ifndef RUAC_NODE_TYPES_HPP
+#define RUAC_NODE_TYPES_HPP
 
 #include <string>
 
 namespace ruac::syntax_lite::tree::node {
 
-    namespace nodelist {
+    namespace types {
 
         struct CreateDatabase {
             std::string name;
@@ -41,8 +40,8 @@ namespace ruac::syntax_lite::tree::node {
             std::string name;
         };
 
-    } // namespace nodelist
+    } // namespace types
 
 } // namespace ruac::syntax_lite::tree::node
 
-#endif // RUAC_NODELIST_HPP
+#endif // RUAC_NODE_TYPES_HPP

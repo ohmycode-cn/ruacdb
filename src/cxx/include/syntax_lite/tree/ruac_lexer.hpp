@@ -12,7 +12,7 @@
 #ifndef RUAC_LEXER_HPP
 #define RUAC_LEXER_HPP
 
-#include "syntax_lite/tree/ruac_kwenums.hpp"
+#include "syntax_lite/tree/ruac_token_type.hpp"
 #include <string>
 #include <vector>
 
@@ -25,7 +25,7 @@ namespace ruac::syntax_lite::tree {
      * and its string value, produced by the Lexer during tokenization of input lines.
      */
     struct Token {
-        kwenums::TokenType type;
+        token_type::TokenType type;
         std::string value;
     };
 
@@ -51,12 +51,12 @@ namespace ruac::syntax_lite::tree {
 
       private:
         void skip_whitespace();
-        void get_string(std::string &str_);
+        void read_word(std::string &str_);
         void read_token();
 
       public:
-        void parse_line(const std::string &line_);
-        auto get_tokens() -> std::vector<Token>;
+        void tokenize(const std::string &line_);
+        auto tokens() -> std::vector<Token>;
         void out_tokens();
     };
 

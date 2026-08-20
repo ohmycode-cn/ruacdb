@@ -6,84 +6,37 @@
  * src/syntax_lite/tree/node/ruac_create_database.cpp
  */
 
+#include "syntax_lite/tree/node/ruac_create_database.hpp"
 #include "kernel/ruac_controller_table.hpp"
 #include "kernel/track/ruac_track_single.hpp"
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
-#include "syntax_lite/tree/node/kit/ruac_database_exist.hpp"
-#include "syntax_lite/tree/node/ruac_create_database.hpp"
+#include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
 #include <iostream>
-#include <sstream>
 #include <syncstream>
 
 namespace ruac::syntax_lite::tree::node {
 
     CreateDatabase::CreateDatabase(int uid_) : m_uid(uid_) {}
 
-    /**
-     * @brief Check whether a database with the given name already exists
-     *
-     * @param name_ - The database name to look up
-     *
-     * @return bool - true if the database exists, false otherwise
-     *
-     * @details Delegates the lookup to the kit helper
-     *          kit::database_exist(), passing m_uid to target the user's
-     *          controller.
-     *
-     */
-    auto CreateDatabase::database_exist(const std::string &name_) -> bool {
-        return ruac::syntax_lite::tree::node::kit::database_exist(name_, m_uid);
+    auto CreateDatabase::exist_database(const std::string &name_) -> bool {
+        return util::exist_database(name_, m_uid);
     }
 
-    /**
-     * @brief Create a database, optionally guarded by an existence check
-     *
-     * @param name_ - The database name to create
-     * @param in_advance_check_ - When true, abort if the database already exists
-     *
-     * @details Prints a debug trace via StdMsg/StdDug on entry. If
-     *          in_advance_check is true and exist_database(name) reports the
-     *          database already exists, an error message is written to stdout
-     *          and the function returns without creating anything. Otherwise
-     *          it fetches controller 0, extracts the Single track strategy
-     *          and calls add_database(name, 0, 0) on the underlying kernel.
-     *
-     */
-    void CreateDatabase::database_create(const std::string &name_, bool in_advance_check_) {
-
-        // tmp debug line;
-        auto &stdmsg = rstd::messages::StdMsg::instance();
-        auto &stdbug = rstd::messages::StdDug::instance();
-        constexpr const char *const dugmsg{"Class: CreateDatabase, Func: database_create"};
-        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
-
-        std::lock_guard<std::mutex> lock(M_CREATE_DATABASE_MTX);
-
-        if (in_advance_check_ || database_exist(name_)) {
-            std::stringstream ss;
-            ss << "Error: Database '" << name_ << "' already exists";
-            std::osyncstream(std::cout) << ss.str() << std::endl;
-            return;
+    void CreateDatabase::create_database(const std::string &name_, bool in_advance_check_) {
+        if (in_advance_check_) {
+            if (exist_database(name_)) {
+                std::osyncstream(std::cout) << "Error: Database '" << name_ << "' already exists." << std::endl;
+                return;
+            }
         }
-
         auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(m_uid);
         auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
-        track->get_kernel().add_database(name_, 0, 0);
+        track->get_kernel().create_database(name_);
+        std::osyncstream(std::cout) << "Done: Database '" << name_ << "' created." << std::endl;
     }
 
-    /**
-     * @brief Entry point for database creation
-     *
-     * @param name_ - The database name to create
-     *
-     * @details Forwards the name to database_create() with the default
-     *          in_advance_check argument so that an existence check is
-     *          performed before the actual creation.
-     *
-     */
-    void CreateDatabase::interface(const std::string &name_, bool in_advance_check_) {
-        database_create(name_, in_advance_check_);
+    void CreateDatabase::execute(const std::string &name_, bool in_advance_check_) {
+        std::lock_guard<std::mutex> lock(M_CREATE_DATABASE_MTX);
+        create_database(name_, in_advance_check_);
     }
 
 } // namespace ruac::syntax_lite::tree::node

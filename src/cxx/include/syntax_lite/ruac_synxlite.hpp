@@ -2,10 +2,10 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/syntax_lite/ruac_synlite.hpp
- * src/syntax_lite/ruac_synlite.cpp
+ * include/syntax_lite/ruac_synxlite.hpp
+ * src/syntax_lite/ruac_synxlite.cpp
  *
- * @brief Provides the SynLite class for thread-safe RUAC syntax analysis.
+ * @brief Provides the SynxLite class for thread-safe RUAC syntax analysis.
  */
 
 #pragma once
@@ -16,7 +16,7 @@
 #include <mutex>
 #include <string>
 
-namespace ruac::syntax_lite {
+namespace ruac::syntax_lite::api {
 
     /**
      * @brief Lightweight syntax analyzer for RUAC commands.
@@ -25,19 +25,19 @@ namespace ruac::syntax_lite {
      * with methods to submit a line for analysis and retrieve the resulting status
      * code.
      */
-    class SynLite {
+    class SynxLite {
       private:
         std::unique_ptr<ruac::syntax_lite::tree::Parser> M_PARSER;
         std::mutex M_SYN_LITE_MTX;
 
       public:
-        explicit SynLite(int uid_ = 1);
-        ~SynLite() = default;
+        explicit SynxLite(int uid_ = 1);
+        ~SynxLite() = default;
 
       public:
-        void syntax_line_hook(const std::string &line_);
+        void process(const std::string &line_);
     };
 
-} // namespace ruac::syntax_lite
+} // namespace ruac::syntax_lite::api
 
 #endif // RUAC_SYNLITE_HPP

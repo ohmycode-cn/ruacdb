@@ -2,31 +2,30 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/syntax_lite/tree/ruac_kwmapps.hpp
- * src/syntax_lite/tree/ruac_kwmapps.cpp
+ * include/syntax_lite/tree/ruac_keyword_map.hpp
  *
  * @brief Defines keyword-to-TokenType mapping for lexer classification.
  */
 
 #pragma once
-#ifndef RUAC_KWMAPPS_HPP
-#define RUAC_KWMAPPS_HPP
+#ifndef RUAC_KEYWORD_MAP_HPP
+#define RUAC_KEYWORD_MAP_HPP
 
 #include "syntax_lite/tree/ruac_keyword.hpp"
-#include "syntax_lite/tree/ruac_kwenums.hpp"
+#include "syntax_lite/tree/ruac_token_type.hpp"
 #include <string>
 #include <unordered_map>
 
 namespace ruac::syntax_lite::tree {
 
-    namespace kwmapps {
+    namespace keyword_map {
 
         namespace k_datatype = keyword::datatype;
         namespace k_object = keyword::object;
         namespace k_attribute = keyword::attribute;
         namespace k_symbol = keyword::symbol;
-        namespace kw = kwenums;
-        using kw::TokenType;
+        namespace tt = token_type;
+        using tt::TokenType;
 
         /**
          * @brief Mapping from keyword strings to their TokenType classifications.
@@ -35,7 +34,7 @@ namespace ruac::syntax_lite::tree {
          * (datatype, object, attribute, symbol) with its corresponding TokenType
          * enumeration value for fast lookup during lexical analysis.
          */
-        const std::unordered_map<std::string, kw::TokenType> maps{
+        const std::unordered_map<std::string, tt::TokenType> maps{
             // datatype
             {k_datatype::G_DATETIME, TokenType::KEYWORD_DATATYPE},
             {k_datatype::G_DATE, TokenType::KEYWORD_DATATYPE},
@@ -95,8 +94,8 @@ namespace ruac::syntax_lite::tree {
             {k_symbol::G_NOT, TokenType::KEYWORD_SYMBOL},
         };
 
-    } // namespace kwmapps
+    } // namespace keyword_map
 
 } // namespace ruac::syntax_lite::tree
 
-#endif // RUAC_KWMAPPS_HPP
+#endif // RUAC_KEYWORD_MAP_HPP

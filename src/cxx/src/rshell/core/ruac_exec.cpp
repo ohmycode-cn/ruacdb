@@ -23,8 +23,8 @@ namespace ruac::rshell::core {
      * @param kstate_ - Reference to the shared Kernel state object
      *
      * @details Stores the kernel reference in m_kstate and initialises
-     *          the SynLite instance (m_synlite) with the user id from
-     *          kstate_. SynLite handles SQL-style command parsing.
+     *          the SynxLite instance (m_synlite) with the user id from
+     *          kstate_. SynxLite handles SQL-style command parsing.
      *
      */
     Exec::Exec(kernel::state::Kernel &kstate_)
@@ -86,7 +86,7 @@ namespace ruac::rshell::core {
      *          - "ruacdb user.info show all": root-only, prints UsersMap.
      *          - "add new user.env": root-only, launches RegisteredUser REPL.
      *          All other strings are gated on the "manager" group and then
-     *          forwarded to m_synlite.syntax_line_hook() for SQL-style
+     *          forwarded to m_synlite.process() for SQL-style
      *          parsing. Permission failures return CONTINUE.
      *
      */
@@ -140,7 +140,7 @@ namespace ruac::rshell::core {
                     "manager")) {
                 return status_code::CONTINUE;
             }
-            m_synlite.syntax_line_hook(line_);
+            m_synlite.process(line_);
         }
         return status_code::CONTINUE;
     }

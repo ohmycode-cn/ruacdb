@@ -2,15 +2,15 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/syntax_lite/tree/node/kit/ruac_database_exist.hpp
- * src/syntax_lite/tree/node/kit/ruac_database_exist.cpp
+ * include/syntax_lite/tree/node/util/ruac_database_exists.hpp
+ * src/syntax_lite/tree/node/util/ruac_database_exists.cpp
  */
 
 #include "kernel/ruac_controller_table.hpp"
 #include "kernel/track/ruac_track_single.hpp"
-#include "syntax_lite/tree/node/kit/ruac_database_exist.hpp"
+#include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
 
-namespace ruac::syntax_lite::tree::node::kit {
+namespace ruac::syntax_lite::tree::node::util {
 
     /**
      * @brief Check whether a database with the given name already exists
@@ -25,10 +25,10 @@ namespace ruac::syntax_lite::tree::node::kit {
      *          query to the underlying kernel's exist_database().
      *
      */
-    auto database_exist(const std::string &name_, const int uid_) -> bool {
+    auto exist_database(const std::string &name_, const int uid_) -> bool {
         auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(uid_);
         auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
         return track->get_kernel().exist_database(name_);
     }
 
-} // namespace ruac::syntax_lite::tree::node::kit
+} // namespace ruac::syntax_lite::tree::node::util

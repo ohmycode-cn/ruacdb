@@ -12,10 +12,10 @@
 #ifndef RUAC_PARSER_HPP
 #define RUAC_PARSER_HPP
 
-#include "syntax_lite/tree/ruac_kwenums.hpp"
+#include "syntax_lite/tree/ruac_token_type.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
-#include "syntax_lite/tree/ruac_prexec.hpp"
-#include "syntax_lite/tree/ruac_synxlist.hpp"
+#include "syntax_lite/tree/ruac_executor.hpp"
+#include "syntax_lite/tree/ruac_node_store.hpp"
 #include <cstddef>
 #include <memory>
 #include <mutex>
@@ -26,8 +26,8 @@ namespace ruac::syntax_lite::tree {
 
     class Parser {
       private:
-        std::unique_ptr<SynxList> M_SYNX_LIST;
-        std::unique_ptr<PrExec> M_PREEXEC;
+        std::unique_ptr<NodeStore> m_node_store;
+        std::unique_ptr<Executor> m_executor;
         std::unique_ptr<Lexer> M_LEXER;
         std::mutex M_PARSER_MTX;
 
@@ -42,7 +42,7 @@ namespace ruac::syntax_lite::tree {
         auto has_more() -> bool;
         auto peek() const -> const Token &;
         auto consume() -> const Token &;
-        auto expect(kwenums::TokenType type_, const std::string &value_ = "") -> bool;
+        auto expect(token_type::TokenType type_, const std::string &value_ = "") -> bool;
 
       private:
         auto parse_create_database() -> bool;
@@ -58,11 +58,11 @@ namespace ruac::syntax_lite::tree {
 
       private:
         void print_tokens();
-        void dispatcher();
-        void parser();
+        void dispatch();
+        void parse();
 
       public:
-        void get_query(const std::string &line_);
+        void process(const std::string &line_);
     };
 
 } // namespace ruac::syntax_lite::tree

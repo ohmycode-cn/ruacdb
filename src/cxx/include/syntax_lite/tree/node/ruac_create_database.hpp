@@ -23,15 +23,15 @@ namespace ruac::syntax_lite::tree::node {
         [[maybe_unused]] int m_uid{1};
 
       private:
-        auto database_exist(const std::string &name_) -> bool;
-        void database_create(const std::string &name_, bool in_advance_check_ = false);
+        auto exist_database(const std::string &name_) -> bool;
+        void create_database(const std::string &name_, bool in_advance_check_ = false);
 
       public:
         explicit CreateDatabase(int uid_ = 1);
         ~CreateDatabase() = default;
 
       public:
-        void interface(const std::string &name_, bool in_advance_check_ = false);
+        void execute(const std::string &name_, bool in_advance_check_ = false);
     };
 
 } // namespace ruac::syntax_lite::tree::node

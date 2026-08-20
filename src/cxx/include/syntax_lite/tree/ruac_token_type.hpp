@@ -2,19 +2,18 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/syntax_lite/tree/ruac_kwenums.hpp
- * src/syntax_lite/tree/ruac_kwenums.cpp
+ * include/syntax_lite/tree/ruac_token_type.hpp
  *
  * @brief Defines the TokenType enumeration for token classification.
  */
 
 #pragma once
-#ifndef RUAC_KWENUMS_HPP
-#define RUAC_KWENUMS_HPP
+#ifndef RUAC_TOKEN_TYPE_HPP
+#define RUAC_TOKEN_TYPE_HPP
 
 namespace ruac::syntax_lite::tree {
 
-    namespace kwenums {
+    namespace token_type {
 
         /**
          * @brief Enumeration of token type classifications.
@@ -31,8 +30,8 @@ namespace ruac::syntax_lite::tree {
             KEYWORD_DATATYPE
         };
 
-    } // namespace kwenums
+    } // namespace token_type
 
 } // namespace ruac::syntax_lite::tree
 
-#endif // RUAC_KWENUMS_HPP
+#endif // RUAC_TOKEN_TYPE_HPP

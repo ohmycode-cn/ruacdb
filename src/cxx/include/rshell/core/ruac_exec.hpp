@@ -13,7 +13,7 @@
 #define RUAC_EXEC_HPP
 
 #include "kernel/state/ruac_state_kernel.hpp"
-#include "syntax_lite/ruac_synlite.hpp"
+#include "syntax_lite/ruac_synxlite.hpp"
 #include "rshell/lib/ruac_scode.hpp"
 #include <string>
 #include <mutex>
@@ -23,7 +23,7 @@ namespace ruac::rshell::core {
     class Exec {
       private:
         using status_code = ruac::rshell::lib::scode::StatusCode;
-        ruac::syntax_lite::SynLite m_synlite;
+        ruac::syntax_lite::api::SynxLite m_synlite;
         kernel::state::Kernel &m_kstate;
         std::mutex M_EXEC_MTX;
 
