@@ -13,8 +13,8 @@
 #include "kernel/state/ruac_state_single.hpp"
 #include "kernel/track/ruac_track_single.hpp"
 #include "login/ruac_login_user.hpp"
-#include "ruacsh/lib/ruac_ragrs.hpp"
-#include "ruacsh/ruac_rsh.hpp"
+#include "rshell/lib/ruac_args.hpp"
+#include "rshell/ruac_rshell.hpp"
 
 /**
  * @brief Program entry point
@@ -28,8 +28,8 @@
  *          the controller into ControllerTable at the user's uid, then retrieves
  *          it and sets the kernel state's current user. Deletes the LoginUser
  *          once the uid and name are propagated. Finally constructs a
- *          ruacsh::api::Interface with the kernel state, sets runtime args
- *          (ce=true, ht=true, bf=false, dp=true), and calls run_shell() to
+ *          rshell::api::RShell with the kernel state, sets runtime args
+ *          (ce=true, ht=true, bf=false, dp=true), and calls run() to
  *          start the interactive shell.
  *
  */
@@ -54,14 +54,14 @@ int main() {
     }
 
     {
-        ruac::ruacsh::lib::ragrs::RshellArgs ruac_shell_args{
+        ruac::rshell::lib::args::ShellArgs ruac_shell_args{
             .m_enable_ce = true,
             .m_enable_ht = true,
             .m_enable_bf = false,
             .m_enable_dp = true,
         };
-        ruac::ruacsh::api::Interface ruac_shell_interface(state->get_kernel_state());
-        ruac_shell_interface.set_ragrs(ruac_shell_args);
-        ruac_shell_interface.run_shell(true);
+        ruac::rshell::api::RShell ruac_shell(state->get_kernel_state());
+        ruac_shell.set_args(ruac_shell_args);
+        ruac_shell.run(true);
     }
 }
