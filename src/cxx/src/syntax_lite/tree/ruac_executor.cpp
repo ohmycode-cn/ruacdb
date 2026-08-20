@@ -13,8 +13,24 @@
 
 namespace ruac::syntax_lite::tree {
 
+    /**
+     * @brief Construct an Executor with node handlers for the given user
+     *
+     * @param uid_ - User ID for the execution context
+     *
+     */
     Executor::Executor(int uid_) : m_node_map{std::make_unique<ExecutorNodeMap>(uid_)} {}
 
+    /**
+     * @brief Dispatch a parsed node tree to the appropriate handler
+     *
+     * @param node_store_ - Pointer to the NodeStore containing the parsed node tree
+     *
+     * @details Uses std::visit to pattern-match the variant held in NodeStore. Routes
+     *          CreateDatabase, ShowDatabases, and other node types to their respective
+     *          handler's execute() method. Unhandled types are silently ignored.
+     *
+     */
     void Executor::dispatch(NodeStore *node_store_) {
         auto &node = node_store_->get_node_tree();
         std::visit([this](auto &arg) {

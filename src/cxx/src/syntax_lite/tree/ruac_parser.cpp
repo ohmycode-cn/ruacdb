@@ -20,22 +20,52 @@
 
 namespace ruac::syntax_lite::tree {
 
+    /**
+     * @brief Reset the token position to 0
+     */
     void Parser::reset() {
         m_pos = 0;
     }
 
+    /**
+     * @brief Check if more tokens remain
+     *
+     * @return bool - true if position is within token bounds
+     */
     auto Parser::has_more() -> bool {
         return m_pos < M_TOKENS.size();
     }
 
+    /**
+     * @brief Return the current token without consuming it
+     *
+     * @return const Token & - Reference to the current token
+     */
     auto Parser::peek() const -> const Token & {
         return M_TOKENS[m_pos];
     }
 
+    /**
+     * @brief Return the current token and advance the position
+     *
+     * @return const Token & - Reference to the consumed token
+     */
     auto Parser::consume() -> const Token & {
         return M_TOKENS[m_pos++];
     }
 
+    /**
+     * @brief Expect and consume a token matching the given type and optional value
+     *
+     * @param type_ - Expected token type
+     * @param value_ - Expected token value; empty string matches any value
+     *
+     * @return bool - true if the token matched and was consumed
+     *
+     * @details Returns false if no more tokens remain, the type does not match,
+     *          or the value does not match (when non-empty). Consumes the token
+     *          on match.
+     */
     auto Parser::expect(token_type::TokenType type_, const std::string &value_) -> bool {
         if (!has_more()) {
             return false;
@@ -51,6 +81,14 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Parse a CREATE DATABASE statement
+     *
+     * @return bool - true if parsing succeeded
+     *
+     * @details Handles the optional IF NOT EXISTS clause. Expects an identifier
+     *          for the database name. Stores the parsed node in NodeStore.
+     */
     auto Parser::parse_create_database() -> bool {
 
         // tmp debug line;
@@ -93,6 +131,14 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Parse a CREATE TABLE statement
+     *
+     * @return bool - true if parsing succeeded
+     *
+     * @details Handles the optional IF NOT EXISTS clause. Expects an identifier
+     *          for the table name. Stores the parsed node in NodeStore.
+     */
     auto Parser::parse_create_table() -> bool {
 
         // Tmp debug.
@@ -137,6 +183,14 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Parse a USE DATABASE statement
+     *
+     * @return bool - true if parsing succeeded
+     *
+     * @details Expects an identifier for the database name. Stores the parsed
+     *          node in NodeStore.
+     */
     auto Parser::parse_use_database() -> bool {
         using tt = token_type::TokenType;
         if (!has_more() || peek().type != tt::IDENTIFIER) {
@@ -148,6 +202,15 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Parse a SHOW DATABASES statement
+     *
+     * @return bool - true if parsing succeeded
+     *
+     * @details Rejects parameterized forms (e.g. SHOW DATABASES <target>).
+     *          Defaults to '*' to show all databases. Stores the parsed node
+     *          in NodeStore.
+     */
     auto Parser::parse_show_databases() -> bool {
         using tt = token_type::TokenType;
         node::types::ShowDatabases node;
@@ -165,6 +228,14 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Parse a SHOW DATABASE <target> statement
+     *
+     * @return bool - true if parsing succeeded
+     *
+     * @details Rejects '*' as a target keyword. Defaults to '*' with a warning
+     *          when no target is specified. Stores the parsed node in NodeStore.
+     */
     auto Parser::parse_show_database_specific() -> bool {
         using tt = token_type::TokenType;
         namespace ks = keyword::symbol;
@@ -195,6 +266,13 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Parse a SHOW TABLES statement
+     *
+     * @return bool - true if parsing succeeded
+     *
+     * @details Stores the parsed node in NodeStore.
+     */
     auto Parser::parse_show_tables() -> bool {
         using tt = token_type::TokenType;
         node::types::ShowTables node;
@@ -205,11 +283,19 @@ namespace ruac::syntax_lite::tree {
         return true;
     }
 
+    /**
+     * @brief Construct a Parser with node store, executor, and lexer
+     *
+     * @param uid_ - User ID for the execution context
+     */
     Parser::Parser(int uid_)
         : m_node_store(std::make_unique<NodeStore>()),
           m_executor(std::make_unique<Executor>(uid_)),
           M_LEXER(std::make_unique<Lexer>()) {}
 
+    /**
+     * @brief Print the current token list to stdout for debugging
+     */
     void Parser::print_tokens() {
         std::stringstream ss;
         ss << "Tmp Test !\n[\n";
@@ -221,6 +307,14 @@ namespace ruac::syntax_lite::tree {
         std::osyncstream(std::cout) << ss.str() << std::endl;
     }
 
+    /**
+     * @brief Dispatch the token stream to the appropriate parse method
+     *
+     * @details Clears the node store and resets position. Reads the attribute
+     *          keyword (CREATE/SHOW/USE) and object keyword
+     *          (DATABASE/TABLE/DATABASES/TABLES), then routes to the
+     *          corresponding parse_* method.
+     */
     void Parser::dispatch() {
         m_node_store->clr_node_tree();
         reset();
@@ -257,6 +351,12 @@ namespace ruac::syntax_lite::tree {
         }
     }
 
+    /**
+     * @brief Run parsing and forward results to the executor
+     *
+     * @details Calls dispatch() to parse the token stream. If parsing succeeded,
+     *          forwards the node store to the executor for execution.
+     */
     void Parser::parse() {
         dispatch();
         if (!m_parser_success) {
@@ -265,6 +365,14 @@ namespace ruac::syntax_lite::tree {
         m_executor->dispatch(m_node_store.get());
     }
 
+    /**
+     * @brief Thread-safe entry point for parsing a command line
+     *
+     * @param line_ - The command line string to parse
+     *
+     * @details Acquires M_PARSER_MTX, tokenizes the input via the Lexer, stores
+     *          the resulting tokens, and triggers parse().
+     */
     void Parser::process(const std::string &line_) {
         std::lock_guard<std::mutex> lock(M_PARSER_MTX);
         M_LEXER->tokenize(line_);

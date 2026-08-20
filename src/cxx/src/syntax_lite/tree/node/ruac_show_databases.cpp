@@ -18,12 +18,36 @@
 
 namespace ruac::syntax_lite::tree::node {
 
+    /**
+     * @brief Construct a ShowDatabases handler
+     *
+     * @param uid_ - User ID for the execution context
+     *
+     */
     ShowDatabases::ShowDatabases(int uid_) : m_uid(uid_) {}
 
+    /**
+     * @brief Check if a database with the given name exists
+     *
+     * @param name_ - The database name to check
+     *
+     * @return bool - true if the database exists
+     *
+     */
     auto ShowDatabases::exist_database(const std::string &name_) -> bool {
         return util::exist_database(name_, m_uid);
     }
 
+    /**
+     * @brief Show a specific database
+     *
+     * @param name_ - The database name to display
+     *
+     * @param in_advance_check_ - When true, skip the existence check
+     *
+     * @details Acquires M_SHOW_DATABASES_MTX. Prints an error if the database does not exist.
+     *
+     */
     void ShowDatabases::show_database(const std::string &name_, const bool in_advance_check_) {
 
         std::lock_guard<std::mutex> lock(M_SHOW_DATABASES_MTX);
@@ -37,6 +61,13 @@ namespace ruac::syntax_lite::tree::node {
         std::osyncstream(std::cout) << "tmp output debug: " << name_ << std::endl;
     }
 
+    /**
+     * @brief Show all databases
+     *
+     * @details Acquires M_SHOW_DATABASES_MTX. Checks if any databases exist via the track
+     *          kernel, printing an error if none are found.
+     *
+     */
     void ShowDatabases::show_all_databases() {
 
         std::lock_guard<std::mutex> lock(M_SHOW_DATABASES_MTX);
@@ -54,6 +85,17 @@ namespace ruac::syntax_lite::tree::node {
         std::osyncstream(std::cout) << "tmp output debug: not implemented." << std::endl;
     }
 
+    /**
+     * @brief Execute the show databases operation
+     *
+     * @param name_ - The target name; '*' or 'all' shows all databases
+     *
+     * @param in_advance_check_ - When true, skip the existence check
+     *
+     * @details Routes to show_all_databases() when name_ is '*' or 'all', otherwise
+     *          delegates to show_database().
+     *
+     */
     void ShowDatabases::execute(const std::string &name_, bool in_advance_check_) {
         // tmp debug line;
         auto &stdmsg = rstd::messages::StdMsg::instance();

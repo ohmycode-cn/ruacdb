@@ -1,14 +1,9 @@
 /**
- * C/C++ Style Guide: RUAC-CCXX-STYLE-GUIDE.md
- * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120
- * Date Time: 2026-07-01 21:36:00
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * Header File : include/kernel/track/ruac_track_multis.hpp
- * Source File : src/kernel/track/ruac_track_multis.cpp
- *
- * File Function Description:
- * Implementation file for ruac_track_multis.hpp.
- *
+ * include/kernel/track/ruac_track_multis.hpp
+ * src/kernel/track/ruac_track_multis.cpp
  */
 
 #include "kernel/track/ruac_track_multis.hpp"

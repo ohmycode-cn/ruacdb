@@ -1,14 +1,9 @@
 /**
- * C/C++ Style Guide: RUAC-CCXX-STYLE-GUIDE.md
- * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120
- * Date Time: 2026-07-01 21:36:00
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * Header File : include/kernel/track/ruac_track_kernel.hpp
- * Source File : src/kernel/track/ruac_track_kernel.cpp
- *
- * File Function Description:
- * Implementation file for ruac_track_kernel.hpp.
- *
+ * include/kernel/track/ruac_track_kernel.hpp
+ * src/kernel/track/ruac_track_kernel.cpp
  */
 
 #include "kernel/track/ruac_track_kernel.hpp"
@@ -16,35 +11,34 @@
 namespace ruac::kernel::track {
 
     /**
-     * Checks if the tracking map is empty.
+     * @brief Checks if the tracking map is empty.
      *
-     * Returns:
-     *   True if the map is empty, false otherwise.
+     * @return bool - True if the map is empty, false otherwise.
+     *
      */
     auto Kernel::empty_database() -> bool {
         return m_database_map.empty();
     }
 
     /**
-     * Checks if a database exists in the tracking map.
+     * @brief Checks if a database exists in the tracking map.
      *
-     * Args:
-     *   database_name_: The name of the database.
+     * @param database_name_ - The name of the database.
      *
-     * Returns:
-     *   True if the database exists, false otherwise.
+     * @return bool - True if the database exists, false otherwise.
+     *
      */
     auto Kernel::exist_database(const std::string &database_name_) -> bool {
         return m_database_map.find(database_name_) != m_database_map.end();
     }
 
     /**
-     * Adds a new database entry to the tracking map.
+     * @brief Adds a new database entry to the tracking map.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   id_: The unique identifier for the database.
-     *   version_: The version number of the database.
+     * @param database_name_ - The name of the database.
+     * @param id_ - The unique identifier for the database.
+     * @param version_ - The version number of the database.
+     *
      */
     void Kernel::add_database(const std::string &database_name_, uint64_t id_, uint64_t version_) {
         mapper::DatabasesMap map;
@@ -56,11 +50,11 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the index of an existing database entry.
+     * @brief Updates the index of an existing database entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   index_: The new index value.
+     * @param database_name_ - The name of the database.
+     * @param index_ - The new index value.
+     *
      */
     void Kernel::update_database_index(const std::string &database_name_, uint64_t index_) {
         auto it = m_database_map.find(database_name_);
@@ -70,11 +64,11 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the ID of an existing database entry.
+     * @brief Updates the ID of an existing database entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   id_: The new unique identifier.
+     * @param database_name_ - The name of the database.
+     * @param id_ - The new unique identifier.
+     *
      */
     void Kernel::update_database_id(const std::string &database_name_, uint64_t id_) {
         auto it = m_database_map.find(database_name_);
@@ -84,11 +78,11 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the version of an existing database entry.
+     * @brief Updates the version of an existing database entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   version_: The new version number.
+     * @param database_name_ - The name of the database.
+     * @param version_ - The new version number.
+     *
      */
     void Kernel::update_database_version(const std::string &database_name_, uint64_t version_) {
         auto it = m_database_map.find(database_name_);
@@ -98,10 +92,10 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Deletes a database and all related data.
+     * @brief Deletes a database and all related data.
      *
-     * Args:
-     *   database_name_: The name of the database to delete.
+     * @param database_name_ - The name of the database to delete.
+     *
      */
     void Kernel::delete_database(const std::string &database_name_) {
         m_database_map.erase(database_name_);
@@ -119,62 +113,59 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Gets the index of a database.
+     * @brief Gets the index of a database.
      *
-     * Args:
-     *   database_name_: The name of the database.
+     * @param database_name_ - The name of the database.
      *
-     * Returns:
-     *   The index of the database.
+     * @return uint64_t - The index of the database.
+     *
      */
     auto Kernel::get_database_index(const std::string &database_name_) -> uint64_t {
         return m_database_map[database_name_].m_index;
     }
 
     /**
-     * Gets the ID of a database.
+     * @brief Gets the ID of a database.
      *
-     * Args:
-     *   database_name_: The name of the database.
+     * @param database_name_ - The name of the database.
      *
-     * Returns:
-     *   The unique identifier of the database.
+     * @return uint64_t - The unique identifier of the database.
+     *
      */
     auto Kernel::get_database_id(const std::string &database_name_) -> uint64_t {
         return m_database_map[database_name_].m_id;
     }
 
     /**
-     * Gets the version of a database.
+     * @brief Gets the version of a database.
      *
-     * Args:
-     *   database_name_: The name of the database.
+     * @param database_name_ - The name of the database.
      *
-     * Returns:
-     *   The version number of the database.
+     * @return uint64_t - The version number of the database.
+     *
      */
     auto Kernel::get_database_version(const std::string &database_name_) -> uint64_t {
         return m_database_map[database_name_].m_version;
     }
 
     /**
-     * Gets the maximum width of database names.
+     * @brief Gets the maximum width of database names.
      *
-     * Returns:
-     *   The maximum width of database names.
+     * @return uint32_t - The maximum width of database names.
+     *
      */
     auto Kernel::get_database_name_max_width() -> uint32_t {
         return m_database_name_max_width;
     }
 
     /**
-     * Adds a new table entry to the tracking map.
+     * @brief Adds a new table entry to the tracking map.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   id_: The unique identifier for the table.
-     *   version_: The version number of the table.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param id_ - The unique identifier for the table.
+     * @param version_ - The version number of the table.
+     *
      */
     void Kernel::add_table(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_) {
         mapper::TablesMap map;
@@ -186,12 +177,12 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the index of an existing table entry.
+     * @brief Updates the index of an existing table entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   index_: The new index value.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param index_ - The new index value.
+     *
      */
     void Kernel::update_table_index(const std::string &database_name_, const std::string &table_name_, uint64_t index_) {
         auto db_it = m_table_map.find(database_name_);
@@ -204,12 +195,12 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the ID of an existing table entry.
+     * @brief Updates the ID of an existing table entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   id_: The new unique identifier.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param id_ - The new unique identifier.
+     *
      */
     void Kernel::update_table_id(const std::string &database_name_, const std::string &table_name_, uint64_t id_) {
         auto db_it = m_table_map.find(database_name_);
@@ -222,12 +213,12 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the version of an existing table entry.
+     * @brief Updates the version of an existing table entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   version_: The new version number.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param version_ - The new version number.
+     *
      */
     void Kernel::update_table_version(const std::string &database_name_, const std::string &table_name_, uint64_t version_) {
         auto db_it = m_table_map.find(database_name_);
@@ -240,11 +231,11 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Deletes a table and all related data.
+     * @brief Deletes a table and all related data.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table to delete.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table to delete.
+     *
      */
     void Kernel::delete_table(const std::string &database_name_, const std::string &table_name_) {
         auto db_it = m_table_map.find(database_name_);
@@ -272,65 +263,62 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Gets the index of a table.
+     * @brief Gets the index of a table.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
      *
-     * Returns:
-     *   The index of the table.
+     * @return uint64_t - The index of the table.
+     *
      */
     auto Kernel::get_table_index(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
         return m_table_map[database_name_][table_name_].m_index;
     }
 
     /**
-     * Gets the ID of a table.
+     * @brief Gets the ID of a table.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
      *
-     * Returns:
-     *   The ID of the table.
+     * @return uint64_t - The ID of the table.
+     *
      */
     auto Kernel::get_table_id(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
         return m_table_map[database_name_][table_name_].m_id;
     }
 
     /**
-     * Gets the version of a table.
+     * @brief Gets the version of a table.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
      *
-     * Returns:
-     *   The version number of the table.
+     * @return uint64_t - The version number of the table.
+     *
      */
     auto Kernel::get_table_version(const std::string &database_name_, const std::string &table_name_) -> uint64_t {
         return m_table_map[database_name_][table_name_].m_version;
     }
 
     /**
-     * Gets the maximum width of table names.
+     * @brief Gets the maximum width of table names.
      *
-     * Returns:
-     *   The maximum width of table names.
+     * @return uint32_t - The maximum width of table names.
+     *
      */
     auto Kernel::get_table_name_max_width() -> uint32_t {
         return m_table_name_max_width;
     }
 
     /**
-     * Adds a new row entry to the tracking map.
+     * @brief Adds a new row entry to the tracking map.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   id_: The unique identifier for the row.
-     *   version_: The version number of the row.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param id_ - The unique identifier for the row.
+     * @param version_ - The version number of the row.
+     *
      */
     void Kernel::add_row(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_) {
         mapper::RowsMap map;
@@ -342,13 +330,13 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the index of an existing row entry.
+     * @brief Updates the index of an existing row entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   row_id_: The ID of the row.
-     *   index_: The new index value.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param row_id_ - The ID of the row.
+     * @param index_ - The new index value.
+     *
      */
     void Kernel::update_row_index(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t index_) {
         auto db_it = m_row_map.find(database_name_);
@@ -364,13 +352,13 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the ID of an existing row entry.
+     * @brief Updates the ID of an existing row entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   row_id_: The current ID of the row.
-     *   new_id_: The new ID value.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param row_id_ - The current ID of the row.
+     * @param new_id_ - The new ID value.
+     *
      */
     void Kernel::update_row_id(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t new_id_) {
         auto db_it = m_row_map.find(database_name_);
@@ -389,13 +377,13 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the version of an existing row entry.
+     * @brief Updates the version of an existing row entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   row_id_: The ID of the row.
-     *   version_: The new version number.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param row_id_ - The ID of the row.
+     * @param version_ - The new version number.
+     *
      */
     void Kernel::update_row_version(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_, uint64_t version_) {
         auto db_it = m_row_map.find(database_name_);
@@ -411,12 +399,12 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Deletes a row and all related data.
+     * @brief Deletes a row and all related data.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   row_id_: The ID of the row to delete.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param row_id_ - The ID of the row to delete.
+     *
      */
     void Kernel::delete_row(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) {
         auto db_it = m_row_map.find(database_name_);
@@ -441,69 +429,66 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Gets the index of a row.
+     * @brief Gets the index of a row.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   row_id_: The ID of the row.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param row_id_ - The ID of the row.
      *
-     * Returns:
-     *   The index of the row.
+     * @return uint64_t - The index of the row.
+     *
      */
     auto Kernel::get_row_index(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
         return m_row_map[database_name_][table_name_][row_id_].m_index;
     }
 
     /**
-     * Gets the ID of a row.
+     * @brief Gets the ID of a row.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   row_id_: The ID of the row.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param row_id_ - The ID of the row.
      *
-     * Returns:
-     *   The ID of the row.
+     * @return uint64_t - The ID of the row.
+     *
      */
     auto Kernel::get_row_id(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
         return m_row_map[database_name_][table_name_][row_id_].m_id;
     }
 
     /**
-     * Gets the version of a row.
+     * @brief Gets the version of a row.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   row_id_: The ID of the row.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param row_id_ - The ID of the row.
      *
-     * Returns:
-     *   The version number of the row.
+     * @return uint64_t - The version number of the row.
+     *
      */
     auto Kernel::get_row_version(const std::string &database_name_, const std::string &table_name_, uint64_t row_id_) -> uint64_t {
         return m_row_map[database_name_][table_name_][row_id_].m_version;
     }
 
     /**
-     * Gets the maximum width of row IDs.
+     * @brief Gets the maximum width of row IDs.
      *
-     * Returns:
-     *   The maximum width of row IDs.
+     * @return uint32_t - The maximum width of row IDs.
+     *
      */
     auto Kernel::get_row_id_max_width() -> uint32_t {
         return m_row_id_max_width;
     }
 
     /**
-     * Adds a new field entry to the tracking map.
+     * @brief Adds a new field entry to the tracking map.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field.
-     *   id_: The unique identifier for the field.
-     *   version_: The version number of the field.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field.
+     * @param id_ - The unique identifier for the field.
+     * @param version_ - The version number of the field.
+     *
      */
     void Kernel::add_field(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_, uint64_t version_) {
         mapper::FieldsMap map;
@@ -515,13 +500,13 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the index of an existing field entry.
+     * @brief Updates the index of an existing field entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field.
-     *   index_: The new index value.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field.
+     * @param index_ - The new index value.
+     *
      */
     void Kernel::update_field_index(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t index_) {
         auto db_it = m_field_map.find(database_name_);
@@ -537,13 +522,13 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the ID of an existing field entry.
+     * @brief Updates the ID of an existing field entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field.
-     *   id_: The new ID value.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field.
+     * @param id_ - The new ID value.
+     *
      */
     void Kernel::update_field_id(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t id_) {
         auto db_it = m_field_map.find(database_name_);
@@ -559,13 +544,13 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Updates the version of an existing field entry.
+     * @brief Updates the version of an existing field entry.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field.
-     *   version_: The new version number.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field.
+     * @param version_ - The new version number.
+     *
      */
     void Kernel::update_field_version(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_, uint64_t version_) {
         auto db_it = m_field_map.find(database_name_);
@@ -581,12 +566,12 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Deletes a field and all related data.
+     * @brief Deletes a field and all related data.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field to delete.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field to delete.
+     *
      */
     void Kernel::delete_field(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) {
         auto db_it = m_field_map.find(database_name_);
@@ -611,55 +596,52 @@ namespace ruac::kernel::track {
     }
 
     /**
-     * Gets the index of a field.
+     * @brief Gets the index of a field.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field.
      *
-     * Returns:
-     *   The index of the field.
+     * @return uint64_t - The index of the field.
+     *
      */
     auto Kernel::get_field_index(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
         return m_field_map[database_name_][table_name_][field_name_].m_index;
     }
 
     /**
-     * Gets the ID of a field.
+     * @brief Gets the ID of a field.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field.
      *
-     * Returns:
-     *   The ID of the field.
+     * @return uint64_t - The ID of the field.
+     *
      */
     auto Kernel::get_field_id(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
         return m_field_map[database_name_][table_name_][field_name_].m_id;
     }
 
     /**
-     * Gets the version of a field.
+     * @brief Gets the version of a field.
      *
-     * Args:
-     *   database_name_: The name of the database.
-     *   table_name_: The name of the table.
-     *   field_name_: The name of the field.
+     * @param database_name_ - The name of the database.
+     * @param table_name_ - The name of the table.
+     * @param field_name_ - The name of the field.
      *
-     * Returns:
-     *   The version number of the field.
+     * @return uint64_t - The version number of the field.
+     *
      */
     auto Kernel::get_field_version(const std::string &database_name_, const std::string &table_name_, const std::string &field_name_) -> uint64_t {
         return m_field_map[database_name_][table_name_][field_name_].m_version;
     }
 
     /**
-     * Gets the maximum width of field names.
+     * @brief Gets the maximum width of field names.
      *
-     * Returns:
-     *   The maximum width of field names.
+     * @return uint32_t - The maximum width of field names.
+     *
      */
     auto Kernel::get_field_name_max_width() -> uint32_t {
         return m_field_name_max_width;

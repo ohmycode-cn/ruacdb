@@ -1,14 +1,9 @@
 /**
- * C/C++ Style Guide: RUAC-CCXX-STYLE-GUIDE.md
- * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120
- * Date Time: 2026-07-09
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * Header File : include/kernel/core/ruac_data.hpp
- * Source File : src/kernel/core/ruac_data.cpp
- * 
- * File Function Description:
- * Null implementation - header-only structs.
- * 
+ * include/kernel/core/ruac_data.hpp
+ * src/kernel/core/ruac_data.cpp
  */
 
 #include "kernel/core/ruac_data.hpp"

@@ -1,14 +1,9 @@
 /**
- * C/C++ Style Guide: RUAC-CCXX-STYLE-GUIDE.md
- * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120
- * Date Time: 2026-07-01 21:36:00
+ * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
+ * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * Header File : include/kernel/ruac_controller.hpp
- * Source File : src/kernel/ruac_controller.cpp
- *
- * File Function Description:
- * Implementation file for ruac_controller.hpp.
- *
+ * include/kernel/ruac_controller.hpp
+ * src/kernel/ruac_controller.cpp
  */
 
 #include "kernel/ruac_controller.hpp"
@@ -22,100 +17,102 @@ namespace ruac::kernel {
     namespace controller {
 
         /**
-         * Default constructor for Operation.
+         * @brief Default constructor for Operation.
+         *
          */
         Operation::Operation() = default;
 
         /**
-         * Default destructor for Operation.
+         * @brief Default destructor for Operation.
+         *
          */
         Operation::~Operation() = default;
 
         /**
-         * Sets the object strategy with a Single reference.
+         * @brief Sets the object strategy with a Single reference.
          *
-         * Args:
-         *   single_: Reference to the Single singleton.
+         * @param single_ - Reference to the Single singleton.
+         *
          */
         void Operation::set_object_strategy(defname::objs &single_) {
             m_object_strategy = &single_;
         }
 
         /**
-         * Sets the object strategy with a Multis unique pointer.
+         * @brief Sets the object strategy with a Multis unique pointer.
          *
-         * Args:
-         *   multis_: Unique pointer to the Multis instance.
+         * @param multis_ - Unique pointer to the Multis instance.
+         *
          */
         void Operation::set_object_strategy(std::unique_ptr<defname::objm> multis_) {
             m_object_strategy = std::move(multis_);
         }
 
         /**
-         * Gets the object strategy variant.
+         * @brief Gets the object strategy variant.
          *
-         * Returns:
-         *   Reference to the object strategy variant.
+         * @return std::variant<defname::objs *, std::unique_ptr<defname::objm>> & - Reference to the object strategy variant.
+         *
          */
         auto Operation::get_object_strategy() -> std::variant<defname::objs *, std::unique_ptr<defname::objm>> & {
             return m_object_strategy;
         }
 
         /**
-         * Sets the state strategy with a Single reference.
+         * @brief Sets the state strategy with a Single reference.
          *
-         * Args:
-         *   state_single_: Reference to the state Single singleton.
+         * @param state_single_ - Reference to the state Single singleton.
+         *
          */
         void Operation::set_state_strategy(defname::stas &state_single_) {
             m_state_strategy = &state_single_;
         }
 
         /**
-         * Sets the state strategy with a Multis unique pointer.
+         * @brief Sets the state strategy with a Multis unique pointer.
          *
-         * Args:
-         *   state_multis_: Unique pointer to the state Multis instance.
+         * @param state_multis_ - Unique pointer to the state Multis instance.
+         *
          */
         void Operation::set_state_strategy(std::unique_ptr<defname::stam> state_multis_) {
             m_state_strategy = std::move(state_multis_);
         }
 
         /**
-         * Gets the state strategy variant.
+         * @brief Gets the state strategy variant.
          *
-         * Returns:
-         *   Reference to the state strategy variant.
+         * @return std::variant<defname::stas *, std::unique_ptr<defname::stam>> & - Reference to the state strategy variant.
+         *
          */
         auto Operation::get_state_strategy() -> std::variant<defname::stas *, std::unique_ptr<defname::stam>> & {
             return m_state_strategy;
         }
 
         /**
-         * Sets the track strategy with a Single reference.
+         * @brief Sets the track strategy with a Single reference.
          *
-         * Args:
-         *   track_single_: Reference to the track Single singleton.
+         * @param track_single_ - Reference to the track Single singleton.
+         *
          */
         void Operation::set_track_strategy(defname::tras &track_single_) {
             m_track_strategy = &track_single_;
         }
 
         /**
-         * Sets the track strategy with a Multis unique pointer.
+         * @brief Sets the track strategy with a Multis unique pointer.
          *
-         * Args:
-         *   track_multis_: Unique pointer to the track Multis instance.
+         * @param track_multis_ - Unique pointer to the track Multis instance.
+         *
          */
         void Operation::set_track_strategy(std::unique_ptr<defname::tram> track_multis_) {
             m_track_strategy = std::move(track_multis_);
         }
 
         /**
-         * Gets the track strategy variant.
+         * @brief Gets the track strategy variant.
          *
-         * Returns:
-         *   Reference to the track strategy variant.
+         * @return std::variant<defname::tras *, std::unique_ptr<defname::tram>> & - Reference to the track strategy variant.
+         *
          */
         auto Operation::get_track_strategy() -> std::variant<defname::tras *, std::unique_ptr<defname::tram>> & {
             return m_track_strategy;

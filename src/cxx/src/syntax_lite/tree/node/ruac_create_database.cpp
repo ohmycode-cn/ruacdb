@@ -19,12 +19,38 @@
 
 namespace ruac::syntax_lite::tree::node {
 
+    /**
+     * @brief Construct a CreateDatabase handler
+     *
+     * @param uid_ - User ID for the execution context
+     *
+     */
     CreateDatabase::CreateDatabase(int uid_) : m_uid(uid_) {}
 
+    /**
+     * @brief Check if a database with the given name exists
+     *
+     * @param name_ - The database name to check
+     *
+     * @return bool - true if the database exists
+     *
+     */
     auto CreateDatabase::exist_database(const std::string &name_) -> bool {
         return util::exist_database(name_, m_uid);
     }
 
+    /**
+     * @brief Create a new database
+     *
+     * @param name_ - The database name to create
+     *
+     * @param in_advance_check_ - When true, skip the existence check
+     *
+     * @details Acquires M_CREATE_DATABASE_MTX. If in_advance_check_ is false and the
+     *          database already exists, prints an error and returns. Otherwise fetches
+     *          the controller's track strategy and adds the database to the kernel.
+     *
+     */
     void CreateDatabase::create_database(const std::string &name_, bool in_advance_check_) {
 
         // tmp debug line;
@@ -47,6 +73,16 @@ namespace ruac::syntax_lite::tree::node {
         track->get_kernel().add_database(name_, 0, 0);
     }
 
+    /**
+     * @brief Execute the create database operation
+     *
+     * @param name_ - The database name to create
+     *
+     * @param in_advance_check_ - When true, skip the existence check
+     *
+     * @details Delegates to create_database().
+     *
+     */
     void CreateDatabase::execute(const std::string &name_, bool in_advance_check_) {
         create_database(name_, in_advance_check_);
     }

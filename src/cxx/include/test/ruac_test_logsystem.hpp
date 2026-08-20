@@ -4,8 +4,8 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * include/test/ruac_test_logsystem.hpp
  * src/test/ruac_test_logsystem.cpp
+ * Description of header file function declaration
  *
- * @brief Declares the test_main_logsystem() function for testing the log system.
  */
 
 #pragma once

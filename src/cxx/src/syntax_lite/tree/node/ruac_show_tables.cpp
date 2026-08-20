@@ -10,6 +10,12 @@
 
 namespace ruac::syntax_lite::tree::node {
 
+    /**
+     * @brief Construct a ShowTables handler
+     *
+     * @param uid_ - User ID for the execution context
+     *
+     */
     ShowTables::ShowTables(int uid_) : m_uid(uid_) {}
 
 } // namespace ruac::syntax_lite::tree::node

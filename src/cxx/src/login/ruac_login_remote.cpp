@@ -10,5 +10,11 @@
 
 namespace ruac::login
 {
+    /**
+     * @brief Initialise the remote login backend
+     *
+     * @details Stub implementation. Not yet implemented.
+     *
+     */
     void LoginRemote::init_login() {}
 } // namespace ruac::login

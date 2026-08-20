@@ -17,12 +17,31 @@
 
 namespace ruac::syntax_lite::tree {
 
+    /**
+     * @brief Skip whitespace characters at the current position
+     *
+     * @details Advances m_pos past consecutive space/tab characters
+     *          in m_line until a non-whitespace character or end of
+     *          string is reached.
+     *
+     */
     void Lexer::skip_whitespace() {
         while (m_pos < m_line.size() && std::isspace(m_line[m_pos])) {
             m_pos++;
         }
     }
 
+    /**
+     * @brief Read a word from the current position into the output string
+     *
+     * @param str_ - Output parameter receiving the extracted word
+     *
+     * @details Accumulates characters from m_pos until a whitespace
+     *          character or end of m_line is found, then stores the
+     *          result in str_. Advances m_pos past the trailing
+     *          whitespace delimiter if present.
+     *
+     */
     void Lexer::read_word(std::string &str_) {
         std::string tmp_string;
         while (m_pos < m_line.size() && m_line[m_pos] != keyword::symbol::G_WHITESPACE_CHAR) {
@@ -35,6 +54,16 @@ namespace ruac::syntax_lite::tree {
         }
     }
 
+    /**
+     * @brief Read and classify the next token from the input line
+     *
+     * @details Skips leading whitespace, extracts a word via
+     *          read_word(), then looks it up in the keyword map.
+     *          If found, the token is classified with the matched
+     *          keyword type; otherwise it is classified as IDENTIFIER.
+     *          Does nothing when the extracted word is empty.
+     *
+     */
     void Lexer::read_token() {
         std::string word;
         skip_whitespace();
@@ -49,6 +78,16 @@ namespace ruac::syntax_lite::tree {
         }
     }
 
+    /**
+     * @brief Tokenize an entire input line into a vector of Token objects
+     *
+     * @param line_ - The input string to tokenize
+     *
+     * @details Resets m_pos to 0, clears any previous tokens, and
+     *          repeatedly calls read_token() until the entire line
+     *          has been consumed.
+     *
+     */
     void Lexer::tokenize(const std::string &line_) {
         m_line = line_;
         m_pos = 0;
@@ -58,10 +97,23 @@ namespace ruac::syntax_lite::tree {
         }
     }
 
+    /**
+     * @brief Return the tokens produced by the most recent tokenize call
+     *
+     * @return std::vector<Token> - Copy of the internal token vector
+     *
+     */
     auto Lexer::tokens() -> std::vector<Token> {
         return m_tokens;
     }
 
+    /**
+     * @brief Print the current token list to stdout for debugging
+     *
+     * @details Outputs each token's index, integer type id, and
+     *          string value to stdout via std::osyncstream.
+     *
+     */
     void Lexer::out_tokens() {
         std::stringstream ss;
         auto list{m_tokens};

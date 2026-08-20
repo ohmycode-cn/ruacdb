@@ -10,5 +10,11 @@
 
 namespace ruac::login
 {
+    /**
+     * @brief Initialise the local login backend
+     *
+     * @details Stub implementation. Not yet implemented.
+     *
+     */
     void LoginLocal::init_login() {}
 } // namespace ruac::login
