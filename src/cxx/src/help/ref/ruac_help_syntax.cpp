@@ -27,12 +27,12 @@ namespace ruac::help::ref::syntax {
         ss << "\n";
         ss << "[CREATE]:\n";
         ss << "  |\n";
-        ss << "  |-CREATE DATABASE <target>\n";
-        ss << "  |-CREATE DATABASE IF NOT EXISTS <target>\n";
+        ss << "  |- CREATE DATABASE <target>\n";
+        ss << "  |- CREATE DATABASE IF NOT EXISTS <target>\n";
         ss << "[SHOW]:\n";
         ss << "  |\n";
-        ss << "  |-SHOW DATABASES\n";
-        ss << "  |-SHOW DATABASES ALL\n";
+        ss << "  |- SHOW DATABASES\n";
+        ss << "  |- SHOW DATABASES ALL\n";
         ss << "(ENDOF)\n";
         std::osyncstream(std::cout) << ss.str() << std::endl;
     }

@@ -6,6 +6,7 @@
  * src/help/shell/ruac_help_shell.cpp
  */
 
+#include "help/ref/ruac_help_commands.hpp"
 #include "help/ref/ruac_help_syntax.hpp"
 #include "help/shell/ruac_help_shell.hpp"
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
@@ -122,7 +123,9 @@ namespace ruac::help::shell {
                 ruac::help::ref::syntax::show_help_syntax();
             }
         } else if ("help --command" == line_) {
-            std::osyncstream(std::cout) << "Error: Current not implemented." << std::endl;
+            {
+                ruac::help::ref::commands::show_help_commands();
+            }
         } else if (std::find(invalid_exit_commands.begin(), invalid_exit_commands.end(), line_) != invalid_exit_commands.end()) {
             {
                 std::stringstream ss;
