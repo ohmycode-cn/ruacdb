@@ -39,17 +39,17 @@ namespace ruac::usersystem {
      *
      */
     void UserName::push_back(const std::string &name_) {
-        auto node = std::make_shared<UserNameNode>();
+        auto node = std::make_shared<lib::UserNameNode>();
         node->name = name_;
-        if (!m_user_name_list.head) {
-            m_user_name_list.head = node;
-            m_user_name_list.tail = node;
+        if (!m_user_name_list->head) {
+            m_user_name_list->head = node;
+            m_user_name_list->tail = node;
         } else {
-            node->prev = m_user_name_list.tail;
-            m_user_name_list.tail->next = node;
-            m_user_name_list.tail = node;
+            node->prev = m_user_name_list->tail;
+            m_user_name_list->tail->next = node;
+            m_user_name_list->tail = node;
         }
-        m_user_name_list.size++;
+        m_user_name_list->size++;
     }
 
     /**
@@ -68,7 +68,7 @@ namespace ruac::usersystem {
      */
     auto UserName::add_user(const std::string &username_) -> bool {
         std::lock_guard<std::mutex> lock(M_USER_NAME_MTX);
-        auto cur = m_user_name_list.head;
+        auto cur = m_user_name_list->head;
         while (cur) {
             if (cur->name == username_) {
                 return false;

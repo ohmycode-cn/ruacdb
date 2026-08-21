@@ -19,7 +19,7 @@ namespace ruac::usersystem {
 
     enum class UserPowerCode {
         NO = 0, // No      Permission
-        OK,     // Have    Permission
+        OK = 1, // Have    Permission
         OT = 2  // Unknown Permission
     };
 

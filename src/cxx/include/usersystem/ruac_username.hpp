@@ -12,27 +12,17 @@
 #ifndef RUAC_USERNAME_HPP
 #define RUAC_USERNAME_HPP
 
+#include "usersystem/lib/ruac_user_name_node.hpp"
+
 #include <memory>
 #include <mutex>
 #include <string>
 
 namespace ruac::usersystem {
 
-    struct UserNameNode {
-        std::string name;
-        std::shared_ptr<UserNameNode> prev;
-        std::shared_ptr<UserNameNode> next;
-    };
-
-    struct UserNameList {
-        int size{0};
-        std::shared_ptr<UserNameNode> head;
-        std::shared_ptr<UserNameNode> tail;
-    };
-
     class UserName {
       private:
-        UserNameList m_user_name_list;
+        std::unique_ptr<lib::UserNameList> m_user_name_list;
         std::mutex M_USER_NAME_MTX;
 
       private:
