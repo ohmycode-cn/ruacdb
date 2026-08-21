@@ -5,8 +5,11 @@
  * src/main.cpp
  */
 
-// #include "test/ruac_c_test_main.h"
-// #include "test/ruac_test_main.hpp"
+#ifdef UNIT_TEST
+#include "test/ruac_c_test_main.h"
+#include "test/ruac_test_main.hpp"
+#include "google_test/ruac_google_test_main.hpp"
+#else
 #include "kernel/object/ruac_object_single.hpp"
 #include "kernel/ruac_controller.hpp"
 #include "kernel/ruac_controller_table.hpp"
@@ -15,6 +18,7 @@
 #include "login/ruac_login_user.hpp"
 #include "rshell/lib/ruac_args.hpp"
 #include "rshell/ruac_rshell.hpp"
+#endif
 
 /**
  * @brief Program entry point
@@ -34,9 +38,9 @@
  *
  */
 int main() {
-    // test_c_main();
-    // ruac::test::test_main();
-
+#ifdef UNIT_TEST
+    return ruac::google_test::google_test_main();
+#else
     auto controller = new ruac::kernel::controller::Operation();
     controller->set_object_strategy(ruac::kernel::object::Single::instance());
     controller->set_state_strategy(ruac::kernel::state::Single::instance());
@@ -64,4 +68,7 @@ int main() {
         ruac_shell.set_args(ruac_shell_args);
         ruac_shell.run(true);
     }
+
+    return 0;
+#endif
 }

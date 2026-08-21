@@ -22,6 +22,20 @@ include(local.cmake)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)
 
+# Unit test control: -DUNIT_TEST=ON (default) or -DUNIT_TEST=OFF
+option(UNIT_TEST "Enable unit tests" ON)
+
+if (NOT UNIT_TEST)
+    # Production build: exclude test sources and test headers from compilation
+    list(FILTER SOURCES EXCLUDE REGEX ".*/google_test/.*")
+    list(FILTER SOURCES EXCLUDE REGEX ".*/test/.*")
+else()
+    # Google Test (vendored) — built as a library target via its own CMakeLists.txt.
+    # The glob above only matches *.cpp/*.c so vendored *.cc files are NOT double-compiled.
+    set(gtest_dir ${CMAKE_SOURCE_DIR}/src/cxx/include/google_test/api/googletest)
+    add_subdirectory(${gtest_dir} ${CMAKE_BINARY_DIR}/googletest EXCLUDE_FROM_ALL)
+endif()
+
 if (NOT WIN32)
     add_compile_options(-Wall -Wextra -Wpedantic)
 # else()
@@ -32,5 +46,16 @@ endif()
 add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIR}")
-target_include_directories(${PROJECT_NAME} PRIVATE src/cxx/include)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
+
+if (UNIT_TEST)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE UNIT_TEST)
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        src/cxx/include
+        ${gtest_dir}/googletest/include    # gtest/gtest.h
+        ${gtest_dir}/googlemock/include    # gmock/gmock.h
+    )
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets gtest)
+else()
+    target_include_directories(${PROJECT_NAME} PRIVATE src/cxx/include)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
+endif()
