@@ -20,6 +20,14 @@
 #include <syncstream>
 #include <vector>
 
+#if defined(__linux__) || defined(__gnu_linux__)
+#include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <io.h>
+#else
+#error "Unsupported platform: only Windows and Linux are supported"
+#endif
+
 namespace ruac::rshell::core {
 
     /**
@@ -198,7 +206,16 @@ namespace ruac::rshell::core {
             };
             ruac::welcome::guidance::BaseInfo bash_info;
             bash_info.init(color_param_list);
-            bash_info.show();
+#if defined(__linux__) || defined(__gnu_linux__)
+            if (isatty(fileno(stdin))) {
+                bash_info.show();
+#elif defined(_WIN32) || defined(_WIN64)
+            if (_isatty(_fileno(stdin))) {
+                bash_info.show();
+#else
+#error "Unsupported platform: only Windows and Linux are supported"
+#endif
+            }
         }
 
         if (nullptr == m_exec) {

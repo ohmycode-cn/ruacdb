@@ -13,6 +13,14 @@
 #include <sstream>
 #include <syncstream>
 
+#if defined(__linux__) || defined(__gnu_linux__)
+#include <unistd.h>
+#elif defined(_WIN32) || defined(_WIN64)
+#include <io.h>
+#else
+#error "Unsupported platform: only Windows and Linux are supported"
+#endif
+
 namespace ruac::help::api {
 
     /**
@@ -36,7 +44,16 @@ namespace ruac::help::api {
             ss << "Get syntax help:                      help --syntax\n";
             ss << "Exit help:                            help --exit\n";
             ss << "  |___________________________________help --quit\n";
-            std::osyncstream(std::cout) << ss.str() << std::endl;
+#if defined(__linux__) || defined(__gnu_linux__)
+            if (isatty(fileno(stdin))) {
+                std::osyncstream(std::cout) << ss.str() << std::endl;
+#elif defined(_WIN32) || defined(_WIN64)
+            if (_isatty(_fileno(stdin))) {
+                std::osyncstream(std::cout) << ss.str() << std::endl;
+#else
+#error "Unsupported platform: only Windows and Linux are supported"
+#endif
+            }
         }
     }
 
