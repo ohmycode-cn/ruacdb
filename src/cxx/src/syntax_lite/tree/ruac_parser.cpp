@@ -377,7 +377,7 @@ namespace ruac::syntax_lite::tree {
         std::lock_guard<std::mutex> lock(M_PARSER_MTX);
         M_LEXER->tokenize(line_);
         M_TOKENS = M_LEXER->tokens();
-        M_LEXER->out_tokens(); // Tmp debug line.
+        // M_LEXER->out_tokens(); // Tmp debug line.
         parse();
     }
 

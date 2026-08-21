@@ -61,7 +61,10 @@ namespace ruac::syntax_lite::tree::node {
 
         std::lock_guard<std::mutex> lock(M_CREATE_DATABASE_MTX);
 
-        if (in_advance_check_ || exist_database(name_)) {
+        if (exist_database(name_)) {
+            if (in_advance_check_) {
+                return;
+            }
             std::stringstream ss;
             ss << "Error: Database '" << name_ << "' already exists";
             std::osyncstream(std::cout) << ss.str() << std::endl;

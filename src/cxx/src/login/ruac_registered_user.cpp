@@ -6,6 +6,7 @@
  * src/login/ruac_registered_user.cpp
  */
 
+#include "login/lib/ruac_legal_characters.hpp"
 #include "login/ruac_registered_user.hpp"
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
 #include "rstd/messages/ruac_stddug.hpp"
@@ -47,7 +48,7 @@ namespace ruac::login {
         }
 
         for (auto &c : name_) {
-            if (!isalpha(c) && !isdigit(c)) {
+            if (!isalpha(c) && !isdigit(c) && '_' != c) {
                 std::osyncstream(std::cout)
                     << "Error: Invalid user name. Because user name include "
                        "invalid character: '"
@@ -205,6 +206,11 @@ namespace ruac::login {
             }
 
             if (field[0] == '#' || (field.size() >= 2 && field.substr(0, 2) == "//")) {
+                continue;
+            }
+
+            if (!ruac::login::lib::legal_char(field)) {
+                std::osyncstream(std::cout) << "Error: command line include illegal characters." << std::endl;
                 continue;
             }
 
