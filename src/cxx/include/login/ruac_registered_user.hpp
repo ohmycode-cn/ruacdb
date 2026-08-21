@@ -5,7 +5,8 @@
  * include/login/ruac_registered_user.hpp
  * src/login/ruac_registered_user.cpp
  *
- * @brief Defines the RegisteredUser class for handling new user registration with thread-safe group and username assignment.
+ * @brief Defines the RegisteredUser class for handling new user registration
+ *        with thread-safe group and username assignment.
  */
 
 #pragma once
@@ -20,13 +21,12 @@ namespace ruac::login {
     class RegisteredUser {
       private:
         std::mutex M_REGISTERE_USER_MTX;
-        std::string m_current_user_name;
 
       private:
-        auto set_user_ne(const std::string &user_ne_) -> bool;
-        auto set_user_gp(const std::string &user_gp_) -> bool;
-        auto hdl_add_user(const std::string &user_ne_) -> bool;
-        auto hdl_add_group(const std::string &user_gp_) -> bool;
+        auto validate_user_name(const std::string &name_) -> bool;
+        auto reg_user(const std::string &name_) -> bool;
+        auto reg_group(const std::string &name_, const std::string &group_) -> bool;
+        auto dispatch_cmd(const std::string &cmd_, std::string &current_user_) -> bool;
 
       public:
         RegisteredUser() = default;

@@ -125,7 +125,7 @@ namespace ruac::rshell::core {
                 ruac::usersystem::UsersMap usmap;
                 usmap.show_users_map();
             }
-        } else if ("add new user.env" == line_) {
+        } else if ("add new user" == line_) {
             if (!uid_permission_guard(
                     "Error: Current user is not add new user env permission ! You must be root to do this.",
                     "root")) {

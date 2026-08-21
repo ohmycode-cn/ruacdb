@@ -7,220 +7,262 @@
  */
 
 #include "login/ruac_registered_user.hpp"
+#include "rstd/cmdlex/ruac_cmdlex.hpp"
 #include "rstd/messages/ruac_stddug.hpp"
 #include "rstd/messages/ruac_stdmsg.hpp"
 #include "usersystem/ruac_usergroup.hpp"
 #include "usersystem/ruac_userid.hpp"
 #include "usersystem/ruac_username.hpp"
+
 #include <iostream>
 #include <mutex>
+#include <vector>
 #include <sstream>
 #include <string>
 #include <syncstream>
 
+namespace {
+
+    auto trim(const std::string &s_) -> std::string {
+        auto start = s_.find_first_not_of(" \t\r\n");
+        if (start == std::string::npos)
+            return "";
+        auto end = s_.find_last_not_of(" \t\r\n");
+        return s_.substr(start, end - start + 1);
+    }
+
+} // anonymous namespace
+
 namespace ruac::login {
 
     /**
-     * @brief Validate and register a new user name
-     *
-     * @param user_ne_ - The user name to register
-     *
-     * @return bool - true if the name was accepted and registered; false
-     *         if it already exists or contains invalid characters
-     *
-     * @details First checks UserId for an existing uid; if found, reports
-     *          a duplicate-name error via osyncstream and returns false.
-     *          Then scans every character requiring isalpha or isdigit;
-     *          any invalid character produces an error and false. On
-     *          success the name is appended to both UserName and UserId
-     *          singletons.
-     *
+     * @brief Validate a user name: must be non-empty, alphanumeric only,
+     *        and must not already exist in UserId.
      */
-    auto RegisteredUser::set_user_ne(const std::string &user_ne_) -> bool {
-        auto uid = ruac::usersystem::UserId::instance().get_user_id(user_ne_);
-
-        if (-1 != uid) {
-            {
-                std::stringstream ss;
-                ss << "Error: User name '" << user_ne_ << "' already exists.";
-                std::osyncstream(std::cout) << ss.str() << std::endl;
-            }
+    auto RegisteredUser::validate_user_name(const std::string &name_) -> bool {
+        if (name_.empty()) {
+            std::osyncstream(std::cout)
+                << "Error: User name is empty." << std::endl;
             return false;
         }
 
-        for (auto &c : user_ne_) {
+        for (auto &c : name_) {
             if (!isalpha(c) && !isdigit(c)) {
-                {
-                    std::stringstream ss;
-                    ss << "Error: Invalid user name. Because user name include invalid character: ";
-                    ss << "'" << c << "'";
-                    std::osyncstream(std::cout) << ss.str() << std::endl;
-                }
+                std::osyncstream(std::cout)
+                    << "Error: Invalid user name. Because user name include "
+                       "invalid character: '"
+                    << c << "'" << std::endl;
                 return false;
             }
         }
 
-        ruac::usersystem::UserName::instance().add_user(user_ne_);
-        ruac::usersystem::UserId::instance().add_user(user_ne_);
-        return true;
-    }
-
-    /**
-     * @brief Assign a group to the current registering user
-     *
-     * @param user_gp_ - Group name to assign; must exist in M_GROUP_REGISTRY
-     *
-     * @return bool - true if the group was assigned; false otherwise
-     *
-     * @details Delegates to UserGroup::add_group() with the current user
-     *          name (set by a prior set_user_ne call) and the supplied
-     *          group name. The group validity check is performed inside
-     *          UserGroup against M_GROUP_REGISTRY.
-     *
-     */
-    auto RegisteredUser::set_user_gp(const std::string &user_gp_) -> bool {
-        auto &u = ruac::usersystem::UserGroup::instance();
-        if (!u.add_group(m_current_user_name, user_gp_)) {
+        if (-1 != ruac::usersystem::UserId::instance().get_user_id(name_)) {
+            std::osyncstream(std::cout)
+                << "Error: User name '" << name_ << "' already exists."
+                << std::endl;
             return false;
         }
+
         return true;
     }
 
     /**
-     * @brief Handle the "add user" command from the registration REPL
-     *
-     * @param user_ne_ - The user name extracted from the command line
-     *
-     * @return bool - true if the user was registered; false if validation
-     *         failed
-     *
-     * @details Emits a debug trace via StdMsg/StdDug on entry, then calls
-     *          set_user_ne() to validate and register the name. On
-     *          success stores the name in m_current_user_name and prints
-     *          a confirmation message to stdout.
-     *
+     * @brief Register a validated user name into UserName and UserId singletons.
+     *        Caller must ensure validate_user_name() returned true.
      */
-    auto RegisteredUser::hdl_add_user(const std::string &user_ne_) -> bool {
-        auto &stdmsg = rstd::messages::StdMsg::instance();
-        auto &stdbug = rstd::messages::StdDug::instance();
+    auto RegisteredUser::reg_user(const std::string &name_) -> bool {
+        ruac::usersystem::UserName::instance().add_user(name_);
+        ruac::usersystem::UserId::instance().add_user(name_);
+        return true;
+    }
 
+    /**
+     * @brief Assign a group to the given user. Returns false if the user
+     *        already has a group or the group name is invalid.
+     */
+    auto RegisteredUser::reg_group(
+        const std::string &name_, const std::string &group_) -> bool {
+        auto &ug = ruac::usersystem::UserGroup::instance();
+        if (!ug.exist_group(name_, group_)) {
+            return false;
+        }
+        ug.add_group(name_, group_);
+        return true;
+    }
+
+    /**
+     * @brief Parse and execute a single command line.
+     *
+     * @param cmd_          The trimmed command string
+     * @param current_user_ In/out: the user name established by a prior
+     *                      "add user" command within the same session
+     *
+     * @return true  if the command was a recognized, successfully executed
+     *               registration command ("add user" or "add group")
+     * @return false in two cases:
+     *               - command was recognized but the registration failed
+     *                 (e.g. duplicate name, invalid group)
+     *               - command was not recognized at all (not a registration
+     *                 error, just unknown syntax)
+     *
+     * @details Unrecognized commands print an error and return false without
+     *          side effects; the caller should NOT count them as registration
+     *          failures.
+     */
+    auto RegisteredUser::dispatch_cmd(const std::string &cmd_, std::string &current_user_) -> bool {
+
+        /* "add user <name>" */
         {
-            std::stringstream ss;
-            ss << "Class: RegisteredUser Func: hdl_add_user, Branch: add user'" << user_ne_ << "'";
-            stdmsg.print(stdbug.ostrs(ss.str(), __FILE__, __LINE__));
+            auto &stdmsg = rstd::messages::StdMsg::instance();
+            auto &stdbug = rstd::messages::StdDug::instance();
+            stdmsg.print(stdbug.ostrs("", __FILE__, __LINE__));
+        }
+        if (cmd_.size() > 9 && cmd_.substr(0, 9) == "add user ") {
+            auto name = trim(cmd_.substr(9));
+
+            if (!validate_user_name(name)) {
+                return false;
+            }
+
+            reg_user(name);
+
+            current_user_ = name;
+            std::osyncstream(std::cout) << "Done: setting user name to " << name << "." << std::endl;
+            return true;
         }
 
-        if (!set_user_ne(user_ne_)) {
-            return false;
-        }
-
-        m_current_user_name = user_ne_;
+        /* "add group <name>" */
         {
-            std::stringstream ss;
-            ss << "Done: setting user name to " << user_ne_ << ".";
-            std::osyncstream(std::cout) << ss.str() << std::endl;
+            auto &stdmsg = rstd::messages::StdMsg::instance();
+            auto &stdbug = rstd::messages::StdDug::instance();
+            stdmsg.print(stdbug.ostrs("", __FILE__, __LINE__));
+        }
+        if (cmd_.size() > 10 && cmd_.substr(0, 10) == "add group ") {
+            auto group = trim(cmd_.substr(10));
+
+            if (current_user_.empty()) {
+                std::stringstream ss;
+                ss << "Error: No user registered in this session. ";
+                ss << "Use 'add user' first.";
+                std::osyncstream(std::cout) << ss.str() << std::endl;
+                return false;
+            }
+            if (group.empty()) {
+                std::osyncstream(std::cout) << "Error: Group name is empty." << std::endl;
+                return false;
+            }
+
+            if (!reg_group(current_user_, group)) {
+                return false;
+            }
+
+            std::osyncstream(std::cout) << "Done: setting user group to " << group << "." << std::endl;
+            current_user_.clear();
+            return true;
         }
 
-        return true;
+        /* Unrecognized command — not a registration failure */
+        std::osyncstream(std::cout) << "Error: Unknown command '" << cmd_ << "'" << std::endl;
+        return false;
     }
 
     /**
-     * @brief Handle the "add group" command from the registration REPL
+     * @brief Run the interactive user registration REPL.
      *
-     * @param user_gp_ - The group name extracted from the command line
+     * @return true  if registration completed successfully
+     * @return false after 3 consecutive registration failures
      *
-     * @return bool - true if the group was assigned; false if assignment
-     *         failed
+     * @details Commands are split on ';' by CmdLex. Each segment is trimmed
+     *          then dispatched independently.
      *
-     * @details Emits a debug trace via StdMsg/StdDug on entry, then calls
-     *          set_user_gp() to assign the group to the current user. On
-     *          success clears m_current_user_name and prints a
-     *          confirmation message to stdout. The caller (registere)
-     *          uses the return value to decide whether to break the loop.
+     *          - "stdmsg on"/"stdmsg off": toggle debug output (not counted
+     *            as registration actions)
+     *          - "exit/quit user.env": exit the loop
+     *          - "add user <name>": register a user name
+     *          - "add group <name>": assign a group to the current user,
+     *            then exit the loop on success
      *
-     */
-    auto RegisteredUser::hdl_add_group(const std::string &user_gp_) -> bool {
-        auto &stdmsg = rstd::messages::StdMsg::instance();
-        auto &stdbug = rstd::messages::StdDug::instance();
-        std::stringstream ss;
-        ss << "Class: RegisteredUser, Func: registere, Branch: add group -> " << user_gp_;
-        stdmsg.print(stdbug.ostrs(ss.str(), __FILE__, __LINE__));
-
-        if (!set_user_gp(user_gp_))
-            return false;
-
-        m_current_user_name.clear();
-        std::osyncstream(std::cout) << "Done: setting user group to " << user_gp_ << "." << std::endl;
-        return true;
-    }
-
-    /**
-     * @brief Run the interactive user registration flow
-     *
-     * @return bool - true if registration completed or the user chose to
-     *         exit; false if the user exceeded 3 failed attempts
-     *
-     * @details Acquires M_REGISTERE_USER_MTX and enters a REPL loop that
-     *          prompts "user-register-env-> " and reads lines from stdin.
-     *          Tracks a failure counter (time_count); on reaching 3 the
-     *          function reports an error and returns false. Recognised
-     *          commands:
-     *          - "add user <name>":  delegates to hdl_add_user() to
-     *            validate and register the name.
-     *          - "add group <grp>": delegates to hdl_add_group() to assign
-     *            the group, then breaks out of the loop to finish.
-     *          - "stdmsg on"/"stdmsg off": toggle debug message output.
-     *          - "exit user.env"/"quit user.env": break out of the loop.
-     *          Unrecognised input prints an error and continues without
-     *          incrementing time_count. Each successful step resets
-     *          time_count to 0.
-     *
+     *          Only recognized commands that fail validation increment the
+     *          failure counter. Unrecognized input and meta-commands do not.
      */
     auto RegisteredUser::registere() -> bool {
         std::lock_guard<std::mutex> lock(M_REGISTERE_USER_MTX);
-        int time_count{0};
+
+        auto &stdmsg = rstd::messages::StdMsg::instance();
+
+        rstd::cmdlex::api::CmdLex cmdlex;
+        std::vector<std::string> lines;
+        std::string current_user;
+        int fail_count{0};
 
         while (true) {
-            std::osyncstream(std::cout) << "user-register-env-> ";
+            std::osyncstream(std::cout) << "register-user-> ";
             std::string field;
             std::getline(std::cin, field);
 
-            if (time_count >= 3) {
-                std::cerr << "Error: Register failed. Because of 3 times try." << std::endl;
+            if (field.empty()) {
+                continue;
+            }
+
+            if (field[0] == '#' || (field.size() >= 2 && field.substr(0, 2) == "//")) {
+                continue;
+            }
+
+            if (fail_count >= 3) {
+                std::osyncstream(std::cout) << "Error: Register failed. Because of 3 times try." << std::endl;
                 return false;
             }
-            if ("stdmsg on" == field) {
-                rstd::messages::StdMsg::instance().enable_stdmsg(true);
-                continue;
-            }
-            if ("stdmsg off" == field) {
-                rstd::messages::StdMsg::instance().enable_stdmsg(false);
-                continue;
-            }
-            if ("exit user.env" == field || "quit user.env" == field) {
-                break;
-            }
 
-            bool should_break = false;
-            bool success = false;
-
-            if ("add user " == field.substr(0, 9)) {
-                success = hdl_add_user(field.substr(9));
-            } else if ("add group " == field.substr(0, 10)) {
-                success = hdl_add_group(field.substr(10));
-                should_break = true;
-            } else {
-                std::osyncstream(std::cout) << "Error: Invalid setting syntax !" << std::endl;
+            if (!cmdlex.lex(field, lines)) {
+                std::stringstream ss;
+                ss << "Error: Invalid setting syntax !";
+                ss << "       |____ '" << field << "'";
+                std::osyncstream(std::cout) << ss.str() << std::endl;
                 continue;
             }
 
-            if (!success) {
-                time_count++;
-                continue;
+            bool should_exit = false;
+
+            for (auto &line : lines) {
+
+                auto cmd = trim(line);
+
+                if (cmd.empty()) {
+                    continue;
+                }
+
+                if (cmd == "stdmsg on") {
+                    stdmsg.enable_stdmsg(true);
+                    continue;
+                }
+
+                if (cmd == "stdmsg off") {
+                    stdmsg.enable_stdmsg(false);
+                    continue;
+                }
+
+                if (cmd == "exit user.env" || cmd == "quit user.env") {
+                    should_exit = true;
+                    break;
+                }
+
+                bool ok = dispatch_cmd(cmd, current_user);
+
+                if (ok && current_user.empty()) {
+                    should_exit = true;
+                    break;
+                }
+
+                if (!ok && !current_user.empty()) {
+                    /*
+                     * Recognized command failed (e.g. duplicate user name,
+                     * invalid group) while a session is active.
+                     */
+                    fail_count++;
+                }
             }
 
-            time_count = 0;
-            if (should_break) {
+            if (should_exit) {
                 break;
             }
         }

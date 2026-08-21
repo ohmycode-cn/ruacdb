@@ -22,11 +22,12 @@ namespace ruac::usersystem {
 
     class UserName {
       private:
-        std::unique_ptr<lib::UserNameList> m_user_name_list;
+        std::unique_ptr<lib::UserNameList> m_user_name_list{std::make_unique<lib::UserNameList>()};
         std::mutex M_USER_NAME_MTX;
+        bool m_init_lock{false};
 
       private:
-        UserName() = default;
+        UserName();
         ~UserName() = default;
         UserName(const UserName &) = delete;
         UserName &operator=(const UserName &) = delete;

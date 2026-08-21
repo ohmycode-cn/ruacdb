@@ -7,8 +7,23 @@
  */
 
 #include "usersystem/ruac_username.hpp"
+#include <memory>
 
 namespace ruac::usersystem {
+
+    /**
+     * @brief Constructor for UserName.
+     *
+     * @details Initializes the user name list and sets the lock to false.
+     *
+     */
+    UserName::UserName() {
+        if (m_init_lock) {
+            return;
+        }
+        m_init_lock = true;
+        m_user_name_list = std::make_unique<lib::UserNameList>();
+    };
 
     /**
      * @brief Access the singleton instance of UserName.

@@ -84,7 +84,7 @@ namespace ruac::usersystem {
      *          and true returned.
      *
      */
-    auto UserGroup::add_group(const std::string &username_, const std::string &group_) -> bool {
+    auto UserGroup::exist_group(const std::string &username_, const std::string &group_) -> bool {
         std::lock_guard<std::mutex> lock(M_USER_GROUP_MTX);
         auto itr = m_user_group_table.find(username_);
         if (itr != m_user_group_table.end()) {
@@ -100,8 +100,25 @@ namespace ruac::usersystem {
             std::osyncstream(std::cout) << ss.str() << std::endl;
             return false;
         }
-        m_user_group_table[username_] = group_;
         return true;
+    }
+
+    /**
+     * @brief Add a group assignment to the internal table.
+     *
+     * @param username_ - Name of the user to assign the group to.
+     * @param group_ - Name of the group to assign; must exist in
+     *                 M_GROUP_REGISTRY.
+     *
+     * @details The mutex is locked before the assignment is stored. If the
+     *          user already has a group an error message is streamed to cout via
+     *          std::osyncstream and the assignment is not stored. If the
+     *          group is not valid in M_GROUP_REGISTRY a second error message is
+     *          emitted and the assignment is not stored.
+     *
+     */
+    void UserGroup::add_group(const std::string &username_, const std::string &group_) {
+        m_user_group_table[username_] = group_;
     }
 
 } // namespace ruac::usersystem
