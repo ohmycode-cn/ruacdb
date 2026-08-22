@@ -76,11 +76,36 @@ RUACDB is a complex project and can be very challenging!
   - [English](RUAC-BASH-STYLE-GUIDE.md)
   - [Chinese](document/md/zh_cn/RUAC-BASH-STYLE-GUIDE.md)
 
+### Project Rules
+
+- Project rules and contribution restrictions announcement: `RULES.md`
+  - [English](RULES.md)
+  - [Chinese](RULES.md)
+  - These are rules added or updated after the initial project setup.
+
 ## Development Environment & Toolchain Requirements
 
 - **IDE Recommendations**
   - Code IDE (Visual Studio Code(/Insider)/Trae/...)
   - CLion (JetBrains)
+- **Line Break Limits**
+  - For Code-based IDEs, add the following settings to `settings.json` to display column rulers and enable word wrap:
+    ```jsonc
+    "editor.rulers": [
+        {
+            "column": 100,
+            "color": "#2E7D3250"
+        },
+        {
+            "column": 120,
+            "color": "#e6394660"
+        }
+    ],
+    "editor.tabSize": 4,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "editor.wrappingIndent": "same"
+    ```
 - **WINDOWS**
   - Compile env: clang-cl.exe/clang++.exe
   - Qt env: Qt6(>=6.11.0), recommended: msvc2022
@@ -107,6 +132,50 @@ endif()
 ```
 
 `local.cmake` has been added to `.gitignore` and will not be committed to version control.
+
+### Build & Compile
+
+RUACDB provides the build script `mk-compile-ruacdb.sh` to simplify the CMake workflow.
+
+**Prerequisites**:
+- CMake >= 4.3.1
+- Clang (clang++ on Linux, clang-cl on Windows)
+- Qt6 Widgets >= 6.11.0
+- Bash >= 5.0
+
+**Build Modes**:
+
+| Mode | Command | Description |
+|------|---------|-------------|
+| Debug (default) | `bash mk-compile-ruacdb.sh` | Enables unit tests (`UNIT_TEST=ON`), links Google Test |
+| Production (Release) | `bash mk-compile-ruacdb.sh --off-unit-test` | Disables unit tests (`UNIT_TEST=OFF`), excludes all test sources and Google Test |
+
+**Build Workflow** (production binary):
+
+```bash
+# 1. (Windows only) Create local.cmake and set your Qt6 path (see above)
+
+# 2. Build production binary
+bash mk-compile-ruacdb.sh --off-unit-test
+
+# 3. Run
+./out/ruacdb
+```
+
+**Build Workflow** (development with tests):
+
+```bash
+# 1. Build with unit tests enabled
+bash mk-compile-ruacdb.sh
+
+# 2. Run
+./out/ruacdb
+```
+
+The script automatically:
+- Detects the number of CPU cores (`nproc` / `sysctl`) for parallel compilation
+- Configures CMake in the `build/` directory
+- Outputs the binary to `out/ruacdb`
 
 ### Module API Documentation
 

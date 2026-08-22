@@ -79,11 +79,36 @@ RUACDB 是一个复杂的项目，可能会非常具有挑战性！
   - [英语](../../RUAC-BASH-STYLE-GUIDE.md)
   - [中文](RUAC-BASH-STYLE-GUIDE.md)
 
+### 项目规则
+
+- 项目规则与贡献限制公告: `RULES.md`
+  - [英语](../../RULES.md)
+  - [中文](../../RULES.md)
+  - 这属于后期添加或者更新的规则。
+
 ## 开发环境与工具链要求
 
 - **IDE 推荐**
   - code ide (visual studio code(/insider)/trae/...)
   - clion (jetbrains)
+- **换行限制**
+  - 对于基于 Code 内核的 IDE，可以添加如下设置到 `settings.json` 以显示列标尺并启用自动换行：
+    ```jsonc
+    "editor.rulers": [
+        {
+            "column": 100,
+            "color": "#2E7D3250"
+        },
+        {
+            "column": 120,
+            "color": "#e6394660"
+        }
+    ],
+    "editor.tabSize": 4,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "editor.wrappingIndent": "same"
+    ```
 - **WINDOWS**
   - compile env: clang-cl.exe/clang++.exe
   - qt      env: qt6(>=6.11.0), recommended: msvc2022
@@ -110,6 +135,50 @@ endif()
 ```
 
 `local.cmake` 已被添加到 `.gitignore`，不会被提交到版本控制中。
+
+### 编译构建
+
+RUACDB 提供了构建脚本 `mk-compile-ruacdb.sh` 来简化 CMake 工作流。
+
+**前置条件**：
+- CMake >= 4.3.1
+- Clang（Linux 使用 clang++，Windows 使用 clang-cl）
+- Qt6 Widgets >= 6.11.0
+- Bash >= 5.0
+
+**构建模式**：
+
+| 模式 | 命令 | 说明 |
+|------|------|------|
+| 调试模式（默认） | `bash mk-compile-ruacdb.sh` | 启用单元测试（`UNIT_TEST=ON`），链接 Google Test |
+| 生产模式（Release） | `bash mk-compile-ruacdb.sh --off-unit-test` | 禁用单元测试（`UNIT_TEST=OFF`），排除所有测试源码和 Google Test |
+
+**构建流程**（生产级别二进制）：
+
+```bash
+# 1.（仅 Windows）创建 local.cmake 并设置 Qt6 路径（见上文）
+
+# 2. 构建生产二进制
+bash mk-compile-ruacdb.sh --off-unit-test
+
+# 3. 运行
+./out/ruacdb
+```
+
+**构建流程**（开发调试，含测试）：
+
+```bash
+# 1. 构建并启用单元测试
+bash mk-compile-ruacdb.sh
+
+# 2. 运行
+./out/ruacdb
+```
+
+脚本会自动执行以下操作：
+- 检测 CPU 核心数（`nproc` / `sysctl`）以启用并行编译
+- 在 `build/` 目录下配置 CMake
+- 将二进制输出到 `out/ruacdb`
 
 ### 模块 API 接口文档
 
