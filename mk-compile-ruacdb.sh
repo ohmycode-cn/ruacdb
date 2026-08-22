@@ -93,7 +93,7 @@ function main() {
         elif command -v sysctl &>/dev/null; then
         nproc=$(sysctl -n hw.ncpu 2>/dev/null || echo 4)
     else
-        nproc=4
+        nproc=9
     fi
     
     if ! cmake --build "${build_dir}" -j "${nproc}" 2>&1; then
