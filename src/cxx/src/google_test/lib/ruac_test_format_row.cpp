@@ -20,7 +20,7 @@ namespace {
     TEST(FormatRowTest, ZeroColSizeReturnsFalse) {
         FormatRow fr;
         bool ret = true;
-        FormatRowArgs args{.m_col_szie = 0};
+        FormatRowArgs args{.m_row_szie = 0};
         auto result = fr.frow(args, ret);
         EXPECT_FALSE(ret);
         EXPECT_TRUE(result.empty());
@@ -30,7 +30,7 @@ namespace {
     TEST(FormatRowTest, DefaultCornerAndColine) {
         FormatRow fr;
         bool ret = false;
-        FormatRowArgs args{.m_col_szie = 5};
+        FormatRowArgs args{.m_row_szie = 5};
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
         EXPECT_EQ(result, "+-----+");
@@ -42,8 +42,8 @@ namespace {
         bool ret = false;
         FormatRowArgs args{
             .m_corners = '*',
-            .m_colline = '=',
-            .m_col_szie = 3,
+            .m_rowline = '=',
+            .m_row_szie = 3,
         };
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
@@ -56,7 +56,7 @@ namespace {
         bool ret = false;
         FormatRowArgs args{
             .m_newline = true,
-            .m_col_szie = 4,
+            .m_row_szie = 4,
         };
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
@@ -69,7 +69,7 @@ namespace {
         bool ret = false;
         FormatRowArgs args{
             .m_newline = false,
-            .m_col_szie = 4,
+            .m_row_szie = 4,
         };
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
@@ -81,7 +81,7 @@ namespace {
     TEST(FormatRowTest, SingleColumnWidth) {
         FormatRow fr;
         bool ret = false;
-        FormatRowArgs args{.m_col_szie = 1};
+        FormatRowArgs args{.m_row_szie = 1};
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
         EXPECT_EQ(result, "+-+");

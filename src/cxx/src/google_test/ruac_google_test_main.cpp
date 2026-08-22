@@ -14,7 +14,8 @@ namespace ruac::google_test {
     namespace u = ruac::google_test::lib;
 
     auto google_test_main() -> int {
-        return u::test_format_row_main();
+        // return u::test_format_row_main();
+        return u::test_format_col_main();
     }
 
 } // namespace ruac::google_test

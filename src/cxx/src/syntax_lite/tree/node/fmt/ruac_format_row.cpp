@@ -15,17 +15,17 @@ namespace ruac::syntax_lite::tree::node::fmt {
     auto FormatRow::frow(const FormatRowArgs &args_, bool &ret_) -> std::string {
 
         const bool newline{args_.m_newline};
-        const int colsize{args_.m_col_szie};
+        const int rowsize{args_.m_row_szie};
+        const char rowline{args_.m_rowline};
         const char corner{args_.m_corners};
-        const char coline{args_.m_colline};
 
-        if (0 == colsize) {
+        if (0 == rowsize) {
             ret_ = false;
             return "";
         };
 
         std::stringstream ss;
-        ss << corner << std::string(colsize, coline) << corner;
+        ss << corner << std::string((rowsize + 2), rowline) << corner;
         if (newline) {
             ss << '\n';
         }

@@ -73,7 +73,9 @@ namespace ruac::syntax_lite::tree::node {
 
         auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(m_uid);
         auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
+        auto *object = std::get<ruac::kernel::object::Single *>(controller.get_object_strategy());
         track->get_kernel().add_database(name_, 0, 0);
+        object->getdbs().push_back({name_, {}, 0, 0});
     }
 
     /**

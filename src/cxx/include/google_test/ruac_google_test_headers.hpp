@@ -13,5 +13,6 @@
 #define RUAC_GOOGLE_TEST_HEADERS_HPP
 
 #include "google_test/lib/ruac_test_format_row.hpp"
+#include "google_test/lib/ruac_test_format_col.hpp"
 
 #endif // RUAC_GOOGLE_TEST_HEADERS_HPP

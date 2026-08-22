@@ -12,8 +12,12 @@
 #ifndef RUAC_SHOW_DATABASES_HPP
 #define RUAC_SHOW_DATABASES_HPP
 
+#include "syntax_lite/tree/node/fmt/ruac_format_row.hpp"
+#include "syntax_lite/tree/node/fmt/ruac_format_col.hpp"
+
 #include <mutex>
 #include <string>
+#include <memory>
 
 namespace ruac::syntax_lite::tree::node {
 
@@ -21,6 +25,8 @@ namespace ruac::syntax_lite::tree::node {
       private:
         std::mutex M_SHOW_DATABASES_MTX;
         [[maybe_unused]] int m_uid{1};
+        std::unique_ptr<ruac::syntax_lite::tree::node::fmt::FormatRow> m_frow;
+        std::unique_ptr<ruac::syntax_lite::tree::node::fmt::FormatCol> m_fcol;
 
       private:
         auto exist_database(const std::string &name_) -> bool;

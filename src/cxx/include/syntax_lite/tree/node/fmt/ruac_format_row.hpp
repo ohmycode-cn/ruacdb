@@ -17,10 +17,10 @@
 namespace ruac::syntax_lite::tree::node::fmt {
 
     struct FormatRowArgs {
-        bool m_newline{false};
+        bool m_newline{true};
         char m_corners{'+'};
-        char m_colline{'-'};
-        int m_col_szie{0};
+        char m_rowline{'-'};
+        int m_row_szie{0};
     };
 
     class FormatRow {

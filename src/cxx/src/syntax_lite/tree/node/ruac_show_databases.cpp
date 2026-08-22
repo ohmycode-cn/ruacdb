@@ -14,6 +14,7 @@
 #include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
 
 #include <iostream>
+#include <sstream>
 #include <syncstream>
 
 namespace ruac::syntax_lite::tree::node {
@@ -24,7 +25,11 @@ namespace ruac::syntax_lite::tree::node {
      * @param uid_ - User ID for the execution context
      *
      */
-    ShowDatabases::ShowDatabases(int uid_) : m_uid(uid_) {}
+    ShowDatabases::ShowDatabases(int uid_) {
+        m_uid = uid_;
+        m_fcol = std::make_unique<ruac::syntax_lite::tree::node::fmt::FormatCol>();
+        m_frow = std::make_unique<ruac::syntax_lite::tree::node::fmt::FormatRow>();
+    }
 
     /**
      * @brief Check if a database with the given name exists
@@ -81,8 +86,30 @@ namespace ruac::syntax_lite::tree::node {
             return;
         }
 
-        // TODO: show all databases
-        std::osyncstream(std::cout) << "tmp output debug: not implemented." << std::endl;
+        auto wsize = track->get_kernel().get_database_name_max_width();
+        auto *objt = std::get<ruac::kernel::object::Single *>(controller.get_object_strategy());
+
+        ruac::syntax_lite::tree::node::fmt::FormatColArgs col_args{
+            .m_col_max_size = static_cast<int>(wsize),
+        };
+        ruac::syntax_lite::tree::node::fmt::FormatRowArgs row_args{
+            .m_row_szie = static_cast<int>(wsize),
+        };
+
+        bool col_ret{false};
+        bool row_ret{false};
+
+        std::stringstream ss;
+        ss << m_frow->frow(row_args, row_ret);
+        m_fcol->fset_member_args(col_args);
+        for (const auto db : objt->getdbs()) {
+            ss << m_fcol->fcol(db.name);
+        }
+        ss << m_frow->frow(row_args, row_ret);
+
+        {
+            std::osyncstream(std::cout) << ss.str() << std::flush;
+        }
     }
 
     /**
