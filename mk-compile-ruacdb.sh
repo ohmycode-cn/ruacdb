@@ -30,73 +30,78 @@ source .shared.sh
 function main() {
     local unit_test="ON"    # default: unit test enabled
     local clear_build="OFF" # default: do not clear build directory
-
+    
+    if [[ "${OS}" == "Windows_NT" ]]; then
+        error "Current build script not supported windows run ! :("
+        return 0
+    fi
+    
     while [[ $# -gt 0 ]]; do
         case "${1}" in
-        --off-unit-test)
-            unit_test="OFF"
-            shift
+            --off-unit-test)
+                unit_test="OFF"
+                shift
             ;;
-        --clear-build)
-            clear_build="ON"
-            shift
+            --clear-build)
+                clear_build="ON"
+                shift
             ;;
-        *)
-            error "Unknown option: ${1}"
-            return 1
+            *)
+                error "Unknown option: ${1}"
+                return 1
             ;;
         esac
     done
-
+    
     local build_dir="build"
-
+    
     if [[ "${clear_build}" == "ON" ]]; then
         info "Build mode: Clearing build directory: ${build_dir}/*"
         rm -rf "${build_dir:?}"/*
         ls -lh "${build_dir:?}/"
     fi
     sleep 2
-
+    
     if [[ "${unit_test}" == "ON" ]]; then
         info "Build mode: Debug (UNIT_TEST=ON)"
     else
         info "Build mode: Release (UNIT_TEST=OFF)"
     fi
-
+    
     if [[ ! -f "CMakeLists.txt" ]]; then
         error "CMakeLists.txt not found. Please check the project directory: 'ruacdb/CMakeLists.txt'"
         return 1
     fi
-
+    
     info "Configuring CMake ..."
     enable_spinner "cmake configuring"
-
+    
     if ! cmake -B "${build_dir}" -DUNIT_TEST="${unit_test}" 2>&1; then
         cancel_spinner
         error "CMake configure failed."
         return 1
     fi
-
+    
     cancel_spinner
     ok "CMake configure done."
     info "Compiling ..."
     enable_spinner "compiling"
-
+    
     local nproc
     if command -v nproc &>/dev/null; then
         nproc=$(nproc)
-    elif command -v sysctl &>/dev/null; then
+        elif command -v sysctl &>/dev/null; then
         nproc=$(sysctl -n hw.ncpu 2>/dev/null || echo 4)
     else
         nproc=4
     fi
-
+    
     if ! cmake --build "${build_dir}" -j "${nproc}" 2>&1; then
         cancel_spinner
         error "Build failed."
         return 1
     fi
-
+    
     cancel_spinner
     ok "Build success: out/ruacdb"
     return 0
