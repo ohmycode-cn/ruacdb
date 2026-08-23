@@ -53,7 +53,9 @@ function main() {
     if [[ "${clear_build}" == "ON" ]]; then
         info "Build mode: Clearing build directory: ${build_dir}/*"
         rm -rf "${build_dir:?}"/*
+        ls -lh "${build_dir:?}/"
     fi
+    sleep 2
 
     if [[ "${unit_test}" == "ON" ]]; then
         info "Build mode: Debug (UNIT_TEST=ON)"
