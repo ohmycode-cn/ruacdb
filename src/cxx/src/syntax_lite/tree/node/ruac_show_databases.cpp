@@ -96,13 +96,13 @@ namespace ruac::syntax_lite::tree::node {
             .m_row_szie = static_cast<int>(wsize),
         };
 
-        bool col_ret{false};
+        // bool col_ret{false};
         bool row_ret{false};
 
         std::stringstream ss;
         ss << m_frow->frow(row_args, row_ret);
         m_fcol->fset_member_args(col_args);
-        for (const auto db : objt->getdbs()) {
+        for (const auto &db : objt->getdbs()) {
             ss << m_fcol->fcol(db.name);
         }
         ss << m_frow->frow(row_args, row_ret);

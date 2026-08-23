@@ -20,6 +20,7 @@ source .shared.sh
 #   This function builds the ruacdb project via CMake.
 #   By default, unit tests are enabled (UNIT_TEST=ON).
 #   Pass --off-unit-test to build a production binary.
+#   Pass --clear-build to delete build/* before building.
 # Args:
 #   $@ - Command line arguments.
 # Returns:
@@ -27,12 +28,17 @@ source .shared.sh
 # Echo:
 #   Build progress and result messages.
 function main() {
-    local unit_test="ON"
+    local unit_test="ON"    # default: unit test enabled
+    local clear_build="OFF" # default: do not clear build directory
 
     while [[ $# -gt 0 ]]; do
         case "${1}" in
         --off-unit-test)
             unit_test="OFF"
+            shift
+            ;;
+        --clear-build)
+            clear_build="ON"
             shift
             ;;
         *)
@@ -44,10 +50,20 @@ function main() {
 
     local build_dir="build"
 
+    if [[ "${clear_build}" == "ON" ]]; then
+        info "Build mode: Clearing build directory: ${build_dir}/*"
+        rm -rf "${build_dir:?}"/*
+    fi
+
     if [[ "${unit_test}" == "ON" ]]; then
         info "Build mode: Debug (UNIT_TEST=ON)"
     else
         info "Build mode: Release (UNIT_TEST=OFF)"
+    fi
+
+    if [[ ! -f "CMakeLists.txt" ]]; then
+        error "CMakeLists.txt not found. Please check the project directory: 'ruacdb/CMakeLists.txt'"
+        return 1
     fi
 
     info "Configuring CMake ..."

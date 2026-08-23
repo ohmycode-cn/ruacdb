@@ -19,6 +19,11 @@ namespace ruac::syntax_lite::tree::node::fmt {
         char left_char = args_.m_left_char;
         bool newline = args_.m_newline;
 
+        if (col_max_size <= 0) {
+            ret_ = false;
+            return "";
+        }
+
         std::stringstream ss;
         ss << left_char << " ";
         ss << std::left << std::setw(col_max_size);
@@ -27,6 +32,8 @@ namespace ruac::syntax_lite::tree::node::fmt {
         if (newline) {
             ss << "\n";
         }
+
+        ret_ = true;
         return ss.str();
     }
 
