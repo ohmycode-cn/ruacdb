@@ -6,11 +6,11 @@
  * src/google_test/lib/ruac_test_format_row.cpp
  */
 
+#include "google_test/kit/ruac_safemsg.hpp"
 #include "google_test/lib/ruac_test_format_row.hpp"
 
 #include "gtest/gtest.h"
 #include "syntax_lite/tree/node/fmt/ruac_format_row.hpp"
-
 namespace {
 
     using ruac::syntax_lite::tree::node::fmt::FormatRow;
@@ -26,14 +26,14 @@ namespace {
         EXPECT_TRUE(result.empty());
     }
 
-    // Normal: produces "+-----+"
+    // Normal: corner + rowline * (row_szie + 2) + corner
     TEST(FormatRowTest, DefaultCornerAndColine) {
         FormatRow fr;
         bool ret = false;
         FormatRowArgs args{.m_row_szie = 5};
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
-        EXPECT_EQ(result, "+-----+");
+        EXPECT_EQ(result, "+-------+\n");
     }
 
     // Custom corner and coline
@@ -47,7 +47,7 @@ namespace {
         };
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
-        EXPECT_EQ(result, "*===*");
+        EXPECT_EQ(result, "*=====*\n");
     }
 
     // Newline appended
@@ -60,7 +60,7 @@ namespace {
         };
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
-        EXPECT_EQ(result, "+----+\n");
+        EXPECT_EQ(result, "+------+\n");
     }
 
     // Newline disabled (explicit)
@@ -84,7 +84,7 @@ namespace {
         FormatRowArgs args{.m_row_szie = 1};
         auto result = fr.frow(args, ret);
         EXPECT_TRUE(ret);
-        EXPECT_EQ(result, "+-+");
+        EXPECT_EQ(result, "+---+\n");
     }
 
 } // anonymous namespace
@@ -92,6 +92,7 @@ namespace {
 namespace ruac::google_test::lib {
 
     auto test_format_row_main() -> int {
+        kit::SafeMsg::get().println("func: ", "test format row");
         testing::InitGoogleTest();
         return RUN_ALL_TESTS();
     }

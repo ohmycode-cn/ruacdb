@@ -5,7 +5,7 @@
  * include/google_test/lib/ruac_test_format_col.hpp
  * src/google_test/lib/ruac_test_format_col.cpp
  */
-
+#include "google_test/kit/ruac_safemsg.hpp"
 #include "google_test/lib/ruac_test_format_col.hpp"
 
 #include "gtest/gtest.h"
@@ -16,13 +16,14 @@ namespace {
     using ruac::syntax_lite::tree::node::fmt::FormatCol;
     using ruac::syntax_lite::tree::node::fmt::FormatColArgs;
 
-    // Default args: col_max_size=0 → only boundary chars and spaces
+    // col_max_size=0 → guard triggers, returns empty string
     TEST(FormatColTest, ZeroColMaxSize) {
         FormatCol fc;
         bool ret = true;
         FormatColArgs args{.m_col_max_size = 0};
         auto result = fc.fcol(args, ret, "");
-        EXPECT_EQ(result, "|  |");
+        EXPECT_FALSE(ret);
+        EXPECT_TRUE(result.empty());
     }
 
     // Normal: produces padded content with default '|' boundaries
@@ -31,7 +32,8 @@ namespace {
         bool ret = false;
         FormatColArgs args{.m_col_max_size = 10};
         auto result = fc.fcol(args, ret, "Hello");
-        EXPECT_EQ(result, "|           |");
+        EXPECT_TRUE(ret);
+        EXPECT_EQ(result, "| Hello      |\n");
     }
 
     // Custom left and right boundary chars
@@ -44,7 +46,8 @@ namespace {
             .m_col_max_size = 5,
         };
         auto result = fc.fcol(args, ret, "Test");
-        EXPECT_EQ(result, "[      ]");
+        EXPECT_TRUE(ret);
+        EXPECT_EQ(result, "[ Test  ]\n");
     }
 
     // Newline enabled
@@ -56,7 +59,8 @@ namespace {
             .m_col_max_size = 6,
         };
         auto result = fc.fcol(args, ret, "AB");
-        EXPECT_EQ(result, "|       |\n");
+        EXPECT_TRUE(ret);
+        EXPECT_EQ(result, "| AB     |\n");
     }
 
     // Newline disabled (explicit)
@@ -77,7 +81,8 @@ namespace {
         bool ret = false;
         FormatColArgs args{.m_col_max_size = 1};
         auto result = fc.fcol(args, ret, "");
-        EXPECT_EQ(result, "|  |");
+        EXPECT_TRUE(ret);
+        EXPECT_EQ(result, "|   |\n");
     }
 
     // Boundary chars with same left/right
@@ -90,7 +95,8 @@ namespace {
             .m_col_max_size = 4,
         };
         auto result = fc.fcol(args, ret, "Hi");
-        EXPECT_EQ(result, "#     #");
+        EXPECT_TRUE(ret);
+        EXPECT_EQ(result, "# Hi   #\n");
     }
 
     // Member-based fcol via fset_member_args
@@ -98,7 +104,7 @@ namespace {
         FormatCol fc;
         fc.fset_member_args(FormatColArgs{.m_col_max_size = 8});
         auto result = fc.fcol("Test");
-        EXPECT_EQ(result, "|         |");
+        EXPECT_EQ(result, "| Test     |\n");
     }
 
     // Member-based fcol with custom args and newline
@@ -112,7 +118,7 @@ namespace {
         };
         fc.fset_member_args(args);
         auto result = fc.fcol("XY");
-        EXPECT_EQ(result, "<       >\n");
+        EXPECT_EQ(result, "< XY     >\n");
     }
 
     // Member-based fcol: update args mid-stream
@@ -129,8 +135,8 @@ namespace {
         });
         auto r2 = fc.fcol("B");
 
-        EXPECT_EQ(r1, "|     |");
-        EXPECT_EQ(r2, "[         ]");
+        EXPECT_EQ(r1, "| A    |\n");
+        EXPECT_EQ(r2, "[ B        ]\n");
     }
 
 } // anonymous namespace
@@ -138,6 +144,7 @@ namespace {
 namespace ruac::google_test::lib {
 
     auto test_format_col_main() -> int {
+        kit::SafeMsg::get().println("func: ", "test format col");
         testing::InitGoogleTest();
         return RUN_ALL_TESTS();
     }
