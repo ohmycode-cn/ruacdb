@@ -13,14 +13,14 @@
 #ifndef RUAC_OBJECT_SINGLE_HPP
 #define RUAC_OBJECT_SINGLE_HPP
 
-#include "kernel/core/ruac_data.hpp"
+#include "kernel/object/ruac_object_abstract.hpp"
 
 namespace ruac::kernel::object {
 
     /**
      * @brief Singleton object manager for kernel object operations.
      */
-    class Single {
+    class Single : public ObjectAbstract {
       private:
         std::vector<ruac::kernel::core::data::Database> m_databases;
 
@@ -31,7 +31,7 @@ namespace ruac::kernel::object {
 
       public:
         static auto instance() -> Single &;
-        auto getdbs() -> std::vector<ruac::kernel::core::data::Database> &;
+        auto getdbs() -> std::vector<ruac::kernel::core::data::Database> & override;
     }; // Single
 
 } // namespace ruac::kernel::object

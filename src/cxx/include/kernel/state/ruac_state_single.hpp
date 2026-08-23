@@ -13,28 +13,29 @@
 #ifndef RUAC_STATE_SINGLE_HPP
 #define RUAC_STATE_SINGLE_HPP
 
-#include "kernel/state/ruac_state_kernel.hpp"
+#include "kernel/state/ruac_state_abstract.hpp"
 
 namespace ruac::kernel::state {
 
     /**
      * @brief Singleton state manager for kernel state operations.
      */
-    class Single {
+    class Single : public StateAbstract {
       private:
         Kernel *m_kernel{nullptr};
 
+        void init();
+        void over();
+
+      private:
         Single();
         ~Single();
         Single(const Single &) = delete;
         Single &operator=(const Single &) = delete;
 
-        void init();
-        void over();
-
       public:
         static auto instance() -> Single &;
-        auto get_kernel_state() -> Kernel &;
+        auto get_kernel_state() -> Kernel & override;
     }; // Single
 
 } // namespace ruac::kernel::state

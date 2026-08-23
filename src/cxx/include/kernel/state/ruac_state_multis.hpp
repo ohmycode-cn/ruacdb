@@ -13,14 +13,14 @@
 #ifndef RUAC_STATE_MULTIS_HPP
 #define RUAC_STATE_MULTIS_HPP
 
-#include "kernel/state/ruac_state_kernel.hpp"
+#include "kernel/state/ruac_state_abstract.hpp"
 
 namespace ruac::kernel::state {
 
     /**
      * @brief Multi-instance state manager for kernel state operations.
      */
-    class Multis {
+    class Multis : public StateAbstract {
       private:
         Kernel *m_kernel{nullptr};
 
@@ -30,7 +30,9 @@ namespace ruac::kernel::state {
       public:
         Multis();
         ~Multis();
-        auto get_kernel_state() -> Kernel &;
+
+      public:
+        auto get_kernel_state() -> Kernel & override;
     }; // Multis
 
 } // namespace ruac::kernel::state

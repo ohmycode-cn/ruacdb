@@ -6,10 +6,11 @@
  */
 
 #ifdef UNIT_TEST
-#include "test/ruac_c_test_main.h"
-#include "test/ruac_test_main.hpp"
+// #include "test/ruac_c_test_main.h"
+// #include "test/ruac_test_main.hpp"
 #include "google_test/ruac_google_test_main.hpp"
 #else
+#include "kernel/ruac_controller_pipes.hpp"
 #include "kernel/object/ruac_object_single.hpp"
 #include "kernel/ruac_controller.hpp"
 #include "kernel/ruac_controller_table.hpp"
@@ -50,7 +51,18 @@ int main() {
     lu->init_login();
     ruac::kernel::controller::ControllerTable::instance().set_controller(lu->get_uid(), *controller);
     auto &ctr = ruac::kernel::controller::ControllerTable::instance().get_controller(lu->get_uid());
+    auto *object = std::get<ruac::kernel::object::Single *>(ctr.get_object_strategy());
     auto *state = std::get<ruac::kernel::state::Single *>(ctr.get_state_strategy());
+    auto *track = std::get<ruac::kernel::track::Single *>(ctr.get_track_strategy());
+
+    ruac::kernel::controller::ControllerPipeArgs args{
+        .uid = lu->get_uid(),
+        .m_object = object,
+        .m_state = state,
+        .m_track = track,
+    };
+    ruac::kernel::controller::ControllerPipes::get().init_pipe(args);
+
     state->get_kernel_state().set_current_user(lu->get_uname(), lu->get_uid());
     if (nullptr != lu) {
         delete lu;

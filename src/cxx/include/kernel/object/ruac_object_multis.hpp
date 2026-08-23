@@ -13,14 +13,14 @@
 #ifndef RUAC_OBJECT_MULTIS_HPP
 #define RUAC_OBJECT_MULTIS_HPP
 
-#include "kernel/core/ruac_data.hpp"
+#include "kernel/object/ruac_object_abstract.hpp"
 
 namespace ruac::kernel::object {
 
     /**
      * @brief Multi-instance object manager for kernel object operations.
      */
-    class Multis {
+    class Multis : public ObjectAbstract {
       private:
         std::vector<ruac::kernel::core::data::Database> m_databases;
 
@@ -29,7 +29,7 @@ namespace ruac::kernel::object {
         ~Multis() = default;
 
       public:
-        auto getdbs() -> std::vector<ruac::kernel::core::data::Database> &;
+        auto getdbs() -> std::vector<ruac::kernel::core::data::Database> & override;
     }; // Multis
 
 } // namespace ruac::kernel::object

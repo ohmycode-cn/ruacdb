@@ -13,7 +13,7 @@
 #ifndef RUAC_TRACK_SINGLE_HPP
 #define RUAC_TRACK_SINGLE_HPP
 
-#include "kernel/track/ruac_track_kernel.hpp"
+#include "kernel/track/ruac_track_abstract.hpp"
 
 namespace ruac::kernel::track {
 
@@ -25,7 +25,7 @@ namespace ruac::kernel::track {
      * Deleted copy constructor and assignment operator enforce
      * the singleton pattern.
      */
-    class Single {
+    class Single : public TrackAbstract {
       private:
         Kernel *m_kernel{nullptr};
 
@@ -39,7 +39,7 @@ namespace ruac::kernel::track {
 
       public:
         static auto instance() -> Single &;
-        auto get_kernel() -> Kernel &;
+        auto get_kernel() -> Kernel & override;
     }; // Single
 
 } // namespace ruac::kernel::track

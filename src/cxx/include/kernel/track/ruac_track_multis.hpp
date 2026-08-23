@@ -13,7 +13,7 @@
 #ifndef RUAC_TRACK_MULTIS_HPP
 #define RUAC_TRACK_MULTIS_HPP
 
-#include "kernel/track/ruac_track_kernel.hpp"
+#include "kernel/track/ruac_track_abstract.hpp"
 
 namespace ruac::kernel::track {
 
@@ -24,7 +24,7 @@ namespace ruac::kernel::track {
      * for track metadata tracking. Provides get_kernel() access
      * to the underlying Kernel instance for CRUD operations.
      */
-    class Multis {
+    class Multis : public TrackAbstract {
       private:
         Kernel *m_kernel{nullptr};
 
@@ -34,7 +34,7 @@ namespace ruac::kernel::track {
       public:
         Multis();
         ~Multis();
-        auto get_kernel() -> Kernel &;
+        auto get_kernel() -> Kernel & override;
     }; // Multis
 
 } // namespace ruac::kernel::track
