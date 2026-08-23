@@ -163,7 +163,9 @@ namespace ruac::help::shell {
 
             std::osyncstream(std::cout) << m_prompt;
             std::string lines;
-            std::getline(std::cin, lines);
+            if (!std::getline(std::cin, lines)) {
+                break;
+            }
 
             {
                 ruac::rstd::convert::rmspace::remove_string_spaces(lines);

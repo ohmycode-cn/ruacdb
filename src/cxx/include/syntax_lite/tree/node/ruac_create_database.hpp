@@ -13,6 +13,7 @@
 #define RUAC_CREATE_DATABASE_HPP
 
 #include <mutex>
+#include <vector>
 #include <string>
 
 namespace ruac::syntax_lite::tree::node {
@@ -32,6 +33,7 @@ namespace ruac::syntax_lite::tree::node {
 
       public:
         void execute(const std::string &name_, bool in_advance_check_ = false);
+        void execute(const std::vector<std::string> &names_, bool in_advance_check_ = false);
     };
 
 } // namespace ruac::syntax_lite::tree::node

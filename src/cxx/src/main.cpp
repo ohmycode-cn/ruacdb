@@ -19,6 +19,9 @@
 #include "login/ruac_login_user.hpp"
 #include "rshell/lib/ruac_args.hpp"
 #include "rshell/ruac_rshell.hpp"
+#include "welcome/ruac_logo.hpp"
+
+// #include <print>
 #endif
 
 /**
@@ -42,6 +45,11 @@ int main() {
 #ifdef UNIT_TEST
     return ruac::google_test::google_test_main();
 #else
+    {
+        ruac::welcome::logo::print_logo();
+        // clear terminal screen
+        // std::print("\n\033[2J\033[1;1H");
+    }
     auto controller = new ruac::kernel::controller::Operation();
     controller->set_object_strategy(ruac::kernel::object::Single::instance());
     controller->set_state_strategy(ruac::kernel::state::Single::instance());

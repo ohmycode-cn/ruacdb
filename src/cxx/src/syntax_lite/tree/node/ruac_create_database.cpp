@@ -97,4 +97,20 @@ namespace ruac::syntax_lite::tree::node {
         create_database(name_, in_advance_check_);
     }
 
+    /**
+     * @brief Execute the create database operation for multiple database names
+     *
+     * @param names_ - The database names to create
+     *
+     * @param in_advance_check_ - When true, skip the existence check
+     *
+     * @details Delegates to create_database() for each name in names_.
+     *
+     */
+    void CreateDatabase::execute(const std::vector<std::string> &names_, bool in_advance_check_) {
+        for (const auto &name : names_) {
+            create_database(name, in_advance_check_);
+        }
+    }
+
 } // namespace ruac::syntax_lite::tree::node

@@ -24,6 +24,7 @@ namespace ruac::syntax_lite::tree {
         mutable std::mutex M_NODE_STORE_MTX;
         std::variant<
             std::monostate,
+            node::types::CreateDatabases,
             node::types::CreateDatabase,
             node::types::CreateTable,
             node::types::UseDatabase,

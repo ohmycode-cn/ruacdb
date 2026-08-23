@@ -234,7 +234,9 @@ namespace ruac::rshell::core {
 
             std::osyncstream(std::cout) << m_prompt;
             std::string lines;
-            std::getline(std::cin, lines);
+            if (!std::getline(std::cin, lines)) {
+                break;
+            }
 
             if (lines.empty()) {
                 continue;

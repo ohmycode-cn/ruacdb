@@ -199,7 +199,9 @@ namespace ruac::login {
         while (true) {
             std::osyncstream(std::cout) << "register-user-> ";
             std::string field;
-            std::getline(std::cin, field);
+            if (!std::getline(std::cin, field)) {
+                return false;
+            }
 
             if (field.empty()) {
                 continue;

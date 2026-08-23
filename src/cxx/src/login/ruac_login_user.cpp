@@ -67,7 +67,7 @@ namespace ruac::login {
             m_user_id = 0;
             {
                 std::stringstream ss;
-                ss << "Error: Login method is not supported. Default use " << m_user_name << " user.\n";
+                ss << "[Error :(]: Login method is not supported. Default use " << m_user_name << " user";
                 std::osyncstream(std::cout) << ss.str() << std::endl;
             }
         }

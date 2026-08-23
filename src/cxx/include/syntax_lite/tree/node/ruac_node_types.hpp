@@ -11,11 +11,17 @@
 #ifndef RUAC_NODE_TYPES_HPP
 #define RUAC_NODE_TYPES_HPP
 
+#include <vector>
 #include <string>
 
 namespace ruac::syntax_lite::tree::node {
 
     namespace types {
+
+        struct CreateDatabases {
+            std::vector<std::string> names;
+            bool if_not_exists{false};
+        };
 
         struct CreateDatabase {
             std::string name;

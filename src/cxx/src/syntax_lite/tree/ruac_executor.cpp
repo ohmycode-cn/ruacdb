@@ -8,7 +8,9 @@
 
 #include "syntax_lite/tree/ruac_executor.hpp"
 
+#include "syntax_lite/tree/node/ruac_node_types.hpp"
 #include <memory>
+#include <type_traits>
 #include <variant>
 
 namespace ruac::syntax_lite::tree {
@@ -37,6 +39,8 @@ namespace ruac::syntax_lite::tree {
             using T = std::decay_t<decltype(arg)>;
             if constexpr (std::is_same_v<T, node::types::CreateDatabase>) {
                 m_node_map->m_create_database.execute(arg.name, arg.if_not_exists);
+            } else if constexpr (std::is_same_v<T, node::types::CreateDatabases>) {
+                m_node_map->m_create_database.execute(arg.names, arg.if_not_exists);
             } else if constexpr (std::is_same_v<T, node::types::CreateTable>) {
             } else if constexpr (std::is_same_v<T, node::types::UseDatabase>) {
             } else if constexpr (std::is_same_v<T, node::types::ShowDatabases>) {
