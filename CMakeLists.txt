@@ -45,6 +45,14 @@ endif()
 # add_compile_options(-Werror) # Only specific system versions will enable strict mode
 add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp)
 
+if (WIN32)
+    # Prevent Windows SDK (minwindef.h) from defining min/max macros,
+    # which conflict with std::min / std::max in <algorithm>.
+    # Without this, calls like std::max(a, b) get text-substituted into
+    # invalid syntax, causing "expected unqualified-id" errors.
+    target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
+endif()
+
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${OUTPUT_DIR}")
 
 if (UNIT_TEST)
