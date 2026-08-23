@@ -13,6 +13,7 @@
 #define RUAC_FORMAT_ROW_HPP
 
 #include <string>
+#include <mutex>
 
 namespace ruac::syntax_lite::tree::node::fmt {
 
@@ -24,6 +25,10 @@ namespace ruac::syntax_lite::tree::node::fmt {
     };
 
     class FormatRow {
+      private:
+        // FormatRowArgs m_format_args;
+        std::mutex M_FORMAT_ROW_MTX;
+
       public:
         FormatRow() = default;
         ~FormatRow() = default;

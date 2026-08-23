@@ -25,13 +25,13 @@ namespace ruac::kernel::controller {
 
         auto uid = args_.uid;
 
-        if (!append_pipes(uid, m_object)) {
+        if (append_pipes(uid, m_object)) {
             m_object[uid] = args_.m_object;
         }
-        if (!append_pipes(uid, m_state)) {
+        if (append_pipes(uid, m_state)) {
             m_state[uid] = args_.m_state;
         }
-        if (!append_pipes(uid, m_track)) {
+        if (append_pipes(uid, m_track)) {
             m_track[uid] = args_.m_track;
         }
 

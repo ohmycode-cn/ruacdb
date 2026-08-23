@@ -7,8 +7,7 @@
  */
 
 #include "syntax_lite/tree/node/ruac_create_database.hpp"
-#include "kernel/ruac_controller_table.hpp"
-#include "kernel/track/ruac_track_single.hpp"
+#include "kernel/ruac_controller_pipes.hpp"
 #include "rstd/messages/ruac_stddug.hpp"
 #include "rstd/messages/ruac_stdmsg.hpp"
 #include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
@@ -61,6 +60,13 @@ namespace ruac::syntax_lite::tree::node {
 
         std::lock_guard<std::mutex> lock(M_CREATE_DATABASE_MTX);
 
+        if (name_.empty()) {
+            std::stringstream ss;
+            ss << "Error: Prohibit passing in empty database names !";
+            std::osyncstream(std::cout) << ss.str() << std::endl;
+            return;
+        }
+
         if (exist_database(name_)) {
             if (in_advance_check_) {
                 return;
@@ -71,11 +77,10 @@ namespace ruac::syntax_lite::tree::node {
             return;
         }
 
-        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(m_uid);
-        auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
-        auto *object = std::get<ruac::kernel::object::Single *>(controller.get_object_strategy());
-        track->get_kernel().add_database(name_, 0, 0);
-        object->getdbs().push_back({name_, {}, 0, 0});
+        auto &t = ruac::kernel::controller::ControllerPipes::get().track(m_uid);
+        auto &o = ruac::kernel::controller::ControllerPipes::get().object(m_uid);
+        t.get_kernel().add_database(name_, 0, 0);
+        o.getdbs().push_back({name_, {}, 0, 0});
     }
 
     /**

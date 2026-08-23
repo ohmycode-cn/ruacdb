@@ -24,7 +24,7 @@ namespace ruac::syntax_lite::tree::node {
     class ShowDatabases {
       private:
         std::mutex M_SHOW_DATABASES_MTX;
-        [[maybe_unused]] int m_uid{1};
+        int m_uid{1};
         std::unique_ptr<ruac::syntax_lite::tree::node::fmt::FormatRow> m_frow;
         std::unique_ptr<ruac::syntax_lite::tree::node::fmt::FormatCol> m_fcol;
 

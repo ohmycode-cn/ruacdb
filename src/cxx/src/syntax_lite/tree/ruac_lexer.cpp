@@ -6,6 +6,7 @@
  * src/syntax_lite/tree/ruac_lexer.cpp
  */
 
+#include "rstd/convert/ruac_rmspace.hpp"
 #include "syntax_lite/tree/ruac_keyword.hpp"
 #include "syntax_lite/tree/ruac_keyword_map.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
@@ -68,6 +69,11 @@ namespace ruac::syntax_lite::tree {
         std::string word;
         skip_whitespace();
         read_word(word);
+
+        {
+            ruac::rstd::convert::rmspace::remove_string_spaces(word);
+        }
+
         if (word.empty()) {
             return;
         }
@@ -123,6 +129,7 @@ namespace ruac::syntax_lite::tree {
             ss << "Token   item: " << index << "\n";
             ss << "Token int id: " << static_cast<int>(list[index].type) << "\n";
             ss << "Token  value: " << list[index].value << "\n";
+            ss << "    |__token value size '" << list[index].value.size() << "'\n";
             ss << "\n";
         }
         ss << "];\n";

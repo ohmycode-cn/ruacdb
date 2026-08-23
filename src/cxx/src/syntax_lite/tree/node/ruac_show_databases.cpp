@@ -7,8 +7,7 @@
  */
 
 #include "syntax_lite/tree/node/ruac_show_databases.hpp"
-#include "kernel/ruac_controller_table.hpp"
-#include "kernel/track/ruac_track_single.hpp"
+#include "kernel/ruac_controller_pipes.hpp"
 #include "rstd/messages/ruac_stddug.hpp"
 #include "rstd/messages/ruac_stdmsg.hpp"
 #include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
@@ -77,17 +76,19 @@ namespace ruac::syntax_lite::tree::node {
 
         std::lock_guard<std::mutex> lock(M_SHOW_DATABASES_MTX);
 
-        auto &ct = ruac::kernel::controller::ControllerTable::instance();
-        auto &controller = ct.get_controller(m_uid);
-        auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
+        // auto &ct = ruac::kernel::controller::ControllerTable::instance();
+        // auto &controller = ct.get_controller(m_uid);
+        // auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
 
-        if (track->get_kernel().empty_database()) {
+        auto &t = ruac::kernel::controller::ControllerPipes::get().track(m_uid);
+
+        if (t.get_kernel().empty_database()) {
             std::osyncstream(std::cout) << "Error: Not any database." << std::endl;
             return;
         }
 
-        auto wsize = track->get_kernel().get_database_name_max_width();
-        auto *objt = std::get<ruac::kernel::object::Single *>(controller.get_object_strategy());
+        auto wsize = t.get_kernel().get_database_name_max_width();
+        auto &o = ruac::kernel::controller::ControllerPipes::get().object(m_uid);
 
         ruac::syntax_lite::tree::node::fmt::FormatColArgs col_args{
             .m_col_max_size = static_cast<int>(wsize),
@@ -102,7 +103,7 @@ namespace ruac::syntax_lite::tree::node {
         std::stringstream ss;
         ss << m_frow->frow(row_args, row_ret);
         m_fcol->fset_member_args(col_args);
-        for (const auto &db : objt->getdbs()) {
+        for (const auto &db : o.getdbs()) {
             ss << m_fcol->fcol(db.name);
         }
         ss << m_frow->frow(row_args, row_ret);

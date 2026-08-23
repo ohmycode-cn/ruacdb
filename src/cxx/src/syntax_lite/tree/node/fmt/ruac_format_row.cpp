@@ -13,6 +13,7 @@
 namespace ruac::syntax_lite::tree::node::fmt {
 
     auto FormatRow::frow(const FormatRowArgs &args_, bool &ret_) -> std::string {
+        std::lock_guard<std::mutex> lock(M_FORMAT_ROW_MTX);
 
         const bool newline{args_.m_newline};
         const int rowsize{args_.m_row_szie};

@@ -27,6 +27,7 @@ namespace ruac::syntax_lite::tree::node::fmt {
     class FormatCol {
       private:
         FormatColArgs m_format_args;
+        std::mutex M_FORMAT_COL_MTX;
 
       public:
         FormatCol() = default;

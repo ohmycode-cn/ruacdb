@@ -14,6 +14,8 @@
 namespace ruac::syntax_lite::tree::node::fmt {
 
     auto FormatCol::fcol(const FormatColArgs &args_, bool &ret_, const std::string &str_) -> std::string {
+        std::lock_guard<std::mutex> lock(M_FORMAT_COL_MTX);
+
         int col_max_size = args_.m_col_max_size;
         char right_char = args_.m_right_char;
         char left_char = args_.m_left_char;
@@ -38,10 +40,13 @@ namespace ruac::syntax_lite::tree::node::fmt {
     }
 
     void FormatCol::fset_member_args(const FormatColArgs &args_) {
+        std::lock_guard<std::mutex> lock(M_FORMAT_COL_MTX);
         m_format_args = args_;
     }
 
     auto FormatCol::fcol(const std::string &str_) -> std::string {
+        std::lock_guard<std::mutex> lock(M_FORMAT_COL_MTX);
+
         std::stringstream ss;
         ss << m_format_args.m_left_char << " ";
         ss << std::left << std::setw(m_format_args.m_col_max_size);
