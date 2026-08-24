@@ -12,6 +12,9 @@
 #include "rstd/colors/ruac_color26.hpp"
 #include "rstd/convert/ruac_lowercase.hpp"
 #include "rstd/convert/ruac_rmspace.hpp"
+#include "rstd/messages/ruac_stddug.hpp"
+#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rstd/ruac_tflush.hpp"
 #include "welcome/ruac_guidance.hpp"
 
 #include <iostream>
@@ -100,21 +103,16 @@ namespace ruac::rshell::core {
      */
     void Run::clear_history() {
 
-        auto ret = ruac::rshell::lib::guard::uid_permission_guard(
-            m_kstate.get_current_user_id(),
-            "Error: Current user is not enable clear history permission !",
-            "manager");
+        auto crtuid{m_kstate.get_current_user_id()};
+        constexpr const char *const errmsg{"Error: Current user is not enable clear history permission !"};
+        constexpr const char *const permgr{"manager"};
 
-        if (ret) {
+        if (ruac::rshell::lib::guard::uid_permission_guard(crtuid, errmsg, permgr)) {
             return;
         }
 
         if (m_commands_history.empty()) {
-            {
-                std::stringstream ss;
-                ss << "Warn : History not any records !";
-                std::osyncstream(std::cout) << ss.str() << std::endl;
-            }
+            std::osyncstream(std::cout) << "Warn : History not any records !" << std::endl;
             return;
         }
 
@@ -122,6 +120,17 @@ namespace ruac::rshell::core {
             m_commands_history.clear();
             std::osyncstream(std::cout) << "Done : History already clear." << std::endl;
         }
+    }
+
+    /**
+     * @brief Clear the terminal screen
+     *
+     * @details Delegates to ruac::rstd::tflush() which writes ANSI
+     *          escape sequences via a synchronized output stream to
+     *          clear the screen and reset the cursor position.
+     */
+    void Run::clear_screen() {
+        ruac::rstd::tflush();
     }
 
     /**
@@ -141,6 +150,8 @@ namespace ruac::rshell::core {
             print_history();
         } else if (line_ == "clear history") {
             clear_history();
+        } else if (line_ == "clear screen") {
+            clear_screen();
         }
         return m_exec->exec(line_);
     }

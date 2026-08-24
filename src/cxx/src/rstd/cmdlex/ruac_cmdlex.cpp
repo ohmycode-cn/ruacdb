@@ -10,6 +10,8 @@
 
 #include <memory>
 #include <mutex>
+#include <syncstream>
+#include <iostream>
 
 namespace ruac::rstd::cmdlex::api {
 
@@ -48,12 +50,14 @@ namespace ruac::rstd::cmdlex::api {
         std::lock_guard<std::mutex> lock(M_INTERFACE_MTX);
 
         if (nullptr == m_funnel || lines_.empty()) {
+            std::osyncstream(std::cout) << "Error: Null object error" << std::endl;
             return false;
         }
 
         m_funnel.get()->funnel(lines_, line_list_);
 
         if (line_list_.empty()) {
+            std::osyncstream(std::cout) << "Error: No line resulted from lexing" << std::endl;
             return false;
         }
 

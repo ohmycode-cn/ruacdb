@@ -141,11 +141,12 @@ namespace ruac::syntax_lite::tree {
      */
     auto Parser::parse_create_table() -> bool {
 
-        // Tmp debug.
-        auto &stdmsg = rstd::messages::StdMsg::instance();
-        auto &stdbug = rstd::messages::StdDug::instance();
-        constexpr const char *const dugmsg{"Class: Parser, Func: parse_create_table"};
-        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+        { // Temporary debug information.
+            auto &stdmsg = rstd::messages::StdMsg::instance();
+            auto &stdbug = rstd::messages::StdDug::instance();
+            constexpr const char *const dugmsg{"Class: Parser, Func: parse_create_table"};
+            stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+        }
 
         using tt = token_type::TokenType;
         namespace ks = keyword::symbol;

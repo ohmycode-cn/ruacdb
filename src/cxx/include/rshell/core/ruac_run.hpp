@@ -40,6 +40,7 @@ namespace ruac::rshell::core {
       private:
         void print_history();
         void clear_history();
+        void clear_screen();
         auto exec(const std::string &line_) -> status_code;
 
       public:
