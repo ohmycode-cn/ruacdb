@@ -27,8 +27,13 @@ namespace ruac::rlib::tdebug {
         Info(const Info &) = delete;
         Info &operator=(const Info &) = delete;
 
+      private:
+        auto innerfmt(std::string &&class_, std::string &&func_) -> std::string &;
+
       public:
         static auto get() -> Info &;
+        auto fmt(const std::string &class_, const std::string &func_) -> std::string &;
+        auto fmt(std::string &&class_, std::string &&func_) -> std::string &;
         void print(const std::string &msgs_, const std::string &file_, const int line_);
     };
 

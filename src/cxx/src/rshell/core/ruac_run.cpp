@@ -6,14 +6,13 @@
  * src/rshell/core/ruac_run.cpp
  */
 
+#include "rlib/ruac_tdebug.hpp"
 #include "rshell/core/ruac_run.hpp"
 #include "rshell/lib/ruac_guard.hpp"
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
 #include "rstd/colors/ruac_color26.hpp"
 #include "rstd/convert/ruac_lowercase.hpp"
 #include "rstd/convert/ruac_rmspace.hpp"
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
 #include "rstd/ruac_tflush.hpp"
 #include "welcome/ruac_guidance.hpp"
 
@@ -146,6 +145,10 @@ namespace ruac::rshell::core {
      *
      */
     auto Run::exec(const std::string &line_) -> status_code {
+        {
+            ruac::rlib::tdebug::Info::get().print(line_, __FILE__, __LINE__);
+        }
+
         if (line_ == "print history") {
             print_history();
         } else if (line_ == "clear history") {

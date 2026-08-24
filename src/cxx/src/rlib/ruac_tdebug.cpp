@@ -13,6 +13,9 @@
 
 namespace ruac::rlib::tdebug {
 
+    auto Info::innerfmt(std::string &&class_, std::string &&func_) -> std::string & {
+    };
+
     /**
      * @brief Get the singleton Info instance
      *
@@ -25,6 +28,9 @@ namespace ruac::rlib::tdebug {
         static Info instance;
         return instance;
     }
+
+    auto fmt(const std::string &class_, const std::string &func_) -> std::string &;
+    auto fmt(std::string &&class_, std::string &&func_) -> std::string &;
 
     /**
      * @brief Print a formatted debug message
