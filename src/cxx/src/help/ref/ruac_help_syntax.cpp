@@ -32,7 +32,7 @@ namespace ruac::help::ref::syntax {
         ss << "[SHOW]:\n";
         ss << "  |\n";
         ss << "  |- SHOW DATABASES\n";
-        ss << "  |- SHOW DATABASES ALL\n";
+        ss << "  |- SHOW DATABASE ALL\n";
         ss << "(ENDOF)\n";
         std::osyncstream(std::cout) << ss.str() << std::endl;
     }
