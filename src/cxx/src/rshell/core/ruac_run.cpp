@@ -6,9 +6,9 @@
  * src/rshell/core/ruac_run.cpp
  */
 
+#include "permission_guard/ruac_guardlock.hpp"
 #include "rlib/ruac_tdebug.hpp"
 #include "rshell/core/ruac_run.hpp"
-#include "rshell/lib/ruac_guard.hpp"
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
 #include "rstd/colors/ruac_color26.hpp"
 #include "rstd/convert/ruac_lowercase.hpp"
@@ -61,12 +61,11 @@ namespace ruac::rshell::core {
      *
      */
     void Run::print_history() {
-        auto ret = ruac::rshell::lib::guard::uid_permission_guard(
-            m_kstate.get_current_user_id(),
-            "Error: Current user is not enable print history permission !",
-            "manager");
 
-        if (ret) {
+        auto &u = ruac::permission_guard::GuardLock::get();
+        auto r = ruac::permission_guard::GuardList::ROOT;
+        if (!u.judgment_lock(m_kstate.get_current_user_id(), r)) {
+            u.print_message("Error: ", "Current user is not enable print history permission");
             return;
         }
 
@@ -102,11 +101,10 @@ namespace ruac::rshell::core {
      */
     void Run::clear_history() {
 
-        auto crtuid{m_kstate.get_current_user_id()};
-        constexpr const char *const errmsg{"Error: Current user is not enable clear history permission !"};
-        constexpr const char *const permgr{"manager"};
-
-        if (ruac::rshell::lib::guard::uid_permission_guard(crtuid, errmsg, permgr)) {
+        auto &u = ruac::permission_guard::GuardLock::get();
+        auto r = ruac::permission_guard::GuardList::MANAGER;
+        if (!u.judgment_lock(m_kstate.get_current_user_id(), r)) {
+            u.print_message("Error: ", "Current user is not enable clear history permission !");
             return;
         }
 
@@ -146,7 +144,14 @@ namespace ruac::rshell::core {
      */
     auto Run::exec(const std::string &line_) -> status_code {
         {
-            ruac::rlib::tdebug::Info::get().print(line_, __FILE__, __LINE__);
+            auto &gl = ruac::permission_guard::GuardLock::get();
+            auto rg = ruac::permission_guard::GuardList::SYSTEM;
+            if (!gl.judgment_lock(m_kstate.get_current_user_id(), rg)) {
+                namespace u = ruac::rlib::tdebug;
+                std::string line = line_;
+                auto fmt = u::Info::get().fmt("Run", "exec(...)", std::move(line));
+                u::Info::get().print(std::move(fmt), __FILE__, __LINE__);
+            }
         }
 
         if (line_ == "print history") {

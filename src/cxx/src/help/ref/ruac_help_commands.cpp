@@ -29,7 +29,7 @@ namespace ruac::help::ref::commands {
         ss << "  |- add new user               : Entry user environment and add a new user.\n";
         ss << "  |- stdmsg off                 : Turn off standard message output.\n";
         ss << "  |- stdmsg on                  : Turn on standard message output.\n";
-        ss << "  |- ruacdb user.info show all  : Show all user information.\n";
+        ss << "  |- ruacdb.host user show.all  : Show all user information from localhost database.\n";
         ss << "  |- ruacdb help                : Show help message.\n";
         ss << "  |\n";
         ss << "(ENDOF)\n";

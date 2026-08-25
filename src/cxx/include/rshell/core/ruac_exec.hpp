@@ -13,11 +13,13 @@
 #define RUAC_EXEC_HPP
 
 #include "kernel/state/ruac_state_kernel.hpp"
+#include "permission_guard/ruac_guardlock.hpp"
 #include "rshell/lib/ruac_scode.hpp"
 #include "syntax_lite/ruac_synxlite.hpp"
 
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace ruac::rshell::core {
 
@@ -33,10 +35,12 @@ namespace ruac::rshell::core {
         ~Exec() = default;
 
       private:
+        std::vector<std::string> M_ROOT_LINES;
+
+      private:
         auto get_current_user() -> std::string;
         auto get_current_uid() -> int;
-        auto uid_permission_guard(const std::string &msg_, const std::string &guard_group_ = "root",
-                                  bool out_msg_ = true) -> bool;
+        auto uid_permission_guard(ruac::permission_guard::GuardList guard_, const std::string &msg_) -> bool;
         auto dispatch(const std::string &line_) -> status_code;
 
       public:

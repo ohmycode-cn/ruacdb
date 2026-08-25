@@ -29,6 +29,7 @@ namespace ruac::usersystem {
         // M_GROUP_REGISTRY in ruac_user_group_perm.hpp)
         std::unordered_map<std::string, std::string> m_user_group_table{
             /*user name, group name*/
+            {"system", "system"},
             {"root", "root"},
             {"live", "visitor"}};
 

@@ -49,7 +49,7 @@ namespace ruac::usersystem {
      *          M_GROUP_REGISTRY, stores the group's Permission; otherwise
      *          stores an empty Permission with G_EMPTY_GROUP. Updates
      *          the maximum column widths for name, uid, group, and each
-     *          permission code (R/W/X/L) so print_user_info() can align
+     *          permission code (R/W/X/L/OS) so print_user_info() can align
      *          the table.
      *
      */
@@ -65,6 +65,7 @@ namespace ruac::usersystem {
         m_max_width_w = 0;
         m_max_width_x = 0;
         m_max_width_l = 0;
+        m_max_width_os = 0;
 
         m_usmap.clear();
         for (const auto &[name, uid] : uid_map) {
@@ -86,6 +87,7 @@ namespace ruac::usersystem {
             m_max_width_w = std::max(m_max_width_w, std::string_view(perm_code_str(p.wp)).size());
             m_max_width_x = std::max(m_max_width_x, std::string_view(perm_code_str(p.xp)).size());
             m_max_width_l = std::max(m_max_width_l, std::string_view(perm_code_str(p.lp)).size());
+            m_max_width_os = std::max(m_max_width_os, std::string_view(perm_code_str(p.os)).size());
         }
     }
 
@@ -95,7 +97,7 @@ namespace ruac::usersystem {
      * @return std::string - The formatted table as a single string
      *
      * @details Acquires M_USERS_MAP_MTX, then constructs a header row
-     *          (NAME, UID, GROUP, R, W, X, L) using the column widths
+     *          (NAME, UID, GROUP, R, W, X, L, OS) using the column widths
      *          computed by merge_user_info(). Draws a separator line of
      *          dashes, then iterates m_usmap (name → uid → group →
      *          Permission) printing each user as a formatted row with
@@ -118,13 +120,16 @@ namespace ruac::usersystem {
            << std::left
            << std::setw(static_cast<int>(m_max_width_x)) << "X" << "    "
            << std::left
-           << std::setw(static_cast<int>(m_max_width_l)) << "L"
+           << std::setw(static_cast<int>(m_max_width_l)) << "L" << "    "
+           << std::left
+           << std::setw(static_cast<int>(m_max_width_os)) << "OS"
            << '\n';
 
         const std::string sep(
             m_max_width_name + m_max_width_uid + m_max_width_group +
-                m_max_width_r + m_max_width_w + m_max_width_x + m_max_width_l +
-                20,
+                m_max_width_r + m_max_width_w + m_max_width_x +
+                m_max_width_l + m_max_width_os +
+                24,
             '-');
         ss << sep << '\n';
 
@@ -144,7 +149,9 @@ namespace ruac::usersystem {
                        << std::left
                        << std::setw(static_cast<int>(m_max_width_x)) << perm_code_str(perm.xp) << "    "
                        << std::left
-                       << std::setw(static_cast<int>(m_max_width_l)) << perm_code_str(perm.lp);
+                       << std::setw(static_cast<int>(m_max_width_l)) << perm_code_str(perm.lp) << "    "
+                       << std::left
+                       << std::setw(static_cast<int>(m_max_width_os)) << perm_code_str(perm.os);
                     ss << '\n';
                 }
             }

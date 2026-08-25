@@ -22,9 +22,10 @@ namespace ruac::usersystem {
       private:
         std::unordered_map<std::string, int> m_user_id_table{
             /*user name, user id*/
-            {"root", 0},
-            {"live", 1}, // default user
-        }; // Predefined user "root" with ID 0
+            {"system", 0},
+            {"root", 1},
+            {"live", 2}, // default user
+        };
         std::mutex M_USER_ID_MTX;
 
       private:

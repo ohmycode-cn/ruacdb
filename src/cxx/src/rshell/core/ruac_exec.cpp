@@ -9,7 +9,7 @@
 #include "rshell/core/ruac_exec.hpp"
 #include "help/ruac_help_entry.hpp"
 #include "login/ruac_registered_user.hpp"
-#include "rshell/lib/ruac_guard.hpp"
+#include "permission_guard/ruac_guardlock.hpp"
 #include "rstd/messages/ruac_stdmsg.hpp"
 #include "usersystem/ruac_usersmap.hpp"
 
@@ -30,7 +30,14 @@ namespace ruac::rshell::core {
      */
     Exec::Exec(kernel::state::Kernel &kstate_)
         : m_synlite(kstate_.get_current_user_id()),
-          m_kstate(kstate_) {}
+          m_kstate(kstate_) {
+        M_ROOT_LINES = {
+            "add new user",
+            "ruacdb.host user show.all",
+            "stdmsg off",
+            "stdmsg on",
+        };
+    }
 
     /**
      * @brief Get the current user name from kernel state
@@ -56,19 +63,20 @@ namespace ruac::rshell::core {
     /**
      * @brief Verify that the current user belongs to a required group
      *
-     * @param msg_ - Error message text printed when the check fails and
-     *               out_msg_ is true
-     * @param guard_group_ - Name of the group that the user must belong
-     *                       to (e.g. "root", "manager")
-     * @param out_msg_ - When true, the failure message is flushed to
-     *                   stdout via std::osyncstream
+     * @param guard_ - Minimum GuardList level required
+     * @param msg_ - Error message text printed when the check fails
      *
-     * @return bool - true if the current user's group matches
-     *                guard_group_; false otherwise
+     * @return bool - true if the current user's group meets guard_;
+     *                false otherwise (prints msg_ on failure)
      *
      */
-    auto Exec::uid_permission_guard(const std::string &msg_, const std::string &guard_group_, bool out_msg_) -> bool {
-        return ruac::rshell::lib::guard::uid_permission_guard(get_current_uid(), msg_, guard_group_, out_msg_);
+    auto Exec::uid_permission_guard(ruac::permission_guard::GuardList guard_, const std::string &msg_) -> bool {
+        auto &gl = ruac::permission_guard::GuardLock::get();
+        if (!gl.judgment_lock(get_current_uid(), guard_)) {
+            gl.print_message("Error: ", msg_);
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -92,57 +100,57 @@ namespace ruac::rshell::core {
      *
      */
     auto Exec::dispatch(const std::string &line_) -> status_code {
-        if ("stdmsg on" == line_) {
-            if (!uid_permission_guard(
-                    "Error: Current user is not enable standard temporarily debug message permission !",
-                    "root")) {
-                return status_code::CONTINUE;
-            }
-            ruac::rstd::messages::StdMsg::instance().enable_stdmsg(true);
-            std::osyncstream(std::cout) << "Done: Enabled standard temporarily debug message." << std::endl;
-        } else if ("stdmsg off" == line_) {
-            if (!uid_permission_guard(
-                    "Error: Current user is not disable standard temporarily debug message permission !",
-                    "root")) {
-                return status_code::CONTINUE;
-            }
-            ruac::rstd::messages::StdMsg::instance().enable_stdmsg(false);
-            std::osyncstream(std::cout) << "Done: Disabled standard temporarily debug message." << std::endl;
-        } else if ("ruacdb help" == line_) {
-            {
-                ruac::help::api::HelpEntry hge;
-                hge.run();
-            }
-        } else if ("exit" == line_ || "quit" == line_) {
+
+        if ("permission guard msg on" == line_) {
+            ruac::permission_guard::GuardLock::get().output_judgment_lock_message(true);
+            return status_code::CONTINUE;
+        }
+
+        if ("permission guard msg off" == line_) {
+            ruac::permission_guard::GuardLock::get().output_judgment_lock_message(false);
+            return status_code::CONTINUE;
+        }
+
+        if ("exit" == line_ || "quit" == line_) {
             return status_code::NORMAL_EXIT;
-        } else if ("ruacdb user.info show all" == line_) {
+        }
+        if ("ruacdb help" == line_) {
+            ruac::help::api::HelpEntry hge;
+            hge.run();
+            return status_code::CONTINUE;
+        }
+
+        auto itr = std::find(M_ROOT_LINES.begin(), M_ROOT_LINES.end(), line_);
+        if (itr != M_ROOT_LINES.end()) {
             if (!uid_permission_guard(
-                    "Error: Current user is not show users info permission !",
-                    "root")) {
+                    ruac::permission_guard::GuardList::ROOT,
+                    "Root permission required for this command.")) {
                 return status_code::CONTINUE;
             }
-            {
+
+            if ("stdmsg on" == line_) {
+                ruac::rstd::messages::StdMsg::instance().enable_stdmsg(true);
+                std::osyncstream(std::cout) << "Done: Enabled standard temporarily debug message." << std::endl;
+            } else if ("stdmsg off" == line_) {
+                ruac::rstd::messages::StdMsg::instance().enable_stdmsg(false);
+                std::osyncstream(std::cout) << "Done: Disabled standard temporarily debug message." << std::endl;
+            } else if ("ruacdb.host user show.all" == line_) {
                 ruac::usersystem::UsersMap usmap;
                 usmap.show_users_map();
-            }
-        } else if ("add new user" == line_) {
-            if (!uid_permission_guard(
-                    "Error: Current user is not add new user env permission ! You must be root to do this.",
-                    "root")) {
-                return status_code::CONTINUE;
-            }
-            {
+            } else if ("add new user" == line_) {
                 ruac::login::RegisteredUser ru;
                 ru.registere();
             }
-        } else {
-            if (!uid_permission_guard(
-                    "Error: Current user is not execute command permission !",
-                    "manager")) {
-                return status_code::CONTINUE;
-            }
-            m_synlite.process(line_);
+            return status_code::CONTINUE;
         }
+
+        if (!uid_permission_guard(
+                ruac::permission_guard::GuardList::MANAGER,
+                "Manager permission required to execute command.")) {
+            return status_code::CONTINUE;
+        }
+
+        m_synlite.process(line_);
         return status_code::CONTINUE;
     }
 

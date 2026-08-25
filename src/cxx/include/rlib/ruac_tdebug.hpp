@@ -14,6 +14,7 @@
 
 #include <mutex>
 #include <string>
+#include <string_view>
 
 namespace ruac::rlib::tdebug {
 
@@ -28,13 +29,12 @@ namespace ruac::rlib::tdebug {
         Info &operator=(const Info &) = delete;
 
       private:
-        auto innerfmt(std::string &&class_, std::string &&func_) -> std::string &;
+        auto innerfmt(std::string class_, std::string func_, std::string msgs_) -> std::string;
 
       public:
         static auto get() -> Info &;
-        auto fmt(const std::string &class_, const std::string &func_) -> std::string &;
-        auto fmt(std::string &&class_, std::string &&func_) -> std::string &;
-        void print(const std::string &msgs_, const std::string &file_, const int line_);
+        auto fmt(std::string class_, std::string func_, std::string msgs_ = "") -> std::string;
+        void print(std::string_view msgs_, const char *file_, const int line_);
     };
 
 } // namespace ruac::rlib::tdebug

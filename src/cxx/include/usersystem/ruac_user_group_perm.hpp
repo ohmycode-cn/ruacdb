@@ -35,6 +35,8 @@ namespace ruac::usersystem {
         UserPowerCode wp{UserPowerCode::NO}; // Write   Permission
         UserPowerCode xp{UserPowerCode::NO}; // Execute Permission
         UserPowerCode lp{UserPowerCode::NO}; // Link    Permission
+        // All users do not have this permission, which is for development and debugging purposes only
+        UserPowerCode os{UserPowerCode::NO}; // System  Permission
     };
 
     /**
@@ -57,6 +59,14 @@ namespace ruac::usersystem {
     inline constexpr const char *G_EMPTY_GROUP{"empty"};
 
     inline const std::unordered_map<std::string, Permission> M_GROUP_REGISTRY{
+        {"system",
+         {
+             .rp = UserPowerCode::OK,
+             .wp = UserPowerCode::OK,
+             .xp = UserPowerCode::OK,
+             .lp = UserPowerCode::OK,
+             .os = UserPowerCode::OK,
+         }},
         {"root",
          {
              .rp = UserPowerCode::OK,

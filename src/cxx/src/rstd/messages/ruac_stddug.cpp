@@ -28,6 +28,30 @@ namespace ruac::rstd::messages {
         }
     }
 
+    auto StdDug::ostrs_view(std::string_view msg_, std::string_view file_, int line_) -> std::string {
+
+        if (!m_param_mode.m_enable_out) {
+            return "";
+        }
+
+        std::stringstream ss;
+
+        if (m_param_mode.m_next_line) {
+            ss << M_NEXT_LINE;
+        }
+
+        ss << m_header << msg_;
+
+        if (!msg_.empty()) {
+            ss << M_NEXT_TABS;
+        }
+
+        ss << "FILE: " << file_ << M_NEXT_TABS;
+        ss << "LINE: " << line_;
+
+        return ss.str();
+    }
+
     /**
      * @brief Format a debug message with file and line info, return as string without output
      *

@@ -13,6 +13,7 @@
 #define RUAC_STDDUG_HPP
 
 #include <string>
+#include <string_view>
 
 namespace ruac::rstd::messages {
 
@@ -42,6 +43,7 @@ namespace ruac::rstd::messages {
 
       public:
         void set_param_mode(const StdDebugParamList &params_ = {});
+        auto ostrs_view(std::string_view msg_, std::string_view file_, int line_) -> std::string;
         auto ostrs(const std::string &msg_, const std::string &file_, int line_) -> std::string;
         void print(const std::string &msg_, const std::string &file_, int line_);
         static auto instance() -> StdDug &;
