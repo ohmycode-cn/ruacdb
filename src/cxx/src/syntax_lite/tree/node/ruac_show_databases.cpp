@@ -8,8 +8,7 @@
 
 #include "syntax_lite/tree/node/ruac_show_databases.hpp"
 #include "kernel/ruac_controller_pipes.hpp"
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rlib/ruac_tdebug.hpp"
 #include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
 
 #include <iostream>
@@ -125,18 +124,23 @@ namespace ruac::syntax_lite::tree::node {
      *
      */
     void ShowDatabases::execute(const std::string &name_, bool in_advance_check_) {
-        // tmp debug line;
-        auto &stdmsg = rstd::messages::StdMsg::instance();
-        auto &stdbug = rstd::messages::StdDug::instance();
-
         if ("*" == name_ || "all" == name_) {
-            constexpr const char *const dugmsg{"Class: ShowDatabases, Func: show_all_databases"};
-            stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+            {
+                auto &u = ruac::rlib::tdebug::Info::get();
+                std::string msg{"show_all_databases"};
+                auto str = u.fmt("ShowDatabases", "show_all_databases(...)", std::move(msg));
+                u.print(str, __FILE__, __LINE__);
+            }
             show_all_databases();
             return;
         }
-        constexpr const char *const dugmsg{"Class: ShowDatabases, Func: show_database"};
-        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+
+        {
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string msg{"show_database"};
+            auto str = u.fmt("ShowDatabases", "show_database(...)", std::move(msg));
+            u.print(str, __FILE__, __LINE__);
+        }
         show_database(name_, in_advance_check_);
     }
 

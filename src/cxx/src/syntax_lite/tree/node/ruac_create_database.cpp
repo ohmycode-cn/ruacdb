@@ -8,8 +8,7 @@
 
 #include "syntax_lite/tree/node/ruac_create_database.hpp"
 #include "kernel/ruac_controller_pipes.hpp"
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rlib/ruac_tdebug.hpp"
 #include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
 
 #include <iostream>
@@ -52,11 +51,12 @@ namespace ruac::syntax_lite::tree::node {
      */
     void CreateDatabase::create_database(const std::string &name_, bool in_advance_check_) {
 
-        // tmp debug line;
-        auto &stdmsg = rstd::messages::StdMsg::instance();
-        auto &stdbug = rstd::messages::StdDug::instance();
-        constexpr const char *const dugmsg{"Class: CreateDatabase, Func: create_database"};
-        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+        {
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string msg{"create_database"};
+            auto str = u.fmt("CreateDatabase", "create_database(...)", std::move(msg));
+            u.print(str, __FILE__, __LINE__);
+        }
 
         std::lock_guard<std::mutex> lock(M_CREATE_DATABASE_MTX);
 

@@ -6,8 +6,7 @@
  * src/syntax_lite/tree/ruac_parser.cpp
  */
 
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rlib/ruac_tdebug.hpp"
 #include "syntax_lite/tree/node/ruac_node_types.hpp"
 #include "syntax_lite/tree/ruac_keyword.hpp"
 #include "syntax_lite/tree/ruac_lexer.hpp"
@@ -91,11 +90,12 @@ namespace ruac::syntax_lite::tree {
      */
     auto Parser::parse_create_database() -> bool {
 
-        // tmp debug line;
-        auto &stdmsg = rstd::messages::StdMsg::instance();
-        auto &stdbug = rstd::messages::StdDug::instance();
-        constexpr const char *const dugmsg{"Class: Parser, Func: parse_create_database"};
-        stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+        {
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string msg{"parse_create_database"};
+            auto str = u.fmt("Parser", "parse_create_database()", std::move(msg));
+            u.print(str, __FILE__, __LINE__);
+        }
 
         namespace ks = keyword::symbol;
         using tt = token_type::TokenType;
@@ -141,11 +141,11 @@ namespace ruac::syntax_lite::tree {
      */
     auto Parser::parse_create_table() -> bool {
 
-        { // Temporary debug information.
-            auto &stdmsg = rstd::messages::StdMsg::instance();
-            auto &stdbug = rstd::messages::StdDug::instance();
-            constexpr const char *const dugmsg{"Class: Parser, Func: parse_create_table"};
-            stdmsg.print(stdbug.ostrs(dugmsg, __FILE__, __LINE__));
+        {
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string msg{"parse_create_table"};
+            auto str = u.fmt("Parser", "parse_create_table()", std::move(msg));
+            u.print(str, __FILE__, __LINE__);
         }
 
         using tt = token_type::TokenType;

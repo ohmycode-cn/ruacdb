@@ -6,34 +6,33 @@
  * src/test/ruac_test_rstd_messages.cpp
  */
 
-#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rlib/ruac_tdebug.hpp"
 #include "test/ruac_test_rstd_messages.hpp"
 
 namespace ruac::test {
     namespace {
 
-        namespace {
-            namespace t = ruac::rstd::messages;
-        } // namespace
-
         /**
-         * @brief Emit a sample message through the StdMsg singleton
+         * @brief Emit a sample message through the Info singleton
          *
-         * @details Calls ruac::rstd::messages::StdMsg::instance().print
+         * @details Calls ruac::rlib::tdebug::Info::get().print
          *          with a fixed test string to verify the standard
          *          message output path.
          *
          */
         void base_output() {
-            t::StdMsg::instance().print("This is rstd messages base output");
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string msg{"This is rstd gen base output"};
+            auto str = u.fmt("Test", "base_output", std::move(msg));
+            u.print(str, __FILE__, __LINE__);
         }
 
     } // namespace
 
     /**
-     * @brief Drive the rstd messages test case
+     * @brief Drive the rstd gen test case
      *
-     * @details Delegates to base_output() to exercise the StdMsg
+     * @details Delegates to base_output() to exercise the Info
      *          singleton print path.
      *
      */

@@ -12,7 +12,8 @@
 #ifndef RUAC_TDEBUG_HPP
 #define RUAC_TDEBUG_HPP
 
-#include <mutex>
+#include "rstd/gen/ruac_stddug.hpp"
+#include "rstd/gen/ruac_stdmsg.hpp"
 #include <string>
 #include <string_view>
 
@@ -20,7 +21,8 @@ namespace ruac::rlib::tdebug {
 
     class Info {
       private:
-        std::mutex M_MSG_MTX;
+        rstd::gen::StdDug m_stddug{rstd::gen::StdDug(true)};
+        rstd::gen::StdMsg m_stdmsg;
 
       private:
         Info() = default;
@@ -35,6 +37,8 @@ namespace ruac::rlib::tdebug {
         static auto get() -> Info &;
         auto fmt(std::string class_, std::string func_, std::string msgs_ = "") -> std::string;
         void print(std::string_view msgs_, const char *file_, const int line_);
+        void enable_stdmsg(bool enable_);
+        void set_param_mode(const rstd::gen::StdDebugParamList &params_ = {});
     };
 
 } // namespace ruac::rlib::tdebug

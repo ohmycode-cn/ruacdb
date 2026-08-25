@@ -69,6 +69,7 @@ namespace ruac::permission_guard {
     }
 
     void GuardLock::print_message(std::string_view msg_header, std::string_view msg_body) {
+        std::lock_guard<std::mutex> lock(M_GUARD_LOCK_MTX);
         if (m_outmsg) {
             std::osyncstream(std::cout) << msg_header << msg_body << std::endl;
         }

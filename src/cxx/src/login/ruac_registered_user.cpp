@@ -9,8 +9,7 @@
 #include "login/lib/ruac_legal_characters.hpp"
 #include "login/ruac_registered_user.hpp"
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rlib/ruac_tdebug.hpp"
 #include "usersystem/ruac_usergroup.hpp"
 #include "usersystem/ruac_userid.hpp"
 #include "usersystem/ruac_username.hpp"
@@ -112,12 +111,13 @@ namespace ruac::login {
      */
     auto RegisteredUser::dispatch_cmd(const std::string &cmd_, std::string &current_user_) -> bool {
 
-        /* "add user <name>" */
         {
-            auto &stdmsg = rstd::messages::StdMsg::instance();
-            auto &stdbug = rstd::messages::StdDug::instance();
-            stdmsg.print(stdbug.ostrs("", __FILE__, __LINE__));
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string msg{cmd_};
+            auto str = u.fmt("RegisteredUser", "dispatch_cmd(...)", std::move(msg));
+            u.print(str, __FILE__, __LINE__);
         }
+
         if (cmd_.size() > 9 && cmd_.substr(0, 9) == "add user ") {
             auto name = trim(cmd_.substr(9));
 
@@ -134,9 +134,10 @@ namespace ruac::login {
 
         /* "add group <name>" */
         {
-            auto &stdmsg = rstd::messages::StdMsg::instance();
-            auto &stdbug = rstd::messages::StdDug::instance();
-            stdmsg.print(stdbug.ostrs("", __FILE__, __LINE__));
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string msg{cmd_};
+            auto str = u.fmt("RegisteredUser", "dispatch_cmd(...)", std::move(msg));
+            u.print(str, __FILE__, __LINE__);
         }
         if (cmd_.size() > 10 && cmd_.substr(0, 10) == "add group ") {
             auto group = trim(cmd_.substr(10));
@@ -189,7 +190,7 @@ namespace ruac::login {
     auto RegisteredUser::registere() -> bool {
         std::lock_guard<std::mutex> lock(M_REGISTERE_USER_MTX);
 
-        auto &stdmsg = rstd::messages::StdMsg::instance();
+        auto &info = rlib::tdebug::Info::get();
 
         rstd::cmdlex::api::CmdLex cmdlex;
         std::vector<std::string> lines;
@@ -240,12 +241,12 @@ namespace ruac::login {
                 }
 
                 if (cmd == "stdmsg on") {
-                    stdmsg.enable_stdmsg(true);
+                    info.enable_stdmsg(true);
                     continue;
                 }
 
                 if (cmd == "stdmsg off") {
-                    stdmsg.enable_stdmsg(false);
+                    info.enable_stdmsg(false);
                     continue;
                 }
 

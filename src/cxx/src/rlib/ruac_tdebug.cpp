@@ -8,9 +8,6 @@
 
 #include "rlib/ruac_tdebug.hpp"
 
-#include "rstd/messages/ruac_stddug.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
-
 #include <sstream>
 
 namespace ruac::rlib::tdebug {
@@ -61,12 +58,10 @@ namespace ruac::rlib::tdebug {
      *       The return value can be safely std::move'd into print().
      */
     auto Info::fmt(std::string class_, std::string func_, std::string msgs_) -> std::string {
-        std::lock_guard<std::mutex> lock(M_MSG_MTX);
-        auto fmt_string = innerfmt(
+        return innerfmt(
             std::move(class_),
             std::move(func_),
             std::move(msgs_));
-        return fmt_string;
     }
 
     /**
@@ -76,9 +71,9 @@ namespace ruac::rlib::tdebug {
      * @param file_  Source file path (__FILE__, points to static storage)
      * @param line_  Source line number (__LINE__, stack value)
      *
-     * @details Delegates to rstd::messages::StdDug::ostrs_view() to build
+     * @details Delegates to rstd::gen::StdDug::ostrs_view() to build
      *          a formatted debug string with file and line information,
-     *          then outputs it via rstd::messages::StdMsg::print().
+     *          then outputs it via rstd::gen::StdMsg::print().
      *
      * @note Calling conventions:
      *   - msgs_ is a non-owning view; caller MUST ensure the underlying
@@ -91,11 +86,15 @@ namespace ruac::rlib::tdebug {
      *   - Thread-safe output via std::osyncstream.
      */
     void Info::print(std::string_view msgs_, const char *file_, const int line_) {
-        {
-            auto &msg{ruac::rstd::messages::StdMsg::instance()};
-            auto &dug{ruac::rstd::messages::StdDug::instance()};
-            msg.print(dug.ostrs_view(msgs_, file_, line_), true);
-        }
+        m_stdmsg.print(m_stddug.ostrs_view(msgs_, file_, line_), true);
+    }
+
+    void Info::enable_stdmsg(bool enable_) {
+        m_stdmsg.enable_stdmsg(enable_);
+    }
+
+    void Info::set_param_mode(const rstd::gen::StdDebugParamList &params_) {
+        m_stddug.set_param_mode(params_);
     }
 
 } // namespace ruac::rlib::tdebug

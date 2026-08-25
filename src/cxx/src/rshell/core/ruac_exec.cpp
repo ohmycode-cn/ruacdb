@@ -10,10 +10,11 @@
 #include "help/ruac_help_entry.hpp"
 #include "login/ruac_registered_user.hpp"
 #include "permission_guard/ruac_guardlock.hpp"
-#include "rstd/messages/ruac_stdmsg.hpp"
+#include "rlib/ruac_tdebug.hpp"
 #include "usersystem/ruac_usersmap.hpp"
 
 #include <iostream>
+#include <sstream>
 #include <syncstream>
 
 namespace ruac::rshell::core {
@@ -33,10 +34,7 @@ namespace ruac::rshell::core {
           m_kstate(kstate_) {
         M_ROOT_LINES = {
             "add new user",
-            "ruacdb.host user show.all",
-            "stdmsg off",
-            "stdmsg on",
-        };
+            "ruacdb.host user show.all"};
     }
 
     /**
@@ -80,6 +78,65 @@ namespace ruac::rshell::core {
     }
 
     /**
+     * @brief Parse and execute a stdmsg command with flag-based options
+     *
+     * @param line_ - The full command line starting with "stdmsg"
+     * @return bool - true if the command was a stdmsg command, false otherwise
+     *
+     * @details Parses the command tokens:
+     *          - "stdmsg on"  : enable debug output with default settings
+     *          - "stdmsg off" : disable debug output
+     *          Flags (after "stdmsg on"):
+     *          - "--no-prompt-header" : disable the debug prompt header
+     *          - "--color-prompt"     : enable ANSI color in the header
+     *
+     *          New flags can be added by extending the flag parsing
+     *          section without modifying the command enumeration.
+     */
+    auto Exec::dispatch_stdmsg(const std::string &line_) -> bool {
+
+        std::istringstream iss(line_);
+        std::string token;
+        std::vector<std::string> tokens;
+        while (iss >> token) {
+            tokens.push_back(std::move(token));
+        }
+
+        if (tokens.empty() || tokens[0] != "stdmsg") {
+            return false;
+        }
+
+        if (tokens.size() < 2 || (tokens[1] != "on" && tokens[1] != "off")) {
+            std::osyncstream(std::cout) << "Error: Usage: stdmsg on|off [--flags]" << std::endl;
+            return true;
+        }
+
+        if (tokens[1] == "off") {
+            rlib::tdebug::Info::get().enable_stdmsg(false);
+            std::osyncstream(std::cout) << "Done: Disabled standard temporarily debug message." << std::endl;
+            return true;
+        }
+
+        rstd::gen::StdDebugParamList params{};
+        for (size_t i = 2; i < tokens.size(); ++i) {
+            if ("--no-prompt-header" == tokens[i]) {
+                params.m_enable_header = false;
+            } else if ("--color-prompt" == tokens[i]) {
+                params.m_enable_color = true;
+                params.m_enable_header = true;
+            } else {
+                std::osyncstream(std::cout) << "Error: Unknown flag '" << tokens[i] << "'" << std::endl;
+                return true;
+            }
+        }
+
+        rlib::tdebug::Info::get().set_param_mode(params);
+        rlib::tdebug::Info::get().enable_stdmsg(true);
+        std::osyncstream(std::cout) << "Done: Enabled standard temporarily debug message." << std::endl;
+        return true;
+    }
+
+    /**
      * @brief Dispatch a single command line to the appropriate handler
      *
      * @param line_ - A pre-processed command line (spaces removed,
@@ -114,9 +171,20 @@ namespace ruac::rshell::core {
         if ("exit" == line_ || "quit" == line_) {
             return status_code::NORMAL_EXIT;
         }
+
         if ("ruacdb help" == line_) {
             ruac::help::api::HelpEntry hge;
             hge.run();
+            return status_code::CONTINUE;
+        }
+
+        if (line_.starts_with("stdmsg")) {
+            if (!uid_permission_guard(
+                    ruac::permission_guard::GuardList::ROOT,
+                    "Root permission required for this command.")) {
+                return status_code::CONTINUE;
+            }
+            dispatch_stdmsg(line_);
             return status_code::CONTINUE;
         }
 
@@ -128,13 +196,7 @@ namespace ruac::rshell::core {
                 return status_code::CONTINUE;
             }
 
-            if ("stdmsg on" == line_) {
-                ruac::rstd::messages::StdMsg::instance().enable_stdmsg(true);
-                std::osyncstream(std::cout) << "Done: Enabled standard temporarily debug message." << std::endl;
-            } else if ("stdmsg off" == line_) {
-                ruac::rstd::messages::StdMsg::instance().enable_stdmsg(false);
-                std::osyncstream(std::cout) << "Done: Disabled standard temporarily debug message." << std::endl;
-            } else if ("ruacdb.host user show.all" == line_) {
+            if ("ruacdb.host user show.all" == line_) {
                 ruac::usersystem::UsersMap usmap;
                 usmap.show_users_map();
             } else if ("add new user" == line_) {

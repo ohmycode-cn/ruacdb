@@ -2,8 +2,8 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/rstd/messages/ruac_stdmsg.hpp
- * src/rstd/messages/ruac_stdmsg.cpp
+ * include/rstd/gen/ruac_stdmsg.hpp
+ * src/rstd/gen/ruac_stdmsg.cpp
  *
  * @brief Provides thread-safe message output utilities for stdout and stderr.
  */
@@ -16,25 +16,20 @@
 #include <mutex>
 #include <syncstream>
 
-namespace ruac::rstd::messages {
+namespace ruac::rstd::gen {
 
     class StdMsg {
-      private:
-        StdMsg() = default;
-        ~StdMsg() = default;
-        StdMsg(const StdMsg &) = delete;
-        StdMsg &operator=(const StdMsg &) = delete;
-
       private:
         std::mutex m_print_mtx;
         bool m_enable_msg{false};
 
       public:
-        template <typename T>
-        void print(const T &msg_, const bool &stdout_ = true);
+        StdMsg() = default;
+        ~StdMsg() = default;
 
       public:
-        static auto instance() -> StdMsg &;
+        template <typename T>
+        void print(const T &msg_, const bool &stdout_ = true);
         void enable_stdmsg(const bool enable_);
     };
 
@@ -56,6 +51,6 @@ namespace ruac::rstd::messages {
                    : std::osyncstream(std::cout) << msg_ << std::endl;
     }
 
-} // namespace ruac::rstd::messages
+} // namespace ruac::rstd::gen
 
 #endif // RUAC_STDMSG_HPP

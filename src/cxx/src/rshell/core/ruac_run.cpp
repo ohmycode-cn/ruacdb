@@ -63,8 +63,8 @@ namespace ruac::rshell::core {
     void Run::print_history() {
 
         auto &u = ruac::permission_guard::GuardLock::get();
-        auto r = ruac::permission_guard::GuardList::ROOT;
-        if (!u.judgment_lock(m_kstate.get_current_user_id(), r)) {
+        auto manager = ruac::permission_guard::GuardList::MANAGER;
+        if (!u.judgment_lock(m_kstate.get_current_user_id(), manager)) {
             u.print_message("Error: ", "Current user is not enable print history permission");
             return;
         }
@@ -102,8 +102,8 @@ namespace ruac::rshell::core {
     void Run::clear_history() {
 
         auto &u = ruac::permission_guard::GuardLock::get();
-        auto r = ruac::permission_guard::GuardList::MANAGER;
-        if (!u.judgment_lock(m_kstate.get_current_user_id(), r)) {
+        auto root = ruac::permission_guard::GuardList::MANAGER;
+        if (!u.judgment_lock(m_kstate.get_current_user_id(), root)) {
             u.print_message("Error: ", "Current user is not enable clear history permission !");
             return;
         }
@@ -127,6 +127,13 @@ namespace ruac::rshell::core {
      *          clear the screen and reset the cursor position.
      */
     void Run::clear_screen() {
+        auto &u = ruac::permission_guard::GuardLock::get();
+        auto manager = ruac::permission_guard::GuardList::MANAGER;
+        if (!u.judgment_lock(m_kstate.get_current_user_id(), manager)) {
+            u.print_message("Error: ", "Current user is not enable clear history permission !");
+            return;
+        }
+
         ruac::rstd::tflush();
     }
 
@@ -144,14 +151,10 @@ namespace ruac::rshell::core {
      */
     auto Run::exec(const std::string &line_) -> status_code {
         {
-            auto &gl = ruac::permission_guard::GuardLock::get();
-            auto rg = ruac::permission_guard::GuardList::SYSTEM;
-            if (!gl.judgment_lock(m_kstate.get_current_user_id(), rg)) {
-                namespace u = ruac::rlib::tdebug;
-                std::string line = line_;
-                auto fmt = u::Info::get().fmt("Run", "exec(...)", std::move(line));
-                u::Info::get().print(std::move(fmt), __FILE__, __LINE__);
-            }
+            auto &u = ruac::rlib::tdebug::Info::get();
+            std::string line = line_;
+            auto fmt = u.fmt("Run", "exec(...)", std::move(line));
+            u.print(std::move(fmt), __FILE__, __LINE__);
         }
 
         if (line_ == "print history") {
