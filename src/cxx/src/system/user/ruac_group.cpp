@@ -2,16 +2,17 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_usergroup.hpp
- * src/usersystem/ruac_usergroup.cpp
+ * include/system/user/ruac_group.hpp
+ * src/system/user/ruac_group.cpp
  */
-#include "usersystem/ruac_user_group_perm.hpp"
-#include "usersystem/ruac_usergroup.hpp"
+#include "system/user/ruac_group.hpp"
+#include "system/user/ruac_group_registry.hpp"
+
 #include <iostream>
 #include <sstream>
 #include <syncstream>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     /**
      * @brief Access the singleton instance of UserGroup.
@@ -53,7 +54,7 @@ namespace ruac::usersystem {
      * @details The mutex is locked before the table is searched. When the
      *          user is found the stored group name is returned; otherwise an
      *          empty string is returned to indicate absence. The returned
-     *          group name is guaranteed to exist in M_GROUP_REGISTRY.
+     *          group name is guaranteed to exist in G_GROUP_REGISTRY.
      *
      */
     auto UserGroup::get_group(const std::string &username_) -> std::string {
@@ -66,22 +67,20 @@ namespace ruac::usersystem {
     }
 
     /**
-     * @brief Assign a group to a user.
+     * @brief Check whether a group assignment is valid for a user.
      *
-     * @param username_ - Name of the user to assign the group to.
-     * @param group_ - Name of the group to assign; must exist in
-     *                 M_GROUP_REGISTRY.
+     * @param username_ - Name of the user to check.
+     * @param group_ - Name of the group to validate.
      *
-     * @return bool - true if the assignment was stored; false if the user
+     * @return bool - true if the assignment is valid; false if the user
      *                already has a group or the group is not valid.
      *
      * @details The mutex is locked before any check is performed. If the
      *          user already has a group an error message including the
      *          existing group is streamed to cout via std::osyncstream and
      *          false is returned. If the supplied group is not present in
-     *          M_GROUP_REGISTRY a second error message is emitted and false
-     *          is returned. Only when both checks pass is the mapping stored
-     *          and true returned.
+     *          G_GROUP_REGISTRY a second error message is emitted and false
+     *          is returned. Only when both checks pass is true returned.
      *
      */
     auto UserGroup::exist_group(const std::string &username_, const std::string &group_) -> bool {
@@ -94,7 +93,7 @@ namespace ruac::usersystem {
             std::osyncstream(std::cout) << ss.str() << std::endl;
             return false;
         }
-        if (M_GROUP_REGISTRY.find(group_) == M_GROUP_REGISTRY.end()) {
+        if (G_GROUP_REGISTRY.find(group_) == G_GROUP_REGISTRY.end()) {
             std::stringstream ss;
             ss << "Error: Group '" << group_ << "' is not a valid group";
             std::osyncstream(std::cout) << ss.str() << std::endl;
@@ -108,12 +107,12 @@ namespace ruac::usersystem {
      *
      * @param username_ - Name of the user to assign the group to.
      * @param group_ - Name of the group to assign; must exist in
-     *                 M_GROUP_REGISTRY.
+     *                 G_GROUP_REGISTRY.
      *
      * @details The mutex is locked before the assignment is stored. If the
      *          user already has a group an error message is streamed to cout via
      *          std::osyncstream and the assignment is not stored. If the
-     *          group is not valid in M_GROUP_REGISTRY a second error message is
+     *          group is not valid in G_GROUP_REGISTRY a second error message is
      *          emitted and the assignment is not stored.
      *
      */
@@ -121,4 +120,4 @@ namespace ruac::usersystem {
         m_user_group_table[username_] = group_;
     }
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user

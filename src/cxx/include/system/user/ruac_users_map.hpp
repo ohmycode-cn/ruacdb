@@ -2,23 +2,24 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_usersmap.hpp
- * src/usersystem/ruac_usersmap.cpp
+ * include/system/user/ruac_users_map.hpp
+ * src/system/user/ruac_users_map.cpp
  *
  * @brief Defines the UsersMap class for displaying nested user-group-permission maps with formatted column output.
  */
 
 #pragma once
-#ifndef RUAC_USERSMAP_HPP
-#define RUAC_USERSMAP_HPP
+#ifndef RUAC_USERS_MAP_HPP
+#define RUAC_USERS_MAP_HPP
 
-#include "ruac_user_group_perm.hpp"
+#include "system/user/ruac_permission.hpp"
+
 #include <cstddef>
 #include <mutex>
 #include <string>
 #include <unordered_map>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     class UsersMap {
       private:
@@ -46,6 +47,6 @@ namespace ruac::usersystem {
         void show_users_map();
     };
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user
 
-#endif // RUAC_USERSMAP_HPP
+#endif // RUAC_USERS_MAP_HPP

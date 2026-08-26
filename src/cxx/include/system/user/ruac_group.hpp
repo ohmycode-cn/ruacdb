@@ -2,36 +2,37 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_usergroup.hpp
- * src/usersystem/ruac_usergroup.cpp
+ * include/system/user/ruac_group.hpp
+ * src/system/user/ruac_group.cpp
  *
  * @brief Defines the UserGroup singleton class for managing user-to-group
  *        mappings with thread-safe access. Group definitions and their
- *        default permissions are sourced from the shared M_GROUP_REGISTRY
- *        in ruac_user_group_perm.hpp.
+ *        default permissions are sourced from the shared G_GROUP_REGISTRY
+ *        in ruac_group_registry.hpp.
  */
 
 #pragma once
-#ifndef RUAC_USERGROUP_HPP
-#define RUAC_USERGROUP_HPP
+#ifndef RUAC_GROUP_HPP
+#define RUAC_GROUP_HPP
 
 #include <mutex>
 #include <string>
 #include <unordered_map>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     class UserGroup {
       private:
         std::mutex M_USER_GROUP_MTX;
 
-        // username → group_name (group validity is checked against
-        // M_GROUP_REGISTRY in ruac_user_group_perm.hpp)
+        // username to group_name (group validity is checked against
+        // G_GROUP_REGISTRY in ruac_group_registry.hpp)
         std::unordered_map<std::string, std::string> m_user_group_table{
             /*user name, group name*/
-            {"system", "system"},
+            {"syst", "syst"},
             {"root", "root"},
-            {"live", "visitor"}};
+            {"live", "visitor"},
+        };
 
       private:
         UserGroup() = default;
@@ -47,6 +48,6 @@ namespace ruac::usersystem {
         void add_group(const std::string &username_, const std::string &group_);
     };
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user
 
-#endif // RUAC_USERGROUP_HPP
+#endif // RUAC_GROUP_HPP
