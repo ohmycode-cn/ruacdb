@@ -29,10 +29,10 @@ namespace ruac::system::user {
         size_t m_max_width_name{0};
         size_t m_max_width_uid{0};
         size_t m_max_width_group{0};
-        size_t m_max_width_r{0}; // read
-        size_t m_max_width_w{0}; // write
-        size_t m_max_width_x{0}; // execute
-        size_t m_max_width_l{0};  // link
+        size_t m_max_width_rd{0}; // read
+        size_t m_max_width_we{0}; // write
+        size_t m_max_width_xe{0}; // execute
+        size_t m_max_width_lk{0}; // link
         size_t m_max_width_os{0}; // system
 
       private:

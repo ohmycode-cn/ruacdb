@@ -219,6 +219,7 @@ namespace ruac::rshell::core {
      */
     void Run::run() {
 
+        std::string prompt{""};
         {
             ruac::welcome::guidance::BaseInfoColorParamList color_param_list{
                 .m_enable_ce = true,
@@ -231,9 +232,11 @@ namespace ruac::rshell::core {
 #if defined(__linux__) || defined(__gnu_linux__)
             if (isatty(fileno(stdin))) {
                 bash_info.show();
+                prompt = m_prompt;
 #elif defined(_WIN32) || defined(_WIN64)
             if (_isatty(_fileno(stdin))) {
                 bash_info.show();
+                prompt = m_prompt;
 #else
 #error "Unsupported platform: only Windows and Linux are supported"
 #endif
@@ -253,8 +256,7 @@ namespace ruac::rshell::core {
         }
 
         while (true) {
-
-            std::osyncstream(std::cout) << m_prompt;
+            std::osyncstream(std::cout) << prompt;
             std::string lines;
             if (!std::getline(std::cin, lines)) {
                 break;

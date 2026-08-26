@@ -63,10 +63,10 @@ namespace ruac::system::user {
         m_max_width_name = 0;
         m_max_width_uid = 0;
         m_max_width_group = 0;
-        m_max_width_r = 0;
-        m_max_width_w = 0;
-        m_max_width_x = 0;
-        m_max_width_l = 0;
+        m_max_width_rd = 0;
+        m_max_width_we = 0;
+        m_max_width_xe = 0;
+        m_max_width_lk = 0;
         m_max_width_os = 0;
 
         m_usmap.clear();
@@ -85,10 +85,10 @@ namespace ruac::system::user {
             m_max_width_group = std::max(m_max_width_group, group.size());
 
             const Permission &p = (rit != G_GROUP_REGISTRY.end()) ? rit->second : Permission{};
-            m_max_width_r = std::max(m_max_width_r, std::string_view(perm_code_str(p.rp)).size());
-            m_max_width_w = std::max(m_max_width_w, std::string_view(perm_code_str(p.wp)).size());
-            m_max_width_x = std::max(m_max_width_x, std::string_view(perm_code_str(p.xp)).size());
-            m_max_width_l = std::max(m_max_width_l, std::string_view(perm_code_str(p.lp)).size());
+            m_max_width_rd = std::max(m_max_width_rd, std::string_view(perm_code_str(p.rp)).size());
+            m_max_width_we = std::max(m_max_width_we, std::string_view(perm_code_str(p.wp)).size());
+            m_max_width_xe = std::max(m_max_width_xe, std::string_view(perm_code_str(p.xp)).size());
+            m_max_width_lk = std::max(m_max_width_lk, std::string_view(perm_code_str(p.lp)).size());
             m_max_width_os = std::max(m_max_width_os, std::string_view(perm_code_str(p.os)).size());
         }
     }
@@ -116,22 +116,22 @@ namespace ruac::system::user {
            << std::left
            << std::setw(static_cast<int>(m_max_width_group)) << "GROUP" << "  "
            << std::left
-           << std::setw(static_cast<int>(m_max_width_r)) << "R" << "    "
+           << std::setw(static_cast<int>(m_max_width_rd)) << "READ" << "    "
            << std::left
-           << std::setw(static_cast<int>(m_max_width_w)) << "W" << "    "
+           << std::setw(static_cast<int>(m_max_width_we)) << "WRITE" << "    "
            << std::left
-           << std::setw(static_cast<int>(m_max_width_x)) << "X" << "    "
+           << std::setw(static_cast<int>(m_max_width_xe)) << "EXECUTE" << "    "
            << std::left
-           << std::setw(static_cast<int>(m_max_width_l)) << "L" << "    "
+           << std::setw(static_cast<int>(m_max_width_lk)) << "LINK" << "    "
            << std::left
            << std::setw(static_cast<int>(m_max_width_os)) << "OS"
            << '\n';
 
         const std::string sep(
             m_max_width_name + m_max_width_uid + m_max_width_group +
-                m_max_width_r + m_max_width_w + m_max_width_x +
-                m_max_width_l + m_max_width_os +
-                24,
+                m_max_width_rd + m_max_width_we + m_max_width_xe +
+                m_max_width_lk + m_max_width_os +
+                36,
             '-');
         ss << sep << '\n';
 
@@ -145,13 +145,13 @@ namespace ruac::system::user {
                        << std::left
                        << std::setw(static_cast<int>(m_max_width_group)) << group << "  "
                        << std::left
-                       << std::setw(static_cast<int>(m_max_width_r)) << perm_code_str(perm.rp) << "    "
+                       << std::setw(static_cast<int>(m_max_width_rd)) << perm_code_str(perm.rp) << "      "
                        << std::left
-                       << std::setw(static_cast<int>(m_max_width_w)) << perm_code_str(perm.wp) << "    "
+                       << std::setw(static_cast<int>(m_max_width_we)) << perm_code_str(perm.wp) << "       "
                        << std::left
-                       << std::setw(static_cast<int>(m_max_width_x)) << perm_code_str(perm.xp) << "    "
+                       << std::setw(static_cast<int>(m_max_width_xe)) << perm_code_str(perm.xp) << "         "
                        << std::left
-                       << std::setw(static_cast<int>(m_max_width_l)) << perm_code_str(perm.lp) << "    "
+                       << std::setw(static_cast<int>(m_max_width_lk)) << perm_code_str(perm.lp) << "      "
                        << std::left
                        << std::setw(static_cast<int>(m_max_width_os)) << perm_code_str(perm.os);
                     ss << '\n';
