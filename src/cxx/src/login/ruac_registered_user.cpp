@@ -13,6 +13,7 @@
 #include "system/user/ruac_group.hpp"
 #include "system/user/ruac_id.hpp"
 #include "system/user/ruac_name.hpp"
+#include "shext/ruac_dispatch_stdmsg.hpp"
 
 #include <iostream>
 #include <mutex>
@@ -88,6 +89,26 @@ namespace ruac::login {
         }
         ug.add_group(name_, group_);
         return true;
+    }
+
+    /**
+     * @brief Parse and execute a stdmsg command with flag-based options
+     *
+     * @param line_ - The full command line starting with "stdmsg"
+     * @return bool - true if the command was a stdmsg command, false otherwise
+     *
+     * @details Parses the command tokens:
+     *          - "stdmsg on"  : enable debug output with default settings
+     *          - "stdmsg off" : disable debug output
+     *          Flags (after "stdmsg on"):
+     *          - "--no-prompt-header" : disable the debug prompt header
+     *          - "--color-prompt"     : enable ANSI color in the header
+     *
+     *          New flags can be added by extending the flag parsing
+     *          section without modifying the command enumeration.
+     */
+    auto RegisteredUser::dispatch_stdmsg(const std::string &line_) -> bool {
+        return shext::dispatch_stdmsg(line_);
     }
 
     /**
@@ -190,15 +211,13 @@ namespace ruac::login {
     auto RegisteredUser::registere() -> bool {
         std::lock_guard<std::mutex> lock(M_REGISTERE_USER_MTX);
 
-        auto &info = rlib::tdebug::Info::get();
-
         rstd::cmdlex::api::CmdLex cmdlex;
         std::vector<std::string> lines;
         std::string current_user;
         int fail_count{0};
 
         while (true) {
-            std::osyncstream(std::cout) << "register-user-> ";
+            std::osyncstream(std::cout) << "register-user-env-: ";
             std::string field;
             if (!std::getline(std::cin, field)) {
                 return false;
@@ -240,17 +259,11 @@ namespace ruac::login {
                     continue;
                 }
 
-                if (cmd == "stdmsg on") {
-                    info.enable_stdmsg(true);
-                    continue;
+                if (line.starts_with("stdmsg")) {
+                    dispatch_stdmsg(line);
                 }
 
-                if (cmd == "stdmsg off") {
-                    info.enable_stdmsg(false);
-                    continue;
-                }
-
-                if (cmd == "exit user.env" || cmd == "quit user.env") {
+                if (cmd == "exit user env" || cmd == "quit user env") {
                     should_exit = true;
                     break;
                 }

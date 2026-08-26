@@ -26,6 +26,7 @@ namespace ruac::login {
         auto validate_user_name(const std::string &name_) -> bool;
         auto reg_user(const std::string &name_) -> bool;
         auto reg_group(const std::string &name_, const std::string &group_) -> bool;
+        auto dispatch_stdmsg(const std::string &line_) -> bool;
         auto dispatch_cmd(const std::string &cmd_, std::string &current_user_) -> bool;
 
       public:

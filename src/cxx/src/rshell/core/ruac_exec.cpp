@@ -10,12 +10,8 @@
 #include "help/ruac_help_entry.hpp"
 #include "login/ruac_registered_user.hpp"
 #include "system/permission/ruac_guardlock.hpp"
-#include "rlib/ruac_tdebug.hpp"
 #include "system/user/ruac_users_map.hpp"
-
-#include <iostream>
-#include <sstream>
-#include <syncstream>
+#include "shext/ruac_dispatch_stdmsg.hpp"
 
 namespace ruac::rshell::core {
 
@@ -94,46 +90,7 @@ namespace ruac::rshell::core {
      *          section without modifying the command enumeration.
      */
     auto Exec::dispatch_stdmsg(const std::string &line_) -> bool {
-
-        std::istringstream iss(line_);
-        std::string token;
-        std::vector<std::string> tokens;
-        while (iss >> token) {
-            tokens.push_back(std::move(token));
-        }
-
-        if (tokens.empty() || tokens[0] != "stdmsg") {
-            return false;
-        }
-
-        if (tokens.size() < 2 || (tokens[1] != "on" && tokens[1] != "off")) {
-            std::osyncstream(std::cout) << "Error: Usage: stdmsg on|off [--flags]" << std::endl;
-            return true;
-        }
-
-        if (tokens[1] == "off") {
-            rlib::tdebug::Info::get().enable_stdmsg(false);
-            std::osyncstream(std::cout) << "Done: Disabled standard temporarily debug message." << std::endl;
-            return true;
-        }
-
-        rstd::gen::StdDebugParamList params{};
-        for (size_t i = 2; i < tokens.size(); ++i) {
-            if ("--no-prompt-header" == tokens[i]) {
-                params.m_enable_header = false;
-            } else if ("--color-prompt" == tokens[i]) {
-                params.m_enable_color = true;
-                params.m_enable_header = true;
-            } else {
-                std::osyncstream(std::cout) << "Error: Unknown flag '" << tokens[i] << "'" << std::endl;
-                return true;
-            }
-        }
-
-        rlib::tdebug::Info::get().set_param_mode(params);
-        rlib::tdebug::Info::get().enable_stdmsg(true);
-        std::osyncstream(std::cout) << "Done: Enabled standard temporarily debug message." << std::endl;
-        return true;
+        return shext::dispatch_stdmsg(line_);
     }
 
     /**
