@@ -18,6 +18,7 @@
 #include <sstream>
 #include <string_view>
 #include <syncstream>
+#include <unordered_map>
 
 namespace ruac::system::user {
 
@@ -29,7 +30,7 @@ namespace ruac::system::user {
      * @return const char * - "OK", "NO", "OT", or "??" for unknown values
      *
      */
-    static auto perm_code_str(PowerCode code_) -> const char * {
+    auto perm_code_str(PowerCode code_) -> const char * {
         switch (code_) {
         case PowerCode::OK:
             return "OK";
@@ -41,22 +42,7 @@ namespace ruac::system::user {
         return "??";
     }
 
-    /**
-     * @brief Merge user identity and permission data into the display map
-     *
-     * @details Acquires M_USERS_MAP_MTX, then fetches the full uid map
-     *          from UserId and the full group map from UserGroup. Clears
-     *          m_usmap and all column-width trackers. For each user,
-     *          looks up their group; if the group exists in
-     *          G_GROUP_REGISTRY, stores the group's Permission; otherwise
-     *          stores an empty Permission with G_EMPTY_GROUP. Updates
-     *          the maximum column widths for name, uid, group, and each
-     *          permission code (R/W/X/L/OS) so print_user_info() can align
-     *          the table.
-     *
-     */
-    void UsersMap::merge_user_info() {
-        std::lock_guard<std::mutex> lock(M_USERS_MAP_MTX);
+    void UsersMap::merge_user_info_locked() {
         auto uid_map = UserId::instance().get_users_map();
         auto ugp_map = UserGroup::instance().get_groups();
 
@@ -91,6 +77,25 @@ namespace ruac::system::user {
             m_max_width_lk = std::max(m_max_width_lk, std::string_view(perm_code_str(p.lp)).size());
             m_max_width_os = std::max(m_max_width_os, std::string_view(perm_code_str(p.os)).size());
         }
+    }
+
+    /**
+     * @brief Merge user identity and permission data into the display map
+     *
+     * @details Acquires M_USERS_MAP_MTX, then fetches the full uid map
+     *          from UserId and the full group map from UserGroup. Clears
+     *          m_usmap and all column-width trackers. For each user,
+     *          looks up their group; if the group exists in
+     *          G_GROUP_REGISTRY, stores the group's Permission; otherwise
+     *          stores an empty Permission with G_EMPTY_GROUP. Updates
+     *          the maximum column widths for name, uid, group, and each
+     *          permission code (R/W/X/L/OS) so print_user_info() can align
+     *          the table.
+     *
+     */
+    void UsersMap::merge_user_info() {
+        std::lock_guard<std::mutex> lock(M_USERS_MAP_MTX);
+        merge_user_info_locked();
     }
 
     /**
@@ -174,6 +179,25 @@ namespace ruac::system::user {
             merge_user_info();
         }
         std::osyncstream(std::cout) << print_user_info() << std::endl;
+    }
+
+    auto UsersMap::get_users_map(const std::string &user_name_) -> std::unordered_map<std::string, Permission> {
+        std::lock_guard<std::mutex> lock(M_USERS_MAP_MTX);
+        merge_user_info_locked();
+        std::unordered_map<std::string, Permission> perm_map;
+
+        auto itr = m_usmap.find(user_name_);
+        if (itr == m_usmap.end()) {
+            return perm_map;
+        }
+
+        for (const auto &[uid, group_map] : itr->second) {
+            for (const auto &[group, perm] : group_map) {
+                perm_map[group] = perm;
+            }
+        }
+
+        return perm_map;
     }
 
 } // namespace ruac::system::user

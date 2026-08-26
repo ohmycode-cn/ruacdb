@@ -21,6 +21,8 @@
 
 namespace ruac::system::user {
 
+    auto perm_code_str(PowerCode code_) -> const char *; // Temporary open func method.
+
     class UsersMap {
       private:
         // user name [user id [group name [group permission]]
@@ -37,6 +39,7 @@ namespace ruac::system::user {
 
       private:
         void merge_user_info();
+        void merge_user_info_locked();
         auto print_user_info() -> std::string;
 
       public:
@@ -45,6 +48,7 @@ namespace ruac::system::user {
 
       public:
         void show_users_map();
+        auto get_users_map(const std::string &user_name_) -> std::unordered_map<std::string, Permission>;
     };
 
 } // namespace ruac::system::user

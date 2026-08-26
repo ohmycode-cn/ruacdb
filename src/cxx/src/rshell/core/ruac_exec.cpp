@@ -12,6 +12,11 @@
 #include "system/permission/ruac_guardlock.hpp"
 #include "system/user/ruac_users_map.hpp"
 #include "shext/ruac_dispatch_stdmsg.hpp"
+#include "shext/ruac_upermission.hpp"
+
+#include <ostream>
+#include <syncstream>
+#include <iostream>
 
 namespace ruac::rshell::core {
 
@@ -132,6 +137,27 @@ namespace ruac::rshell::core {
         if ("ruacdb help" == line_) {
             ruac::help::api::HelpEntry hge;
             hge.run();
+            return status_code::CONTINUE;
+        }
+
+        if ("whoami" == line_) {
+            {
+                std::osyncstream(std::cout) << "Current user: " << get_current_user() << std::endl;
+            }
+            return status_code::CONTINUE;
+        }
+
+        if ("mypower --color" == line_) {
+            {
+                ruac::shext::upermission::print_view(get_current_user(), true);
+            }
+            return status_code::CONTINUE;
+        }
+
+        if ("mypower" == line_) {
+            {
+                ruac::shext::upermission::print_view(get_current_user(), false);
+            }
             return status_code::CONTINUE;
         }
 

@@ -36,6 +36,8 @@ namespace ruac::help::ref::commands {
         ss << "  |- stdmsg off                           : Turn off standard message output.\n";
         ss << "  |- ruacdb.host user show.all            : Show all user information from localhost database.\n";
         ss << "  |- ruacdb help                          : Show help message.\n";
+        ss << "  |- whoami                               : Show current user.\n";
+        ss << "  |- mypower                              : Show current user permission.\n";
         ss << "  |\n";
         ss << "(ENDOF)\n";
         std::osyncstream(std::cout) << ss.str() << std::endl;
