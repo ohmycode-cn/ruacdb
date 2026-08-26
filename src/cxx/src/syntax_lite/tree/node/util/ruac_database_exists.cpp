@@ -6,8 +6,7 @@
  * src/syntax_lite/tree/node/util/ruac_database_exists.cpp
  */
 
-#include "kernel/ruac_controller_table.hpp"
-#include "kernel/track/ruac_track_single.hpp"
+#include "kernel/ruac_controller_pipes.hpp"
 #include "syntax_lite/tree/node/util/ruac_database_exists.hpp"
 
 namespace ruac::syntax_lite::tree::node::util {
@@ -20,15 +19,14 @@ namespace ruac::syntax_lite::tree::node::util {
      *
      * @return bool - true if the database exists, false otherwise
      *
-     * @details Fetches controller uid_ from ControllerTable, extracts the
+     * @details Fetches controller uid_ from ControllerPipes, extracts the
      *          Single track strategy from its variant, and forwards the
      *          query to the underlying kernel's exist_database().
      *
      */
     auto exist_database(const std::string &name_, const int uid_) -> bool {
-        auto &controller = ruac::kernel::controller::ControllerTable::instance().get_controller(uid_);
-        auto *track = std::get<ruac::kernel::track::Single *>(controller.get_track_strategy());
-        return track->get_kernel().exist_database(name_);
+        auto &track = ruac::kernel::controller::ControllerPipes::get().track(uid_);
+        return track.get_kernel().exist_database(name_);
     }
 
 } // namespace ruac::syntax_lite::tree::node::util

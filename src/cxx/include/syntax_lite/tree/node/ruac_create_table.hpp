@@ -12,15 +12,36 @@
 #ifndef RUAC_CREATE_TABLE_HPP
 #define RUAC_CREATE_TABLE_HPP
 
+#include <string>
+#include <vector>
+#include <mutex>
+
 namespace ruac::syntax_lite::tree::node {
+
+    struct TableItem {
+        std::string dbname;
+        std::string tbname;
+        std::vector<std::string> ftypes;
+        std::vector<std::string> fnames;
+        bool if_not_exists{false};
+    };
 
     class CreateTable {
       private:
-        [[maybe_unused]] int m_uid{1};
+        std::mutex M_CREATE_TABLE_MTX;
+        int m_uid{1};
+
+      private:
+        auto exist_database(const std::string &dbname_) -> bool;
+        auto exist_table(const TableItem &item_) -> bool;
+        void create_table(const TableItem &item_);
 
       public:
         explicit CreateTable(int uid_ = 1);
         ~CreateTable() = default;
+
+      public:
+        void execute(const TableItem &item_);
     };
 
 } // namespace ruac::syntax_lite::tree::node

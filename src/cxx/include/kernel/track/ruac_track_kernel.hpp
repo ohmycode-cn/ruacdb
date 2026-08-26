@@ -105,6 +105,7 @@ namespace ruac::kernel::track {
         auto get_database_name_max_width() -> uint32_t;
 
       public:
+        auto exist_table(const std::string &database_name_, const std::string &table_name_) -> bool;
         void add_table(const std::string &database_name_, const std::string &table_name_, uint64_t id_, uint64_t version_);
         void update_table_index(const std::string &database_name_, const std::string &table_name_, uint64_t index_);
         void update_table_id(const std::string &database_name_, const std::string &table_name_, uint64_t id_);

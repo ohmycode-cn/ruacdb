@@ -158,6 +158,17 @@ namespace ruac::kernel::track {
         return m_database_name_max_width;
     }
 
+    auto Kernel::exist_table(const std::string &database_name_, const std::string &table_name_) -> bool {
+        auto db_it = m_table_map.find(database_name_);
+        if (db_it != m_table_map.end()) {
+            auto table_it = db_it->second.find(table_name_);
+            if (table_it != db_it->second.end()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @brief Adds a new table entry to the tracking map.
      *
