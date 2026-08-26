@@ -2,10 +2,10 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/permission_guard/ruac_guardlock.hpp
- * src/permission_guard/ruac_guardlock.cpp
- * Description of header file function declaration
+ * include/system/permission/ruac_guardlock.hpp
+ * src/system/permission/ruac_guardlock.cpp
  *
+ * @brief GuardLock singleton for permission checking with group-based access control.
  */
 
 #pragma once
@@ -16,7 +16,7 @@
 #include <string>
 #include <string_view>
 
-namespace ruac::permission_guard {
+namespace ruac::system::permission {
 
     enum class GuardList {
         SYSTEM = 0,
@@ -48,6 +48,6 @@ namespace ruac::permission_guard {
         void print_message(std::string_view msg_header, std::string_view msg_body);
     };
 
-} // namespace ruac::permission_guard
+} // namespace ruac::system::permission
 
 #endif // RUAC_GUARDLOCK_HPP

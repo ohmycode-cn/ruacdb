@@ -2,17 +2,18 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_userid.hpp
- * src/usersystem/ruac_userid.cpp
+ * include/system/user/ruac_id.hpp
+ * src/system/user/ruac_id.cpp
  */
 
-#include "usersystem/ruac_userid.hpp"
+#include "system/user/ruac_id.hpp"
+
 #include <iostream>
 #include <mutex>
 #include <sstream>
 #include <syncstream>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     /**
      * @brief Access the singleton instance of UserId.
@@ -113,4 +114,4 @@ namespace ruac::usersystem {
         return true;
     }
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user

@@ -10,9 +10,9 @@
 #include "login/ruac_registered_user.hpp"
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
 #include "rlib/ruac_tdebug.hpp"
-#include "usersystem/ruac_usergroup.hpp"
-#include "usersystem/ruac_userid.hpp"
-#include "usersystem/ruac_username.hpp"
+#include "system/user/ruac_group.hpp"
+#include "system/user/ruac_id.hpp"
+#include "system/user/ruac_name.hpp"
 
 #include <iostream>
 #include <mutex>
@@ -56,7 +56,7 @@ namespace ruac::login {
             }
         }
 
-        if (-1 != ruac::usersystem::UserId::instance().get_user_id(name_)) {
+        if (-1 != ruac::system::user::UserId::instance().get_user_id(name_)) {
             std::osyncstream(std::cout)
                 << "Error: User name '" << name_ << "' already exists."
                 << std::endl;
@@ -71,8 +71,8 @@ namespace ruac::login {
      *        Caller must ensure validate_user_name() returned true.
      */
     auto RegisteredUser::reg_user(const std::string &name_) -> bool {
-        ruac::usersystem::UserName::instance().add_user(name_);
-        ruac::usersystem::UserId::instance().add_user(name_);
+        ruac::system::user::UserName::instance().add_user(name_);
+        ruac::system::user::UserId::instance().add_user(name_);
         return true;
     }
 
@@ -82,7 +82,7 @@ namespace ruac::login {
      */
     auto RegisteredUser::reg_group(
         const std::string &name_, const std::string &group_) -> bool {
-        auto &ug = ruac::usersystem::UserGroup::instance();
+        auto &ug = ruac::system::user::UserGroup::instance();
         if (!ug.exist_group(name_, group_)) {
             return false;
         }

@@ -2,23 +2,23 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_username.hpp
- * src/usersystem/ruac_username.cpp
+ * include/system/user/ruac_name.hpp
+ * src/system/user/ruac_name.cpp
  *
  * @brief Defines the UserName singleton class with a doubly-linked list for thread-safe user name management.
  */
 
 #pragma once
-#ifndef RUAC_USERNAME_HPP
-#define RUAC_USERNAME_HPP
+#ifndef RUAC_NAME_HPP
+#define RUAC_NAME_HPP
 
-#include "usersystem/lib/ruac_user_name_node.hpp"
+#include "system/user/lib/ruac_name_node.hpp"
 
 #include <memory>
 #include <mutex>
 #include <string>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     class UserName {
       private:
@@ -40,6 +40,6 @@ namespace ruac::usersystem {
         auto add_user(const std::string &username_) -> bool;
     };
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user
 
-#endif // RUAC_USERNAME_HPP
+#endif // RUAC_NAME_HPP

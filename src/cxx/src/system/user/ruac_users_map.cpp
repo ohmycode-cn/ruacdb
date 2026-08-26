@@ -2,13 +2,15 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_usersmap.hpp
- * src/usersystem/ruac_usersmap.cpp
+ * include/system/user/ruac_users_map.hpp
+ * src/system/user/ruac_users_map.cpp
  */
 
-#include "usersystem/ruac_usergroup.hpp"
-#include "usersystem/ruac_userid.hpp"
-#include "usersystem/ruac_usersmap.hpp"
+#include "system/user/ruac_group.hpp"
+#include "system/user/ruac_group_registry.hpp"
+#include "system/user/ruac_id.hpp"
+#include "system/user/ruac_users_map.hpp"
+
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
@@ -17,23 +19,23 @@
 #include <string_view>
 #include <syncstream>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     /**
-     * @brief Convert a UserPowerCode enum value to its string representation
+     * @brief Convert a PowerCode enum value to its string representation
      *
-     * @param code_ - The UserPowerCode to convert
+     * @param code_ - The PowerCode to convert
      *
      * @return const char * - "OK", "NO", "OT", or "??" for unknown values
      *
      */
-    static auto perm_code_str(UserPowerCode code_) -> const char * {
+    static auto perm_code_str(PowerCode code_) -> const char * {
         switch (code_) {
-        case UserPowerCode::OK:
+        case PowerCode::OK:
             return "OK";
-        case UserPowerCode::NO:
+        case PowerCode::NO:
             return "NO";
-        case UserPowerCode::OT:
+        case PowerCode::OT:
             return "OT";
         }
         return "??";
@@ -46,7 +48,7 @@ namespace ruac::usersystem {
      *          from UserId and the full group map from UserGroup. Clears
      *          m_usmap and all column-width trackers. For each user,
      *          looks up their group; if the group exists in
-     *          M_GROUP_REGISTRY, stores the group's Permission; otherwise
+     *          G_GROUP_REGISTRY, stores the group's Permission; otherwise
      *          stores an empty Permission with G_EMPTY_GROUP. Updates
      *          the maximum column widths for name, uid, group, and each
      *          permission code (R/W/X/L/OS) so print_user_info() can align
@@ -55,8 +57,8 @@ namespace ruac::usersystem {
      */
     void UsersMap::merge_user_info() {
         std::lock_guard<std::mutex> lock(M_USERS_MAP_MTX);
-        auto uid_map = ruac::usersystem::UserId::instance().get_users_map();
-        auto ugp_map = ruac::usersystem::UserGroup::instance().get_groups();
+        auto uid_map = UserId::instance().get_users_map();
+        auto ugp_map = UserGroup::instance().get_groups();
 
         m_max_width_name = 0;
         m_max_width_uid = 0;
@@ -71,8 +73,8 @@ namespace ruac::usersystem {
         for (const auto &[name, uid] : uid_map) {
             const auto git = ugp_map.find(name);
             const std::string &group = (git != ugp_map.end()) ? git->second : G_EMPTY_GROUP;
-            const auto rit = M_GROUP_REGISTRY.find(group);
-            if (rit == M_GROUP_REGISTRY.end()) {
+            const auto rit = G_GROUP_REGISTRY.find(group);
+            if (rit == G_GROUP_REGISTRY.end()) {
                 m_usmap[name][uid][G_EMPTY_GROUP] = {};
             } else {
                 m_usmap[name][uid][group] = rit->second;
@@ -82,7 +84,7 @@ namespace ruac::usersystem {
             m_max_width_uid = std::max(m_max_width_uid, std::to_string(uid).size());
             m_max_width_group = std::max(m_max_width_group, group.size());
 
-            const Permission &p = (rit != M_GROUP_REGISTRY.end()) ? rit->second : Permission{};
+            const Permission &p = (rit != G_GROUP_REGISTRY.end()) ? rit->second : Permission{};
             m_max_width_r = std::max(m_max_width_r, std::string_view(perm_code_str(p.rp)).size());
             m_max_width_w = std::max(m_max_width_w, std::string_view(perm_code_str(p.wp)).size());
             m_max_width_x = std::max(m_max_width_x, std::string_view(perm_code_str(p.xp)).size());
@@ -99,7 +101,7 @@ namespace ruac::usersystem {
      * @details Acquires M_USERS_MAP_MTX, then constructs a header row
      *          (NAME, UID, GROUP, R, W, X, L, OS) using the column widths
      *          computed by merge_user_info(). Draws a separator line of
-     *          dashes, then iterates m_usmap (name → uid → group →
+     *          dashes, then iterates m_usmap (name to uid to group to
      *          Permission) printing each user as a formatted row with
      *          std::setw alignment. Returns the entire table as a string.
      *
@@ -174,4 +176,4 @@ namespace ruac::usersystem {
         std::osyncstream(std::cout) << print_user_info() << std::endl;
     }
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user

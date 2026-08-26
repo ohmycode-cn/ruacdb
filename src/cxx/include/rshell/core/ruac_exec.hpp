@@ -13,7 +13,7 @@
 #define RUAC_EXEC_HPP
 
 #include "kernel/state/ruac_state_kernel.hpp"
-#include "permission_guard/ruac_guardlock.hpp"
+#include "system/permission/ruac_guardlock.hpp"
 #include "rshell/lib/ruac_scode.hpp"
 #include "syntax_lite/ruac_synxlite.hpp"
 
@@ -40,7 +40,7 @@ namespace ruac::rshell::core {
       private:
         auto get_current_user() -> std::string;
         auto get_current_uid() -> int;
-        auto uid_permission_guard(ruac::permission_guard::GuardList guard_, const std::string &msg_) -> bool;
+        auto uid_permission_guard(ruac::system::permission::GuardList guard_, const std::string &msg_) -> bool;
         auto dispatch_stdmsg(const std::string &line_) -> bool;
         auto dispatch(const std::string &line_) -> status_code;
 

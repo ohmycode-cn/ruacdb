@@ -9,9 +9,9 @@
 #include "rshell/core/ruac_exec.hpp"
 #include "help/ruac_help_entry.hpp"
 #include "login/ruac_registered_user.hpp"
-#include "permission_guard/ruac_guardlock.hpp"
+#include "system/permission/ruac_guardlock.hpp"
 #include "rlib/ruac_tdebug.hpp"
-#include "usersystem/ruac_usersmap.hpp"
+#include "system/user/ruac_users_map.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -68,8 +68,8 @@ namespace ruac::rshell::core {
      *                false otherwise (prints msg_ on failure)
      *
      */
-    auto Exec::uid_permission_guard(ruac::permission_guard::GuardList guard_, const std::string &msg_) -> bool {
-        auto &gl = ruac::permission_guard::GuardLock::get();
+    auto Exec::uid_permission_guard(ruac::system::permission::GuardList guard_, const std::string &msg_) -> bool {
+        auto &gl = ruac::system::permission::GuardLock::get();
         if (!gl.judgment_lock(get_current_uid(), guard_)) {
             gl.print_message("Error: ", msg_);
             return false;
@@ -159,12 +159,12 @@ namespace ruac::rshell::core {
     auto Exec::dispatch(const std::string &line_) -> status_code {
 
         if ("permission guard msg on" == line_) {
-            ruac::permission_guard::GuardLock::get().output_judgment_lock_message(true);
+            ruac::system::permission::GuardLock::get().output_judgment_lock_message(true);
             return status_code::CONTINUE;
         }
 
         if ("permission guard msg off" == line_) {
-            ruac::permission_guard::GuardLock::get().output_judgment_lock_message(false);
+            ruac::system::permission::GuardLock::get().output_judgment_lock_message(false);
             return status_code::CONTINUE;
         }
 
@@ -180,7 +180,7 @@ namespace ruac::rshell::core {
 
         if (line_.starts_with("stdmsg")) {
             if (!uid_permission_guard(
-                    ruac::permission_guard::GuardList::ROOT,
+                    ruac::system::permission::GuardList::ROOT,
                     "Root permission required for this command.")) {
                 return status_code::CONTINUE;
             }
@@ -191,13 +191,13 @@ namespace ruac::rshell::core {
         auto itr = std::find(M_ROOT_LINES.begin(), M_ROOT_LINES.end(), line_);
         if (itr != M_ROOT_LINES.end()) {
             if (!uid_permission_guard(
-                    ruac::permission_guard::GuardList::ROOT,
+                    ruac::system::permission::GuardList::ROOT,
                     "Root permission required for this command.")) {
                 return status_code::CONTINUE;
             }
 
             if ("ruacdb.host user show.all" == line_) {
-                ruac::usersystem::UsersMap usmap;
+                ruac::system::user::UsersMap usmap;
                 usmap.show_users_map();
             } else if ("add new user" == line_) {
                 ruac::login::RegisteredUser ru;
@@ -207,7 +207,7 @@ namespace ruac::rshell::core {
         }
 
         if (!uid_permission_guard(
-                ruac::permission_guard::GuardList::MANAGER,
+                ruac::system::permission::GuardList::MANAGER,
                 "Manager permission required to execute command.")) {
             return status_code::CONTINUE;
         }

@@ -6,7 +6,7 @@
  * src/rshell/core/ruac_run.cpp
  */
 
-#include "permission_guard/ruac_guardlock.hpp"
+#include "system/permission/ruac_guardlock.hpp"
 #include "rlib/ruac_tdebug.hpp"
 #include "rshell/core/ruac_run.hpp"
 #include "rstd/cmdlex/ruac_cmdlex.hpp"
@@ -62,8 +62,8 @@ namespace ruac::rshell::core {
      */
     void Run::print_history() {
 
-        auto &u = ruac::permission_guard::GuardLock::get();
-        auto manager = ruac::permission_guard::GuardList::MANAGER;
+        auto &u = ruac::system::permission::GuardLock::get();
+        auto manager = ruac::system::permission::GuardList::MANAGER;
         if (!u.judgment_lock(m_kstate.get_current_user_id(), manager)) {
             u.print_message("Error: ", "Current user is not enable print history permission");
             return;
@@ -101,8 +101,8 @@ namespace ruac::rshell::core {
      */
     void Run::clear_history() {
 
-        auto &u = ruac::permission_guard::GuardLock::get();
-        auto root = ruac::permission_guard::GuardList::MANAGER;
+        auto &u = ruac::system::permission::GuardLock::get();
+        auto root = ruac::system::permission::GuardList::MANAGER;
         if (!u.judgment_lock(m_kstate.get_current_user_id(), root)) {
             u.print_message("Error: ", "Current user is not enable clear history permission !");
             return;
@@ -127,8 +127,8 @@ namespace ruac::rshell::core {
      *          clear the screen and reset the cursor position.
      */
     void Run::clear_screen() {
-        auto &u = ruac::permission_guard::GuardLock::get();
-        auto manager = ruac::permission_guard::GuardList::MANAGER;
+        auto &u = ruac::system::permission::GuardLock::get();
+        auto manager = ruac::system::permission::GuardList::MANAGER;
         if (!u.judgment_lock(m_kstate.get_current_user_id(), manager)) {
             u.print_message("Error: ", "Current user is not enable clear history permission !");
             return;

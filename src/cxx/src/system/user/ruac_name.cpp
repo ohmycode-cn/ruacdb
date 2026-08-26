@@ -2,14 +2,15 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_username.hpp
- * src/usersystem/ruac_username.cpp
+ * include/system/user/ruac_name.hpp
+ * src/system/user/ruac_name.cpp
  */
 
-#include "usersystem/ruac_username.hpp"
+#include "system/user/ruac_name.hpp"
+
 #include <memory>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     /**
      * @brief Constructor for UserName.
@@ -94,4 +95,4 @@ namespace ruac::usersystem {
         return true;
     }
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user

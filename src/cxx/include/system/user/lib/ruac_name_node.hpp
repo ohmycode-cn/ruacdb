@@ -2,20 +2,20 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/lib/ruac_user_name_node.hpp
- * src/usersystem/lib/ruac_user_name_node.cpp
- * Description of header file function declaration
+ * include/system/user/lib/ruac_name_node.hpp
+ * src/system/user/lib/ruac_name_node.cpp
  *
+ * @brief Doubly-linked list node and list structures for UserName management.
  */
 
 #pragma once
-#ifndef RUAC_USER_NAME_NODE_HPP
-#define RUAC_USER_NAME_NODE_HPP
+#ifndef RUAC_NAME_NODE_HPP
+#define RUAC_NAME_NODE_HPP
 
 #include <memory>
 #include <string>
 
-namespace ruac::usersystem::lib {
+namespace ruac::system::user::lib {
 
     struct UserNameNode {
         std::string name;
@@ -29,6 +29,6 @@ namespace ruac::usersystem::lib {
         std::shared_ptr<UserNameNode> tail;
     };
 
-} // namespace ruac::usersystem::lib
+} // namespace ruac::system::user::lib
 
-#endif // RUAC_USER_NAME_NODE_HPP
+#endif // RUAC_NAME_NODE_HPP

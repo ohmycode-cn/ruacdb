@@ -2,27 +2,27 @@
  * Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * File Rule: The code should wrap around 100 columns and force wrap around 120 columns
  * Author: ohmycode-cn(ohcode@163.com)
- * include/usersystem/ruac_userid.hpp
- * src/usersystem/ruac_userid.cpp
+ * include/system/user/ruac_id.hpp
+ * src/system/user/ruac_id.cpp
  *
  * @brief Defines the UserId singleton class for managing user ID assignments with thread-safe access.
  */
 
 #pragma once
-#ifndef RUAC_USERID_HPP
-#define RUAC_USERID_HPP
+#ifndef RUAC_ID_HPP
+#define RUAC_ID_HPP
 
 #include <mutex>
 #include <string>
 #include <unordered_map>
 
-namespace ruac::usersystem {
+namespace ruac::system::user {
 
     class UserId {
       private:
         std::unordered_map<std::string, int> m_user_id_table{
             /*user name, user id*/
-            {"system", 0},
+            {"syst", 0},
             {"root", 1},
             {"live", 2}, // default user
         };
@@ -46,6 +46,6 @@ namespace ruac::usersystem {
         auto add_user(const std::string &username_) -> bool;
     };
 
-} // namespace ruac::usersystem
+} // namespace ruac::system::user
 
-#endif // RUAC_USERID_HPP
+#endif // RUAC_ID_HPP
