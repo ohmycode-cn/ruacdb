@@ -61,6 +61,12 @@ namespace ruac::google_test {
         bool ret = true;
         test_true_run(ret, u::test_format_row_main, __FILE__, __LINE__);
         test_true_run(ret, u::test_format_col_main, __FILE__, __LINE__);
+        test_true_run(ret, u::test_lexer_main, __FILE__, __LINE__);
+        test_true_run(ret, u::test_colors_main, __FILE__, __LINE__);
+        test_true_run(ret, u::test_logsystem_main, __FILE__, __LINE__);
+        test_true_run(ret, u::test_registere_main, __FILE__, __LINE__);
+        test_true_run(ret, u::test_rstd_messages_main, __FILE__, __LINE__);
+        test_true_run(ret, u::test_type_list_out_main, __FILE__, __LINE__);
         if (ret == false) {
             return 1;
         }

@@ -17,7 +17,13 @@
  * But you must add "IWYU pragma: keep" to each header file disable unused warning.
  */
 
-#include "google_test/lib/ruac_test_format_row.hpp" // IWYU pragma: keep
-#include "google_test/lib/ruac_test_format_col.hpp" // IWYU pragma: keep
+#include "google_test/lib/ruac_test_colors.hpp"       // IWYU pragma: keep
+#include "google_test/lib/ruac_test_format_col.hpp"   // IWYU pragma: keep
+#include "google_test/lib/ruac_test_format_row.hpp"   // IWYU pragma: keep
+#include "google_test/lib/ruac_test_lexer.hpp"        // IWYU pragma: keep
+#include "google_test/lib/ruac_test_logsystem.hpp"    // IWYU pragma: keep
+#include "google_test/lib/ruac_test_registere.hpp"    // IWYU pragma: keep
+#include "google_test/lib/ruac_test_rstd_messages.hpp" // IWYU pragma: keep
+#include "google_test/lib/ruac_test_type_list_out.hpp" // IWYU pragma: keep
 
 #endif // RUAC_GOOGLE_TEST_HEADERS_HPP

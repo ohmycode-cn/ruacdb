@@ -6,8 +6,6 @@
  */
 
 #ifdef UNIT_TEST
-// #include "test/ruac_c_test_main.h"
-// #include "test/ruac_test_main.hpp"
 #include "google_test/ruac_google_test_main.hpp"
 #else
 #include "kernel/ruac_controller_pipes.hpp"
