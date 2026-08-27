@@ -1,5 +1,21 @@
 # RUACDB (Runtime Unified Access Control Database)
 
+> [!IMPORTANT]
+> ## Kernel Stage Note (0.0.1-beta)
+>
+> The current kernel (`kernel`) is in the **0.0.1-beta** stage. It serves only as a minimal viable prototype (MVP) for validating that the overall architecture can run end-to-end, and has not yet reached the maturity required for production or large-scale multi-user scenarios.
+>
+> ### Known Defects
+>
+> - **Flattened data ownership with full copies**: data is copied between `object::Kernel` and `object::Single` / `object::Multis` via `getdbs()` returning a copy, and `Single` / `Multis` each perform a full deep copy at construction. Starting N users can therefore produce N times the amount of data copied, suffering from severe data bloat and synchronization problems.
+> - **One-shot multi-user registration**: `ControllerPipes::init_pipe` relies on the `m_once_lock` flag, so only the first user can be registered and subsequent users are silently ignored, preventing the multi-user scenario from initializing correctly.
+> - **Data write path is not yet closed**: `object::Kernel` currently only exposes read-only copy access (`getdbs()` returns by value) and lacks a write entry point to synchronize modifications back to the authoritative data source; the data semantics (shared vs. isolated) have not been finalized.
+> - **Dangling references (raw-pointer ownership)**: `ControllerTable::m_controller_table` stores each user's controller as a raw pointer `Operation *`, whose lifetime is owned by the caller (the `new` in `main()`) yet is never `delete`d — this is both a memory leak and leaves no guarantee that the referenced object remains alive while being held. If `Operation` is released early or switched to a stack object / smart pointer, the raw pointer kept in the table will immediately dangle; `ControllerPipes` holds `object / state / track` as raw pointers with the same hazard.
+>
+> ### Stage Positioning
+>
+> The goal of this stage is to **get the system running first** and validate a minimal closed loop (login → controller assembly → state initialization → interactive shell → SQL statement execution), rather than pursuing correctness of the data model, concurrency, and persistence. The defects above are all known and will be progressively resolved in later commits by refactoring the kernel (shared data references, closed write paths, multi-user registration, and so on).
+
 ## Introduction
 
 RUACDB is a mini database for runtime unified access control, implemented in C/C++/Rust, with most functionality written in C++. The project is dedicated to exploring a more radical database system architecture, and therefore may undergo major refactoring at certain milestones or specific version stages. RUACDB has been verified to compile and run on Windows 11 / Linux platforms.
