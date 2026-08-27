@@ -67,6 +67,7 @@ namespace ruac::google_test {
         test_true_run(ret, u::test_registere_main, __FILE__, __LINE__);
         test_true_run(ret, u::test_rstd_messages_main, __FILE__, __LINE__);
         test_true_run(ret, u::test_type_list_out_main, __FILE__, __LINE__);
+        test_true_run(ret, u::test_rstd_clue_output_main, __FILE__, __LINE__);
         if (ret == false) {
             return 1;
         }
