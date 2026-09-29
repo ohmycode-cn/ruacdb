@@ -25,6 +25,12 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/cxx/*.cpp src/cxx/*.c)
 # Unit test control: -DUNIT_TEST=ON (default) or -DUNIT_TEST=OFF
 option(UNIT_TEST "Enable unit tests" ON)
 
+# Static link control: -DBUILD_STATIC=ON links libgcc/libstdc++ statically.
+# Only valid for production builds (requires -DUNIT_TEST=OFF).
+# Note: Qt6 ships only shared libraries, so a full '-static' link would fail;
+# we therefore statically link only the C/C++ runtime, leaving Qt dynamic.
+option(BUILD_STATIC "Statically link the C/C++ runtime" OFF)
+
 if (NOT UNIT_TEST)
     # Production build: exclude test sources and test headers from compilation
     list(FILTER SOURCES EXCLUDE REGEX ".*/google_test/.*")
@@ -44,6 +50,10 @@ endif()
 
 # add_compile_options(-Werror) # Only specific system versions will enable strict mode
 add_executable(${PROJECT_NAME} ${SOURCES} src/cxx/src/main.cpp)
+
+if (BUILD_STATIC)
+    target_link_options(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++)
+endif()
 
 if (WIN32)
     # Prevent Windows SDK (minwindef.h) from defining min/max macros,

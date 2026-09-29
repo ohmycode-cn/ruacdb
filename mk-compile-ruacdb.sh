@@ -20,6 +20,7 @@ source .shared.sh
 #   This function builds the ruacdb project via CMake.
 #   By default, unit tests are enabled (UNIT_TEST=ON).
 #   Pass --off-unit-test to build a production binary.
+#   Pass --static to statically link the C/C++ runtime (requires --off-unit-test).
 #   Pass --clear-build to delete build/* before building.
 # Args:
 #   $@ - Command line arguments.
@@ -29,6 +30,7 @@ source .shared.sh
 #   Build progress and result messages.
 function main() {
     local unit_test="ON"    # default: unit test enabled
+    local build_static="OFF" # default: dynamic link
     local clear_build="OFF" # default: do not clear build directory
     
     if [[ "${OS}" == "Windows_NT" ]]; then
@@ -42,6 +44,10 @@ function main() {
                 unit_test="OFF"
                 shift
             ;;
+            --static)
+                build_static="ON"
+                shift
+            ;;
             --clear-build)
                 clear_build="ON"
                 shift
@@ -53,6 +59,11 @@ function main() {
         esac
     done
     
+    if [[ "${build_static}" == "ON" ]] && [[ "${unit_test}" == "ON" ]]; then
+        error "--static requires --off-unit-test"
+        return 1
+    fi
+    
     local build_dir="build"
     
     if [[ "${clear_build}" == "ON" ]]; then
@@ -62,7 +73,9 @@ function main() {
     fi
     sleep 2
     
-    if [[ "${unit_test}" == "ON" ]]; then
+    if [[ "${build_static}" == "ON" ]]; then
+        info "Build mode: Release (UNIT_TEST=OFF) static"
+    elif [[ "${unit_test}" == "ON" ]]; then
         info "Build mode: Debug (UNIT_TEST=ON)"
     else
         info "Build mode: Release (UNIT_TEST=OFF)"
@@ -76,7 +89,7 @@ function main() {
     info "Configuring CMake ..."
     enable_spinner "cmake configuring"
     
-    if ! cmake -B "${build_dir}" -DUNIT_TEST="${unit_test}" 2>&1; then
+    if ! cmake -B "${build_dir}" -DUNIT_TEST="${unit_test}" -DBUILD_STATIC="${build_static}" 2>&1; then
         cancel_spinner
         error "CMake configure failed."
         return 1
