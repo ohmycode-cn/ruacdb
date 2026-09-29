@@ -10,18 +10,38 @@
 #include "rstd/colors/ruac_background.hpp"
 #include "rstd/colors/ruac_color26.hpp"
 #include "rstd/ruac_donone.hpp"
+#include "rstd/format/tbe26/ruac_tbe26.hpp"
 #include "welcome/ruac_guidance.hpp"
 #include <algorithm>
 #include <iostream>
 #include <print>
 #include <sstream>
 #include <string>
+#include <syncstream>
 #include <vector>
 
 namespace ruac::welcome {
 
     namespace {
+
         namespace crlib = rstd::colors;
+
+        auto get_welcome_information() -> std::vector<std::string> {
+
+            std::vector<std::string> vecstr{
+                "WELCOME TO USE RUACDB",
+                "When multiple commands or statements need to be entered at once,",
+                "you can use semicolons as separators.",
+                "Repository: https://github.com/ohmycode-cn/ruacdb",
+                "Version: 0.0.2 Beta",
+                "Exit Program: Ctrl+C, quit, exit",
+                "Use annotations symbol: # or //",
+                "Get detail help: ruacdb help",
+            };
+
+            return vecstr;
+        }
+
     } // namespace
 
     namespace guidance {
@@ -39,16 +59,8 @@ namespace ruac::welcome {
          *
          */
         void BaseInfo::show_guide_message() {
-            const std::vector<std::string> GUIDE_MESSAGE_LIST{
-                "WELCOME TO USE RUACDB",
-                "When multiple commands or statements need to be entered at once,",
-                "you can use semicolons as separators.",
-                "Repository: https://github.com/ohmycode-cn/ruacdb",
-                "Version: 0.0.2 Beta",
-                "Exit Program: Ctrl+C, quit, exit",
-                "Use annotations symbol: # or //",
-                "Get detail help: ruacdb help",
-            };
+
+            auto GUIDE_MESSAGE_LIST{get_welcome_information()};
 
             auto max_len{0};
             for (auto msg : GUIDE_MESSAGE_LIST) {
@@ -90,6 +102,15 @@ namespace ruac::welcome {
 
             // Bottom border
             std::print("{}{}{}\n", BL, hline, BR);
+        }
+
+        void BaseInfo::show_guide_message1() {
+            { // SAFETY: Ensure that the object is destructed in advance to avoid accidents !
+                auto vecstr{get_welcome_information()};
+                rstd::format::tbe26::TbeFmt tf;
+                tf.retmax_col(vecstr);
+                std::osyncstream(std::cout) << tf.retfmt_str(vecstr) << std::endl;
+            }
         }
 
         /**
@@ -160,7 +181,7 @@ namespace ruac::welcome {
         /**
          * @brief Display the base information
          *
-         * @details First calls show_guide_message() to display the guide
+         * @details First calls show_guide_message1() to display the guide
          *          message box. Then uses a ternary operator: calls
          *          show_color_background() when m_param_list.m_enable_ht
          *          is true, otherwise calls ruac::rstd::donone::notdo()
@@ -168,7 +189,7 @@ namespace ruac::welcome {
          *
          */
         void BaseInfo::show() {
-            show_guide_message();
+            show_guide_message1();
             (m_param_list.m_enable_ht) ? show_color_background() : ruac::rstd::donone::notdo();
         }
 

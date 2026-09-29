@@ -29,6 +29,7 @@ namespace ruac::welcome {
 
           private:
             void show_guide_message();
+            void show_guide_message1();
             void show_color_background();
 
           public:
